@@ -1,0 +1,16 @@
+{
+    "name": "guten-csek",
+    "version": "1.0.0",
+    "description": "A series of Gutenberg blocks for Csek Creative's rebrand.",
+    "main": "build/index.js",
+    "author": "Connor Doman",
+    "license": "MIT",
+    "private": true,
+    "devDependencies": {
+        "@wordpress/scripts": "^26.10.0"
+    },
+    "scripts": {
+        "start": "wp-scripts start",
+        "build": "wp-scripts build"
+    }
+}
