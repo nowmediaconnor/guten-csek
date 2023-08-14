@@ -41,5 +41,10 @@ function enqueue_custom_block_assets()
         'editor_style' => 'guten-csek-editor-style',
         'style' => 'guten-csek-frontend-style',
     ));
+    register_block_type('guten-csek/block-quote-block', array(
+        'editor_script' => 'block-quote-block',
+        'editor_style' => 'guten-csek-editor-style',
+        'style' => 'guten-csek-frontend-style',
+    ));
 }
 add_action('init', 'enqueue_custom_block_assets');

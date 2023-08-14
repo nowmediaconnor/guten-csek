@@ -71,16 +71,39 @@ export const ExpandingVideoBlockSave = ({ attributes }: ExpandingVideoBlockProps
     // the video will be the middle column and will expand to fill the viewport as the screen is scrolled
     // the images will be the left and right columns and will be pushed offscreen as the video expands
 
+    // pick a random subset of up to 6 images
+    // shuffle that subset
+    // split the images into 2 arrays of 3
+    // the left array will be the left column
+    // the right array will be the right column
+
+    const maxImages = images.length < 6 ? images.length : 6;
+    const randomImages = images.sort(() => Math.random() - Math.random()).slice(0, maxImages);
+
+    const firstImageElements = randomImages.slice(0, maxImages / 2).map((image: string, index: number) => {
+        return <img src={image} className="floating-image" />;
+    });
+    const secondImageElements = randomImages.slice(maxImages / 2).map((image: string, index: number) => {
+        return <img src={image} className="floating-image" />;
+    });
+
     return (
-        <div className="expanding-video-container h-[100vh] sticky top-0 mx-auto flex flex-col w-1/3 justify-start items-center overflow-hidden">
-            <video
-                controls={false}
-                autoPlay={true}
-                loop={true}
-                muted={true}
-                className="object-cover max-w-none object-center relative left-1/2 translate-x-[-50%]">
-                <source src={videoURL} />
-            </video>
+        <div>
+            <div id="test-thresh" className="threshold"></div>
+            <div className="row">
+                <div className="image-container-left scroll-fade-away">{firstImageElements}</div>
+                <div className="expanding-video-container">
+                    <video
+                        controls={false}
+                        autoPlay={true}
+                        loop={true}
+                        muted={true}
+                        className="object-cover max-w-none object-center relative left-1/2 translate-x-[-50%]">
+                        <source src={videoURL} />
+                    </video>
+                </div>
+                <div className="image-container-right scroll-fade-away">{secondImageElements}</div>
+            </div>
         </div>
     );
 };

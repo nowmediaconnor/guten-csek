@@ -1,3 +1,182 @@
+:root {
+    --csek-red: #f40201;
+    --csek-blue: #b4d8df;
+    --csek-dark: #131313;
+    --csek-light: #e9ebea;
+}
+
+@keyframes hover {
+    from {
+        transform: translateY(0.25rem);
+    }
+    to {
+        transform: translateY(-0.25rem);
+    }
+}
+
+/* Video Test Block */
+
 .wp-block-guten-csek-video-block {
     border: 1px solid tomato;
+}
+
+/* Tagline Header Block */
+.wp-block-guten-csek-tagline-header-block {
+    transition: all ease 0.2s;
+}
+
+/* h-[100vh] sticky top-0 mx-auto flex flex-col w-1/3 justify-start items-center */
+
+/* Expanding Video Block*/
+
+.wp-block-guten-csek-expanding-video-block {
+    transition: all ease 0.2s;
+    height: 100vh;
+    position: relative;
+    top: 0;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: flex-start;
+    align-items: center;
+    overflow: hidden;
+}
+
+.wp-block-guten-csek-expanding-video-block .row {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    gap: 1rem;
+}
+
+.wp-block-guten-csek-expanding-video-block .threshold {
+    height: 1px;
+    overflow: hidden;
+    width: 100%;
+    position: absolute;
+    bottom: 110vh;
+    z-index: 100;
+}
+
+.expanding-video-container {
+    width: 30%;
+    height: 60vh;
+    overflow: hidden;
+    border-radius: 0.5rem;
+    transition: all ease 0.2s;
+    /* position: absolute;
+    top: 0; */
+}
+
+.expanded {
+    width: 100%;
+    height: 100vh;
+    border-radius: 0;
+    transition: all ease 1.2s;
+}
+
+.floating-image {
+    width: 20rem;
+    border-radius: 0.5rem;
+    animation: hover 2s ease-in-out infinite alternate;
+}
+
+.image-container-left {
+    width: 30%;
+    display: grid;
+    flex-direction: row;
+    grid-template-rows: 1fr 1fr;
+    grid-auto-flow: column;
+    justify-content: flex-end;
+    align-items: flex-end;
+    gap: 1rem;
+    flex: 0 1 auto;
+}
+
+.image-container-right {
+    width: 30%;
+    display: grid;
+    flex-direction: row;
+    grid-template-rows: 1fr 1fr;
+    grid-auto-flow: column;
+    justify-content: center;
+    align-items: left;
+    gap: 1rem;
+    flex: 0 1 auto;
+}
+
+/* Block Quote */
+
+.wp-block-guten-csek-block-quote-block {
+    width: 100%;
+    font-family: Syne, sans-serif;
+    padding: 2rem 0;
+    position: relative;
+}
+
+.wp-block-guten-csek-block-quote-block h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: var(--csek-red);
+    text-transform: uppercase;
+}
+.wp-block-guten-csek-block-quote-block .quotation-mark {
+}
+.wp-block-guten-csek-block-quote-block blockquote {
+    margin: 0 auto;
+    text-align: left;
+    font-size: 2.5rem;
+    line-height: 1.2;
+    z-index: 20;
+}
+.wp-block-guten-csek-block-quote-block .quote-area {
+    position: relative;
+    margin: 2rem auto;
+    max-width: 75rem;
+    box-content: border-box;
+    padding: 0 2rem;
+}
+.wp-block-guten-csek-block-quote-block .quote::before {
+    content: "“";
+    color: var(--csek-red);
+    font-size: 6rem;
+    position: absolute;
+    left: 3rem;
+    top: 4rem;
+}
+.wp-block-guten-csek-block-quote-block .quote {
+    margin-left: 6rem;
+    margin-top: 4rem;
+    margin-bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+}
+.wp-block-guten-csek-block-quote-block .quote .byline {
+    margin-top: 2rem;
+    font-weight: bold;
+    font-family: Montserrat, sans-serif;
+    line-height: 1.2;
+    text-transform: uppercase;
+}
+.wp-block-guten-csek-block-quote-block .quote .byline .author {
+    color: var(--csek-red);
+}
+.wp-block-guten-csek-block-quote-block .quote .byline .author-role {
+}
+.wp-block-guten-csek-block-quote-block .serif {
+    filter: saturate(0) brightness(2.5);
+    position: absolute;
+    right: 4rem;
+    top: 2rem;
+}
+
+/* Generic Classes */
+
+.hide {
+    opacity: 0;
+    transition: all ease 0.2s;
 }
