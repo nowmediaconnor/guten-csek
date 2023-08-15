@@ -26,11 +26,6 @@ function enqueue_custom_block_assets()
     );
 
     // Write the following statement for each block
-    register_block_type('guten-csek/video-block', array(
-        'editor_script' => 'video-block',
-        'editor_style' => 'guten-csek-editor-style',
-        'style' => 'guten-csek-frontend-style',
-    ));
     register_block_type('guten-csek/tagline-header-block', array(
         'editor_script' => 'tagline-header-block',
         'editor_style' => 'guten-csek-editor-style',
@@ -43,6 +38,11 @@ function enqueue_custom_block_assets()
     ));
     register_block_type('guten-csek/block-quote-block', array(
         'editor_script' => 'block-quote-block',
+        'editor_style' => 'guten-csek-editor-style',
+        'style' => 'guten-csek-frontend-style',
+    ));
+    register_block_type('guten-csek/scrolling-projects-block', array(
+        'editor_script' => 'scrolling-projects-block',
         'editor_style' => 'guten-csek-editor-style',
         'style' => 'guten-csek-frontend-style',
     ));

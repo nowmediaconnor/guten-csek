@@ -49,7 +49,7 @@
     justify-content: center;
     align-items: center;
     position: relative;
-    gap: 1rem;
+    gap: 2rem;
 }
 
 .wp-block-guten-csek-expanding-video-block .threshold {
@@ -66,7 +66,7 @@
     height: 60vh;
     overflow: hidden;
     border-radius: 0.5rem;
-    transition: all ease 0.2s;
+    transition: all ease 1.2s;
     /* position: absolute;
     top: 0; */
 }
@@ -79,12 +79,14 @@
 }
 
 .floating-image {
+    position: relative;
     width: 20rem;
     border-radius: 0.5rem;
     animation: hover 2s ease-in-out infinite alternate;
 }
 
 .image-container-left {
+    position: relative;
     width: 30%;
     display: grid;
     flex-direction: row;
@@ -92,19 +94,20 @@
     grid-auto-flow: column;
     justify-content: flex-end;
     align-items: flex-end;
-    gap: 1rem;
+    gap: 2rem;
     flex: 0 1 auto;
 }
 
 .image-container-right {
+    position: relative;
     width: 30%;
     display: grid;
     flex-direction: row;
     grid-template-rows: 1fr 1fr;
     grid-auto-flow: column;
-    justify-content: center;
-    align-items: left;
-    gap: 1rem;
+    justify-content: flex-end;
+    align-items: flex-end;
+    gap: 2rem;
     flex: 0 1 auto;
 }
 
@@ -113,8 +116,9 @@
 .wp-block-guten-csek-block-quote-block {
     width: 100%;
     font-family: Syne, sans-serif;
-    padding: 2rem 0;
+    padding: 4rem 0;
     position: relative;
+    background: white;
 }
 
 .wp-block-guten-csek-block-quote-block h2 {
@@ -137,7 +141,7 @@
     position: relative;
     margin: 2rem auto;
     max-width: 75rem;
-    box-content: border-box;
+    box-sizing: border-box;
     padding: 0 2rem;
 }
 .wp-block-guten-csek-block-quote-block .quote::before {
@@ -174,9 +178,143 @@
     top: 2rem;
 }
 
+/* Scrolling Projects Block */
+
+.wp-block-guten-csek-scrolling-projects-block {
+    width: 100%;
+    font-family: Syne, sans-serif;
+    padding: 4rem 0;
+    position: relative;
+    background: white;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+.wp-block-guten-csek-scrolling-projects-block .projects {
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.projects hr {
+    width: calc(100% - 8rem);
+}
+
+.project-ribbon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    width: 100%;
+    background-color: white;
+    height: 10rem;
+    overflow: hidden;
+    position: relative;
+    transition: all ease 0.2s;
+}
+
+.project-ribbon ul {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    width: 100%;
+}
+
+.project-ribbon ul li {
+    flex-grow: 0;
+    flex-shrink: 0;
+    text-align: center;
+    width: max-content;
+    font-size: 5rem;
+    z-index: 10;
+    position: relative;
+}
+
+.project-ribbon li {
+    color: var(--csek-light);
+    position: relative;
+    z-index: 10;
+}
+
+.project-ribbon li:hover {
+    z-index: 40;
+}
+
+.project-ribbon li a {
+    transition: color ease 0.2s;
+}
+
+.project-ribbon li a:hover {
+    color: var(--csek-dark);
+}
+
+.project-ribbon.reverse li:hover {
+    z-index: 40;
+}
+
+.project-ribbon.reverse li {
+    position: relative;
+    z-index: 10;
+}
+
+.reverse ul {
+    transform: rotate(180deg);
+    z-index: 10;
+}
+
+.reverse ul li {
+    transform: rotate(-180deg);
+    z-index: 10;
+}
+
+.project-blurb {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    background-color: var(--csek-blue);
+    transition: all ease 0.2s;
+    z-index: 20;
+    width: 40vh;
+    height: 40vh;
+    transform: translateX(-50%) translateY(-50%);
+}
+
+.project-blurb img {
+    position: absolute;
+    top: 0;
+    right: 25%;
+    width: 150%;
+    height: auto;
+}
+
+.project-blurb .view-button {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--csek-light);
+    z-index: 40;
+    font-size: 0.75rem;
+    width: 8em;
+    height: 8em;
+    border-radius: 100%;
+    background-color: var(--csek-dark);
+    bottom: 20%;
+    right: 20%;
+    font-family: Montserrat, sans-serif;
+    text-transform: uppercase;
+    font-weight: 600;
+    text-align: center;
+}
+
 /* Generic Classes */
 
 .hide {
     opacity: 0;
-    transition: all ease 0.2s;
+    transition: opacity ease 0.2s, width ease 2s;
+    width: 0;
 }
