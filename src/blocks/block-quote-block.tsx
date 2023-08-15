@@ -43,7 +43,7 @@ export const BlockQuoteSave = ({ attributes }: BlockQuoteProps) => {
     return (
         <div>
             <div className="quote-area">
-                <h2>{heading}</h2>
+                <h2 className="block-title">{heading}</h2>
                 <div className="quote">
                     <blockquote>“{quote}”</blockquote>
                     <div className="byline">

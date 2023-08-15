@@ -6,11 +6,12 @@
 const { registerBlockType } = wp.blocks;
 
 import { shuffle } from "./array";
-import { map, randomIntInRange, randomPartOfOne } from "./math";
+import { randomIntInRange, randomPartOfOne } from "./math";
 import { TaglineHeaderEdit, TaglineHeaderSave } from "./blocks/tagline-header-block";
 import { ExpandingVideoBlockEdit, ExpandingVideoBlockSave } from "./blocks/expanding-video-block";
 import { BlockQuoteEdit, BlockQuoteSave } from "./blocks/block-quote-block";
 import { ScrollingProjectsBlockEdit, ScrollingProjectsBlockSave } from "./blocks/scrolling-projects-block";
+import { TeamBlockEdit, TeamBlockSave } from "./blocks/team-block";
 
 // so the "edit" component is a place where i can put fields that will be used to edit block attributes
 
@@ -98,6 +99,41 @@ registerBlockType("guten-csek/scrolling-projects-block", {
     },
     edit: ScrollingProjectsBlockEdit,
     save: ScrollingProjectsBlockSave,
+});
+
+// Team Block
+registerBlockType("guten-csek/team-block", {
+    title: "Csek Team Block",
+    icon: "admin-users",
+    category: "text",
+    attributes: {
+        images: {
+            type: "array",
+            default: [],
+        },
+        title: {
+            type: "string",
+            default: "",
+        },
+        tagline: {
+            type: "string",
+            default: "",
+        },
+        copyText: {
+            type: "string",
+            default: "",
+        },
+        cta: {
+            type: "string",
+            default: "",
+        },
+        ctaLink: {
+            type: "string",
+            default: "",
+        },
+    },
+    edit: TeamBlockEdit,
+    save: TeamBlockSave,
 });
 
 const FLAGS = {
