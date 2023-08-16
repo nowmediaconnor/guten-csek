@@ -27,6 +27,11 @@ export const randomPartOfOne = (): number => {
     return Math.random() * 2 - 1;
 };
 
+export const clampInt = (n: number, min: number, max: number): number => {
+    n = parseInt(n.toString());
+    return Math.min(Math.max(n, min), max);
+};
+
 export const cyrb128 = (str: string) => {
     let h1 = 1779033703,
         h2 = 3144134277,

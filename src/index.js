@@ -6,12 +6,13 @@
 const { registerBlockType } = wp.blocks;
 
 import { shuffle } from "./array";
-import { randomIntInRange, randomPartOfOne } from "./math";
+import { randomIntInRange, randomPartOfOne, clampInt } from "./math";
 import { TaglineHeaderEdit, TaglineHeaderSave } from "./blocks/tagline-header-block";
 import { ExpandingVideoBlockEdit, ExpandingVideoBlockSave } from "./blocks/expanding-video-block";
 import { BlockQuoteEdit, BlockQuoteSave } from "./blocks/block-quote-block";
 import { ScrollingProjectsBlockEdit, ScrollingProjectsBlockSave } from "./blocks/scrolling-projects-block";
 import { TeamBlockEdit, TeamBlockSave } from "./blocks/team-block";
+import { VideoCarouselBlockEdit, VideoCarouselBlockSave } from "./blocks/video-carousel-block";
 
 // so the "edit" component is a place where i can put fields that will be used to edit block attributes
 
@@ -136,6 +137,21 @@ registerBlockType("guten-csek/team-block", {
     save: TeamBlockSave,
 });
 
+// Video Carousel Block
+registerBlockType("guten-csek/video-carousel-block", {
+    title: "Csek Video Carousel Block",
+    icon: "format-video",
+    category: "media",
+    attributes: {
+        videos: {
+            type: "array",
+            default: [],
+        },
+    },
+    edit: VideoCarouselBlockEdit,
+    save: VideoCarouselBlockSave,
+});
+
 const FLAGS = {
     DEBUG: true,
     taglineSroll: true,
@@ -205,6 +221,9 @@ const prepareExpandingVideoBlocks = () => {
 
 const prepareScrollingProjectsBlocks = () => {
     const scrollingProjectsBlocks = document.querySelectorAll(".wp-block-guten-csek-scrolling-projects-block");
+
+    const animationRateMilliseconds = 12.5; // ms
+
     for (const block of scrollingProjectsBlocks) {
         const containers = block.querySelectorAll(".project-ribbon");
 
@@ -217,10 +236,9 @@ const prepareScrollingProjectsBlocks = () => {
                 ribbon.classList.add("reverse");
             }
 
-            const speed = randomIntInRange(1, 3) * 0.125 * (evenRow ? 1 : -1);
+            const speed = randomIntInRange(3, 3) * 0.125 * (evenRow ? 1 : 1);
 
             const containerRect = ribbon.getBoundingClientRect();
-            const containerSide = containerRect.left;
             const list = ribbon.querySelector("ul");
             const items = shuffle(list.querySelectorAll("li"));
 
@@ -236,23 +254,40 @@ const prepareScrollingProjectsBlocks = () => {
                 list.appendChild(dash);
             }
 
-            let currentLeftValue = 0;
+            let currentOffset = 0;
 
-            const animateMarquee = () => {
-                const firstListItem = list.querySelector("li:first-child");
-                const firstListItemRect = firstListItem.getBoundingClientRect();
-                const firstListItemSide = firstListItemRect.right;
+            const animateMarquee = (direction) => {
+                direction = clampInt(direction, -1, 1);
 
-                if (firstListItemSide < containerSide) {
-                    currentLeftValue = -1;
-                    list.appendChild(firstListItem);
+                if (direction === 0) return;
+
+                const endListItem =
+                    direction > 0 ? list.querySelector("li:first-child") : list.querySelector("li:first-child");
+                const endListItemRect = endListItem.getBoundingClientRect();
+                const endListItemSide = direction > 0 ? endListItemRect.right : endListItemRect.left;
+                const containerSide = direction > 0 ? containerRect.left : containerRect.right;
+
+                switch (direction) {
+                    case 1:
+                        if (endListItemSide < containerSide) {
+                            currentOffset = -1;
+                            list.appendChild(endListItem);
+                        }
+                        list.style.left = `${currentOffset}px`;
+                        break;
+                    case -1:
+                        if (endListItemSide > containerSide) {
+                            currentOffset = 1;
+                            list.appendChild(endListItem);
+                        }
+                        list.style.right = `${currentOffset}px`;
+                        break;
                 }
 
-                list.style.marginLeft = `${currentLeftValue}px`;
-                currentLeftValue -= speed;
+                currentOffset -= speed;
             };
 
-            window.setInterval(animateMarquee, 12.5);
+            window.setInterval(() => animateMarquee(evenRow ? 1 : -1), animationRateMilliseconds);
             ribbonRow++;
         }
     }

@@ -3,7 +3,11 @@
     --csek-blue: #b4d8df;
     --csek-dark: #131313;
     --csek-light: #e9ebea;
+    --max-width: 75rem;
+    --half-pad: calc(calc(100vw - var(--max-width)) / 2);
 }
+
+/* Floating images at top of home page */
 
 @keyframes hover {
     from {
@@ -11,6 +15,36 @@
     }
     to {
         transform: translateY(-0.25rem);
+    }
+}
+
+/* Project Ribbon Hover Effect */
+
+@keyframes ribbon-hover {
+    0% {
+        z-index: 10;
+        color: var(--csek-light);
+    }
+    50% {
+        color: var(--csek-dark);
+    }
+    100% {
+        color: var(--csek-dark);
+        z-index: 40;
+    }
+}
+
+@keyframes ribbon-hover-reverse {
+    0% {
+        color: var(--csek-dark);
+        z-index: 40;
+    }
+    50% {
+        color: var(--csek-light);
+    }
+    100% {
+        color: var(--csek-light);
+        z-index: 10;
     }
 }
 
@@ -232,20 +266,20 @@
     z-index: 10;
 }
 
-.project-ribbon li:hover {
-    z-index: 40;
+.project-ribbon li {
+    /* transition: color ease 0.2s; */
+    animation-duration: 0.2s;
+    animation-fill-mode: forwards;
+    animation-timing-function: ease-in-out;
 }
 
-.project-ribbon li a {
-    transition: color ease 0.2s;
+.project-ribbon li:has(a):hover {
+    animation-name: ribbon-hover;
 }
 
-.project-ribbon li:hover a {
-    color: var(--csek-dark);
-}
-
-.project-ribbon.reverse li:hover {
-    z-index: 40;
+.project-ribbon li:has(a):not(:hover) {
+    animation-name: ribbon-hover-reverse;
+    animation-fill-mode: forwards;
 }
 
 .project-ribbon.reverse li {
@@ -254,13 +288,8 @@
 }
 
 .reverse ul {
-    transform: rotate(180deg);
-    z-index: 10;
-}
-
-.reverse ul li {
-    transform: rotate(-180deg);
-    z-index: 10;
+    flex-direction: row-reverse;
+    right: 0;
 }
 
 .project-blurb {
@@ -349,6 +378,90 @@
     width: 2rem;
     height: 1px;
     border: 1px solid var(--csek-red);
+}
+
+/* Video Carousel Block */
+
+.wp-block-guten-csek-video-carousel-block {
+    width: 100%;
+    font-family: Syne, sans-serif;
+    padding: 4rem 0;
+    position: relative;
+    overflow: hidden;
+    box-sizing: border-box;
+    background: white;
+}
+
+.video-block {
+    width: 100%;
+    position: relative;
+}
+
+.video-block video {
+    width: calc(100% - var(--half-pad));
+    height: auto;
+    position: relative;
+    filter: brightness(0.75);
+}
+
+.video-block .video-caption {
+    position: absolute;
+    left: var(--half-pad);
+    bottom: 25%;
+    color: white;
+}
+
+.video-caption .video-playbutton {
+    display: inline-flex;
+    height: 4rem;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background: rgba(19, 19, 19, 0.5);
+    padding-right: 1rem;
+    padding-left: 0.5rem;
+    border-radius: 2rem;
+    margin: 2rem 0;
+}
+
+.video-playbutton i {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 100%;
+    width: 3rem;
+    height: 3rem;
+    background-color: var(--csek-red);
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+.video-caption .slider-progress {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.slider-progress .bar {
+    display: inline-block;
+    width: 4rem;
+    height: 0.1rem;
+    background-color: gray;
+    position: relative;
+    line-height: 0;
+    box-sizing: border-box;
+}
+
+.slider-progress .bar .progress {
+    display: inline-flex;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 25%;
+    height: 0.1rem;
+    background-color: var(--csek-red);
+    line-height: 0;
 }
 
 /* Generic Classes */
