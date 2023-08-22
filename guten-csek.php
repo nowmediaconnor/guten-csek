@@ -24,12 +24,12 @@ function enqueue_custom_block_assets()
         [],
         filemtime(plugin_dir_path(__FILE__) . 'src/style.css')
     );
-    wp_register_style(
-        'curtainify-style',
-        plugins_url('src/curtainify.css', __FILE__),
-        [],
-        filemtime(plugin_dir_path(__FILE__) . 'src/curtainify.css')
-    );
+    // wp_register_style(
+    //     'curtainify-style',
+    //     plugins_url('src/curtainify.css', __FILE__),
+    //     [],
+    //     filemtime(plugin_dir_path(__FILE__) . 'src/curtainify.css')
+    // );
 
     // Write the following statement for each block
     register_block_type('guten-csek/tagline-header-block', array(
@@ -77,3 +77,22 @@ function curtainify_enqueue()
     wp_enqueue_style('curtainify-style', $plugin_url . 'src/curtainify.css');
 }
 add_action('wp_enqueue_scripts', 'curtainify_enqueue');
+
+
+function enqueue_styles_iteratively()
+{
+    $plugin_url = plugin_dir_url(__FILE__);
+    $directory_path = plugin_dir_path(__FILE__) . '/src/css';
+    $files = scandir($directory_path);
+    foreach ($files as $file) {
+        if (pathinfo($file, PATHINFO_EXTENSION) === 'css') {
+            $handle = pathinfo($file, PATHINFO_FILENAME);
+            $src = $plugin_url . 'src/css/' . $file;
+            $deps = [];
+            $ver = filemtime(plugin_dir_path(__FILE__) . 'src/css/' . $file);
+
+            wp_enqueue_style($handle, $src, $deps, $ver);
+        }
+    }
+}
+add_action('wp_enqueue_scripts', 'enqueue_styles_iteratively');

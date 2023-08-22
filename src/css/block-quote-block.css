@@ -1,0 +1,65 @@
+/*
+ * Created on Tue Aug 22 2023
+ * Author: Connor Doman
+ */
+
+/* Block Quote */
+
+.wp-block-guten-csek-block-quote-block {
+    width: 100%;
+    font-family: Syne, sans-serif;
+    padding: 4rem 0;
+    position: relative;
+    background: white;
+}
+.wp-block-guten-csek-block-quote-block .quotation-mark {
+}
+.wp-block-guten-csek-block-quote-block blockquote {
+    margin: 0 auto;
+    text-align: left;
+    font-size: 2.5rem;
+    line-height: 1.2;
+    z-index: 10;
+}
+.wp-block-guten-csek-block-quote-block .quote-area {
+    position: relative;
+    margin: 2rem auto;
+    max-width: 75rem;
+    box-sizing: border-box;
+    padding: 0 2rem;
+}
+.wp-block-guten-csek-block-quote-block .quote::before {
+    content: "“";
+    color: var(--csek-red);
+    font-size: 6rem;
+    position: absolute;
+    left: 3rem;
+    top: 4rem;
+}
+.wp-block-guten-csek-block-quote-block .quote {
+    margin-left: 6rem;
+    margin-top: 4rem;
+    margin-bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+}
+.wp-block-guten-csek-block-quote-block .quote .byline {
+    margin-top: 2rem;
+    font-weight: bold;
+    font-family: Montserrat, sans-serif;
+    line-height: 1.2;
+    text-transform: uppercase;
+}
+.wp-block-guten-csek-block-quote-block .quote .byline .author {
+    color: var(--csek-red);
+}
+
+.wp-block-guten-csek-block-quote-block .quote .byline .author-role {
+}
+
+.wp-block-guten-csek-block-quote-block .serif {
+    filter: saturate(0) brightness(2.5);
+    position: absolute;
+    right: 4rem;
+    top: 2rem;
+}

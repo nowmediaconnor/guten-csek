@@ -1,0 +1,142 @@
+/*
+ * Created on Tue Aug 22 2023
+ * Author: Connor Doman
+ */
+
+/* Video Carousel Block */
+
+.wp-block-guten-csek-video-carousel-block {
+    width: 100%;
+    font-family: Syne, sans-serif;
+    padding: 4rem 0;
+    position: relative;
+    overflow: hidden;
+    box-sizing: border-box;
+    background: white;
+}
+
+.video-strip {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    height: auto;
+    transition: transform ease 0.75s;
+}
+
+.video-strip > * {
+    flex-basis: 100vw;
+    min-width: 100vw;
+}
+
+.video-block {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    max-width: 100%;
+    width: calc(var(--max-width) + (100vw - (var(--max-width) / 2)));
+    position: relative;
+    height: 40rem;
+    background: var(--csek-dark);
+}
+
+.video-block video {
+    filter: brightness(0.75);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+}
+
+.video-block .video-caption {
+    position: relative;
+    color: white;
+    /* bottom: 50%; */
+    width: 100%;
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 4rem 2rem;
+    z-index: 2;
+    font-family: Montserrat, sans-serif;
+}
+
+.video-caption h2 {
+    font-size: 2rem;
+    line-height: 1.2;
+    margin: 1rem 0;
+    font-weight: bold;
+    font-family: Syne, sans-serif;
+    max-width: calc(var(--max-width) / 2);
+}
+
+.video-caption .video-playbutton {
+    display: inline-flex;
+    height: 4rem;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background: rgba(19, 19, 19, 0.5);
+    padding-right: 1rem;
+    padding-left: 0.5rem;
+    border-radius: 2rem;
+    margin: 2rem 0;
+}
+
+.video-playbutton i {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 100%;
+    width: 3rem;
+    height: 3rem;
+    background-color: var(--csek-red);
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+.video-caption .caption {
+    font-size: 1.1rem;
+    line-height: 1.1;
+    margin: 0;
+    padding: 0;
+    font-family: Montserrat, sans-serif;
+}
+
+.wp-block-guten-csek-video-carousel-block .carousel-slider-progress {
+    justify-content: center;
+    position: absolute;
+    height: 4rem;
+    bottom: 4rem;
+    left: 50%;
+    transform: translateX(-50%);
+    /* z-index: 10; */
+    background: rgba(19, 19, 19, 0.5);
+    color: white;
+}
+
+.video-player {
+    background-color: var(--csek-light);
+    border-radius: 0.25rem;
+    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    /* transition: opacity 0.3s ease-in-out; */
+}
+
+.video-player[open] {
+    opacity: 1;
+}
+
+.video-player .close-dialog {
+    position: absolute;
+    top: 0.5rem;
+    right: 1rem;
+    font-size: 1rem;
+    color: var(--csek-dark);
+    z-index: 20;
+    cursor: pointer;
+}

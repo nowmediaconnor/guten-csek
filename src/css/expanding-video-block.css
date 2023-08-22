@@ -1,0 +1,88 @@
+/*
+ * Created on Tue Aug 22 2023
+ * Author: Connor Doman
+ */
+
+/* Expanding Video Block*/
+
+.wp-block-guten-csek-expanding-video-block {
+    transition: all ease 0.2s;
+    height: 100vh;
+    position: relative;
+    top: 0;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: flex-start;
+    align-items: center;
+    overflow: hidden;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    /* position: relative; */
+    gap: 2rem;
+}
+
+.wp-block-guten-csek-expanding-video-block .threshold {
+    height: 1px;
+    overflow: hidden;
+    width: 100%;
+    position: absolute;
+    bottom: 110vh;
+    z-index: 100;
+}
+
+.expanding-video-container {
+    width: 30%;
+    height: 75vh;
+    overflow: hidden;
+    border-radius: 0.5rem;
+    transition: all ease 1.2s;
+    /* position: absolute;
+    top: 0; */
+}
+
+.expanded {
+    width: 100%;
+    height: 100vh;
+    border-radius: 0;
+    transition: all ease 1.2s;
+}
+
+.floating-image {
+    position: relative;
+    width: 20rem;
+    border-radius: 0.5rem;
+    animation: hover 2s ease-in-out infinite alternate;
+}
+
+.image-container-left {
+    position: relative;
+    width: 30%;
+    display: grid;
+    flex-direction: row;
+    grid-template-rows: 1fr 1fr;
+    grid-auto-flow: column;
+    justify-content: flex-end;
+    align-items: flex-end;
+    gap: 2rem;
+    flex: 0 1 auto;
+}
+
+.image-container-right {
+    position: relative;
+    width: 30%;
+    display: grid;
+    flex-direction: row;
+    grid-template-rows: 1fr 1fr;
+    grid-auto-flow: column;
+    justify-content: flex-end;
+    align-items: flex-end;
+    gap: 2rem;
+    flex: 0 1 auto;
+}

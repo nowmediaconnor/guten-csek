@@ -1,0 +1,111 @@
+/*
+ * Created on Tue Aug 22 2023
+ * Author: Connor Doman
+ */
+
+/* Horizontal Carousel Block */
+
+.wp-block-guten-csek-horizontal-carousel-block {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    background: var(--csek-dark);
+    color: white;
+    font-family: Syne, sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.carousel-item h1 {
+    font-size: 40rem;
+    color: white;
+    margin: 0;
+    padding: 0;
+    line-height: 1;
+}
+.wp-block-guten-csek-horizontal-carousel-block h2 {
+    font-size: 3rem;
+    font-weight: bold;
+    color: var(--csek-red);
+}
+.wp-block-guten-csek-horizontal-carousel-block p {
+    font-family: Montserrat, sans-serif;
+}
+
+.carousel {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    height: auto;
+    /* overflow: hidden; */
+    transition: transform ease 0.75s;
+}
+
+.carousel-item {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    min-width: 100vw;
+    flex-basis: 100vw;
+    pointer-events: none;
+}
+
+.carousel-item-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    max-width: 50rem;
+    padding: 0 2rem;
+}
+
+.carousel-slider-progress {
+    width: 100%;
+    max-width: var(--max-width);
+    height: 3rem;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    gap: 0.25rem;
+    position: absolute;
+    bottom: 0;
+    padding: 0 1rem;
+}
+
+.carousel-slider-progress .bar {
+    display: inline-block;
+    width: 100%;
+    height: 0.25rem;
+    background-color: gray;
+    position: relative;
+    line-height: 0;
+    box-sizing: border-box;
+    max-width: var(--max-width);
+}
+
+.carousel-slider-progress .bar .progress {
+    display: inline-flex;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 25%;
+    height: 0.25rem;
+    background-color: var(--csek-red);
+    line-height: 0;
+    transition: all ease 0.75s;
+}
+
+.carousel-slider-progress .status {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+}
+.carousel-slider-progress .status i {
+    font-size: 0.75rem;
+}

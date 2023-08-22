@@ -1,0 +1,52 @@
+/*
+ * Created on Tue Aug 22 2023
+ * Author: Connor Doman
+ */
+
+/* Team Block */
+
+.wp-block-guten-csek-team-block {
+    width: 100%;
+    font-family: Syne, sans-serif;
+    padding: 4rem 0;
+    position: relative;
+    background: white;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+.block-content {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin: 2rem auto;
+    max-width: 75rem;
+    box-sizing: border-box;
+    padding: 0 2rem;
+}
+.block-content .tagline {
+    font-size: 5rem;
+    line-height: 1;
+}
+.block-content .copy-text {
+    font-family: Montserrat, sans-serif;
+    width: 30rem;
+    align-self: flex-end;
+    margin: 0 4rem;
+}
+.block-content .copy-text .learn-more {
+    font-weight: 700;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    margin-top: 2rem;
+}
+.block-content .copy-text .learn-more a {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+.block-content .copy-text .learn-more .bar {
+    display: inline-block;
+    width: 2rem;
+    height: 1px;
+    border: 1px solid var(--csek-red);
+}
