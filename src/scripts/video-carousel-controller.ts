@@ -11,7 +11,7 @@ import { pad } from "./strings";
 // needs to control dialog
 
 export default class VideoCarouselController {
-    debug: boolean = true;
+    debug: boolean = false;
     videoCarouselClassName: string;
     activeIndex: number;
     numItems: number;

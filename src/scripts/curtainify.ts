@@ -14,7 +14,7 @@ import { constrain, map } from "./math";
 
 console.log("Curtainify.js");
 
-const DEBUG = false;
+const DEBUG = true;
 
 const log = (...msg: any[]) => {
     if (DEBUG) {

@@ -38,7 +38,7 @@
 }
 
 .expanding-video-container {
-    width: 30%;
+    width: 30vw;
     height: 75vh;
     overflow: hidden;
     border-radius: 0.5rem;
@@ -48,7 +48,7 @@
 }
 
 .expanded {
-    width: 100%;
+    width: 100vw;
     height: 100vh;
     border-radius: 0;
     transition: all ease 1.2s;
