@@ -4,7 +4,7 @@
  */
 
 import React from "react";
-import { shuffle } from "../array";
+import { shuffle } from "../scripts/array";
 
 interface ScrollingProjectsProps {
     attributes: any;

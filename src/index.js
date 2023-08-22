@@ -5,14 +5,21 @@
 
 const { registerBlockType } = wp.blocks;
 
-import { shuffle } from "./array";
-import { randomIntInRange, randomPartOfOne, clampInt } from "./math";
+import { shuffle } from "./scripts/array";
+import { randomIntInRange, randomPartOfOne, clampInt } from "./scripts/math";
 import { TaglineHeaderEdit, TaglineHeaderSave } from "./blocks/tagline-header-block";
 import { ExpandingVideoBlockEdit, ExpandingVideoBlockSave } from "./blocks/expanding-video-block";
 import { BlockQuoteEdit, BlockQuoteSave } from "./blocks/block-quote-block";
 import { ScrollingProjectsBlockEdit, ScrollingProjectsBlockSave } from "./blocks/scrolling-projects-block";
 import { TeamBlockEdit, TeamBlockSave } from "./blocks/team-block";
 import { VideoCarouselBlockEdit, VideoCarouselBlockSave } from "./blocks/video-carousel-block";
+import { HorizontalCarouselBlockEdit, HorizontalCarouselBlockSave } from "./blocks/horizontal-carousel-block";
+import { prepareCurtainElements } from "./scripts/curtainify";
+import { prepareScrollingProjectsBlocks, prepareExpandingVideoBlocks } from "./scripts/dom";
+
+import ScrollDownController from "./scripts/scroll-down-controller";
+import CarouselController from "./scripts/carousel-controller";
+import VideoCarouselController from "./scripts/video-carousel-controller";
 
 // so the "edit" component is a place where i can put fields that will be used to edit block attributes
 
@@ -152,152 +159,47 @@ registerBlockType("guten-csek/video-carousel-block", {
     save: VideoCarouselBlockSave,
 });
 
-const FLAGS = {
-    DEBUG: true,
-    taglineSroll: true,
-};
-
-const smoothScrollTo = (yPosition) => {
-    // window.scrollTo({
-    //     top: yPosition,
-    //     behavior: "instant",
-    // });
-    window.scrollTo({
-        top: yPosition,
-        behavior: "smooth",
-    });
-};
-
-// code for expanding video blocks
-const prepareExpandingVideoBlocks = () => {
-    // add scroll listener
-    const expandingVideoBlocks = document.querySelectorAll(".wp-block-guten-csek-expanding-video-block");
-    const elementsToFadeOnScroll = document.querySelectorAll(".scroll-fade-away");
-
-    for (const videoBlock of expandingVideoBlocks) {
-        const threshold = videoBlock.querySelector(".threshold");
-        const video = videoBlock.querySelector(".expanding-video-container");
-
-        window.addEventListener("scroll", () => {
-            const blockRect = videoBlock.getBoundingClientRect();
-            const thresholdRect = threshold.getBoundingClientRect();
-            const thresholdTop = thresholdRect.top;
-            if (parseInt(thresholdTop) <= 0 && FLAGS.taglineSroll && blockRect.bottom > 0) {
-                video.classList.add("expanded");
-                for (const element of elementsToFadeOnScroll) {
-                    element.classList.add("hide");
-                }
-                document.body.style.backgroundColor = "#131313";
-                FLAGS.taglineSroll = false;
-                console.log("threshold reached");
-            } else if (parseInt(thresholdTop) > 0 && !FLAGS.taglineSroll) {
-                video.classList.remove("expanded");
-                for (const element of elementsToFadeOnScroll) {
-                    element.classList.remove("hide");
-                }
-                document.body.style.backgroundColor = "transparent";
-                FLAGS.taglineSroll = true;
-            }
-        });
-
-        const floatingImages = videoBlock.querySelectorAll(".floating-image");
-        for (const image of floatingImages) {
-            const randomDelay = randomIntInRange(0, 1000);
-            const randomDuration = randomIntInRange(1000, 3000);
-            const randomXDisplacement = randomPartOfOne();
-
-            image.style.animationDelay = `${-randomDelay}ms`;
-            image.style.animationDuration = `${randomDuration}ms`;
-            if (Math.random() > 0.5) {
-                image.style.left = `${randomXDisplacement}rem`;
-            } else {
-                image.style.right = `${randomXDisplacement}rem`;
-            }
-
-            console.log({ randomDelay, randomDuration, randomXDisplacement });
-        }
-    }
-};
-
-const prepareScrollingProjectsBlocks = () => {
-    const scrollingProjectsBlocks = document.querySelectorAll(".wp-block-guten-csek-scrolling-projects-block");
-
-    const animationRateMilliseconds = 12.5; // ms
-
-    for (const block of scrollingProjectsBlocks) {
-        const containers = block.querySelectorAll(".project-ribbon");
-
-        let ribbonRow = 0;
-
-        for (const ribbon of containers) {
-            const evenRow = ribbonRow % 2 === 0;
-
-            if (!evenRow) {
-                ribbon.classList.add("reverse");
-            }
-
-            const speed = randomIntInRange(3, 3) * 0.125 * (evenRow ? 1 : 1);
-
-            const containerRect = ribbon.getBoundingClientRect();
-            const list = ribbon.querySelector("ul");
-            const items = shuffle(list.querySelectorAll("li"));
-
-            console.log({ items });
-            list.innerHTML = "";
-            for (const item of items) {
-                if (!item) continue;
-
-                console.log(typeof item);
-                list.appendChild(item);
-                const dash = document.createElement("li");
-                dash.innerHTML = "&nbsp;&mdash;&nbsp;";
-                list.appendChild(dash);
-            }
-
-            let currentOffset = 0;
-
-            const animateMarquee = (direction) => {
-                direction = clampInt(direction, -1, 1);
-
-                if (direction === 0) return;
-
-                const endListItem =
-                    direction > 0 ? list.querySelector("li:first-child") : list.querySelector("li:first-child");
-                const endListItemRect = endListItem.getBoundingClientRect();
-                const endListItemSide = direction > 0 ? endListItemRect.right : endListItemRect.left;
-                const containerSide = direction > 0 ? containerRect.left : containerRect.right;
-
-                switch (direction) {
-                    case 1:
-                        if (endListItemSide < containerSide) {
-                            currentOffset = -1;
-                            list.appendChild(endListItem);
-                        }
-                        list.style.left = `${currentOffset}px`;
-                        break;
-                    case -1:
-                        if (endListItemSide > containerSide) {
-                            currentOffset = 1;
-                            list.appendChild(endListItem);
-                        }
-                        list.style.right = `${currentOffset}px`;
-                        break;
-                }
-
-                currentOffset -= speed;
-            };
-
-            window.setInterval(() => animateMarquee(evenRow ? 1 : -1), animationRateMilliseconds);
-            ribbonRow++;
-        }
-    }
-};
+// Horizontal Carousel Block
+registerBlockType("guten-csek/horizontal-carousel-block", {
+    title: "Csek Horizontal Carousel Block",
+    icon: "columns",
+    category: "text",
+    attributes: {
+        titles: {
+            type: "array",
+            default: [],
+        },
+        statements: {
+            type: "array",
+            default: [],
+        },
+        numItems: {
+            type: "number",
+            default: 1,
+        },
+    },
+    edit: HorizontalCarouselBlockEdit,
+    save: HorizontalCarouselBlockSave,
+});
 
 // window load listener
 window.addEventListener("load", (e) => {
     console.log("Window loaded.");
     console.log({ windowWidth: window.innerWidth, windowHeight: window.innerHeight });
+    // Video block expands on scroll
     prepareExpandingVideoBlocks();
+    // Scrolling projects block
     prepareScrollingProjectsBlocks();
+    // Curtainify
+    window.requestAnimationFrame(() => {
+        prepareCurtainElements();
+    });
+    // "Scroll Down" controller
+    new ScrollDownController("scroll-down", ".wp-block-guten-csek-tagline-header-block");
+    // Scrolling carousel
+    new CarouselController(".wp-block-guten-csek-horizontal-carousel-block");
+    // Video carousel
+    new VideoCarouselController(".wp-block-guten-csek-video-carousel-block");
+    // Circular "scroll down" text
     new CircleType(document.getElementById("scroll-down"));
 });

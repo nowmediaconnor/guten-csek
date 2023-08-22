@@ -24,6 +24,12 @@ function enqueue_custom_block_assets()
         [],
         filemtime(plugin_dir_path(__FILE__) . 'src/style.css')
     );
+    wp_register_style(
+        'curtainify-style',
+        plugins_url('src/curtainify.css', __FILE__),
+        [],
+        filemtime(plugin_dir_path(__FILE__) . 'src/curtainify.css')
+    );
 
     // Write the following statement for each block
     register_block_type('guten-csek/tagline-header-block', array(
@@ -56,5 +62,18 @@ function enqueue_custom_block_assets()
         'editor_style' => 'guten-csek-editor-style',
         'style' => 'guten-csek-frontend-style',
     ));
+    register_block_type('guten-csek/horizontal-carousel-block', array(
+        'editor_script' => 'horizontal-carousel-block',
+        'editor_style' => 'guten-csek-editor-style',
+        'style' => 'guten-csek-frontend-style',
+    ));
 }
 add_action('init', 'enqueue_custom_block_assets');
+
+function curtainify_enqueue()
+{
+    $plugin_url = plugin_dir_url(__FILE__);
+
+    wp_enqueue_style('curtainify-style', $plugin_url . 'src/curtainify.css');
+}
+add_action('wp_enqueue_scripts', 'curtainify_enqueue');

@@ -2,13 +2,14 @@
  * Created on Fri Aug 11 2023
  * Author: Connor Doman
  */
-import React, { useEffect } from "@wordpress/element";
+import React from "@wordpress/element";
 import { MediaUploadCheck, MediaUpload, InspectorControls } from "@wordpress/block-editor";
 import { Button, PanelBody } from "@wordpress/components";
 
 interface ExpandingVideoBlockProps {
     attributes: any;
     setAttributes?: any;
+    className?: string;
 }
 
 export const ExpandingVideoBlockEdit = ({ attributes, setAttributes }: ExpandingVideoBlockProps) => {
@@ -64,7 +65,7 @@ export const ExpandingVideoBlockEdit = ({ attributes, setAttributes }: Expanding
     );
 };
 
-export const ExpandingVideoBlockSave = ({ attributes }: ExpandingVideoBlockProps) => {
+export const ExpandingVideoBlockSave = ({ attributes, className }: ExpandingVideoBlockProps) => {
     const { videoURL, images } = attributes;
 
     // there will be 3 columns: images, video, images
@@ -78,7 +79,8 @@ export const ExpandingVideoBlockSave = ({ attributes }: ExpandingVideoBlockProps
     // the right array will be the right column
 
     const maxImages = images.length < 6 ? images.length : 6;
-    const randomImages = images.sort(() => Math.random() - Math.random()).slice(0, maxImages);
+    // const randomImages = images.sort(() => Math.random() - Math.random()).slice(0, maxImages);
+    const randomImages = images;
 
     const firstImageElements = randomImages.slice(0, maxImages / 2).map((image: string, index: number) => {
         return <img src={image} className="floating-image" />;
@@ -88,22 +90,26 @@ export const ExpandingVideoBlockSave = ({ attributes }: ExpandingVideoBlockProps
     });
 
     return (
-        <div>
-            <div id="test-thresh" className="threshold"></div>
-            <div className="row">
-                <div className="image-container-left scroll-fade-away">{firstImageElements}</div>
-                <div className="expanding-video-container">
-                    <video
-                        controls={false}
-                        autoPlay={true}
-                        loop={true}
-                        muted={true}
-                        className="object-cover max-w-none object-center relative left-1/2 translate-x-[-50%]">
-                        <source src={videoURL} />
-                    </video>
+        <>
+            {/* <div id="test-thresh" className="threshold"></div> */}
+            <div className={`curtain-reel ${className}`}>
+                <div className="content-block curtain">
+                    <div className="row">
+                        <div className="image-container-left scroll-fade-away">{firstImageElements}</div>
+                        <div className="expanding-video-container">
+                            <video
+                                controls={false}
+                                autoPlay={false}
+                                loop={true}
+                                muted={true}
+                                className="object-cover max-w-none object-center relative left-1/2 translate-x-[-50%]">
+                                <source src={videoURL} />
+                            </video>
+                        </div>
+                        <div className="image-container-right scroll-fade-away">{secondImageElements}</div>
+                    </div>
                 </div>
-                <div className="image-container-right scroll-fade-away">{secondImageElements}</div>
             </div>
-        </div>
+        </>
     );
 };

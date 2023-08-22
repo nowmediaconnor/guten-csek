@@ -4,7 +4,7 @@
  */
 
 import React from "react";
-import { MediaUploadCheck, MediaUpload, InspectorControls } from "@wordpress/block-editor";
+import { MediaUploadCheck, MediaUpload, InspectorControls, RichText, useBlockProps } from "@wordpress/block-editor";
 import {
     Button,
     PanelBody,
@@ -18,9 +18,11 @@ import {
     __experimentalText as Text,
     __experimentalVStack as VStack,
     CardFooter,
+    TextareaControl,
 } from "@wordpress/components";
 
 interface Video {
+    videoTitle: string;
     videoUrl: string;
     videoCaption: string;
 }
@@ -33,23 +35,13 @@ interface VideoCarouselBlockProps {
 }
 
 export const VideoCarouselBlockEdit = ({ attributes, setAttributes }: VideoCarouselBlockProps) => {
+    const blockProps = useBlockProps();
+
     const { videos } = attributes;
-
-    const onUpdateVideoUrl = (videoUrl: string, index: number) => {
-        const newVideos = [...videos];
-        newVideos[index].videoUrl = videoUrl;
-        setAttributes({ videos: newVideos });
-    };
-
-    const onUpdateVideoCaption = (videoCaption: string, index: number) => {
-        const newVideos = [...videos];
-        newVideos[index].videoCaption = videoCaption;
-        setAttributes({ videos: newVideos });
-    };
 
     const handleAddVideo = () => {
         const newVideos = [...videos];
-        newVideos.push({ videoUrl: "", videoCaption: "" });
+        newVideos.push({ videoTitle: "", videoUrl: "", videoCaption: "" });
         setAttributes({ videos: newVideos });
     };
 
@@ -65,46 +57,11 @@ export const VideoCarouselBlockEdit = ({ attributes, setAttributes }: VideoCarou
         setAttributes({ videos: newVideos });
     };
 
-    const videoFields = videos.map((video: Video, index: number) => {
+    const videoElements = videos.map((video: Video, index: number) => {
         return (
-            <Card key={index}>
-                <CardHeader>
-                    <Heading level={4}>Video {index + 1}</Heading>
-                </CardHeader>
-                <CardBody>
-                    <TextControl
-                        className="csek-video-caption"
-                        placeholder="A short video from our sales team."
-                        label="Video Caption"
-                        value={video.videoCaption}
-                        onChange={(videoCaption) =>
-                            handleVideoChange({ videoUrl: video.videoUrl, videoCaption }, index)
-                        }
-                    />
-                    <VStack>
-                        <MediaUploadCheck>
-                            <MediaUpload
-                                onSelect={(media) =>
-                                    handleVideoChange({ videoUrl: media.url, videoCaption: video.videoCaption }, index)
-                                }
-                                allowedTypes={["video"]}
-                                render={({ open }) => (
-                                    <Button
-                                        className="csek-video-upload"
-                                        icon="video-alt3"
-                                        label="Upload Video"
-                                        onClick={open}>
-                                        Choose Video
-                                    </Button>
-                                )}
-                            />
-                        </MediaUploadCheck>
-                        {video.videoUrl !== "" ? (
-                            <Text title={video.videoUrl}>{video.videoUrl.slice(0, 25)}...</Text>
-                        ) : null}
-                    </VStack>
-                </CardBody>
-                <CardFooter>
+            <div key={index} className="video-carousel-data">
+                <div className="flex flex-row justify-between items-center">
+                    <h3>Video {index + 1}</h3>
                     <Button
                         className="csek-video-remove"
                         icon="trash"
@@ -112,62 +69,123 @@ export const VideoCarouselBlockEdit = ({ attributes, setAttributes }: VideoCarou
                         onClick={() => handleRemoveVideo(index)}>
                         Delete
                     </Button>
-                </CardFooter>
-            </Card>
+                </div>
+                <h4>Title</h4>
+                <input
+                    type="text"
+                    className="csek-input"
+                    placeholder="A great title"
+                    value={video.videoTitle}
+                    onChange={(e) =>
+                        handleVideoChange(
+                            { videoTitle: e.target.value, videoCaption: video.videoCaption, videoUrl: video.videoUrl },
+                            index
+                        )
+                    }
+                />
+                <h4>Caption</h4>
+                <em className="em-label">Rich text</em>
+                <RichText
+                    tagName="div"
+                    className="csek-input"
+                    placeholder="A caption for a video."
+                    label="Video Caption"
+                    value={video.videoCaption}
+                    onChange={(videoCaption) =>
+                        handleVideoChange(
+                            { videoTitle: video.videoTitle, videoUrl: video.videoUrl, videoCaption },
+                            index
+                        )
+                    }
+                />
+                <h4>URL</h4>
+                <MediaUploadCheck>
+                    <MediaUpload
+                        onSelect={(media) =>
+                            handleVideoChange(
+                                { videoTitle: video.videoTitle, videoUrl: media.url, videoCaption: video.videoCaption },
+                                index
+                            )
+                        }
+                        allowedTypes={["video"]}
+                        render={({ open }) => (
+                            <Button className="csek-video-upload" icon="video-alt3" label="Upload Video" onClick={open}>
+                                Choose Video
+                            </Button>
+                        )}
+                    />
+                </MediaUploadCheck>
+            </div>
         );
     });
-
     return (
-        <div>
-            <InspectorControls>
-                <PanelBody title="Videos">
-                    {videoFields}
-                    <Button onClick={handleAddVideo} icon="plus">
-                        Add Video
-                    </Button>
-                </PanelBody>
-            </InspectorControls>
+        <div {...blockProps}>
             <h2>Csek Video Carousel Block</h2>
+            {videoElements}
+            <Button onClick={handleAddVideo} icon="plus" className="csek-button">
+                Add Video
+            </Button>
             <p>{videos.length} videos selected.</p>
         </div>
     );
 };
 
 export const VideoCarouselBlockSave = ({ attributes }: VideoCarouselBlockProps) => {
+    const blockProps = useBlockProps.save();
     const { videos } = attributes;
 
     const videoElements = videos.map((video: Video, index: number) => {
+        const title = video.videoTitle;
+        const caption = video.videoCaption;
+        const url = video.videoUrl;
+
+        if (!url) return null;
+
         return (
             <div className="video-block">
                 <video controls={false} onPlay={(e) => e.preventDefault()}>
-                    <source src={video.videoUrl} type="video/mp4" />
+                    <source src={url} type="video/mp4" />
                 </video>
                 <div className="video-caption">
-                    <p>{video.videoCaption}</p>
+                    {title ? <h2>{title}</h2> : null}
+                    {caption ? <RichText.Content className="caption" tagName="div" value={caption} /> : null}
                     <a className="video-playbutton" href="#opendialog">
                         <i className="fa fa-play"></i>
                         Watch the video
                     </a>
-                    <div className="slider-progress">
-                        <span className="start">01</span>
-                        <div className="bar">
-                            <span className="progress"></span>
-                        </div>
-                        <span className="stop">04</span>
-                    </div>
                 </div>
             </div>
         );
     });
 
     return (
-        <section>
+        <section {...blockProps}>
             <dialog className="video-player">
-                <video controls={false} src="">
+                <a href="#closedialog" className="close-dialog">
+                    <i className="fas fa-x"></i>
+                </a>
+                <video controls={false}>
                     Videos aren't supported in your browser. Frankly we're impressed you got this far.
                 </video>
             </dialog>
-            {videoElements}
+            <div className="video-strip">{videoElements}</div>
+            <div className="carousel-slider-progress">
+                <div className="status">
+                    <a href="#prev" className="prev">
+                        <i className="fa fa-chevron-left"></i>
+                    </a>
+                    <p>
+                        Progress&nbsp;
+                        <span className="start">01</span>&nbsp;/&nbsp;<span className="stop">04</span>
+                    </p>
+                    <a href="#next" className="next">
+                        <i className="fa fa-chevron-right"></i>
+                    </a>
+                </div>
+                <div className="bar">
+                    <span className="progress"></span>
+                </div>
+            </div>
         </section>
     );
 };

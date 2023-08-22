@@ -61,11 +61,11 @@ export const TaglineHeaderSave = ({ attributes }: TaglineHeaderProps) => {
 
     return (
         <div className="flex flex-col items-center justify-center text-csek-black text-center w-[70%] mx-auto -mb-20 scroll-fade-away">
-            <div className="z-20">
+            <div className="z-[25]">
                 <h3 className="font-bold text-xl uppercase font-syne">{preTagline}</h3>
                 <h1 className="text-8xl font-bold uppercase font-syne">{tagline}</h1>
             </div>
-            <img src={imageURL} className="w-48 -top-11 relative z-10" alt="Red Csek Creative Serif Symbol" />
+            <img src={imageURL} className="w-48 -top-11 relative z-20" alt="Red Csek Creative Serif Symbol" />
         </div>
     );
 };

@@ -4,7 +4,16 @@
     --csek-dark: #131313;
     --csek-light: #e9ebea;
     --max-width: 75rem;
-    --half-pad: calc(calc(100vw - var(--max-width)) / 2);
+    --half-pad: calc(calc(100% - var(--max-width)) / 2);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    overflow-x: clip;
 }
 
 /* Floating images at top of home page */
@@ -77,12 +86,12 @@
     overflow: hidden;
 }
 
-.wp-block-guten-csek-expanding-video-block .row {
+.row {
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    position: relative;
+    /* position: relative; */
     gap: 2rem;
 }
 
@@ -96,8 +105,8 @@
 }
 
 .expanding-video-container {
-    width: 30%;
-    height: 60vh;
+    width: 60%;
+    height: 75vh;
     overflow: hidden;
     border-radius: 0.5rem;
     transition: all ease 1.2s;
@@ -161,7 +170,7 @@
     text-align: left;
     font-size: 2.5rem;
     line-height: 1.2;
-    z-index: 20;
+    z-index: 10;
 }
 .wp-block-guten-csek-block-quote-block .quote-area {
     position: relative;
@@ -392,23 +401,63 @@
     background: white;
 }
 
-.video-block {
-    width: 100%;
+.video-strip {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
     position: relative;
+    width: 100%;
+    height: auto;
+    transition: transform ease 0.75s;
+}
+
+.video-strip > * {
+    flex-basis: 100vw;
+    min-width: 100vw;
+}
+
+.video-block {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    max-width: 100%;
+    width: calc(var(--max-width) + (100vw - (var(--max-width) / 2)));
+    position: relative;
+    height: 40rem;
+    background: var(--csek-dark);
 }
 
 .video-block video {
-    width: calc(100% - var(--half-pad));
-    height: auto;
-    position: relative;
     filter: brightness(0.75);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
 }
 
 .video-block .video-caption {
-    position: absolute;
-    left: var(--half-pad);
-    bottom: 25%;
+    position: relative;
     color: white;
+    /* bottom: 50%; */
+    width: 100%;
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 4rem 2rem;
+    z-index: 2;
+    font-family: Montserrat, sans-serif;
+}
+
+.video-caption h2 {
+    font-size: 2rem;
+    line-height: 1.2;
+    margin: 1rem 0;
+    font-weight: bold;
+    font-family: Syne, sans-serif;
+    max-width: calc(var(--max-width) / 2);
 }
 
 .video-caption .video-playbutton {
@@ -436,34 +485,154 @@
     font-size: 1.5rem;
 }
 
-.video-caption .slider-progress {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 0.5rem;
+.video-caption .caption {
+    font-size: 1.1rem;
+    line-height: 1.1;
+    margin: 0;
+    padding: 0;
+    font-family: Montserrat, sans-serif;
 }
 
-.slider-progress .bar {
+.wp-block-guten-csek-video-carousel-block .carousel-slider-progress {
+    justify-content: center;
+    position: absolute;
+    height: 4rem;
+    bottom: 4rem;
+    left: 50%;
+    transform: translateX(-50%);
+    /* z-index: 10; */
+    background: rgba(19, 19, 19, 0.5);
+    color: white;
+}
+
+.video-player {
+    background-color: var(--csek-light);
+    border-radius: 0.25rem;
+    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    /* transition: opacity 0.3s ease-in-out; */
+}
+
+.video-player[open] {
+    opacity: 1;
+}
+
+.video-player .close-dialog {
+    position: absolute;
+    top: 0.5rem;
+    right: 1rem;
+    font-size: 1rem;
+    color: var(--csek-dark);
+    z-index: 20;
+    cursor: pointer;
+}
+
+/* Horizontal Carousel Block */
+
+.wp-block-guten-csek-horizontal-carousel-block {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    background: var(--csek-dark);
+    color: white;
+    font-family: Syne, sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.carousel-item h1 {
+    font-size: 40rem;
+    color: white;
+    margin: 0;
+    padding: 0;
+    line-height: 1;
+}
+.wp-block-guten-csek-horizontal-carousel-block h2 {
+    font-size: 3rem;
+    font-weight: bold;
+    color: var(--csek-red);
+}
+.wp-block-guten-csek-horizontal-carousel-block p {
+    font-family: Montserrat, sans-serif;
+}
+
+.carousel {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    height: auto;
+    /* overflow: hidden; */
+    transition: transform ease 0.75s;
+}
+
+.carousel-item {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    min-width: 100vw;
+    flex-basis: 100vw;
+    pointer-events: none;
+}
+
+.carousel-item-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    max-width: 50rem;
+    padding: 0 2rem;
+}
+
+.carousel-slider-progress {
+    width: 100%;
+    max-width: var(--max-width);
+    height: 3rem;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    gap: 0.25rem;
+    position: absolute;
+    bottom: 0;
+    padding: 0 1rem;
+}
+
+.carousel-slider-progress .bar {
     display: inline-block;
-    width: 4rem;
-    height: 0.1rem;
+    width: 100%;
+    height: 0.25rem;
     background-color: gray;
     position: relative;
     line-height: 0;
     box-sizing: border-box;
+    max-width: var(--max-width);
 }
 
-.slider-progress .bar .progress {
+.carousel-slider-progress .bar .progress {
     display: inline-flex;
     position: absolute;
     top: 0;
     left: 0;
     width: 25%;
-    height: 0.1rem;
+    height: 0.25rem;
     background-color: var(--csek-red);
     line-height: 0;
+    transition: all ease 0.75s;
 }
 
+.carousel-slider-progress .status {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+}
+.carousel-slider-progress .status i {
+    font-size: 0.75rem;
+}
 /* Generic Classes */
 
 .hide {
