@@ -3,6 +3,8 @@
  * Author: Connor Doman
  */
 
+import { getSiblings } from "./dom";
+
 export default class ExpandingVideoController {
     debug: boolean = true;
     expandingVideos: NodeListOf<HTMLElement>;
@@ -28,10 +30,24 @@ export default class ExpandingVideoController {
 
     expandVideo(container: HTMLElement) {
         container.classList.add("expanded");
+        const otherElements = getSiblings(container);
+
+        if (otherElements.length === 0) {
+            this.log("No siblings found");
+            return;
+        }
+        otherElements.forEach((elmt: Node) => (elmt as HTMLElement).classList.add("disappear"));
     }
 
     retractVideo(container: HTMLElement) {
         container.classList.remove("expanded");
+        const otherElements = getSiblings(container);
+
+        if (otherElements.length === 0) {
+            this.log("No siblings found");
+            return;
+        }
+        otherElements.forEach((elmt: Node) => (elmt as HTMLElement).classList.remove("disappear"));
     }
 
     onScroll(pos: number) {
@@ -42,8 +58,8 @@ export default class ExpandingVideoController {
             if (!parent) return;
 
             const rect = parent.getBoundingClientRect();
-            this.log(JSON.stringify(rect, null, 4));
-            if (rect.top <= 200) {
+            // this.log(JSON.stringify(rect, null, 4));
+            if (rect.top <= 300) {
                 this.expandVideo(container);
             } else {
                 this.retractVideo(container);

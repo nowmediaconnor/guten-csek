@@ -73,12 +73,12 @@
 }
 
 .project-ribbon li:has(a):hover {
-    animation-name: ribbon-hover;
+    /* animation-name: ribbon-hover; */
 }
 
 .project-ribbon li:has(a):not(:hover) {
-    animation-name: ribbon-hover-reverse;
-    animation-fill-mode: forwards;
+    /* animation-name: ribbon-hover-reverse;
+    animation-fill-mode: forwards; */
 }
 
 .project-ribbon.reverse li {
@@ -92,15 +92,17 @@
 }
 
 .project-blurb {
+    --project-blurb-color: var(--csek-blue);
     position: absolute;
     top: 50%;
     left: 50%;
-    background-color: var(--csek-blue);
+    background-color: var(--project-blurb-color);
     transition: all ease 0.2s;
     z-index: 20;
-    width: 40vh;
-    height: 40vh;
+    width: 60vh;
+    height: 60vh;
     transform: translateX(-50%) translateY(-50%);
+    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);
 }
 
 .project-blurb img {
@@ -129,4 +131,8 @@
     text-transform: uppercase;
     font-weight: 600;
     text-align: center;
+}
+
+.highlight-link {
+    color: var(--csek-dark);
 }

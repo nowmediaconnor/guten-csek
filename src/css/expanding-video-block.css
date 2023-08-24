@@ -86,3 +86,14 @@
     gap: 2rem;
     flex: 0 1 auto;
 }
+
+.scroll-fade-away {
+    transition-property: opacity, width;
+    transition-duration: 1s;
+    transition-timing-function: ease-in-out;
+}
+
+.disappear {
+    opacity: 0;
+    width: 0;
+}

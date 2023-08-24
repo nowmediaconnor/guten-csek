@@ -21,6 +21,7 @@ import ScrollDownController from "./scripts/scroll-down-controller";
 import CarouselController from "./scripts/carousel-controller";
 import VideoCarouselController from "./scripts/video-carousel-controller";
 import ExpandingVideoController from "./scripts/expanding-video-controller";
+import ScrollingProjectsController from "./scripts/scrolling-projects-controller";
 
 // so the "edit" component is a place where i can put fields that will be used to edit block attributes
 
@@ -189,8 +190,6 @@ window.addEventListener("load", (e) => {
     console.log({ windowWidth: window.innerWidth, windowHeight: window.innerHeight });
     // Video block expands on scroll
     prepareExpandingVideoBlocks();
-    // Scrolling projects block
-    prepareScrollingProjectsBlocks();
     // Curtainify
     window.requestAnimationFrame(() => {
         prepareCurtainElements();
@@ -205,4 +204,7 @@ window.addEventListener("load", (e) => {
     new VideoCarouselController(".wp-block-guten-csek-video-carousel-block");
     // Circular "scroll down" text
     new CircleType(document.getElementById("scroll-down"));
+    // Scrolling projects block
+    // prepareScrollingProjectsBlocks();
+    new ScrollingProjectsController(".wp-block-guten-csek-scrolling-projects-block");
 });

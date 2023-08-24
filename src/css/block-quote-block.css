@@ -29,7 +29,7 @@
     padding: 0 2rem;
 }
 .wp-block-guten-csek-block-quote-block .quote::before {
-    content: "“";
+    content: "\201C";
     color: var(--csek-red);
     font-size: 6rem;
     position: absolute;

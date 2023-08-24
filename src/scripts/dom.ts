@@ -11,6 +11,18 @@ export const DOM_FLAGS = {
     taglineSroll: true,
 };
 
+export const getChildren = (n: ChildNode | null, skipMe: Node) => {
+    let r: ChildNode[] = [];
+    for (; n; n = n.nextSibling) if (n.nodeType == 1 && n != skipMe) r.push(n);
+    return r;
+};
+
+export const getSiblings = (n: Node) => {
+    const parent = n.parentNode;
+    if (!parent) return [];
+    return getChildren(parent.firstChild, n);
+};
+
 export const smoothScrollTo = (yPosition: number) => {
     // window.scrollTo({
     //     top: yPosition,

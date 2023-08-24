@@ -5,66 +5,143 @@
 
 import React from "react";
 import { shuffle } from "../scripts/array";
+import { MediaUpload, MediaUploadCheck, RichText, useBlockProps } from "@wordpress/block-editor";
+import { Button } from "@wordpress/components";
 
 interface ScrollingProjectsProps {
-    attributes: any;
+    attributes: {
+        projects: Project[];
+    };
     setAttributes?: any;
 }
 
+interface Project {
+    name: string;
+    link: string;
+    imageUrl: string;
+}
+
 export const ScrollingProjectsBlockEdit = ({ attributes, setAttributes }: ScrollingProjectsProps) => {
+    const blockProps = useBlockProps();
+
     const { projects } = attributes;
 
-    const onProjectsChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-        setAttributes({ projects: e.target.value.split("\n") });
+    const handleAddProject = () => {
+        const newProjects = [...projects];
+        newProjects.push({ name: "", link: "", imageUrl: "" });
+        setAttributes({ projects: newProjects });
     };
 
+    const handleRemoveProject = (index: number) => {
+        const newProjects = [...projects];
+        newProjects.splice(index, 1);
+        setAttributes({ projects: newProjects });
+    };
+
+    const handleProjectChange = (project: Project, index: number) => {
+        const newProjects = [...projects];
+        newProjects[index] = project;
+        setAttributes({ projects: newProjects });
+    };
+
+    const videoElements = projects.map((project: Project, index: number) => {
+        return (
+            <div key={index} className="video-carousel-data">
+                <div className="flex flex-row justify-between items-center">
+                    <h3>Project {index + 1}</h3>
+                    <Button
+                        className="csek-video-remove"
+                        icon="trash"
+                        label="Remove project"
+                        onClick={() => handleRemoveProject(index)}>
+                        Delete
+                    </Button>
+                </div>
+                <h4>Title</h4>
+                <input
+                    type="text"
+                    className="csek-input"
+                    placeholder="Project name"
+                    value={project.name}
+                    onChange={(e) =>
+                        handleProjectChange(
+                            { name: e.target.value, link: project.link, imageUrl: project.imageUrl },
+                            index
+                        )
+                    }
+                />
+                <h4>Caption</h4>
+                <input
+                    type="text"
+                    className="csek-input"
+                    placeholder="Link to project or project page"
+                    value={project.link}
+                    onChange={(e) =>
+                        handleProjectChange(
+                            { name: project.name, link: e.target.value, imageUrl: project.imageUrl },
+                            index
+                        )
+                    }
+                />
+                <h4>Image</h4>
+                <MediaUploadCheck>
+                    <MediaUpload
+                        onSelect={(media) =>
+                            handleProjectChange({ name: project.name, link: project.link, imageUrl: media.url }, index)
+                        }
+                        allowedTypes={["image"]}
+                        render={({ open }) => (
+                            <Button className="csek-video-upload" icon="camera-alt" label="Upload Image" onClick={open}>
+                                Choose Image
+                            </Button>
+                        )}
+                    />
+                </MediaUploadCheck>
+            </div>
+        );
+    });
     return (
-        <div>
-            <h2>Scrolling Projects Block</h2>
-            <p>
-                Enter project titles and links in the form of <code>name|link</code>
-            </p>
-            <textarea
-                className="w-full h-64"
-                value={projects.join("\n")}
-                onChange={(event) => {
-                    onProjectsChange(event);
-                }}
-            />
+        <div {...blockProps}>
+            <h2>Csek Scrolling Projects Block</h2>
+            {videoElements}
+            <Button onClick={handleAddProject} icon="plus" className="csek-button">
+                Add Project
+            </Button>
+            <p>{projects.length} projects added.</p>
         </div>
     );
 };
 
 export const ScrollingProjectsBlockSave = ({ attributes }: ScrollingProjectsProps) => {
+    const blockProps = useBlockProps.save();
+
     const { projects } = attributes;
 
-    const projectData = projects.map((project: string) => {
-        if (project.indexOf("|") === -1) return null;
-
-        const name = project.split("|")[0].trim();
-        const link = project.split("|")[1].trim();
-        return { name, link };
-    });
-
-    const listItems = projectData.map((project: any) => {
+    const listItems = projects.map((project: Project) => {
         if (project == null) return null;
+
+        const { name, link, imageUrl } = project;
+
         return (
             <>
                 <li>
-                    <a href={project.link}>{project.name}</a>
+                    <a href={link}>{name}</a>
+                    <img src={imageUrl} style={{ display: "none" }} />
                 </li>
             </>
         );
     });
 
     return (
-        <div>
+        <div {...blockProps}>
             <div className="project-blurb">
-                <img src="/wp-content/plugins/guten-csek/src/img/project-template.png" />
+                <img className="project-image" src="/wp-content/plugins/guten-csek/src/img/project-template.png" />
                 <div className="view-button">
-                    View
-                    <br />
-                    Project
+                    <a href="#">
+                        View
+                        <br />
+                        Project
+                    </a>
                 </div>
             </div>
             <div className="projects">
