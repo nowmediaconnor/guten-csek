@@ -1,7 +1,11 @@
 <?php
 /*
 Plugin Name: Guten Csek
+Version: 1.0
+Author: Csek Creative
+Description: Add custom blocks to wordpress for the Gutenberg system of blocks.
 */
+
 function enqueue_custom_block_assets()
 {
     wp_enqueue_script(
@@ -96,3 +100,55 @@ function enqueue_styles_iteratively()
     }
 }
 add_action('wp_enqueue_scripts', 'enqueue_styles_iteratively');
+
+
+// API endpoints
+function image_color_endpoint()
+{
+    register_rest_route('csek/v2', '/img-color', array(
+        'methods' => 'POST',
+        'callback' => 'get_image_color',
+        'permission_callback' => '__return_true',
+    ));
+}
+
+function get_image_color($request)
+{
+    $json = $request->get_json_params();
+    // Your custom logic to retrieve and return data
+    $base64Image = $json['base64Data'];
+    $imageData = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $base64Image));
+    $imageResource = imagecreatefromstring($imageData);
+
+    // Initialize an array to store the unique colors
+    $uniqueColors = [];
+
+    // Get the dimensions of the image
+    $width = imagesx($imageResource);
+    $height = imagesy($imageResource);
+
+    // Iterate through the pixels of the image
+    for ($x = 0; $x < $width; $x++) {
+        for ($y = 0; $y < $height; $y++) {
+            $rgb = imagecolorat($imageResource, $x, $y);
+            $color = imagecolorsforindex($imageResource, $rgb);
+            $colorKey = "rgb({$color['red']}, {$color['green']}, {$color['blue']})";
+
+            if (!isset($uniqueColors[$colorKey])) {
+                $uniqueColors[$colorKey] = 1;
+            } else {
+                $uniqueColors[$colorKey]++;
+            }
+        }
+    }
+
+    arsort($uniqueColors);
+    $most_color = array_key_first($uniqueColors);
+
+    imagedestroy($imageResource);
+    // $colorCount = count($uniqueColors);
+
+    return rest_ensure_response(["color" => $most_color], 200);
+}
+
+add_action('rest_api_init', 'image_color_endpoint', 999);

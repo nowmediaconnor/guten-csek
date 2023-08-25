@@ -4,6 +4,7 @@
  */
 
 import { shuffle } from "./array";
+import { getImageColor, imageToBase64 } from "./files";
 import { randomIntInRange } from "./math";
 
 export default class ScrollingProjectsController {
@@ -24,6 +25,8 @@ export default class ScrollingProjectsController {
     highglightedProjectName: string;
 
     canvas: HTMLCanvasElement | null = null;
+
+    colorCache: Map<string, string> = new Map<string, string>();
 
     constructor(scrollingProjectsBlockClassName: string) {
         if (!scrollingProjectsBlockClassName) throw new Error("Scrolling projects block class name not provided");
@@ -61,17 +64,43 @@ export default class ScrollingProjectsController {
         this.canvas.height = 1;
     }
 
-    precalculateColors() {
-        const allProjects = this.scrollingProjectsBlock?.querySelectorAll(".project-ribbon ul li");
-        if (!allProjects) {
+    async precalculateColors() {
+        if (!this.scrollingProjectsBlock) return;
+        const allImages: NodeListOf<HTMLImageElement> =
+            this.scrollingProjectsBlock.querySelectorAll(".project-ribbon ul li img");
+
+        if (!allImages) {
             this.log("No projects found");
             return false;
         }
-        for (let i = 0; i < allProjects.length; i++) {
-            const img = allProjects[i].querySelector("img") as HTMLImageElement;
+
+        const uniqueSources: string[] = [];
+        for (let i = 0; i < allImages.length; i++) {
+            const img = allImages[i];
             if (!img) continue;
 
-            this.determineMainColorForImage(img);
+            if (uniqueSources.includes(img.src)) continue;
+            uniqueSources.push(img.src);
+
+            // const base64Data: string = await imageToBase64(img.src);
+            // this.determineMainColorForImage(img);
+        }
+
+        for (const source of uniqueSources) {
+            const imageColor: string = await getImageColor(source);
+
+            this.colorCache.set(source, imageColor);
+            this.log(imageColor);
+        }
+
+        for (let i = 0; i < allImages.length; i++) {
+            const img = allImages[i];
+            if (!img) continue;
+
+            const color = this.colorCache.get(img.src);
+            if (!color) continue;
+
+            img.setAttribute("data-color", color);
         }
     }
 
@@ -183,6 +212,7 @@ export default class ScrollingProjectsController {
             this.log("No blurb, project image, or view project button found");
             return false;
         }
+        this.projectImage.style.opacity = "0";
 
         const allProjects = this.scrollingProjectsBlock?.querySelectorAll(".project-ribbon ul li");
         if (!allProjects) {
@@ -221,6 +251,20 @@ export default class ScrollingProjectsController {
         link.classList.add("highlight-link");
 
         const color = img.getAttribute("data-color");
+
+        const blurbRect = this.blurb.getBoundingClientRect();
+        const imgX = randomIntInRange(0, blurbRect.width);
+        const imgY = randomIntInRange(0, blurbRect.width);
+
+        this.projectImage.src = img.src;
+
+        this.projectImage.addEventListener("load", (e) => {
+            if (!e.target) return;
+            const elmt = e.target as HTMLElement;
+            elmt.style.left = `${(imgX / blurbRect.width) * 100}%`;
+            elmt.style.top = `${(imgY / blurbRect.width) * 100}%`;
+            elmt.style.opacity = "1";
+        });
 
         this.log("color:", color);
         this.blurb?.style.setProperty("--project-blurb-color", color);
