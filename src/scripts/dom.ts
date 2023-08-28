@@ -192,6 +192,16 @@ export abstract class BlockController implements ControllerProperties {
     abstract setup(): void;
     // abstract beforeReload?(): void;
 
+    invalid(truthy: any): boolean {
+        if (truthy) {
+            this.log("Block is valid.");
+            return false;
+        }
+        this.log("Block is invalid.");
+        this.isInitialized = true;
+        return true;
+    }
+
     log(...msg: any[]): void {
         if (this.debug) {
             console.log(`[${this.name}]`, ...msg);
@@ -246,7 +256,7 @@ export default class DOMController extends BlockController implements DOMControl
 
     setup() {
         // this.overrideAllDebug(true);
-        this.overrideDebug(true, "ScrollDownController");
+        // this.overrideDebug(true, "ScrollDownController");
 
         this.prepareLoadingPanel();
 
@@ -263,11 +273,6 @@ export default class DOMController extends BlockController implements DOMControl
                     controller.beforeReload();
                     controllers.push(controller.name);
                 }
-            }
-
-            if (this.debug) {
-                alert(JSON.stringify(controllers, null, 4));
-                e.preventDefault();
             }
         });
 

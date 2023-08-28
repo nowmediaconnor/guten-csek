@@ -34,16 +34,16 @@ export default class VideoCarouselController extends BlockController {
 
         this.videoCarouselClassName = videoCarouselClassName;
         this.activeIndex = 0;
-        this.videoCarousel = document.querySelector(`.${this.videoCarouselClassName}`);
-
-        if (this.videoCarousel) {
-            this.log("Found video carousel");
-            this.setup();
-        }
     }
 
     setup() {
-        if (!this.videoCarousel) return;
+        this.videoCarousel = document.querySelector(`.${this.videoCarouselClassName}`) as HTMLDivElement;
+        if (this.invalid(this.videoCarousel)) {
+            this.log("No video carousel found.");
+            return;
+        }
+
+        this.log("Found video carousel");
 
         this.videoDialog = this.videoCarousel.querySelector(".video-player");
         this.videoStrip = this.videoCarousel.querySelector(".video-strip");

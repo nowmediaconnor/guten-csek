@@ -62,6 +62,14 @@ registerBlockType("guten-csek/expanding-video-block", {
             type: "array",
             default: [],
         },
+        messageHeading: {
+            type: "string",
+            default: "",
+        },
+        message: {
+            type: "string",
+            default: "",
+        },
     },
     edit: ExpandingVideoBlockEdit,
     save: ExpandingVideoBlockSave,

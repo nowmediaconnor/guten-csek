@@ -16,6 +16,10 @@ export const map = (n: number, start1: number, stop1: number, start2: number, st
     }
 };
 
+export const randomInRange = (min: number, max: number): number => {
+    return Math.random() * (max - min) + min;
+};
+
 export const randomIntInRange = (min: number, max: number): number => {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 };

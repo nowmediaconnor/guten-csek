@@ -110,6 +110,7 @@
     top: 0;
     left: 25%;
     width: 100%;
+    transform: translate(-50%, -50%);
     height: auto;
     transition: opacity 1s ease-in-out;
     filter: drop-shadow(0 0 1rem rgba(0, 0, 0, 0.2));
@@ -127,12 +128,13 @@
     height: 8em;
     border-radius: 100%;
     background-color: var(--csek-dark);
-    bottom: 20%;
-    right: 20%;
+    top: 60%;
+    left: 60%;
     font-family: Montserrat, sans-serif;
     text-transform: uppercase;
     font-weight: 600;
     text-align: center;
+    transform: translate(-50%, -50%);
 }
 
 .highlight-link {

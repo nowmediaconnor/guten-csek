@@ -32,22 +32,17 @@ export default class CarouselController extends BlockController {
         this.carouselClass = carouselClass.startsWith(".") ? carouselClass : `.${carouselClass}`;
         this.numItems = 0;
         this.activeIndex = 0;
-
-        this.carouselBlock = document.querySelector(this.carouselClass);
-
-        if (this.carouselBlock) {
-            this.carousel = this.carouselBlock.querySelector(".carousel");
-
-            this.log("Found carousel");
-            // this.setup();
-        }
     }
 
     setup() {
-        if (!this.carouselBlock) {
-            this.log("No carousel block found");
-            return;
-        }
+        this.carouselBlock = document.querySelector(this.carouselClass) as HTMLDivElement;
+
+        if (this.invalid(this.carouselBlock)) return;
+
+        this.carousel = this.carouselBlock.querySelector(".carousel");
+
+        this.log("Found carousel");
+        // this.setup();
         this.progressNumerator = this.carouselBlock.querySelector(".carousel-slider-progress .start");
         this.progressDenominator = this.carouselBlock.querySelector(".carousel-slider-progress .stop");
         this.barProgress = this.carouselBlock.querySelector(".carousel-slider-progress .bar .progress");
@@ -60,7 +55,9 @@ export default class CarouselController extends BlockController {
         this.updateBarProgress();
 
         this.addEventListeners();
-
+        // } else if (!this.carouselBlock) {
+        //     this.log("No carousel block found");
+        // }
         this.isInitialized = true;
     }
 

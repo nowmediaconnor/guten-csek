@@ -6,12 +6,14 @@
 import { shuffle } from "../array";
 import { BlockController, ControllerProperties } from "../dom";
 import { getImageColor, imageToBase64 } from "../files";
-import { randomIntInRange } from "../math";
+import { randomInRange, randomIntInRange } from "../math";
 
 export default class ScrollingProjectsController extends BlockController {
     name: string;
 
-    debug: boolean = false;
+    debug: boolean = true;
+
+    scrollingProjectsBlockClassName: string;
 
     marqueeRefreshRateMilliseconds: number = 12.5; // ms
     randomProjectRateMilliseconds: number = 10000; // ms
@@ -41,7 +43,8 @@ export default class ScrollingProjectsController extends BlockController {
         else if (scrollingProjectsBlockClassName[0] === ".")
             scrollingProjectsBlockClassName = scrollingProjectsBlockClassName.slice(1);
 
-        this.scrollingProjectsBlock = document.querySelector(`.${scrollingProjectsBlockClassName}`);
+        this.scrollingProjectsBlockClassName = scrollingProjectsBlockClassName;
+
         this.highglightedProjectName = "";
     }
 
@@ -68,6 +71,7 @@ export default class ScrollingProjectsController extends BlockController {
 
     async precalculateColors() {
         if (!this.scrollingProjectsBlock) return;
+
         const allImages: NodeListOf<HTMLImageElement> =
             this.scrollingProjectsBlock.querySelectorAll(".project-ribbon ul li img");
 
@@ -107,8 +111,12 @@ export default class ScrollingProjectsController extends BlockController {
     }
 
     setup() {
-        if (!this.scrollingProjectsBlock) {
-            this.log("No scrolling projects block found");
+        this.scrollingProjectsBlock = document.querySelector(
+            `.${this.scrollingProjectsBlockClassName}`
+        ) as HTMLDivElement;
+
+        if (this.invalid(this.scrollingProjectsBlock)) {
+            this.log("No scrolling projects block found.");
             return;
         }
 
@@ -257,17 +265,24 @@ export default class ScrollingProjectsController extends BlockController {
         const color = img.getAttribute("data-color");
 
         const blurbRect = this.blurb.getBoundingClientRect();
-        const imgX = randomIntInRange(0, blurbRect.width);
-        const imgY = randomIntInRange(0, blurbRect.width);
+        const imgX = randomInRange(0.25, 0.75);
+        const imgY = randomInRange(0.25, 0.75);
+        const linkX = randomInRange(0.1, 0.9);
+        const linkY = randomInRange(0.1, 0.9);
 
         this.projectImage.src = img.src;
 
         this.projectImage.addEventListener("load", (e) => {
             if (!e.target) return;
             const elmt = e.target as HTMLElement;
-            elmt.style.left = `${(imgX / blurbRect.width) * 100}%`;
-            elmt.style.top = `${(imgY / blurbRect.width) * 100}%`;
+            elmt.style.left = `${imgX * 100}%`;
+            elmt.style.top = `${imgY * 100}%`;
             elmt.style.opacity = "1";
+
+            if (this.viewProjectButton) {
+                this.viewProjectButton.style.left = `${linkX * 100}%`;
+                this.viewProjectButton.style.top = `${linkY * 100}%`;
+            }
         });
 
         this.log("color:", color);
@@ -286,59 +301,5 @@ export default class ScrollingProjectsController extends BlockController {
             const elmt = e.target as HTMLElement;
             elmt.style.color = "red";
         });
-    }
-
-    determineMainColorForImage(img: HTMLImageElement): void {
-        if (!this.canvas) return;
-
-        this.canvas.width = img.width;
-        this.canvas.height = img.height;
-
-        const ctx = this.canvas.getContext("2d");
-        if (!ctx) return;
-
-        ctx.drawImage(img, 0, 0);
-
-        const imageData = ctx.getImageData(0, 0, this.canvas.width, this.canvas.height);
-
-        const worker = new Worker("/wp-content/plugins/guten-csek/src/scripts/image-worker.js");
-
-        worker.postMessage(imageData);
-        worker.onmessage = (e) => {
-            const color = e.data;
-
-            this.log("color:", color);
-            img.setAttribute("data-color", color);
-        };
-
-        // const data = imageData.data;
-
-        // const colors = new Map<string, number>();
-
-        // const pollingRate = 10;
-
-        // for (let i = 0; i < data.length; i += 4 * pollingRate) {
-        //     const r = data[i];
-        //     const g = data[i + 1];
-        //     const b = data[i + 2];
-        //     const a = data[i + 3];
-
-        //     if (a === 0) continue;
-
-        //     const color = `rgb(${r}, ${g}, ${b})`;
-        //     if (colors.has(color)) {
-        //         colors.set(color, colors.get(color)! + 1);
-        //     } else {
-        //         colors.set(color, 1);
-        //     }
-        // }
-
-        // const sortedColors = new Map([...colors.entries()].sort((a, b) => b[1] - a[1]));
-
-        // const color = sortedColors.keys().next().value;
-        // if (!color) return "rgb(0,0,0)";
-
-        // return color;
-        return;
     }
 }

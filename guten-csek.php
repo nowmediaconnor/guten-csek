@@ -6,6 +6,7 @@ Author: Csek Creative
 Description: Add custom blocks to wordpress for the Gutenberg system of blocks.
 */
 
+require 'kmeans.php';
 function enqueue_custom_block_assets()
 {
     wp_enqueue_script(
@@ -116,39 +117,20 @@ function get_image_color($request)
 {
     $json = $request->get_json_params();
     // Your custom logic to retrieve and return data
-    $base64Image = $json['base64Data'];
-    $imageData = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $base64Image));
-    $imageResource = imagecreatefromstring($imageData);
+    $base64_image = $json['base64Data'];
+    $image_data = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $base64_image));
+    $image_resource = imagecreatefromstring($image_data);
 
     // Initialize an array to store the unique colors
-    $uniqueColors = [];
 
-    // Get the dimensions of the image
-    $width = imagesx($imageResource);
-    $height = imagesy($imageResource);
+    $rgb_data = createRGBArrayFromImage($image_resource, 10);
+    $main_color = findMainColorOfImage($rgb_data);
+    unset($rgb_data);
 
-    // Iterate through the pixels of the image
-    for ($x = 0; $x < $width; $x++) {
-        for ($y = 0; $y < $height; $y++) {
-            $rgb = imagecolorat($imageResource, $x, $y);
-            $color = imagecolorsforindex($imageResource, $rgb);
-            $colorKey = "rgb({$color['red']}, {$color['green']}, {$color['blue']})";
-
-            if (!isset($uniqueColors[$colorKey])) {
-                $uniqueColors[$colorKey] = 1;
-            } else {
-                $uniqueColors[$colorKey]++;
-            }
-        }
-    }
-
-    arsort($uniqueColors);
-    $most_color = array_key_first($uniqueColors);
-
-    imagedestroy($imageResource);
+    imagedestroy($image_resource);
     // $colorCount = count($uniqueColors);
 
-    return rest_ensure_response(["color" => $most_color], 200);
+    return rest_ensure_response(["color" => $main_color], 200);
 }
 
 add_action('rest_api_init', 'image_color_endpoint', 999);

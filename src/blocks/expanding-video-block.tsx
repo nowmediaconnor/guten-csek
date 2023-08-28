@@ -2,8 +2,8 @@
  * Created on Fri Aug 11 2023
  * Author: Connor Doman
  */
-import React from "@wordpress/element";
-import { MediaUploadCheck, MediaUpload, InspectorControls } from "@wordpress/block-editor";
+import React from "react";
+import { MediaUploadCheck, MediaUpload, InspectorControls, useBlockProps } from "@wordpress/block-editor";
 import { Button, PanelBody } from "@wordpress/components";
 
 interface ExpandingVideoBlockProps {
@@ -13,7 +13,9 @@ interface ExpandingVideoBlockProps {
 }
 
 export const ExpandingVideoBlockEdit = ({ attributes, setAttributes }: ExpandingVideoBlockProps) => {
-    const { videoURL, images } = attributes;
+    const blockProps = useBlockProps();
+
+    const { videoURL, images, messageHeading, message } = attributes;
 
     const onSelectVideo = (media: any) => {
         setAttributes({ videoURL: media.url });
@@ -23,8 +25,15 @@ export const ExpandingVideoBlockEdit = ({ attributes, setAttributes }: Expanding
         setAttributes({ images: newImages.map((image: { url: string }) => image.url) });
     };
 
+    const onUpdateMessageHeading = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setAttributes({ messageHeading: e.target.value });
+    };
+    const onUpdateMessage = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+        setAttributes({ message: e.target.value });
+    };
+
     return (
-        <div className="p-4 flex flex-col gap-4">
+        <div {...blockProps} className="p-4 flex flex-col gap-4">
             <InspectorControls>
                 <div className="flex flex-col">
                     <PanelBody title="Expanding Video Block Media">
@@ -56,17 +65,32 @@ export const ExpandingVideoBlockEdit = ({ attributes, setAttributes }: Expanding
                 </div>
             </InspectorControls>
             <h2>Expanding Video Block</h2>
-            {videoURL && (
+            <input
+                type="text"
+                className="csek-input"
+                placeholder="Message heading"
+                value={messageHeading}
+                onChange={(e) => onUpdateMessageHeading(e)}
+            />
+            <textarea
+                className="csek-input"
+                placeholder="Message"
+                value={message}
+                onChange={(e) => onUpdateMessage(e)}
+            />
+            {videoURL ? (
                 <video width="320" height="180" className="border-2 border-blue-400 mx-auto">
-                    <source src={videoURL} />
+                    <source src={videoURL as string} />
                 </video>
-            )}
+            ) : null}
         </div>
     );
 };
 
-export const ExpandingVideoBlockSave = ({ attributes, className }: ExpandingVideoBlockProps) => {
-    const { videoURL, images } = attributes;
+export const ExpandingVideoBlockSave = ({ attributes }: ExpandingVideoBlockProps) => {
+    const blockProps = useBlockProps.save();
+
+    const { videoURL, images, messageHeading, message } = attributes;
 
     // there will be 3 columns: images, video, images
     // the video will be the middle column and will expand to fill the viewport as the screen is scrolled
@@ -92,7 +116,7 @@ export const ExpandingVideoBlockSave = ({ attributes, className }: ExpandingVide
     return (
         <>
             {/* <div id="test-thresh" className="threshold"></div> */}
-            <div className={`curtain-reel ${className}`}>
+            <div className="curtain-reel undefined">
                 <div className="content-block curtain">
                     <div className="row">
                         <div className="image-container-left scroll-fade-away">{firstImageElements}</div>
@@ -105,6 +129,10 @@ export const ExpandingVideoBlockSave = ({ attributes, className }: ExpandingVide
                                 className="object-cover max-w-none object-center relative left-1/2 translate-x-[-50%]">
                                 <source src={videoURL} />
                             </video>
+                            <div className="message">
+                                <h2>{messageHeading}</h2>
+                                <p>{message}</p>
+                            </div>
                         </div>
                         <div className="image-container-right scroll-fade-away">{secondImageElements}</div>
                     </div>

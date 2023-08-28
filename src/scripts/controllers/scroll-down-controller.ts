@@ -34,13 +34,13 @@ export default class ScrollDownController extends BlockController {
         } else {
             this.log("No scroll down element");
         }
+        this.isInitialized = true;
     }
 
     addEventListeners() {
         window.addEventListener("scroll", () => {
             this.update();
         });
-        this.isInitialized = true;
     }
 
     update() {

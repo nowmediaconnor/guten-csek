@@ -7,7 +7,7 @@ import { getSiblings, ControllerProperties, BlockController } from "../dom";
 
 export default class ExpandingVideoController extends BlockController {
     name: string;
-    debug: boolean = true;
+    debug: boolean = false;
     expandingVideoClassName: string;
     expandingVideos: NodeListOf<HTMLElement>;
     isInitialized: boolean;
@@ -21,11 +21,11 @@ export default class ExpandingVideoController extends BlockController {
     setup() {
         this.expandingVideos = document.querySelectorAll(this.expandingVideoClassName);
 
-        if (this.expandingVideos.length > 0) {
-            this.log(`Found ${this.expandingVideos.length} expanding videos`);
-        } else {
+        if (this.invalid(this.expandingVideos.length > 0)) {
             this.log("No expanding videos found.");
             return;
+        } else {
+            this.log(`Found ${this.expandingVideos.length} expanding videos`);
         }
 
         this.addScrollEventListener();

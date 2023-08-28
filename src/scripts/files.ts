@@ -30,8 +30,12 @@ export const getImageColor = async (url: string): Promise<string> => {
         body: JSON.stringify({ base64Data }),
     });
     const { color } = await res.json();
+
     if (!color) {
-        throw new Error("Color is null");
+        throw new Error("Color is null: " + color);
     }
     return color;
+
+    // const text = await res.text();
+    // return text;
 };
