@@ -3,14 +3,15 @@
  * Author: Connor Doman
  */
 
-import CarouselController from "./carousel-controller";
-import { constrain } from "./math";
-import { pad } from "./strings";
+import { constrain } from "../math";
+import { pad } from "../strings";
+import { BlockController } from "../dom";
 
 // needs to control carousel
 // needs to control dialog
 
-export default class VideoCarouselController {
+export default class VideoCarouselController extends BlockController {
+    name: string;
     debug: boolean = false;
     videoCarouselClassName: string;
     activeIndex: number;
@@ -23,8 +24,11 @@ export default class VideoCarouselController {
     videoStrip: HTMLElement | null;
     videoPlayButton: HTMLAnchorElement | null;
     videoCloseButton: HTMLAnchorElement | null;
+    isInitialized: boolean;
 
     constructor(videoCarouselClassName: string) {
+        super();
+        this.name = "VideoCarouselController";
         if (!videoCarouselClassName) throw new Error("Video carousel class name not provided");
         if (videoCarouselClassName[0] === ".") videoCarouselClassName = videoCarouselClassName.slice(1);
 
@@ -36,10 +40,6 @@ export default class VideoCarouselController {
             this.log("Found video carousel");
             this.setup();
         }
-    }
-
-    log(...msg: any[]) {
-        if (this.debug) console.log("[VideoCarouselController]", ...msg);
     }
 
     setup() {
@@ -72,6 +72,8 @@ export default class VideoCarouselController {
         this.log("Found bar progress");
 
         this.addEventListeners();
+
+        this.isInitialized = true;
     }
 
     addEventListeners() {

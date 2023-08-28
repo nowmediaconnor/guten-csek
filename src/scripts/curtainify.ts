@@ -18,7 +18,7 @@ const DEBUG = false;
 
 const log = (...msg: any[]) => {
     if (DEBUG) {
-        console.log(...msg);
+        console.log("[Curtainify.js]", ...msg);
     }
 };
 
@@ -77,11 +77,6 @@ const curtainify = (contentReel: HTMLElement, contentReelItems: NodeList) => {
 };
 
 export const prepareCurtainElements = () => {
-    // reset scroll on reload
-    window.addEventListener("beforeunload", () => {
-        window.scrollTo(0, 0);
-    });
-
     const contentReel = document.querySelector(".curtain-reel") as HTMLElement;
     const contentReelItems = document.querySelectorAll(".curtain");
 

@@ -3,12 +3,15 @@
  * Author: Connor Doman
  */
 
-import { shuffle } from "./array";
-import { getImageColor, imageToBase64 } from "./files";
-import { randomIntInRange } from "./math";
+import { shuffle } from "../array";
+import { BlockController, ControllerProperties } from "../dom";
+import { getImageColor, imageToBase64 } from "../files";
+import { randomIntInRange } from "../math";
 
-export default class ScrollingProjectsController {
-    debug: boolean = true;
+export default class ScrollingProjectsController extends BlockController {
+    name: string;
+
+    debug: boolean = false;
 
     marqueeRefreshRateMilliseconds: number = 12.5; // ms
     randomProjectRateMilliseconds: number = 10000; // ms
@@ -28,19 +31,18 @@ export default class ScrollingProjectsController {
 
     colorCache: Map<string, string> = new Map<string, string>();
 
+    isInitialized: boolean;
+
     constructor(scrollingProjectsBlockClassName: string) {
+        super();
+        this.name = "ScrollingProjectsController";
+
         if (!scrollingProjectsBlockClassName) throw new Error("Scrolling projects block class name not provided");
         else if (scrollingProjectsBlockClassName[0] === ".")
             scrollingProjectsBlockClassName = scrollingProjectsBlockClassName.slice(1);
 
         this.scrollingProjectsBlock = document.querySelector(`.${scrollingProjectsBlockClassName}`);
         this.highglightedProjectName = "";
-        this.setup();
-    }
-
-    log(...msg: any[]) {
-        if (!this.debug) return;
-        console.log("[ScrollingProjectsController]\n", ...msg);
     }
 
     prepareCanvas() {
@@ -191,6 +193,8 @@ export default class ScrollingProjectsController {
         this.randomProjectIntervalId = window.setInterval(() => {
             while (!this.selectRandomProject());
         }, this.randomProjectRateMilliseconds);
+
+        this.isInitialized = true;
     }
 
     clearHighlightedLinks() {

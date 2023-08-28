@@ -3,8 +3,9 @@
  * Author: Connor Doman
  */
 
-import { constrain } from "./math";
-import { pad } from "./strings";
+import { BlockController, ControllerProperties } from "../dom";
+import { constrain } from "../math";
+import { pad } from "../strings";
 
 export interface CarouselItem {
     title: string;
@@ -12,7 +13,9 @@ export interface CarouselItem {
     index: number;
 }
 
-export default class CarouselController {
+export default class CarouselController extends BlockController {
+    name: string;
+    debug: boolean = false;
     carouselClass: string;
     numItems: number;
     activeIndex: number;
@@ -21,8 +24,11 @@ export default class CarouselController {
     progressNumerator: HTMLElement | null;
     progressDenominator: HTMLElement | null;
     barProgress: HTMLElement | null;
+    isInitialized: boolean;
 
     constructor(carouselClass: string) {
+        super();
+        this.name = "CarouselController";
         this.carouselClass = carouselClass.startsWith(".") ? carouselClass : `.${carouselClass}`;
         this.numItems = 0;
         this.activeIndex = 0;
@@ -33,7 +39,7 @@ export default class CarouselController {
             this.carousel = this.carouselBlock.querySelector(".carousel");
 
             this.log("Found carousel");
-            this.setup();
+            // this.setup();
         }
     }
 
@@ -54,6 +60,8 @@ export default class CarouselController {
         this.updateBarProgress();
 
         this.addEventListeners();
+
+        this.isInitialized = true;
     }
 
     addEventListeners() {
@@ -126,9 +134,5 @@ export default class CarouselController {
             const proportion = (this.activeIndex + 1) / this.numItems;
             this.barProgress.style.width = `${constrain(proportion, 0, 1) * 100}%`;
         }
-    }
-
-    log(...msg: any) {
-        console.log(`[Carousel Controller]`, ...msg);
     }
 }

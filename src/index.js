@@ -5,8 +5,7 @@
 
 const { registerBlockType } = wp.blocks;
 
-import { shuffle } from "./scripts/array";
-import { randomIntInRange, randomPartOfOne, clampInt } from "./scripts/math";
+import DOMController from "./scripts/dom";
 import { TaglineHeaderEdit, TaglineHeaderSave } from "./blocks/tagline-header-block";
 import { ExpandingVideoBlockEdit, ExpandingVideoBlockSave } from "./blocks/expanding-video-block";
 import { BlockQuoteEdit, BlockQuoteSave } from "./blocks/block-quote-block";
@@ -14,14 +13,13 @@ import { ScrollingProjectsBlockEdit, ScrollingProjectsBlockSave } from "./blocks
 import { TeamBlockEdit, TeamBlockSave } from "./blocks/team-block";
 import { VideoCarouselBlockEdit, VideoCarouselBlockSave } from "./blocks/video-carousel-block";
 import { HorizontalCarouselBlockEdit, HorizontalCarouselBlockSave } from "./blocks/horizontal-carousel-block";
-import { prepareCurtainElements } from "./scripts/curtainify";
-import { prepareScrollingProjectsBlocks, prepareExpandingVideoBlocks } from "./scripts/dom";
 
-import ScrollDownController from "./scripts/scroll-down-controller";
-import CarouselController from "./scripts/carousel-controller";
-import VideoCarouselController from "./scripts/video-carousel-controller";
-import ExpandingVideoController from "./scripts/expanding-video-controller";
-import ScrollingProjectsController from "./scripts/scrolling-projects-controller";
+import ScrollDownController from "./scripts/controllers/scroll-down-controller";
+import CarouselController from "./scripts/controllers/carousel-controller";
+import VideoCarouselController from "./scripts/controllers/video-carousel-controller";
+import ExpandingVideoController from "./scripts/controllers/expanding-video-controller";
+import ScrollingProjectsController from "./scripts/controllers/scrolling-projects-controller";
+import { CurtainifyController } from "./scripts/controllers/curtainify-controller";
 
 // so the "edit" component is a place where i can put fields that will be used to edit block attributes
 
@@ -188,23 +186,35 @@ registerBlockType("guten-csek/horizontal-carousel-block", {
 window.addEventListener("load", (e) => {
     console.log("Window loaded.");
     console.log({ windowWidth: window.innerWidth, windowHeight: window.innerHeight });
-    // Video block expands on scroll
-    prepareExpandingVideoBlocks();
-    // Curtainify
+
     window.requestAnimationFrame(() => {
-        prepareCurtainElements();
-        new ExpandingVideoController(".expanding-video-container");
+        // First, prepare curtain elements
+        const curtainifyController = new CurtainifyController();
+        // prepareCurtainElements();
+
+        // "Scroll Down" controller
+        const scrollController = new ScrollDownController("scroll-down", ".wp-block-guten-csek-tagline-header-block");
+        // Scrolling carousel
+        const carouselController = new CarouselController(".wp-block-guten-csek-horizontal-carousel-block");
+        // Video carousel
+        const videoCarouselController = new VideoCarouselController(".wp-block-guten-csek-video-carousel-block");
+        // Scrolling projects block
+        const scrollingProjectsController = new ScrollingProjectsController(
+            ".wp-block-guten-csek-scrolling-projects-block"
+        );
+        // Expanding video controller
+        const expandingVideoController = new ExpandingVideoController(".expanding-video-container");
+
+        // DOM controller
+        const domController = new DOMController(
+            curtainifyController,
+            scrollController,
+            carouselController,
+            videoCarouselController,
+            scrollingProjectsController,
+            expandingVideoController
+        );
+        // Curtainify
+        domController.setup();
     });
-    // Expanding video controller
-    // "Scroll Down" controller
-    new ScrollDownController("scroll-down", ".wp-block-guten-csek-tagline-header-block");
-    // Scrolling carousel
-    new CarouselController(".wp-block-guten-csek-horizontal-carousel-block");
-    // Video carousel
-    new VideoCarouselController(".wp-block-guten-csek-video-carousel-block");
-    // Circular "scroll down" text
-    new CircleType(document.getElementById("scroll-down"));
-    // Scrolling projects block
-    // prepareScrollingProjectsBlocks();
-    new ScrollingProjectsController(".wp-block-guten-csek-scrolling-projects-block");
 });

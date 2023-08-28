@@ -171,3 +171,150 @@ export const prepareScrollingProjectsBlocks = () => {
         }
     }
 };
+
+export interface ControllerProperties {
+    name: string;
+    debug: boolean;
+    isInitialized: boolean;
+    setup(): void;
+    beforeReload?(): void;
+}
+
+export abstract class BlockController implements ControllerProperties {
+    name: string;
+    debug: boolean;
+    isInitialized: boolean;
+
+    constructor() {
+        this.name = "BlockController";
+    }
+
+    abstract setup(): void;
+    // abstract beforeReload?(): void;
+
+    log(...msg: any[]): void {
+        if (this.debug) {
+            console.log(`[${this.name}]`, ...msg);
+        }
+    }
+}
+
+interface DOMControllerState extends ControllerProperties {
+    blockControllers: ControllerProperties[];
+    loadingInterval: number;
+}
+
+/**
+ * DOMController
+ *
+ * This class handles using the above legacy functions and also determines when the DOM is ready and the loading indicator can be removed.
+ */
+export default class DOMController extends BlockController implements DOMControllerState {
+    name: string;
+    blockControllers: ControllerProperties[];
+    loadingInterval: number;
+    debug: boolean;
+    isInitialized: boolean;
+
+    loadingPanel: HTMLDivElement;
+
+    constructor(...blockControllers: ControllerProperties[]) {
+        super();
+        this.name = "DOMController";
+        this.blockControllers = blockControllers;
+        this.debug = true;
+    }
+
+    prepareLoadingPanel() {
+        const existingPanel = document.getElementById("loading") as HTMLDivElement;
+        if (existingPanel) {
+            this.loadingPanel = existingPanel;
+        } else if (!existingPanel) {
+            this.loadingPanel = document.createElement("div");
+        }
+        this.loadingPanel.id = "loading";
+        document.body.prepend(this.loadingPanel);
+
+        window.addEventListener("beforeunload", () => {
+            console.log("unload dom controller...");
+        });
+    }
+
+    hideLoadingPanel() {
+        this.loadingPanel.classList.add("complete");
+    }
+
+    setup() {
+        // this.overrideAllDebug(true);
+        this.overrideDebug(true, "ScrollDownController");
+
+        this.prepareLoadingPanel();
+
+        prepareExpandingVideoBlocks();
+
+        // prepare reload listeners
+        window.addEventListener("beforeunload", (e) => {
+            this.beforeReload();
+
+            const controllers: string[] = [];
+
+            for (const controller of this.blockControllers) {
+                if (controller.beforeReload) {
+                    controller.beforeReload();
+                    controllers.push(controller.name);
+                }
+            }
+
+            if (this.debug) {
+                alert(JSON.stringify(controllers, null, 4));
+                e.preventDefault();
+            }
+        });
+
+        // prepareScrollingProjectsBlocks();
+        for (const controller of this.blockControllers) {
+            controller.setup();
+            this.log("Set up", controller.name);
+        }
+
+        // check if all controllers are loaded and show page
+        this.loadingInterval = window.setInterval(() => {
+            if (this.finished()) {
+                window.clearInterval(this.loadingInterval);
+                this.hideLoadingPanel();
+                this.log("Finished loading");
+            }
+        }, 1000);
+
+        this.isInitialized = true;
+    }
+
+    beforeReload() {
+        this.loadingPanel.classList.remove("complete");
+    }
+
+    finished() {
+        for (const controller of this.blockControllers) {
+            if (!controller.isInitialized) {
+                this.log(controller.name, "not yet initialized...");
+                return false;
+            }
+        }
+        return this.isInitialized;
+    }
+
+    overrideAllDebug(state: boolean) {
+        this.debug = state;
+        this.overrideDebug(state, undefined);
+    }
+
+    overrideDebug(state: boolean, controllerName?: string) {
+        for (const controller of this.blockControllers) {
+            if (!controllerName || controller.name === controllerName) controller.debug = state;
+        }
+    }
+
+    log(...msg: any[]) {
+        if (this.debug) console.log("[DOMController]", ...msg);
+    }
+}

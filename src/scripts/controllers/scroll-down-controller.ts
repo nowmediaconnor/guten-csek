@@ -3,18 +3,36 @@
  * Author: Connor Doman
  */
 
-export default class ScrollDownController {
+import { BlockController, ControllerProperties } from "../dom";
+import CircleType from "circletype";
+
+export default class ScrollDownController extends BlockController {
+    name: string;
+    debug: boolean = false;
+    scrollDownId: string;
+    parentScrollTargetSelector: string;
     scrollDownElement: HTMLElement | null;
     parentScrollTarget: HTMLElement | null;
+    isInitialized: boolean;
+
     constructor(scrollDownId: string, parentScrollTargetSelector: string) {
+        super();
+        this.name = "ScrollDownController";
         if (!scrollDownId) throw new Error("Scroll down id not provided");
         if (!parentScrollTargetSelector) throw new Error("Parent scroll target selector not provided");
 
-        this.scrollDownElement = document.getElementById(scrollDownId);
-        this.parentScrollTarget = document.querySelector(parentScrollTargetSelector);
+        this.scrollDownId = scrollDownId;
+        this.parentScrollTargetSelector = parentScrollTargetSelector;
+    }
+    setup(): void {
+        this.scrollDownElement = document.getElementById(this.scrollDownId);
+        this.parentScrollTarget = document.querySelector(this.parentScrollTargetSelector);
 
         if (this.scrollDownElement && this.parentScrollTarget) {
+            new CircleType(this.scrollDownElement);
             this.addEventListeners();
+        } else {
+            this.log("No scroll down element");
         }
     }
 
@@ -22,6 +40,7 @@ export default class ScrollDownController {
         window.addEventListener("scroll", () => {
             this.update();
         });
+        this.isInitialized = true;
     }
 
     update() {
@@ -35,9 +54,5 @@ export default class ScrollDownController {
             return;
         }
         this.scrollDownElement.style.opacity = "1";
-    }
-
-    log(...msg: any[]) {
-        if (false) console.log("[Scroll Down Controller]", ...msg);
     }
 }

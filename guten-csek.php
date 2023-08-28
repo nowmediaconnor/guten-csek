@@ -80,7 +80,7 @@ function curtainify_enqueue()
 
     wp_enqueue_style('curtainify-style', $plugin_url . 'src/curtainify.css');
 }
-add_action('wp_enqueue_scripts', 'curtainify_enqueue');
+// add_action('wp_enqueue_scripts', 'curtainify_enqueue');
 
 
 function enqueue_styles_iteratively()

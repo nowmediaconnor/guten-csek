@@ -72,3 +72,22 @@ body {
     color: var(--csek-red);
     text-transform: uppercase;
 }
+
+/* Specific Elements */
+
+#loading {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    background-color: white;
+    width: 100vw;
+    height: 100vh;
+    /* transition: opacity 0s; */
+    transition: opacity 1s ease;
+}
+
+#loading.complete {
+    opacity: 0;
+    pointer-events: none;
+}

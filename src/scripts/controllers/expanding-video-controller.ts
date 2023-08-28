@@ -3,32 +3,37 @@
  * Author: Connor Doman
  */
 
-import { getSiblings } from "./dom";
+import { getSiblings, ControllerProperties, BlockController } from "../dom";
 
-export default class ExpandingVideoController {
+export default class ExpandingVideoController extends BlockController {
+    name: string;
     debug: boolean = true;
+    expandingVideoClassName: string;
     expandingVideos: NodeListOf<HTMLElement>;
+    isInitialized: boolean;
 
     constructor(expandingVideoClassName: string) {
-        this.expandingVideos = document.querySelectorAll(expandingVideoClassName);
-
-        if (this.expandingVideos.length > 0) {
-            this.log(`Found ${this.expandingVideos.length} expanding videos`);
-            this.setup();
-        } else {
-            this.log("No expanding videos found.");
-        }
-    }
-
-    log(...msg: any[]) {
-        if (this.debug) console.log("[ExpandingVideoController]", ...msg);
+        super();
+        this.name = "ExpandingVideoController";
+        this.expandingVideoClassName = expandingVideoClassName;
     }
 
     setup() {
+        this.expandingVideos = document.querySelectorAll(this.expandingVideoClassName);
+
+        if (this.expandingVideos.length > 0) {
+            this.log(`Found ${this.expandingVideos.length} expanding videos`);
+        } else {
+            this.log("No expanding videos found.");
+            return;
+        }
+
         this.addScrollEventListener();
+        this.isInitialized = true;
     }
 
     expandVideo(container: HTMLElement) {
+        this.log("Expanding video...");
         container.classList.add("expanded");
         const otherElements = getSiblings(container);
 
@@ -36,7 +41,9 @@ export default class ExpandingVideoController {
             this.log("No siblings found");
             return;
         }
-        otherElements.forEach((elmt: Node) => (elmt as HTMLElement).classList.add("disappear"));
+        otherElements.forEach((elmt: Node) => {
+            (elmt as HTMLElement).classList.add("disappear");
+        });
     }
 
     retractVideo(container: HTMLElement) {
