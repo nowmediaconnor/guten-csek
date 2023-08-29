@@ -11,7 +11,7 @@ import { randomInRange, randomIntInRange } from "../math";
 export default class ScrollingProjectsController extends BlockController {
     name: string;
 
-    debug: boolean = true;
+    debug: boolean = false;
 
     scrollingProjectsBlockClassName: string;
 

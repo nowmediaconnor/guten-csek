@@ -178,6 +178,7 @@ export interface ControllerProperties {
     isInitialized: boolean;
     setup(): void;
     beforeReload?(): void;
+    scroll?(): void;
 }
 
 export abstract class BlockController implements ControllerProperties {
@@ -228,6 +229,11 @@ export default class DOMController extends BlockController implements DOMControl
 
     loadingPanel: HTMLDivElement;
 
+    isLetsTalkOpen: boolean = false;
+    letsTalkScreen: HTMLDivElement;
+    letsTalkOpenButtons: NodeListOf<HTMLAnchorElement>;
+    letsTalkCloseButton: HTMLAnchorElement;
+
     constructor(...blockControllers: ControllerProperties[]) {
         super();
         this.name = "DOMController";
@@ -250,6 +256,32 @@ export default class DOMController extends BlockController implements DOMControl
         });
     }
 
+    prepareLetsTalkScreen(): boolean {
+        const letsTalk = document.getElementById("lets-talk") as HTMLDivElement;
+        if (!letsTalk) {
+            this.log("Lets talk screen not found.");
+            return false;
+        }
+
+        const letsTalkButtons: NodeListOf<HTMLAnchorElement> = document.querySelectorAll(".lets-talk-open");
+        if (!letsTalkButtons || letsTalkButtons.length === 0) {
+            this.log("Lets talk buttons not found.");
+            return false;
+        }
+
+        const letsTalkCloseButton = document.getElementById("lets-talk-close") as HTMLAnchorElement;
+        if (!letsTalkCloseButton) {
+            this.log("Lets talk close button not found.");
+            return false;
+        }
+
+        this.letsTalkScreen = letsTalk;
+        this.letsTalkOpenButtons = letsTalkButtons;
+        this.letsTalkCloseButton = letsTalkCloseButton;
+
+        return true;
+    }
+
     hideLoadingPanel() {
         this.loadingPanel.classList.add("complete");
     }
@@ -262,19 +294,7 @@ export default class DOMController extends BlockController implements DOMControl
 
         prepareExpandingVideoBlocks();
 
-        // prepare reload listeners
-        window.addEventListener("beforeunload", (e) => {
-            this.beforeReload();
-
-            const controllers: string[] = [];
-
-            for (const controller of this.blockControllers) {
-                if (controller.beforeReload) {
-                    controller.beforeReload();
-                    controllers.push(controller.name);
-                }
-            }
-        });
+        this.addEventListeners();
 
         // prepareScrollingProjectsBlocks();
         for (const controller of this.blockControllers) {
@@ -294,8 +314,51 @@ export default class DOMController extends BlockController implements DOMControl
         this.isInitialized = true;
     }
 
-    beforeReload() {
-        this.loadingPanel.classList.remove("complete");
+    addEventListeners() {
+        // prepare reload listeners
+        window.addEventListener("beforeunload", (e) => {
+            this.beforeReload();
+
+            for (const controller of this.blockControllers) {
+                if (controller.beforeReload) {
+                    controller.beforeReload();
+                }
+            }
+        });
+        // prepare scroll listeners
+        window.addEventListener("scroll", (e) => {
+            // this.scroll();
+
+            for (const controller of this.blockControllers) {
+                if (controller.scroll) {
+                    controller.scroll();
+                }
+            }
+        });
+
+        // header/footer listeners
+        if (this.prepareLetsTalkScreen()) {
+            this.letsTalkOpenButtons.forEach((btn) => {
+                btn.addEventListener("click", () => {
+                    this.openLetsTalk();
+                });
+            });
+
+            this.letsTalkCloseButton.addEventListener("click", () => {
+                this.closeLetsTalk();
+            });
+        }
+
+        // keyboard listeners
+        window.addEventListener("keydown", (e) => {
+            this.log("Key pressed:", e.key);
+            // close lets talk on escape key
+            if (e.key === "Escape" && this.isLetsTalkOpen) {
+                this.log("Closing let's talk...");
+                this.closeLetsTalk();
+                e.preventDefault();
+            }
+        });
     }
 
     finished() {
@@ -306,6 +369,22 @@ export default class DOMController extends BlockController implements DOMControl
             }
         }
         return this.isInitialized;
+    }
+
+    openLetsTalk() {
+        if (!this.letsTalkScreen) return;
+        this.letsTalkScreen.classList.add("open");
+        this.isLetsTalkOpen = true;
+    }
+
+    closeLetsTalk() {
+        if (!this.letsTalkScreen) return;
+        this.letsTalkScreen.classList.remove("open");
+        this.isLetsTalkOpen = false;
+    }
+
+    beforeReload() {
+        this.loadingPanel.classList.remove("complete");
     }
 
     overrideAllDebug(state: boolean) {

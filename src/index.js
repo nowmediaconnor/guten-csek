@@ -19,7 +19,8 @@ import CarouselController from "./scripts/controllers/carousel-controller";
 import VideoCarouselController from "./scripts/controllers/video-carousel-controller";
 import ExpandingVideoController from "./scripts/controllers/expanding-video-controller";
 import ScrollingProjectsController from "./scripts/controllers/scrolling-projects-controller";
-import { CurtainifyController } from "./scripts/controllers/curtainify-controller";
+import CurtainifyController from "./scripts/controllers/curtainify-controller";
+import TeamController from "./scripts/controllers/team-controller";
 
 // so the "edit" component is a place where i can put fields that will be used to edit block attributes
 
@@ -213,6 +214,9 @@ window.addEventListener("load", (e) => {
         // Expanding video controller
         const expandingVideoController = new ExpandingVideoController(".expanding-video-container");
 
+        // Team Block Controller
+        const teamController = new TeamController(".wp-block-guten-csek-team-block");
+
         // DOM controller
         const domController = new DOMController(
             curtainifyController,
@@ -220,7 +224,8 @@ window.addEventListener("load", (e) => {
             carouselController,
             videoCarouselController,
             scrollingProjectsController,
-            expandingVideoController
+            expandingVideoController,
+            teamController
         );
         // Curtainify
         domController.setup();

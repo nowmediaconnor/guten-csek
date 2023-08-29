@@ -9994,6 +9994,11 @@ typed-array-length@^1.0.4:
     for-each "^0.3.3"
     is-typed-array "^1.1.9"
 
+typescript-cubic-spline@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/typescript-cubic-spline/-/typescript-cubic-spline-1.0.1.tgz#340ef0f4f068fa28be0a0c3b4484e11f55b40610"
+  integrity sha512-h1dvp2YK66CU/p1thrBjQ61/CBSmkZw4Uh28ay8v9UjAA0gQdCQ+Etkie9sdj74WjYuYHEom5qLHjrci1IVMPA==
+
 uc.micro@^1.0.1, uc.micro@^1.0.5:
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/uc.micro/-/uc.micro-1.0.6.tgz#9c411a802a409a91fc6cf74081baba34b24499ac"

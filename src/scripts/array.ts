@@ -20,3 +20,11 @@ export const shuffle = (array: any[]) => {
 
     return newArray;
 };
+
+export const arrayMax = (array: number[]) => {
+    return Math.max(...array);
+};
+
+export const arrayMin = (array: number[]) => {
+    return Math.min(...array);
+};

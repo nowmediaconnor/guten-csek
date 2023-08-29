@@ -16,9 +16,11 @@
     },
     "scripts": {
         "start": "wp-scripts start",
-        "build": "wp-scripts build"
+        "build": "wp-scripts build",
+        "count": "python count_lines.py src -ignore img"
     },
     "dependencies": {
-        "circletype": "^2.3.0"
+        "circletype": "^2.3.0",
+        "typescript-cubic-spline": "^1.0.1"
     }
 }

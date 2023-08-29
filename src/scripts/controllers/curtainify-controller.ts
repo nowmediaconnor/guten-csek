@@ -6,7 +6,7 @@
 import { BlockController, ControllerProperties } from "../dom";
 import { prepareCurtainElements } from "../curtainify";
 
-export class CurtainifyController extends BlockController {
+export default class CurtainifyController extends BlockController {
     name: string;
     debug: boolean;
     isInitialized: boolean;

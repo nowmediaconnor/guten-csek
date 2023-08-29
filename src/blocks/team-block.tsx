@@ -3,7 +3,7 @@
  * Author: Connor Doman
  */
 
-import { MediaUploadCheck, MediaUpload, InspectorControls } from "@wordpress/block-editor";
+import { MediaUploadCheck, MediaUpload, InspectorControls, useBlockProps } from "@wordpress/block-editor";
 import { Button, PanelBody } from "@wordpress/components";
 import React from "react";
 
@@ -68,10 +68,11 @@ export const TeamBlockEdit = ({ attributes, setAttributes }: TeamBlockProps) => 
 };
 
 export const TeamBlockSave = ({ attributes }: TeamBlockProps) => {
+    const blockProps = useBlockProps.save();
     const { images, title, tagline, copyText, cta, ctaLink } = attributes;
 
     return (
-        <section>
+        <section {...blockProps}>
             <div className="block-content">
                 <h2 className="block-title">{title}</h2>
                 <p className="tagline">{tagline}</p>
@@ -86,11 +87,13 @@ export const TeamBlockSave = ({ attributes }: TeamBlockProps) => {
                 </div>
             </div>
             <div className="headshots">
-                {images.map((image: string, index: number) => (
-                    <div className="headshot" key={index}>
-                        <img src={image} alt="" />
-                    </div>
-                ))}
+                {images.map((image: string, index: number) => {
+                    return (
+                        <div className="headshot" key={index}>
+                            <img src={image} alt="" />
+                        </div>
+                    );
+                })}
             </div>
         </section>
     );
