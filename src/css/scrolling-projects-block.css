@@ -72,15 +72,6 @@
     animation-timing-function: ease-in-out;
 }
 
-.project-ribbon li:has(a):hover {
-    /* animation-name: ribbon-hover; */
-}
-
-.project-ribbon li:has(a):not(:hover) {
-    /* animation-name: ribbon-hover-reverse;
-    animation-fill-mode: forwards; */
-}
-
 .project-ribbon.reverse li {
     position: relative;
     z-index: 10;

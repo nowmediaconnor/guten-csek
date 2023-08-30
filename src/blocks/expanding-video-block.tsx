@@ -123,7 +123,7 @@ export const ExpandingVideoBlockSave = ({ attributes }: ExpandingVideoBlockProps
                         <div className="expanding-video-container">
                             <video
                                 controls={false}
-                                autoPlay={false}
+                                autoPlay={true}
                                 loop={true}
                                 muted={true}
                                 className="object-cover max-w-none object-center relative left-1/2 translate-x-[-50%]">

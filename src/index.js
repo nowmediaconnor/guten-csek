@@ -21,6 +21,7 @@ import ExpandingVideoController from "./scripts/controllers/expanding-video-cont
 import ScrollingProjectsController from "./scripts/controllers/scrolling-projects-controller";
 import CurtainifyController from "./scripts/controllers/curtainify-controller";
 import TeamController from "./scripts/controllers/team-controller";
+import { ProjectMastheadBlockEdit, ProjectMastheadBlockSave } from "./blocks/misc/project-masthead-block";
 
 // so the "edit" component is a place where i can put fields that will be used to edit block attributes
 
@@ -191,43 +192,86 @@ registerBlockType("guten-csek/horizontal-carousel-block", {
     save: HorizontalCarouselBlockSave,
 });
 
+/* Misc Blocks */
+
+// Masthead Block
+registerBlockType("guten-csek/project-masthead-block", {
+    title: "Csek Project Masthead Block",
+    icon: "cover-image",
+    category: "layout",
+    attributes: {
+        clientName: {
+            type: "string",
+            default: "",
+        },
+        projectTitle: {
+            type: "string",
+            default: "",
+        },
+        headerImageURL: {
+            type: "string",
+            default: "",
+        },
+        projectTagline: {
+            type: "string",
+            default: "",
+        },
+        projectSummary: {
+            type: "string",
+            default: "",
+        },
+        taggedServices: {
+            type: "array",
+            default: [],
+        },
+        websiteLink: {
+            type: "string",
+            default: "",
+        },
+    },
+    edit: ProjectMastheadBlockEdit,
+    save: ProjectMastheadBlockSave,
+});
+
+/* Prepare DOM Controller */
+
+// First, prepare curtain elements
+const curtainifyController = new CurtainifyController();
+// prepareCurtainElements();
+
+// "Scroll Down" controller
+const scrollController = new ScrollDownController("scroll-down", ".scroll-down-target");
+// Scrolling carousel
+const carouselController = new CarouselController(".wp-block-guten-csek-horizontal-carousel-block");
+// Video carousel
+const videoCarouselController = new VideoCarouselController(".wp-block-guten-csek-video-carousel-block");
+// Scrolling projects block
+const scrollingProjectsController = new ScrollingProjectsController(".wp-block-guten-csek-scrolling-projects-block");
+// Expanding video controller
+const expandingVideoController = new ExpandingVideoController(".expanding-video-container");
+
+// Team Block Controller
+const teamController = new TeamController(".wp-block-guten-csek-team-block");
+
+// DOM controller
+window.domController = new DOMController(
+    curtainifyController,
+    scrollController,
+    carouselController,
+    videoCarouselController,
+    scrollingProjectsController,
+    expandingVideoController
+    // teamController
+);
+
 // window load listener
 window.addEventListener("load", (e) => {
     console.log("Window loaded.");
     console.log({ windowWidth: window.innerWidth, windowHeight: window.innerHeight });
 
     window.requestAnimationFrame(() => {
-        // First, prepare curtain elements
-        const curtainifyController = new CurtainifyController();
-        // prepareCurtainElements();
-
-        // "Scroll Down" controller
-        const scrollController = new ScrollDownController("scroll-down", ".wp-block-guten-csek-tagline-header-block");
-        // Scrolling carousel
-        const carouselController = new CarouselController(".wp-block-guten-csek-horizontal-carousel-block");
-        // Video carousel
-        const videoCarouselController = new VideoCarouselController(".wp-block-guten-csek-video-carousel-block");
-        // Scrolling projects block
-        const scrollingProjectsController = new ScrollingProjectsController(
-            ".wp-block-guten-csek-scrolling-projects-block"
-        );
-        // Expanding video controller
-        const expandingVideoController = new ExpandingVideoController(".expanding-video-container");
-
-        // Team Block Controller
-        const teamController = new TeamController(".wp-block-guten-csek-team-block");
-
-        // DOM controller
-        const domController = new DOMController(
-            curtainifyController,
-            scrollController,
-            carouselController,
-            videoCarouselController,
-            scrollingProjectsController,
-            expandingVideoController,
-            teamController
-        );
-        // Curtainify
-        domController.setup();
+        window.domController.setup();
+        window.domController.overrideDebug(true, "ScrollDownController");
+        // window.domController.overrideAllDebug(false);
     });
 });

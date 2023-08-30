@@ -6,6 +6,11 @@
 import { shuffle } from "./array";
 import { clampInt, randomIntInRange, randomPartOfOne } from "./math";
 
+export interface GutenbergBlockProps {
+    attributes: any;
+    setAttributes?: any;
+}
+
 export const DOM_FLAGS = {
     DEBUG: true,
     taglineSroll: true,
@@ -241,14 +246,23 @@ export default class DOMController extends BlockController implements DOMControl
         this.debug = true;
     }
 
+    addController(controller: BlockController) {
+        this.blockControllers.push(controller);
+
+        if (this.isInitialized) {
+            controller.setup();
+        }
+        this.addEventListeners();
+    }
+
     prepareLoadingPanel() {
         const existingPanel = document.getElementById("loading") as HTMLDivElement;
         if (existingPanel) {
             this.loadingPanel = existingPanel;
         } else if (!existingPanel) {
             this.loadingPanel = document.createElement("div");
+            this.loadingPanel.id = "loading";
         }
-        this.loadingPanel.id = "loading";
         document.body.prepend(this.loadingPanel);
 
         window.addEventListener("beforeunload", () => {

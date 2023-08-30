@@ -1,4 +1,5 @@
-input[type="text"].csek-input {
+input[type="text"].csek-input,
+textarea.csek-input {
     width: 100%;
 }
 
@@ -40,4 +41,12 @@ input[type="text"].csek-input {
     color: #fff;
     border-radius: 0.25rem;
     padding: 0.25rem 0.5rem;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
 }

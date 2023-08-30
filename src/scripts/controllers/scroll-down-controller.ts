@@ -8,7 +8,6 @@ import CircleType from "circletype";
 
 export default class ScrollDownController extends BlockController {
     name: string;
-    debug: boolean = false;
     scrollDownId: string;
     parentScrollTargetSelector: string;
     scrollDownElement: HTMLElement | null;

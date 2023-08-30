@@ -73,6 +73,8 @@ export class WaypointInterpolator {
     private step: number = 0.01;
     private phase: number = 0;
 
+    debug: boolean = true;
+
     points: Waypoint[];
 
     constructor(points: Waypoint[], width: number, height: number) {
@@ -86,6 +88,7 @@ export class WaypointInterpolator {
     setup() {
         console.log("Setting up WaypointInterpolator...");
 
+        // prepare interpolator
         const waypointX = this.points.map((p) => p.x);
         const waypointY = this.points.map((p) => p.y);
 
@@ -94,28 +97,60 @@ export class WaypointInterpolator {
         this.minX = arrayMin(waypointX);
         this.minY = arrayMin(waypointY);
 
-        const x = waypointX.map((x) => map(x, 0, this.maxX, 0, 1));
-        const y = waypointY.map((y) => map(y, 0, this.maxY, 0, 1));
+        const xList = waypointX.map((x) => map(x, 0, this.width, 0, 1));
+        const yList = waypointY.map((y) => map(y, 0, this.height, 0, 1));
 
-        console.log("Generated x and y arrays:", { x, y });
+        console.log("Generated x and y arrays:", { x: xList, y: xList });
 
-        this.spline = new Spline(x, y);
+        this.spline = new Spline(xList, yList);
+        // this.spline = new Spline(waypointX, waypointY);
+
+        console.log(this.toString());
     }
 
+    /**
+     *
+     * @param x the x value to interpolate, in pixels
+     * @param max (optional) the maximum x value, in pixels. Usually the width of the container.
+     * @returns the interpolated y value, in pixels
+     */
     at(x: number, max?: number): number {
         const mappedX = map(x, 0, max ? max : this.width, 0, 1);
         const y = this.spline.at(mappedX);
-        return map(y, 0, 1, 0, this.height);
+        return y;
     }
 
     interpolate(): Waypoint {
-        const x = this.phase;
-        const y = this.at(x, this.width);
+        const x = this.phase * this.width;
+        const y = this.at(this.phase, this.width);
 
         this.phase += this.step;
 
         if (this.phase > this.width) this.phase = 0;
 
         return { x, y };
+    }
+
+    x(unitValue: number): number {
+        return map(unitValue, 0, 1, 0, this.maxX);
+    }
+
+    interpolatedSet() {
+        const interpolated: number[] = [];
+        for (let i = 0; i < 1; i += 0.01) {
+            interpolated.push(this.at(i));
+        }
+        return interpolated;
+    }
+
+    toString(): string {
+        const points = this.points.map((p) => `(${p.x}, ${p.y})`).join(", ");
+        const interpolated: number[] = [];
+        for (let i = 0; i < 1; i += 0.01) {
+            interpolated.push(this.at(i));
+        }
+        return `WaypointInterpolator: ${this.points.length} points:\n${points}\nInterpolated: ${interpolated.join(
+            ", "
+        )}`;
     }
 }

@@ -60,7 +60,7 @@ export const TaglineHeaderSave = ({ attributes }: TaglineHeaderProps) => {
     const { preTagline, tagline, imageURL } = attributes;
 
     return (
-        <div className="flex flex-col items-center justify-center text-csek-black text-center w-[70%] mx-auto -mb-20 scroll-fade-away">
+        <div className="flex flex-col items-center justify-center text-csek-black text-center w-[70%] mx-auto -mb-20 scroll-fade-away scroll-down-target">
             <div className="z-[25]">
                 <h3 className="font-bold text-xl uppercase font-syne">{preTagline}</h3>
                 <h1 className="text-8xl font-bold uppercase font-syne">{tagline}</h1>
