@@ -21,7 +21,7 @@ import ExpandingVideoController from "./scripts/controllers/expanding-video-cont
 import ScrollingProjectsController from "./scripts/controllers/scrolling-projects-controller";
 import CurtainifyController from "./scripts/controllers/curtainify-controller";
 import TeamController from "./scripts/controllers/team-controller";
-import { ProjectMastheadBlockEdit, ProjectMastheadBlockSave } from "./blocks/misc/project-masthead-block";
+import { ProjectSummaryBlockEdit, ProjectSummaryBlockSave } from "./blocks/misc/project-summary-block";
 
 // so the "edit" component is a place where i can put fields that will be used to edit block attributes
 
@@ -195,22 +195,14 @@ registerBlockType("guten-csek/horizontal-carousel-block", {
 /* Misc Blocks */
 
 // Masthead Block
-registerBlockType("guten-csek/project-masthead-block", {
-    title: "Csek Project Masthead Block",
-    icon: "cover-image",
+registerBlockType("guten-csek/project-summary-block", {
+    title: "Csek Project Summary Block",
+    icon: "text",
     category: "layout",
     attributes: {
-        clientName: {
+        backgroundColor: {
             type: "string",
-            default: "",
-        },
-        projectTitle: {
-            type: "string",
-            default: "",
-        },
-        headerImageURL: {
-            type: "string",
-            default: "",
+            default: "000000",
         },
         projectTagline: {
             type: "string",
@@ -229,8 +221,8 @@ registerBlockType("guten-csek/project-masthead-block", {
             default: "",
         },
     },
-    edit: ProjectMastheadBlockEdit,
-    save: ProjectMastheadBlockSave,
+    edit: ProjectSummaryBlockEdit,
+    save: ProjectSummaryBlockSave,
 });
 
 /* Prepare DOM Controller */
@@ -253,25 +245,21 @@ const expandingVideoController = new ExpandingVideoController(".expanding-video-
 // Team Block Controller
 const teamController = new TeamController(".wp-block-guten-csek-team-block");
 
-// DOM controller
-window.domController = new DOMController(
-    curtainifyController,
-    scrollController,
-    carouselController,
-    videoCarouselController,
-    scrollingProjectsController,
-    expandingVideoController
-    // teamController
-);
-
-// window load listener
-window.addEventListener("load", (e) => {
-    console.log("Window loaded.");
-    console.log({ windowWidth: window.innerWidth, windowHeight: window.innerHeight });
-
-    window.requestAnimationFrame(() => {
-        window.domController.setup();
-        window.domController.overrideDebug(true, "ScrollDownController");
-        // window.domController.overrideAllDebug(false);
-    });
+window.addEventListener("load", () => {
+    // DOM controller
+    window.domController = new DOMController(
+        curtainifyController,
+        scrollController,
+        carouselController,
+        videoCarouselController,
+        scrollingProjectsController,
+        expandingVideoController
+        // teamController
+    );
+    setTimeout(() => {
+        // hide loading panel if DOM controller is not in use...
+        if (!window.domController.isStarted) {
+            window.domController.hideLoadingPanel();
+        }
+    }, 1000);
 });

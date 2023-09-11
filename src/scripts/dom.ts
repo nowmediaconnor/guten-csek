@@ -232,6 +232,8 @@ export default class DOMController extends BlockController implements DOMControl
     debug: boolean;
     isInitialized: boolean;
 
+    isStarted: boolean;
+
     loadingPanel: HTMLDivElement;
 
     isLetsTalkOpen: boolean = false;
@@ -244,6 +246,9 @@ export default class DOMController extends BlockController implements DOMControl
         this.name = "DOMController";
         this.blockControllers = blockControllers;
         this.debug = true;
+        this.isInitialized = false;
+        this.isStarted = false;
+        this.prepareLoadingPanel();
     }
 
     addController(controller: BlockController) {
@@ -262,8 +267,8 @@ export default class DOMController extends BlockController implements DOMControl
         } else if (!existingPanel) {
             this.loadingPanel = document.createElement("div");
             this.loadingPanel.id = "loading";
+            document.body.prepend(this.loadingPanel);
         }
-        document.body.prepend(this.loadingPanel);
 
         window.addEventListener("beforeunload", () => {
             console.log("unload dom controller...");
@@ -301,10 +306,12 @@ export default class DOMController extends BlockController implements DOMControl
     }
 
     setup() {
+        if (this.isStarted === false) this.isStarted = true;
+
         // this.overrideAllDebug(true);
         // this.overrideDebug(true, "ScrollDownController");
 
-        this.prepareLoadingPanel();
+        // this.prepareLoadingPanel();
 
         prepareExpandingVideoBlocks();
 

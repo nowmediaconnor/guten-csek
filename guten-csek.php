@@ -72,6 +72,11 @@ function enqueue_custom_block_assets()
         'editor_style' => 'guten-csek-editor-style',
         'style' => 'guten-csek-frontend-style',
     ));
+    register_block_type('guten-csek/project-summary-block', array(
+        'editor_script' => 'project-summary-block',
+        'editor_style' => 'guten-csek-editor-style',
+        'style' => 'guten-csek-frontend-style',
+    ));
 }
 add_action('init', 'enqueue_custom_block_assets');
 
@@ -84,17 +89,27 @@ function curtainify_enqueue()
 // add_action('wp_enqueue_scripts', 'curtainify_enqueue');
 
 
-function enqueue_styles_iteratively()
+function enqueue_styles_iteratively($directory_path = null)
 {
+    if (!$directory_path) {
+        $directory_path = plugin_dir_path(__FILE__) . '/src/css';
+    }
+
     $plugin_url = plugin_dir_url(__FILE__);
-    $directory_path = plugin_dir_path(__FILE__) . '/src/css';
     $files = scandir($directory_path);
     foreach ($files as $file) {
-        if (pathinfo($file, PATHINFO_EXTENSION) === 'css') {
+        if ($file === '.' || $file === '..') {
+            continue;
+        }
+
+        $full_path = $directory_path . '/' . $file;
+        if (is_dir($full_path)) {
+            enqueue_styles_iteratively($full_path);
+        } elseif (pathinfo($file, PATHINFO_EXTENSION) === 'css') {
             $handle = pathinfo($file, PATHINFO_FILENAME);
             $src = $plugin_url . 'src/css/' . $file;
             $deps = [];
-            $ver = filemtime(plugin_dir_path(__FILE__) . 'src/css/' . $file);
+            $ver = filemtime($full_path);
 
             wp_enqueue_style($handle, $src, $deps, $ver);
         }

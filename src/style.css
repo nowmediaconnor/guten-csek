@@ -73,6 +73,25 @@ body {
     text-transform: uppercase;
 }
 
+.max-width {
+    max-width: var(--max-width);
+    margin: 0 auto;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
 /* Specific Elements */
 
 #loading {

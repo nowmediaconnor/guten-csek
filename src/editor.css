@@ -3,6 +3,12 @@ textarea.csek-input {
     width: 100%;
 }
 
+hr {
+    border: 1px solid #8c8f94;
+    margin: 1rem 0;
+    width: 100%;
+}
+
 .csek-input {
     border: 1px solid #8c8f94;
     padding: 0.25rem;

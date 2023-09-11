@@ -20,7 +20,7 @@
     overflow: hidden;
 }
 
-.row {
+.wp-block-guten-csek-expanding-video-block .row {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -120,12 +120,12 @@
     transition: all 3s ease;
     opacity: 0;
     overflow: hidden;
+    font-family: Montserrat, sans-serif;
 }
 
 .message h2 {
     font-size: 1.5rem;
     font-weight: 500;
-    font-family: Montserrat, sans-serif;
     max-width: 75rem;
 }
 
