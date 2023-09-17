@@ -16,7 +16,7 @@
 }
 
 .project-summary-block .row {
-    gap: 2rem;
+    gap: 5rem;
     justify-content: space-between;
 }
 
@@ -53,5 +53,21 @@
     gap: 2rem;
 }
 
-.website-link {
+.tagged-services ul {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.website-link h3 {
+    display: inline-flex;
+    gap: 2rem;
+    text-wrap: nowrap;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.website-link h3 i {
+    position: relative;
+    bottom: 0.125rem;
 }

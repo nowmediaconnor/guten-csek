@@ -108,6 +108,7 @@ export const ProjectSummaryBlockSave = ({ attributes }: GutenbergBlockProps) => 
                         <h4>Check out our partner</h4>
                         <h3>
                             <a href={websiteLink}>{urlExtractSecondLevelDomain(websiteLink)}</a>
+                            <i className="fa-solid fa-arrow-up-right-from-square"></i>
                         </h3>
                     </div>
                 </div>
