@@ -9,6 +9,10 @@ hr {
     width: 100%;
 }
 
+section {
+    margin: 5rem 0;
+}
+
 .csek-input {
     border: 1px solid #8c8f94;
     padding: 0.25rem;
@@ -55,4 +59,27 @@ hr {
     justify-content: space-between;
     align-items: center;
     gap: 1rem;
+    width: 100%;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    justify-content: stretch;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+}
+
+.preview-image {
+    width: 30%;
+    height: auto;
+}
+
+.csek-card {
+    border: 1px solid #8c8f94;
+    border-radius: 0.25rem;
+    padding: 1rem;
+    margin: 1rem 0;
+    width: 100%;
 }

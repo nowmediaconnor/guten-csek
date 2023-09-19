@@ -7,6 +7,37 @@ Description: Add custom blocks to wordpress for the Gutenberg system of blocks.
 */
 
 require 'kmeans.php';
+
+function enqueue_blocks_iteratively()
+{
+    $block_names = [
+        'tagline-header-block',
+        'expanding-video-block',
+        'block-quote-block',
+        'scrolling-projects-block',
+        'team-block',
+        'video-carousel-block',
+        'horizontal-carousel-block',
+        'project-summary-block',
+        'featured-image-block',
+        'multi-image-block',
+        'left-right-block',
+        'fullscreen-image-block',
+        'vertical-scrolling-images-block',
+        'dom-controller-block'
+    ];
+
+    for ($i = 0; $i < count($block_names); $i++) {
+        $block_name = $block_names[$i];
+
+        register_block_type('guten-csek/' . $block_name, [
+            'editor_script' => $block_name,
+            'editor_style' => 'guten-csek-editor-style',
+            'style' => 'guten-csek-frontend-style',
+        ]);
+    }
+}
+
 function enqueue_custom_block_assets()
 {
     wp_enqueue_script(
@@ -29,6 +60,10 @@ function enqueue_custom_block_assets()
         [],
         filemtime(plugin_dir_path(__FILE__) . 'src/style.css')
     );
+
+    enqueue_blocks_iteratively();
+
+
     // wp_register_style(
     //     'curtainify-style',
     //     plugins_url('src/curtainify.css', __FILE__),
@@ -37,46 +72,71 @@ function enqueue_custom_block_assets()
     // );
 
     // Write the following statement for each block
-    register_block_type('guten-csek/tagline-header-block', array(
-        'editor_script' => 'tagline-header-block',
-        'editor_style' => 'guten-csek-editor-style',
-        'style' => 'guten-csek-frontend-style',
-    ));
-    register_block_type('guten-csek/expanding-video-block', array(
-        'editor_script' => 'expanding-video-block',
-        'editor_style' => 'guten-csek-editor-style',
-        'style' => 'guten-csek-frontend-style',
-    ));
-    register_block_type('guten-csek/block-quote-block', array(
-        'editor_script' => 'block-quote-block',
-        'editor_style' => 'guten-csek-editor-style',
-        'style' => 'guten-csek-frontend-style',
-    ));
-    register_block_type('guten-csek/scrolling-projects-block', array(
-        'editor_script' => 'scrolling-projects-block',
-        'editor_style' => 'guten-csek-editor-style',
-        'style' => 'guten-csek-frontend-style',
-    ));
-    register_block_type('guten-csek/team-block', array(
-        'editor_script' => 'team-block',
-        'editor_style' => 'guten-csek-editor-style',
-        'style' => 'guten-csek-frontend-style',
-    ));
-    register_block_type('guten-csek/video-carousel-block', array(
-        'editor_script' => 'video-carousel-block',
-        'editor_style' => 'guten-csek-editor-style',
-        'style' => 'guten-csek-frontend-style',
-    ));
-    register_block_type('guten-csek/horizontal-carousel-block', array(
-        'editor_script' => 'horizontal-carousel-block',
-        'editor_style' => 'guten-csek-editor-style',
-        'style' => 'guten-csek-frontend-style',
-    ));
-    register_block_type('guten-csek/project-summary-block', array(
-        'editor_script' => 'project-summary-block',
-        'editor_style' => 'guten-csek-editor-style',
-        'style' => 'guten-csek-frontend-style',
-    ));
+    // register_block_type('guten-csek/tagline-header-block', array(
+    //     'editor_script' => 'tagline-header-block',
+    //     'editor_style' => 'guten-csek-editor-style',
+    //     'style' => 'guten-csek-frontend-style',
+    // ));
+    // register_block_type('guten-csek/expanding-video-block', array(
+    //     'editor_script' => 'expanding-video-block',
+    //     'editor_style' => 'guten-csek-editor-style',
+    //     'style' => 'guten-csek-frontend-style',
+    // ));
+    // register_block_type('guten-csek/block-quote-block', array(
+    //     'editor_script' => 'block-quote-block',
+    //     'editor_style' => 'guten-csek-editor-style',
+    //     'style' => 'guten-csek-frontend-style',
+    // ));
+    // register_block_type('guten-csek/scrolling-projects-block', array(
+    //     'editor_script' => 'scrolling-projects-block',
+    //     'editor_style' => 'guten-csek-editor-style',
+    //     'style' => 'guten-csek-frontend-style',
+    // ));
+    // register_block_type('guten-csek/team-block', array(
+    //     'editor_script' => 'team-block',
+    //     'editor_style' => 'guten-csek-editor-style',
+    //     'style' => 'guten-csek-frontend-style',
+    // ));
+    // register_block_type('guten-csek/video-carousel-block', array(
+    //     'editor_script' => 'video-carousel-block',
+    //     'editor_style' => 'guten-csek-editor-style',
+    //     'style' => 'guten-csek-frontend-style',
+    // ));
+    // register_block_type('guten-csek/horizontal-carousel-block', array(
+    //     'editor_script' => 'horizontal-carousel-block',
+    //     'editor_style' => 'guten-csek-editor-style',
+    //     'style' => 'guten-csek-frontend-style',
+    // ));
+    // register_block_type('guten-csek/project-summary-block', array(
+    //     'editor_script' => 'project-summary-block',
+    //     'editor_style' => 'guten-csek-editor-style',
+    //     'style' => 'guten-csek-frontend-style',
+    // ));
+    // register_block_type('guten-csek/featured-image-block', [
+    //     'editor_script' => 'featured-image-block',
+    //     'editor_style' => 'guten-csek-editor-style',
+    //     'style' => 'guten-csek-frontend-style',
+    // ]);
+    // register_block_type('guten-csek/multi-image-block', [
+    //     'editor_script' => 'multi-image-block',
+    //     'editor_style' => 'guten-csek-editor-style',
+    //     'style' => 'guten-csek-frontend-style',
+    // ]);
+    // register_block_type('guten-csek/left-right-block', [
+    //     'editor_script' => 'left-right-block',
+    //     'editor_style' => 'guten-csek-editor-style',
+    //     'style' => 'guten-csek-frontend-style',
+    // ]);
+    // register_block_type('guten-csek/fullscreen-image-block', [
+    //     'editor_script' => 'fullscreen-image-block',
+    //     'editor_style' => 'guten-csek-editor-style',
+    //     'style' => 'guten-csek-frontend-style',
+    // ]);
+    // register_block_type('guten-csek/vertical-scrolling-images-block', [
+    //     'editor_script' => 'vertical-scrolling-images-block',
+    //     'editor_style' => 'guten-csek-editor-style',
+    //     'style' => 'guten-csek-frontend-style',
+    // ]);
 }
 add_action('init', 'enqueue_custom_block_assets');
 
@@ -87,6 +147,7 @@ function curtainify_enqueue()
     wp_enqueue_style('curtainify-style', $plugin_url . 'src/curtainify.css');
 }
 // add_action('wp_enqueue_scripts', 'curtainify_enqueue');
+
 
 
 function enqueue_styles_iteratively($directory_path = null)

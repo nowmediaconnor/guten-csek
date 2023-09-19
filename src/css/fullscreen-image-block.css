@@ -1,0 +1,15 @@
+/*
+ * Created on Sun Sep 17 2023
+ * Author: Connor Doman
+ */
+
+.wp-block-guten-csek-fullscreen-image-block {
+    min-height: 100vh;
+    font-family: "Montserrat", sans-serif;
+}
+
+.fullscreen-image {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}

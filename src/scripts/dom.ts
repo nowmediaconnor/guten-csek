@@ -4,12 +4,71 @@
  */
 
 import { shuffle } from "./array";
+import CarouselController from "./controllers/carousel-controller";
+import CurtainifyController from "./controllers/curtainify-controller";
+import ExpandingVideoController from "./controllers/expanding-video-controller";
+import ScrollDownController from "./controllers/scroll-down-controller";
+import ScrollingProjectsController from "./controllers/scrolling-projects-controller";
+import TeamController from "./controllers/team-controller";
+import VideoCarouselController from "./controllers/video-carousel-controller";
 import { clampInt, randomIntInRange, randomPartOfOne } from "./math";
 
 export interface GutenbergBlockProps {
     attributes: any;
     setAttributes?: any;
 }
+
+export interface ControllerScript {
+    name: string;
+    shortName: string;
+    script: string;
+    parameters: string[];
+}
+
+export const controllerScriptRegistry: ControllerScript[] = [
+    {
+        name: "CurtainifyController",
+        shortName: "curainifyController",
+        script: "curtainify-controller.ts",
+        parameters: [],
+    },
+    {
+        name: "ScrollDownController",
+        shortName: "scrollDownController",
+        script: "scroll-down-controller.ts",
+        parameters: ["scroll-down", ".scroll-down-target"],
+    },
+    {
+        name: "CarouselController",
+        shortName: "carouselController",
+        script: "carousel-controller.ts",
+        parameters: [".wp-block-guten-csek-horizontal-carousel-block"],
+    },
+    {
+        name: "VideoCarouselController",
+        shortName: "videoCarouselController",
+        script: "video-carousel-controller.ts",
+        parameters: [".wp-block-guten-csek-video-carousel-block"],
+    },
+    {
+        name: "ScrollingProjectsController",
+        shortName: "scrollingProjectsController",
+        script: "scrolling-projects-controller.ts",
+        parameters: [".wp-block-guten-csek-scrolling-projects-block"],
+    },
+    {
+        name: "ExpandingVideoController",
+        shortName: "expandingVideoController",
+        script: "expanding-video-controller.ts",
+        parameters: [".expanding-video-container"],
+    },
+    {
+        name: "TeamController",
+        shortName: "teamController",
+        script: "team-controller.ts",
+        parameters: [".wp-block-guten-csek-team-block"],
+    },
+];
 
 export const DOM_FLAGS = {
     DEBUG: true,

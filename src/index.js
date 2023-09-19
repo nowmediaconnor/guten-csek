@@ -22,6 +22,16 @@ import ScrollingProjectsController from "./scripts/controllers/scrolling-project
 import CurtainifyController from "./scripts/controllers/curtainify-controller";
 import TeamController from "./scripts/controllers/team-controller";
 import { ProjectSummaryBlockEdit, ProjectSummaryBlockSave } from "./blocks/misc/project-summary-block";
+import { FeaturedImageBlockEdit, FeaturedImageBlockSave } from "./blocks/misc/featured-image-block";
+import { MultiImageBlockEdit, MultiImageBlockSave } from "./blocks/misc/multi-image-block";
+import { LeftRightBlockEdit, LeftRightBlockSave } from "./blocks/misc/left-right-block";
+import { FullscreenImageBlockEdit, FullscreenImageBlockSave } from "./blocks/misc/fullscreen-image-block";
+import {
+    VerticalScrollingImagesBlockEdit,
+    VerticalScrollingImagesBlockSave,
+} from "./blocks/misc/vertical-scrolling-images-block";
+import { DOMControllerBlockEdit, DOMControllerBlockSave } from "./blocks/dom-controller-block";
+import VerticalScrollingImagesController from "./scripts/controllers/vertical-scrolling-images-controller";
 
 // so the "edit" component is a place where i can put fields that will be used to edit block attributes
 
@@ -225,27 +235,172 @@ registerBlockType("guten-csek/project-summary-block", {
     save: ProjectSummaryBlockSave,
 });
 
-/* Prepare DOM Controller */
+// Featured Image Block
+registerBlockType("guten-csek/featured-image-block", {
+    title: "Csek Featured Image Block",
+    icon: "format-image",
+    category: "media",
+    attributes: {
+        imageURL: {
+            type: "string",
+            default: "",
+        },
+        imageAlt: {
+            type: "string",
+            default: "",
+        },
+    },
+    edit: FeaturedImageBlockEdit,
+    save: FeaturedImageBlockSave,
+});
 
-// First, prepare curtain elements
-const curtainifyController = new CurtainifyController();
-// prepareCurtainElements();
+// Multi Image Block
+registerBlockType("guten-csek/multi-image-block", {
+    title: "Csek Multi Image Block",
+    icon: "format-image",
+    category: "media",
+    attributes: {
+        images: {
+            type: "array",
+            default: [],
+        },
+        numberOfImages: {
+            type: "string",
+            default: "1",
+        },
+        title: {
+            type: "string",
+            default: "",
+        },
+        altTexts: {
+            type: "array",
+            default: [],
+        },
+    },
+    edit: MultiImageBlockEdit,
+    save: MultiImageBlockSave,
+});
 
-// "Scroll Down" controller
-const scrollController = new ScrollDownController("scroll-down", ".scroll-down-target");
-// Scrolling carousel
-const carouselController = new CarouselController(".wp-block-guten-csek-horizontal-carousel-block");
-// Video carousel
-const videoCarouselController = new VideoCarouselController(".wp-block-guten-csek-video-carousel-block");
-// Scrolling projects block
-const scrollingProjectsController = new ScrollingProjectsController(".wp-block-guten-csek-scrolling-projects-block");
-// Expanding video controller
-const expandingVideoController = new ExpandingVideoController(".expanding-video-container");
+// Left-Right Block
+registerBlockType("guten-csek/left-right-block", {
+    title: "Csek Left-Right Block",
+    icon: "columns",
+    category: "text",
+    attributes: {
+        text: {
+            type: "string",
+            default: "",
+        },
+        image: {
+            type: "string",
+            default: "",
+        },
+        altText: {
+            type: "string",
+            default: "",
+        },
+        direction: {
+            enum: ["left", "right"],
+        },
+    },
+    edit: LeftRightBlockEdit,
+    save: LeftRightBlockSave,
+});
 
-// Team Block Controller
-const teamController = new TeamController(".wp-block-guten-csek-team-block");
+// Fullscreen Image Block
+registerBlockType("guten-csek/fullscreen-image-block", {
+    title: "Csek Fullscreen Image Block",
+    icon: "format-image",
+    category: "media",
+    attributes: {
+        imageURL: {
+            type: "string",
+            default: "",
+        },
+        imageAlt: {
+            type: "string",
+            default: "",
+        },
+    },
+    edit: FullscreenImageBlockEdit,
+    save: FullscreenImageBlockSave,
+});
+
+// Vertical Scrolling Images Block
+registerBlockType("guten-csek/vertical-scrolling-images-block", {
+    title: "Csek Vertical Scrolling Images Block",
+    icon: "format-image",
+    category: "media",
+    attributes: {
+        images: {
+            type: "array",
+            default: [],
+        },
+        numberOfImages: {
+            type: "string",
+            default: "1",
+        },
+        imageAlts: {
+            type: "array",
+            default: [],
+        },
+        links: {
+            type: "array",
+            default: [],
+        },
+    },
+    edit: VerticalScrollingImagesBlockEdit,
+    save: VerticalScrollingImagesBlockSave,
+});
+
+// DOM Controller Block
+registerBlockType("guten-csek/dom-controller-block", {
+    title: "Csek Script Manager Block",
+    icon: "admin-settings",
+    category: "text",
+    attributes: {
+        controllerScripts: {
+            type: "array",
+            default: [],
+        },
+        enabledScripts: {
+            type: "array",
+            default: [],
+        },
+    },
+    edit: DOMControllerBlockEdit,
+    save: DOMControllerBlockSave,
+});
 
 window.addEventListener("load", () => {
+    /* Prepare DOM Controller */
+
+    // First, prepare curtain elements
+    const curtainifyController = new CurtainifyController();
+    // prepareCurtainElements();
+
+    // "Scroll Down" controller
+    const scrollController = new ScrollDownController("scroll-down", ".scroll-down-target");
+    // Scrolling carousel
+    const carouselController = new CarouselController(".wp-block-guten-csek-horizontal-carousel-block");
+    // Video carousel
+    const videoCarouselController = new VideoCarouselController(".wp-block-guten-csek-video-carousel-block");
+    // Scrolling projects block
+    const scrollingProjectsController = new ScrollingProjectsController(
+        ".wp-block-guten-csek-scrolling-projects-block"
+    );
+    // Expanding video controller
+    const expandingVideoController = new ExpandingVideoController(".expanding-video-container");
+
+    // Team Block Controller
+    const teamController = new TeamController(".wp-block-guten-csek-team-block");
+
+    // Vertical Scrolling Images Controller
+    const verticalImagesController = new VerticalScrollingImagesController(
+        ".vertical-scroll-container",
+        ".vertical-scroll-grid"
+    );
+
     // DOM controller
     window.domController = new DOMController(
         curtainifyController,
@@ -253,7 +408,8 @@ window.addEventListener("load", () => {
         carouselController,
         videoCarouselController,
         scrollingProjectsController,
-        expandingVideoController
+        expandingVideoController,
+        verticalImagesController
         // teamController
     );
     setTimeout(() => {
