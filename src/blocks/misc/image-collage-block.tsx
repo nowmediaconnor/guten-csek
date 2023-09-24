@@ -45,7 +45,7 @@ export const ImageCollageBlockEdit = ({ attributes, setAttributes }: GutenbergBl
 
     const imagePreviewElements = images.map((image: any, index: number) => {
         return (
-            <div className="csek-card">
+            <div className="csek-card w-full">
                 <h4>Image Preview</h4>
                 <div className="flex flex-col gap-2">
                     <img className="preview-image" src={image} alt={imageAlts[index]} />

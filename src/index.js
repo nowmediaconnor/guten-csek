@@ -28,6 +28,7 @@ import { LeftRightBlockEdit, LeftRightBlockSave } from "./blocks/misc/left-right
 import { FullscreenImageBlockEdit, FullscreenImageBlockSave } from "./blocks/misc/fullscreen-image-block";
 import { DOMControllerBlockEdit, DOMControllerBlockSave } from "./blocks/dom-controller-block";
 import { ImageCollageBlockEdit, ImageCollageBlockSave } from "./blocks/misc/image-collage-block";
+import { ScreenshotCollageBlockEdit, ScreenshotCollageBlockSave } from "./blocks/misc/screenshot-collage-block";
 
 // so the "edit" component is a place where i can put fields that will be used to edit block attributes
 
@@ -362,6 +363,33 @@ registerBlockType("guten-csek/image-collage-block", {
     },
     edit: ImageCollageBlockEdit,
     save: ImageCollageBlockSave,
+});
+
+// Screenshot Collage Block
+registerBlockType("guten-csek/screenshot-collage-block", {
+    title: "Csek Screenshot Collage Block",
+    icon: "desktop",
+    category: "media",
+    attributes: {
+        screenshots: {
+            type: "array",
+            default: [],
+        },
+        screenshotAlts: {
+            type: "array",
+            default: [],
+        },
+        backgroundColor: {
+            type: "string",
+            default: "#000000",
+        },
+        angleDegrees: {
+            type: "number",
+            default: 0,
+        },
+    },
+    edit: ScreenshotCollageBlockEdit,
+    save: ScreenshotCollageBlockSave,
 });
 
 window.addEventListener("load", () => {

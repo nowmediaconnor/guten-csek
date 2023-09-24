@@ -24,7 +24,8 @@ function enqueue_blocks_iteratively()
         'left-right-block',
         'fullscreen-image-block',
         'dom-controller-block',
-        'image-collage-block'
+        'image-collage-block',
+        'screenshot-collage-block'
     ];
 
     for ($i = 0; $i < count($block_names); $i++) {
