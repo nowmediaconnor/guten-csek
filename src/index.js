@@ -26,12 +26,8 @@ import { FeaturedImageBlockEdit, FeaturedImageBlockSave } from "./blocks/misc/fe
 import { MultiImageBlockEdit, MultiImageBlockSave } from "./blocks/misc/multi-image-block";
 import { LeftRightBlockEdit, LeftRightBlockSave } from "./blocks/misc/left-right-block";
 import { FullscreenImageBlockEdit, FullscreenImageBlockSave } from "./blocks/misc/fullscreen-image-block";
-import {
-    VerticalScrollingImagesBlockEdit,
-    VerticalScrollingImagesBlockSave,
-} from "./blocks/misc/vertical-scrolling-images-block";
 import { DOMControllerBlockEdit, DOMControllerBlockSave } from "./blocks/dom-controller-block";
-import VerticalScrollingImagesController from "./scripts/controllers/vertical-scrolling-images-controller";
+import { ImageCollageBlockEdit, ImageCollageBlockSave } from "./blocks/misc/image-collage-block";
 
 // so the "edit" component is a place where i can put fields that will be used to edit block attributes
 
@@ -326,33 +322,6 @@ registerBlockType("guten-csek/fullscreen-image-block", {
     save: FullscreenImageBlockSave,
 });
 
-// Vertical Scrolling Images Block
-registerBlockType("guten-csek/vertical-scrolling-images-block", {
-    title: "Csek Vertical Scrolling Images Block",
-    icon: "format-image",
-    category: "media",
-    attributes: {
-        images: {
-            type: "array",
-            default: [],
-        },
-        numberOfImages: {
-            type: "string",
-            default: "1",
-        },
-        imageAlts: {
-            type: "array",
-            default: [],
-        },
-        links: {
-            type: "array",
-            default: [],
-        },
-    },
-    edit: VerticalScrollingImagesBlockEdit,
-    save: VerticalScrollingImagesBlockSave,
-});
-
 // DOM Controller Block
 registerBlockType("guten-csek/dom-controller-block", {
     title: "Csek Script Manager Block",
@@ -369,7 +338,30 @@ registerBlockType("guten-csek/dom-controller-block", {
         },
     },
     edit: DOMControllerBlockEdit,
-    save: DOMControllerBlockSave,
+    save: () => null,
+});
+
+// Image Collage Block
+registerBlockType("guten-csek/image-collage-block", {
+    title: "Csek Image Collage Block",
+    icon: "format-image",
+    category: "media",
+    attributes: {
+        images: {
+            type: "array",
+            default: [],
+        },
+        imageAlts: {
+            type: "array",
+            default: [],
+        },
+        backgroundColor: {
+            type: "string",
+            default: "#000000",
+        },
+    },
+    edit: ImageCollageBlockEdit,
+    save: ImageCollageBlockSave,
 });
 
 window.addEventListener("load", () => {
@@ -396,10 +388,10 @@ window.addEventListener("load", () => {
     const teamController = new TeamController(".wp-block-guten-csek-team-block");
 
     // Vertical Scrolling Images Controller
-    const verticalImagesController = new VerticalScrollingImagesController(
-        ".vertical-scroll-container",
-        ".vertical-scroll-grid"
-    );
+    // const verticalImagesController = new VerticalScrollingImagesController(
+    //     ".vertical-scroll-container",
+    //     ".vertical-scroll-grid"
+    // );
 
     // DOM controller
     window.domController = new DOMController(
@@ -408,8 +400,8 @@ window.addEventListener("load", () => {
         carouselController,
         videoCarouselController,
         scrollingProjectsController,
-        expandingVideoController,
-        verticalImagesController
+        expandingVideoController
+        // verticalImagesController
         // teamController
     );
     setTimeout(() => {
