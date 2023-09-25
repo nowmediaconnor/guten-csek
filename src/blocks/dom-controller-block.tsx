@@ -5,6 +5,7 @@
 
 import React from "react";
 import { ControllerScript, GutenbergBlockProps, controllerScriptRegistry } from "../scripts/dom";
+import { Heading } from "../components/heading";
 
 export const DOMControllerBlockEdit = ({ attributes, setAttributes }: GutenbergBlockProps) => {
     const { controllerScripts, enabledScripts } = attributes;
@@ -23,14 +24,14 @@ export const DOMControllerBlockEdit = ({ attributes, setAttributes }: GutenbergB
                     checked={enabledScripts[index]}
                     onChange={() => setScriptEnabled(index, !enabledScripts[index])}
                 />
-                <h4>{controller.name}</h4>
+                <Heading level="4">{controller.name}</Heading>
             </span>
         );
     });
 
     return (
         <section>
-            <h3>Script Manager Block</h3>
+            <Heading level="3">Script Manager Block</Heading>
             <div className="column csek-card">{domControllerScripts}</div>
         </section>
     );

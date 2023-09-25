@@ -11,6 +11,7 @@ import { ColorPicker } from "@wordpress/components";
 import "../../css/project-summary-block.css";
 import { LegacyColor } from "@wordpress/components/build-types/color-picker/types";
 import { urlExtractSecondLevelDomain } from "../../scripts/strings";
+import { Heading } from "../../components/heading";
 
 export const ProjectSummaryBlockEdit = ({ attributes, setAttributes }: GutenbergBlockProps) => {
     const blockProps = useBlockProps();
@@ -44,7 +45,7 @@ export const ProjectSummaryBlockEdit = ({ attributes, setAttributes }: Gutenberg
                 <ColorPicker color={backgroundColor} onChangeComplete={setBackgroundColor} copyFormat="hex" />
             </InspectorControls>
             <section {...blockProps}>
-                <h2>Project Summary Block</h2>
+                <Heading level="2">Project Summary Block</Heading>
                 <input
                     type="text"
                     className="csek-input"

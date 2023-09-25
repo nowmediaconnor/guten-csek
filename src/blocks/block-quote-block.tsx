@@ -4,6 +4,7 @@
  */
 
 import React from "react";
+import { Heading } from "../components/heading";
 
 interface BlockQuoteProps {
     attributes: any;
@@ -28,7 +29,7 @@ export const BlockQuoteEdit = ({ attributes, setAttributes }: BlockQuoteProps) =
 
     return (
         <div className="flex flex-col w-full gap-4">
-            <h2>Blockquote</h2>
+            <Heading level="2">Blockquote</Heading>
             <input type="text" placeholder="Heading" value={heading} onChange={setHeading} />
             <textarea placeholder="Quote" value={quote} onChange={setQuote} />
             <input type="text" placeholder="Author" value={author} onChange={setAuthor} />

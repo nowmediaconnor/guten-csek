@@ -7,6 +7,7 @@ import React from "react";
 import { GutenbergBlockProps } from "../../scripts/dom";
 import { MediaUpload, useBlockProps } from "@wordpress/block-editor";
 import { Button, ColorPicker } from "@wordpress/components";
+import { Heading } from "../../components/heading";
 
 export const ImageCollageBlockEdit = ({ attributes, setAttributes }: GutenbergBlockProps) => {
     const blockProps = useBlockProps();
@@ -46,7 +47,7 @@ export const ImageCollageBlockEdit = ({ attributes, setAttributes }: GutenbergBl
     const imagePreviewElements = images.map((image: any, index: number) => {
         return (
             <div className="csek-card w-full">
-                <h4>Image Preview</h4>
+                <Heading level="4">Image Preview</Heading>
                 <div className="flex flex-col gap-2">
                     <img className="preview-image" src={image} alt={imageAlts[index]} />
                     <MediaUpload
@@ -61,7 +62,7 @@ export const ImageCollageBlockEdit = ({ attributes, setAttributes }: GutenbergBl
                         )}
                     />
                 </div>
-                <h4>Image Alt Text</h4>
+                <Heading level="4">Image Alt Text</Heading>
                 <input
                     className="csek-input"
                     type="text"
@@ -79,7 +80,7 @@ export const ImageCollageBlockEdit = ({ attributes, setAttributes }: GutenbergBl
 
     return (
         <section {...blockProps} className="p-4">
-            <h3>Csek Image Collage Block</h3>
+            <Heading level="3">Csek Image Collage Block</Heading>
             <div className="flex flex-row justify-between gap-4">
                 <div className="flex flex-col">
                     {imagePreviewElements}
@@ -88,7 +89,7 @@ export const ImageCollageBlockEdit = ({ attributes, setAttributes }: GutenbergBl
                     </Button>
                 </div>
                 <div className="flex flex-col csek-card h-max">
-                    <h4>Background Color</h4>
+                    <Heading level="4">Background Color</Heading>
                     <ColorPicker color={backgroundColor} onChangeComplete={setBackgroundColor} copyFormat="hex" />
                 </div>
             </div>

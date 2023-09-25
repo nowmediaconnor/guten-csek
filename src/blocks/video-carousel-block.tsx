@@ -14,12 +14,12 @@ import {
     Card,
     CardHeader,
     CardBody,
-    __experimentalHeading as Heading,
     __experimentalText as Text,
     __experimentalVStack as VStack,
     CardFooter,
     TextareaControl,
 } from "@wordpress/components";
+import { Heading } from "../components/heading";
 
 interface Video {
     videoTitle: string;
@@ -61,7 +61,7 @@ export const VideoCarouselBlockEdit = ({ attributes, setAttributes }: VideoCarou
         return (
             <div key={index} className="video-carousel-data">
                 <div className="flex flex-row justify-between items-center">
-                    <h3>Video {index + 1}</h3>
+                    <Heading level="3">Video {index + 1}</Heading>
                     <Button
                         className="csek-video-remove"
                         icon="trash"
@@ -70,7 +70,7 @@ export const VideoCarouselBlockEdit = ({ attributes, setAttributes }: VideoCarou
                         Delete
                     </Button>
                 </div>
-                <h4>Title</h4>
+                <Heading level="4">Title</Heading>
                 <input
                     type="text"
                     className="csek-input"
@@ -83,7 +83,7 @@ export const VideoCarouselBlockEdit = ({ attributes, setAttributes }: VideoCarou
                         )
                     }
                 />
-                <h4>Caption</h4>
+                <Heading level="4">Caption</Heading>
                 <em className="em-label">Rich text</em>
                 <RichText
                     tagName="div"
@@ -98,7 +98,7 @@ export const VideoCarouselBlockEdit = ({ attributes, setAttributes }: VideoCarou
                         )
                     }
                 />
-                <h4>URL</h4>
+                <Heading level="4">URL</Heading>
                 <MediaUploadCheck>
                     <MediaUpload
                         onSelect={(media) =>
@@ -120,7 +120,7 @@ export const VideoCarouselBlockEdit = ({ attributes, setAttributes }: VideoCarou
     });
     return (
         <div {...blockProps}>
-            <h2>Csek Video Carousel Block</h2>
+            <Heading level="2">Csek Video Carousel Block</Heading>
             {videoElements}
             <Button onClick={handleAddVideo} icon="plus" className="csek-button">
                 Add Video

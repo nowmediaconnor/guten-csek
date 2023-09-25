@@ -3,8 +3,15 @@
  * Author: Connor Doman
  */
 import React from "react";
-import { MediaUploadCheck, MediaUpload, InspectorControls, useBlockProps } from "@wordpress/block-editor";
+import {
+    MediaUploadCheck,
+    MediaUpload,
+    InspectorControls,
+    useBlockProps,
+    useInnerBlocksProps,
+} from "@wordpress/block-editor";
 import { Button, PanelBody } from "@wordpress/components";
+import { Heading } from "../components/heading";
 
 interface ExpandingVideoBlockProps {
     attributes: any;
@@ -14,6 +21,7 @@ interface ExpandingVideoBlockProps {
 
 export const ExpandingVideoBlockEdit = ({ attributes, setAttributes }: ExpandingVideoBlockProps) => {
     const blockProps = useBlockProps();
+    const { children, ...innerBlockProps } = useInnerBlocksProps(blockProps);
 
     const { videoURL, images, messageHeading, message } = attributes;
 
@@ -38,7 +46,7 @@ export const ExpandingVideoBlockEdit = ({ attributes, setAttributes }: Expanding
                 <div className="flex flex-col">
                     <PanelBody title="Expanding Video Block Media">
                         <MediaUploadCheck>
-                            <h3>Video</h3>
+                            <Heading level="3">Video</Heading>
                             <MediaUpload
                                 onSelect={onSelectVideo}
                                 allowedTypes={["video"]}
@@ -51,7 +59,7 @@ export const ExpandingVideoBlockEdit = ({ attributes, setAttributes }: Expanding
                                 </div>
                             )}
                             <hr />
-                            <h3>Images</h3>
+                            <Heading level="3">Images</Heading>
                             <MediaUpload
                                 onSelect={onSelectImages}
                                 allowedTypes={["image"]}
@@ -64,7 +72,8 @@ export const ExpandingVideoBlockEdit = ({ attributes, setAttributes }: Expanding
                     </PanelBody>
                 </div>
             </InspectorControls>
-            <h2>Expanding Video Block</h2>
+            <Heading level="2">Csek Curtain Video Block</Heading>
+            <Heading level="4">Message Heading</Heading>
             <input
                 type="text"
                 className="csek-input"
@@ -72,6 +81,7 @@ export const ExpandingVideoBlockEdit = ({ attributes, setAttributes }: Expanding
                 value={messageHeading}
                 onChange={(e) => onUpdateMessageHeading(e)}
             />
+            <Heading level="4">Message Body</Heading>
             <textarea
                 className="csek-input"
                 placeholder="Message"
@@ -79,10 +89,16 @@ export const ExpandingVideoBlockEdit = ({ attributes, setAttributes }: Expanding
                 onChange={(e) => onUpdateMessage(e)}
             />
             {videoURL ? (
-                <video width="320" height="180" className="border-2 border-blue-400 mx-auto">
-                    <source src={videoURL as string} />
-                </video>
+                <>
+                    <Heading level="4">Video Preview</Heading>
+                    <video width="320" height="180" className="border-2 border-blue-400 mx-auto">
+                        <source src={videoURL as string} />
+                    </video>
+                </>
             ) : null}
+            <h4 className="m-0">Inner Block</h4>
+            <em className="em-label">Click the box below to add a block that will appear behind the curtains</em>
+            <div className="csek-input p-4">{children as React.ReactNode}</div>
         </div>
     );
 };

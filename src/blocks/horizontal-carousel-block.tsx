@@ -15,11 +15,11 @@ import {
     Card,
     CardHeader,
     CardBody,
-    __experimentalHeading as Heading,
     __experimentalText as Text,
     __experimentalVStack as VStack,
     CardFooter,
 } from "@wordpress/components";
+import { Heading } from "../components/heading";
 
 export interface HorizontalCarouselBlockProps {
     attributes: {
@@ -50,7 +50,7 @@ export const HorizontalCarouselBlockEdit = ({ attributes, setAttributes }: Horiz
         cards.push(
             <Card key={i}>
                 <CardHeader>
-                    <Heading level={2}>Card {i + 1}</Heading>
+                    <Heading level="2">Card {i + 1}</Heading>
                 </CardHeader>
                 <CardBody>
                     <TextControl
@@ -81,8 +81,8 @@ export const HorizontalCarouselBlockEdit = ({ attributes, setAttributes }: Horiz
                 </PanelBody>
             </InspectorControls>
             <div>
-                <h2>Horizontal Carousel Block</h2>
-                <p>{numItems} items in list.</p>
+                <Heading level="2">Horizontal Carousel Block</Heading>
+                <p>{numItems} item{numItems != 1 ? 's' : ''} in list.</p>
             </div>
         </div>
     );

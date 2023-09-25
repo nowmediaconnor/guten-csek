@@ -9,6 +9,7 @@ import { GutenbergBlockProps } from "../../scripts/dom";
 
 import { MediaUpload, MediaUploadCheck, useBlockProps } from "@wordpress/block-editor";
 import { Button } from "@wordpress/components";
+import { Heading } from "../../components/heading";
 
 export const LeftRightBlockEdit = ({ attributes, setAttributes }: GutenbergBlockProps) => {
     const blockProps = useBlockProps();
@@ -17,15 +18,15 @@ export const LeftRightBlockEdit = ({ attributes, setAttributes }: GutenbergBlock
 
     return (
         <section {...blockProps}>
-            <h3>Csek Left-Right Block</h3>
-            <h5>Direction</h5>
+            <Heading level="3">Csek Left-Right Block</Heading>
+            <Heading level="5">Direction</Heading>
             <select onChange={(e) => setAttributes({ direction: e.target.value })}>
                 <option value="left">Left to Right</option>
                 <option value="right">Right to Left</option>
             </select>
             <div className="row">
                 <div className="column">
-                    <h5>Body text</h5>
+                    <Heading level="5">Body text</Heading>
                     <textarea
                         className="csek-input"
                         value={text}

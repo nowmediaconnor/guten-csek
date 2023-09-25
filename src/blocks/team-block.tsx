@@ -6,6 +6,7 @@
 import { MediaUploadCheck, MediaUpload, InspectorControls, useBlockProps } from "@wordpress/block-editor";
 import { Button, PanelBody } from "@wordpress/components";
 import React from "react";
+import { Heading } from "../components/heading";
 
 interface TeamBlockProps {
     attributes: any;
@@ -41,7 +42,7 @@ export const TeamBlockEdit = ({ attributes, setAttributes }: TeamBlockProps) => 
                 <div className="flex flex-col">
                     <PanelBody title="Expanding Video Block Media">
                         <MediaUploadCheck>
-                            <h3>Headshot Images</h3>
+                            <Heading level="3">Headshot Images</Heading>
                             <MediaUpload
                                 onSelect={onSelectImages}
                                 allowedTypes={["image"]}
@@ -54,7 +55,7 @@ export const TeamBlockEdit = ({ attributes, setAttributes }: TeamBlockProps) => 
                     </PanelBody>
                 </div>
             </InspectorControls>
-            <h2>Team Block</h2>
+            <Heading level="2">Team Block</Heading>
             <div className="w-full flex flex-col gap-4">
                 <p>{images.length} images selected.</p>
                 <input type="text" value={title} onChange={onSetBlockTitle} placeholder="Block Title" />
