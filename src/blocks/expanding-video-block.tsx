@@ -105,6 +105,7 @@ export const ExpandingVideoBlockEdit = ({ attributes, setAttributes }: Expanding
 
 export const ExpandingVideoBlockSave = ({ attributes }: ExpandingVideoBlockProps) => {
     const blockProps = useBlockProps.save();
+    const { children, ...innerBlockProps } = useInnerBlocksProps.save(blockProps);
 
     const { videoURL, images, messageHeading, message } = attributes;
 
@@ -154,6 +155,7 @@ export const ExpandingVideoBlockSave = ({ attributes }: ExpandingVideoBlockProps
                     </div>
                 </div>
             </div>
+            {children as React.ReactNode}
         </>
     );
 };

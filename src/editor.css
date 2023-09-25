@@ -13,6 +13,10 @@ section {
     margin: 5rem 0;
 }
 
+.is-root-container > div + div {
+    margin-top: 3rem;
+}
+
 .csek-input {
     border: 1px solid #8c8f94;
     padding: 0.25rem;

@@ -8,61 +8,64 @@
 .wp-block-guten-csek-horizontal-carousel-block {
     width: 100%;
     height: 100vh;
-    position: relative;
+    top: 0;
+    position: sticky;
     background: var(--csek-dark);
     color: white;
-    font-family: Syne, sans-serif;
+    font-family: "Syne", sans-serif;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-}
+    
+    & h2 {
+        font-size: 3rem;
+        font-weight: bold;
+        color: var(--csek-red);
+    }
+    
+    & p {
+        font-family: Montserrat, sans-serif;
+    }
 
-.carousel-item h1 {
-    font-size: 40rem;
-    color: white;
-    margin: 0;
-    padding: 0;
-    line-height: 1;
-}
-.wp-block-guten-csek-horizontal-carousel-block h2 {
-    font-size: 3rem;
-    font-weight: bold;
-    color: var(--csek-red);
-}
-.wp-block-guten-csek-horizontal-carousel-block p {
-    font-family: Montserrat, sans-serif;
-}
+    & .carousel {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+        position: relative;
+        width: 100%;
+        height: auto;
+        /* overflow: hidden; */
+        transition: transform ease 0.75s;
 
-.carousel {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
-    position: relative;
-    width: 100%;
-    height: auto;
-    /* overflow: hidden; */
-    transition: transform ease 0.75s;
-}
+        & .carousel-item {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            min-width: 100vw;
+            flex-basis: 100vw;
+            pointer-events: none;
+            
+            & h1 {
+                font-size: 40rem;
+                color: white;
+                margin: 0;
+                padding: 0;
+                line-height: 1;
+            }
 
-.carousel-item {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    min-width: 100vw;
-    flex-basis: 100vw;
-    pointer-events: none;
-}
-
-.carousel-item-body {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    max-width: 50rem;
-    padding: 0 2rem;
+            & .carousel-item-body {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: flex-start;
+                max-width: 50rem;
+                padding: 0 2rem;
+            }
+        }
+    }
 }
 
 .carousel-slider-progress {
@@ -108,4 +111,12 @@
 }
 .carousel-slider-progress .status i {
     font-size: 0.75rem;
+}
+
+.dummy-block {
+    display: block;
+    height: 100vh;
+    width: 100%;
+    position: relative;
+    z-index: -20;
 }

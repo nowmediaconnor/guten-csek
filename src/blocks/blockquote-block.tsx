@@ -6,12 +6,12 @@
 import React from "react";
 import { Heading } from "../components/heading";
 
-interface BlockQuoteProps {
+interface BlockquoteProps {
     attributes: any;
     setAttributes?: any;
 }
 
-export const BlockQuoteEdit = ({ attributes, setAttributes }: BlockQuoteProps) => {
+export const BlockquoteEdit = ({ attributes, setAttributes }: BlockquoteProps) => {
     const { heading, quote, author, authorRole } = attributes;
 
     const setHeading = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -38,7 +38,7 @@ export const BlockQuoteEdit = ({ attributes, setAttributes }: BlockQuoteProps) =
     );
 };
 
-export const BlockQuoteSave = ({ attributes }: BlockQuoteProps) => {
+export const BlockquoteSave = ({ attributes }: BlockquoteProps) => {
     const { heading, quote, author, authorRole } = attributes;
 
     return (

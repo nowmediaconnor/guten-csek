@@ -8,7 +8,7 @@ const { registerBlockType } = wp.blocks;
 import DOMController from "./scripts/dom";
 import { TaglineHeaderEdit, TaglineHeaderSave } from "./blocks/tagline-header-block";
 import { ExpandingVideoBlockEdit, ExpandingVideoBlockSave } from "./blocks/expanding-video-block";
-import { BlockQuoteEdit, BlockQuoteSave } from "./blocks/block-quote-block";
+import { BlockquoteEdit, BlockquoteSave } from "./blocks/blockquote-block";
 import { ScrollingProjectsBlockEdit, ScrollingProjectsBlockSave } from "./blocks/scrolling-projects-block";
 import { TeamBlockEdit, TeamBlockSave } from "./blocks/team-block";
 import { VideoCarouselBlockEdit, VideoCarouselBlockSave } from "./blocks/video-carousel-block";
@@ -107,8 +107,8 @@ registerBlockType("guten-csek/block-quote-block", {
             default: "",
         },
     },
-    edit: BlockQuoteEdit,
-    save: BlockQuoteSave,
+    edit: BlockquoteEdit,
+    save: BlockquoteSave,
 });
 
 // Scrolling Projects Block
@@ -432,6 +432,9 @@ window.addEventListener("load", () => {
         // verticalImagesController
         // teamController
     );
+
+    // window.domController.hideLoadingPanel();
+
     setTimeout(() => {
         // hide loading panel if DOM controller is not in use...
         if (!window.domController.isStarted) {

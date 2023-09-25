@@ -38,8 +38,11 @@ export default class ScrollDownController extends BlockController {
 
     addEventListeners() {
         window.addEventListener("scroll", () => {
-            this.update();
         });
+    }
+    
+    scroll(scrollY?: number) {
+        this.update();
     }
 
     update() {

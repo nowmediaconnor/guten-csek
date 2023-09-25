@@ -26,6 +26,10 @@ export default class CarouselController extends BlockController {
     barProgress: HTMLElement | null;
     isInitialized: boolean;
 
+    lastZIndex: string;
+
+    scrollableMass: HTMLElement;
+
     constructor(carouselClass: string) {
         super();
         this.name = "CarouselController";
@@ -39,6 +43,8 @@ export default class CarouselController extends BlockController {
 
         if (this.invalid(this.carouselBlock)) return;
 
+        this.lastZIndex = this.carouselBlock.style.zIndex;
+
         this.carousel = this.carouselBlock.querySelector(".carousel");
 
         this.log("Found carousel");
@@ -47,8 +53,11 @@ export default class CarouselController extends BlockController {
         this.progressDenominator = this.carouselBlock.querySelector(".carousel-slider-progress .stop");
         this.barProgress = this.carouselBlock.querySelector(".carousel-slider-progress .bar .progress");
 
-        const carouselItems = this.carouselBlock.querySelectorAll(".carousel-item");
+        const carouselItems: NodeListOf<HTMLElement> = this.carouselBlock.querySelectorAll(".carousel-item");
         this.numItems = carouselItems.length;
+
+        this.debug = true;
+        this.addScrollableMass(carouselItems);
 
         this.updateNumerator(pad(this.activeIndex + 1, 2));
         this.updateDenominator(pad(this.numItems, 2));
@@ -88,6 +97,23 @@ export default class CarouselController extends BlockController {
         } else {
             this.log("next button not found");
         }
+    }
+
+    addScrollableMass(carouselItems: NodeListOf<HTMLElement>) {
+        // add a dummy scroll block for every carousel item
+        const scrollableMass = document.createElement("div");
+
+        const dummyBlock = document.createElement("div");
+        dummyBlock.classList.add("dummy-block");
+
+        carouselItems.forEach((item, index) => {
+            const dummyDupe = dummyBlock.cloneNode(true) as HTMLDivElement;
+            scrollableMass.appendChild(dummyDupe);
+            this.log("Adding dummy block", index);
+        });
+        
+        this.scrollableMass = scrollableMass;
+        this.carouselBlock?.parentNode?.insertBefore(this.scrollableMass, this.carouselBlock?.nextSibling);
     }
 
     prev() {
@@ -130,6 +156,53 @@ export default class CarouselController extends BlockController {
         if (this.barProgress) {
             const proportion = (this.activeIndex + 1) / this.numItems;
             this.barProgress.style.width = `${constrain(proportion, 0, 1) * 100}%`;
+        }
+    }
+
+    scroll(scrollY?: number) {
+        if (!this.carouselBlock || !this.scrollableMass) return;
+
+        const blockRect = this.carouselBlock.getBoundingClientRect();
+        const blockTop = blockRect.top || 0;
+        const blockHeight = blockRect.height || 0;
+
+        const scrollableMassBottom = this.scrollableMass.getBoundingClientRect().bottom || 0;
+
+        this.log(`Block top: ${blockTop}\nBlock height: ${blockHeight}\nScrollable mass bottom: ${scrollableMassBottom}\nScrollY: ${scrollY}`);
+
+        if (blockTop > 0 && scrollableMassBottom > window.innerHeight) {
+            this.revertZIndex();
+            this.carouselBlock.style.position = "sticky";
+            this.scrollableMass.style.display = `block`;
+        } else if (blockTop > -10 && blockTop < 10) {
+            this.scrollableMass.style.display = `block`;
+
+            if (scrollableMassBottom > window.innerHeight) {
+                this.liftZIndex();
+                this.carouselBlock.style.position = "sticky";
+            } else if (scrollableMassBottom <= window.innerHeight) {
+                this.revertZIndex();
+                this.carouselBlock.style.position = "relative";
+                // this.carouselBlock.style.top = `${window.innerHeight - blockHeight}px`;
+            }
+        } else if (blockTop < 0) {
+            this.revertZIndex();
+            this.carouselBlock.style.position = "relative";
+            this.scrollableMass.style.display = `none`;
+        }
+
+        // this.log(`Distance to top: ${blockTop}\nScrollY: ${scrollY}`);
+    }
+
+    liftZIndex() {
+        if (this.carouselBlock) {
+            this.carouselBlock.style.zIndex = "40";
+        }
+    }
+
+    revertZIndex() {
+        if (this.carouselBlock) {
+            this.carouselBlock.style.zIndex = this.lastZIndex;
         }
     }
 }

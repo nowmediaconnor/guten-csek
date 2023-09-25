@@ -242,7 +242,7 @@ export interface ControllerProperties {
     isInitialized: boolean;
     setup(): void;
     beforeReload?(): void;
-    scroll?(): void;
+    scroll?(scrollY?: number): void;
 }
 
 export abstract class BlockController implements ControllerProperties {
@@ -255,7 +255,6 @@ export abstract class BlockController implements ControllerProperties {
     }
 
     abstract setup(): void;
-    // abstract beforeReload?(): void;
 
     invalid(truthy: any): boolean {
         if (truthy) {
@@ -368,7 +367,7 @@ export default class DOMController extends BlockController implements DOMControl
         if (this.isStarted === false) this.isStarted = true;
 
         // this.overrideAllDebug(true);
-        // this.overrideDebug(true, "ScrollDownController");
+        // this.overrideDebug(false, "ScrollDownController");
 
         // this.prepareLoadingPanel();
 
@@ -409,9 +408,11 @@ export default class DOMController extends BlockController implements DOMControl
         window.addEventListener("scroll", (e) => {
             // this.scroll();
 
+            const scrollY = window.scrollY;
+
             for (const controller of this.blockControllers) {
                 if (controller.scroll) {
-                    controller.scroll();
+                    controller.scroll(scrollY);
                 }
             }
         });

@@ -28,12 +28,7 @@ export const Heading = ({ level, text, className, children }: HeadingProps) => {
             return <h3 className={twMerge(commonClasses, "", className)}>{content}</h3>;
         case "2":
             return (
-                <h2
-                    className={twMerge(
-                        commonClasses,
-                        "border-0 border-b border-black border-solid pb-2 mt-4",
-                        className
-                    )}>
+                <h2 className={twMerge(commonClasses, "border-0 border-b border-black border-solid pb-2", className)}>
                     {content}
                 </h2>
             );

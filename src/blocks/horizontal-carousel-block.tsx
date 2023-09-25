@@ -81,7 +81,8 @@ export const HorizontalCarouselBlockEdit = ({ attributes, setAttributes }: Horiz
                 </PanelBody>
             </InspectorControls>
             <div>
-                <Heading level="2">Horizontal Carousel Block</Heading>
+                <Heading level="2">Csek Horizontal Carousel Block</Heading>
+                <em className="em-label">Check the inspector panel to add elements</em>
                 <p>{numItems} item{numItems != 1 ? 's' : ''} in list.</p>
             </div>
         </div>
