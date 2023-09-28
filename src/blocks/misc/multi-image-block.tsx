@@ -32,7 +32,7 @@ export const MultiImageBlockEdit = ({ attributes, setAttributes }: GutenbergBloc
     const imageInputs: JSX.Element[] = [];
     for (let i = 0; i < numberOfImages; i++) {
         imageInputs.push(
-            <div className="row">
+            <div className="row csek-card">
                 <div className="flex flex-col gap-4 w-full">
                     <MediaUploadCheck>
                         <MediaUpload
@@ -58,19 +58,21 @@ export const MultiImageBlockEdit = ({ attributes, setAttributes }: GutenbergBloc
 
     return (
         <section {...blockProps}>
-            <Heading level="3">Csek Multi Image Block</Heading>
-            <Heading level="5">Block Title</Heading>
-            <input
-                className="csek-input"
-                type="text"
-                value={title}
-                onChange={(e) => setAttributes({ title: e.target.value })}
-                placeholder="Block Title"
-            />
-            <Heading level="5">Number of Images</Heading>
-            <NumberControl value={numberOfImages} onChange={onNumberOfImagesChange} />
-            <Heading level="4">Image previews</Heading>
-            <div className="flex flex-col gap-4">{imageInputs}</div>
+            <Heading level="2">Csek Multi Image Block</Heading>
+            <div className="py-4 flex flex-col gap-4">
+                <Heading level="5">Block Title</Heading>
+                <input
+                    className="csek-input"
+                    type="text"
+                    value={title}
+                    onChange={(e) => setAttributes({ title: e.target.value })}
+                    placeholder="Block Title"
+                />
+                <Heading level="5">Number of Images</Heading>
+                <NumberControl value={numberOfImages} onChange={onNumberOfImagesChange} />
+                <Heading level="4">Image previews</Heading>
+                <div className="flex flex-col gap-4">{imageInputs}</div>
+            </div>
         </section>
     );
 };

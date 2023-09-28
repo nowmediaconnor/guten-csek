@@ -61,7 +61,7 @@ export const VideoCarouselBlockEdit = ({ attributes, setAttributes }: VideoCarou
         return (
             <div key={index} className="video-carousel-data">
                 <div className="flex flex-row justify-between items-center">
-                    <Heading level="3">Video {index + 1}</Heading>
+                    <Heading level="2">Video {index + 1}</Heading>
                     <Button
                         className="csek-video-remove"
                         icon="trash"

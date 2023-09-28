@@ -49,7 +49,7 @@ export const ScrollingProjectsBlockEdit = ({ attributes, setAttributes }: Scroll
         return (
             <div key={index} className="video-carousel-data">
                 <div className="flex flex-row justify-between items-center">
-                    <Heading level="3">Project {index + 1}</Heading>
+                    <Heading level="2">Project {index + 1}</Heading>
                     <Button
                         className="csek-video-remove"
                         icon="trash"

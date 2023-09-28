@@ -24,25 +24,28 @@ export const FeaturedImageBlockEdit = ({ attributes, setAttributes }: GutenbergB
 
     return (
         <section {...blockProps}>
-            <Heading level="3">Csek Featured Image Block</Heading>
-            <input
-                className="csek-input"
-                type="text"
-                value={attributes.imageAlt}
-                onChange={onChangeImageAlt}
-                placeholder="Image alt text"
-            />
-            <MediaUploadCheck>
-                <MediaUpload
-                    onSelect={onChangeImageURL}
-                    allowedTypes={["image"]}
-                    multiple={false}
-                    value={imageURL}
-                    render={({ open }) => <Button onClick={open}>Choose image</Button>}
+            <Heading level="2">Csek Featured Image Block</Heading>
+
+            <div className="py-4 flex flex-col gap-4">
+                <input
+                    className="csek-input"
+                    type="text"
+                    value={attributes.imageAlt}
+                    onChange={onChangeImageAlt}
+                    placeholder="Image alt text"
                 />
-            </MediaUploadCheck>
-            <Heading level="4">Image preview</Heading>
-            <img className="featured-image" src={attributes.imageURL} alt={attributes.imageAlt} />
+                <MediaUploadCheck>
+                    <MediaUpload
+                        onSelect={onChangeImageURL}
+                        allowedTypes={["image"]}
+                        multiple={false}
+                        value={imageURL}
+                        render={({ open }) => <Button onClick={open}>Choose image</Button>}
+                    />
+                </MediaUploadCheck>
+                <Heading level="4">Image preview</Heading>
+                <img className="featured-image" src={attributes.imageURL} alt={attributes.imageAlt} />
+            </div>
         </section>
     );
 };

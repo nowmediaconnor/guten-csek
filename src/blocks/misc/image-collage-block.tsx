@@ -80,7 +80,7 @@ export const ImageCollageBlockEdit = ({ attributes, setAttributes }: GutenbergBl
 
     return (
         <section {...blockProps} className="p-4">
-            <Heading level="3">Csek Image Collage Block</Heading>
+            <Heading level="2">Csek Image Collage Block</Heading>
             <div className="flex flex-row justify-between gap-4">
                 <div className="flex flex-col">
                     {imagePreviewElements}
