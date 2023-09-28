@@ -5,6 +5,7 @@
 import React from "react";
 import { MediaUpload, MediaUploadCheck, InspectorControls } from "@wordpress/block-editor";
 import { Button, PanelBody } from "@wordpress/components";
+import { Heading } from "../components/heading";
 
 interface TaglineHeaderProps {
     attributes: any;
@@ -31,7 +32,7 @@ export const TaglineHeaderEdit = ({ attributes, setAttributes }: TaglineHeaderPr
             <InspectorControls>
                 <PanelBody title="Tagline Header Editor">
                     <MediaUploadCheck>
-                        <h2>Tagline accent image:</h2>
+                        <Heading level="2">Tagline accent image:</Heading>
                         <MediaUpload
                             onSelect={onSelectImage}
                             // type="image"
@@ -41,7 +42,7 @@ export const TaglineHeaderEdit = ({ attributes, setAttributes }: TaglineHeaderPr
                     </MediaUploadCheck>
                 </PanelBody>
             </InspectorControls>
-            <h2>Tagline Header Block</h2>
+            <Heading level="2">Tagline Header Block</Heading>
             <div className="z-10 w-full flex flex-col gap-4">
                 <input
                     type="text"

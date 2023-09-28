@@ -7,6 +7,7 @@ import React from "react";
 import { shuffle } from "../scripts/array";
 import { MediaUpload, MediaUploadCheck, RichText, useBlockProps } from "@wordpress/block-editor";
 import { Button } from "@wordpress/components";
+import { Heading } from "../components/heading";
 
 interface ScrollingProjectsProps {
     attributes: {
@@ -48,7 +49,7 @@ export const ScrollingProjectsBlockEdit = ({ attributes, setAttributes }: Scroll
         return (
             <div key={index} className="video-carousel-data">
                 <div className="flex flex-row justify-between items-center">
-                    <h3>Project {index + 1}</h3>
+                    <Heading level="3">Project {index + 1}</Heading>
                     <Button
                         className="csek-video-remove"
                         icon="trash"
@@ -57,7 +58,7 @@ export const ScrollingProjectsBlockEdit = ({ attributes, setAttributes }: Scroll
                         Delete
                     </Button>
                 </div>
-                <h4>Title</h4>
+                <Heading level="4">Title</Heading>
                 <input
                     type="text"
                     className="csek-input"
@@ -70,7 +71,7 @@ export const ScrollingProjectsBlockEdit = ({ attributes, setAttributes }: Scroll
                         )
                     }
                 />
-                <h4>Caption</h4>
+                <Heading level="4">Caption</Heading>
                 <input
                     type="text"
                     className="csek-input"
@@ -83,7 +84,7 @@ export const ScrollingProjectsBlockEdit = ({ attributes, setAttributes }: Scroll
                         )
                     }
                 />
-                <h4>Image</h4>
+                <Heading level="4">Image</Heading>
                 <MediaUploadCheck>
                     <MediaUpload
                         onSelect={(media) =>
@@ -102,7 +103,7 @@ export const ScrollingProjectsBlockEdit = ({ attributes, setAttributes }: Scroll
     });
     return (
         <div {...blockProps}>
-            <h2>Csek Scrolling Projects Block</h2>
+            <Heading level="2">Csek Scrolling Projects Block</Heading>
             {videoElements}
             <Button onClick={handleAddProject} icon="plus" className="csek-button">
                 Add Project

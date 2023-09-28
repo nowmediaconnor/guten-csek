@@ -7,6 +7,7 @@ import React from "react";
 import { GutenbergBlockProps } from "../../scripts/dom";
 import { MediaUpload, useBlockProps } from "@wordpress/block-editor";
 import { Button, ColorPicker, RangeControl } from "@wordpress/components";
+import { Heading } from "../../components/heading";
 
 export const ScreenshotCollageBlockEdit = ({ attributes, setAttributes }: GutenbergBlockProps) => {
     const blockProps = useBlockProps();
@@ -50,7 +51,7 @@ export const ScreenshotCollageBlockEdit = ({ attributes, setAttributes }: Gutenb
     const imagePreviewElements = screenshots.map((screenshot: any, index: number) => {
         return (
             <div className="csek-card">
-                <h4>Image Preview</h4>
+                <Heading level="4">Image Preview</Heading>
                 <div className="flex flex-col gap-2">
                     <img className="preview-image" src={screenshot} alt={screenshotAlts[index]} />
                     <MediaUpload
@@ -65,7 +66,7 @@ export const ScreenshotCollageBlockEdit = ({ attributes, setAttributes }: Gutenb
                         )}
                     />
                 </div>
-                <h4>Image Alt Text</h4>
+                <Heading level="4">Image Alt Text</Heading>
                 <input
                     className="csek-input"
                     type="text"
@@ -83,7 +84,7 @@ export const ScreenshotCollageBlockEdit = ({ attributes, setAttributes }: Gutenb
 
     return (
         <section {...blockProps} className="p-4">
-            <h3>Csek Screenshot Collage Block</h3>
+            <Heading level="3">Csek Screenshot Collage Block</Heading>
             <div className="flex flex-row justify-between gap-4">
                 <div className="flex flex-col">
                     {imagePreviewElements}
@@ -93,11 +94,11 @@ export const ScreenshotCollageBlockEdit = ({ attributes, setAttributes }: Gutenb
                 </div>
                 <div className="flex flex-col h-max">
                     <div className="csek-card">
-                        <h4>Background Color</h4>
+                        <Heading level="4">Background Color</Heading>
                         <ColorPicker color={backgroundColor} onChangeComplete={setBackgroundColor} copyFormat="hex" />
                     </div>
                     <div className="csek-card">
-                        <h4>Row Tilt</h4>
+                        <Heading level="4">Row Tilt</Heading>
                         <RangeControl
                             value={angleDegrees}
                             onChange={(v) => setAngleDegrees(v ?? 0)}

@@ -7,6 +7,7 @@ import React from "react";
 import { GutenbergBlockProps } from "../../scripts/dom";
 import { MediaUpload, MediaUploadCheck, useBlockProps } from "@wordpress/block-editor";
 import { Button } from "@wordpress/components";
+import { Heading } from "../../components/heading";
 
 export const FullscreenImageBlockEdit = ({ attributes, setAttributes }: GutenbergBlockProps) => {
     const blockProps = useBlockProps();
@@ -23,7 +24,7 @@ export const FullscreenImageBlockEdit = ({ attributes, setAttributes }: Gutenber
 
     return (
         <section {...blockProps}>
-            <h3>Csek Fullscreen Image Block</h3>
+            <Heading level="3">Csek Fullscreen Image Block</Heading>
             <input
                 className="csek-input"
                 type="text"
@@ -40,7 +41,7 @@ export const FullscreenImageBlockEdit = ({ attributes, setAttributes }: Gutenber
                     render={({ open }) => <Button onClick={open}>Choose image</Button>}
                 />
             </MediaUploadCheck>
-            <h4>Image preview</h4>
+            <Heading level="4">Image preview</Heading>
             <img className="featured-image" src={attributes.imageURL} alt={attributes.imageAlt} />
         </section>
     );
