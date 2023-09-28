@@ -7,48 +7,6 @@ import { BlockController, ControllerProperties } from "../dom";
 import { constrain } from "../math";
 import { pad } from "../strings";
 
-// adapted from https://kyliedeboer.com/wp-content/themes/theme/_assets/scripts/plugins/featureslider.js
-// if there is a at least one lsit item in the carousel on the page, add a scroll listener
-function horizontalScrollSlider() {
-    if (document.getElementById("module-feature_slider-slider")) {
-        const vertScroll = window.scrollY;
-
-        const theSlider = document.getElementById("module-feature_slider-slider") as HTMLElement;
-
-        const sliderBoundingRect = document
-            .querySelector(".module-feature_slider-slider-outerwrap")
-            ?.getBoundingClientRect();
-
-        if (sliderBoundingRect) {
-            const theScrollOffset = sliderBoundingRect.top - window.innerHeight;
-
-            const theSliderScrollAmount = vertScroll - window.innerHeight - theScrollOffset;
-
-            theSlider.scrollLeft = theSliderScrollAmount;
-        }
-    }
-}
-// window.addEventListener("load", howitworksslider);
-// document.addEventListener("scroll", howitworksslider);
-
-// window.addEventListener("load", () => {
-const carouselOnLoad = () => {
-    let slides = document.querySelectorAll(".carousel li.carousel-item") as NodeListOf<HTMLElement>;
-    let numSlides = slides.length;
-    let slideWidth = slides[0].offsetWidth;
-    let slideHeight = slides[0].offsetHeight;
-
-    let sliderWidth = numSlides * slideWidth;
-
-    let offset = 1.2;
-    let newHeight = slideHeight + (sliderWidth - window.innerWidth) * offset;
-
-    const block = document.querySelector(".wp-block-guten-csek-horizontal-carousel-block") as HTMLElement;
-    block.style.height = `${newHeight}px`;
-};
-
-// });
-
 export interface CarouselItem {
     title: string;
     description: string;
@@ -141,6 +99,10 @@ export default class CarouselController extends BlockController {
         this.updateScroll(scrollY);
     }
 
+    /**
+     * Adapted from the script at: https://kyliedeboer.com/wp-content/themes/theme/_assets/scripts/plugins/featureslider.js
+     * @param scrollY the current value of window.scrollY
+     */
     updateScroll(scrollY?: number) {
         const carouselSlider = this.carouselBlock?.querySelector(".carousel-slider");
 
@@ -173,7 +135,9 @@ export default class CarouselController extends BlockController {
             }
         }
     }
-
+    /**
+     * Adapted from the script at: https://kyliedeboer.com/wp-content/themes/theme/_assets/scripts/plugins/featureslider.js
+     */
     loadScroll() {
         if (!this.carouselBlock || !this.carousel) return;
 

@@ -39,7 +39,10 @@ if __name__ == "__main__":
     )
     parser.add_argument("folder_path", help="Path to the folder to count lines in")
     parser.add_argument(
-        "-ignore", help="Comma-separated list of folders/files to ignore", default=""
+        "-i",
+        "--ignore",
+        help="Comma-separated list of folders/files to ignore",
+        default="",
     )
     args = parser.parse_args()
 
