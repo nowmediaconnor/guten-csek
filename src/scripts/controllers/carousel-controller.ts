@@ -7,6 +7,48 @@ import { BlockController, ControllerProperties } from "../dom";
 import { constrain } from "../math";
 import { pad } from "../strings";
 
+// adapted from https://kyliedeboer.com/wp-content/themes/theme/_assets/scripts/plugins/featureslider.js
+// if there is a at least one lsit item in the carousel on the page, add a scroll listener
+function horizontalScrollSlider() {
+    if (document.getElementById("module-feature_slider-slider")) {
+        const vertScroll = window.scrollY;
+
+        const theSlider = document.getElementById("module-feature_slider-slider") as HTMLElement;
+
+        const sliderBoundingRect = document
+            .querySelector(".module-feature_slider-slider-outerwrap")
+            ?.getBoundingClientRect();
+
+        if (sliderBoundingRect) {
+            const theScrollOffset = sliderBoundingRect.top - window.innerHeight;
+
+            const theSliderScrollAmount = vertScroll - window.innerHeight - theScrollOffset;
+
+            theSlider.scrollLeft = theSliderScrollAmount;
+        }
+    }
+}
+// window.addEventListener("load", howitworksslider);
+// document.addEventListener("scroll", howitworksslider);
+
+// window.addEventListener("load", () => {
+const carouselOnLoad = () => {
+    let slides = document.querySelectorAll(".carousel li.carousel-item") as NodeListOf<HTMLElement>;
+    let numSlides = slides.length;
+    let slideWidth = slides[0].offsetWidth;
+    let slideHeight = slides[0].offsetHeight;
+
+    let sliderWidth = numSlides * slideWidth;
+
+    let offset = 1.2;
+    let newHeight = slideHeight + (sliderWidth - window.innerWidth) * offset;
+
+    const block = document.querySelector(".wp-block-guten-csek-horizontal-carousel-block") as HTMLElement;
+    block.style.height = `${newHeight}px`;
+};
+
+// });
+
 export interface CarouselItem {
     title: string;
     description: string;
@@ -18,32 +60,30 @@ export default class CarouselController extends BlockController {
     debug: boolean = false;
     carouselClass: string;
     numItems: number;
-    activeIndex: number;
+
+    blockHeight: number;
+    scrollOffset: number;
+
     carouselBlock: HTMLElement | null;
-    carousel: HTMLElement | null;
+    carousel: HTMLUListElement | null;
     progressNumerator: HTMLElement | null;
     progressDenominator: HTMLElement | null;
     barProgress: HTMLElement | null;
+
     isInitialized: boolean;
-
-    lastZIndex: string;
-
-    scrollableMass: HTMLElement;
 
     constructor(carouselClass: string) {
         super();
         this.name = "CarouselController";
         this.carouselClass = carouselClass.startsWith(".") ? carouselClass : `.${carouselClass}`;
         this.numItems = 0;
-        this.activeIndex = 0;
+        this.blockHeight = 0;
     }
 
     setup() {
         this.carouselBlock = document.querySelector(this.carouselClass) as HTMLDivElement;
 
         if (this.invalid(this.carouselBlock)) return;
-
-        this.lastZIndex = this.carouselBlock.style.zIndex;
 
         this.carousel = this.carouselBlock.querySelector(".carousel");
 
@@ -57,86 +97,24 @@ export default class CarouselController extends BlockController {
         this.numItems = carouselItems.length;
 
         this.debug = true;
-        this.addScrollableMass(carouselItems);
 
-        this.updateNumerator(pad(this.activeIndex + 1, 2));
+        this.loadScroll();
+        this.updateScroll();
+
         this.updateDenominator(pad(this.numItems, 2));
-        this.updateBarProgress();
+        this.updateProgress();
 
-        this.addEventListeners();
-        // } else if (!this.carouselBlock) {
-        //     this.log("No carousel block found");
-        // }
         this.isInitialized = true;
     }
 
-    addEventListeners() {
-        if (!this.carouselBlock) return;
+    addEventListeners() {}
 
-        this.log(this.carouselBlock.children);
+    update() {}
 
-        const prevButton = this.carouselBlock.querySelector(".carousel-slider-progress .prev");
-        const nextButton = this.carouselBlock.querySelector(".carousel-slider-progress .next");
-
-        if (prevButton) {
-            this.log("prev button found");
-            prevButton.addEventListener("click", () => {
-                this.prev();
-                this.log("prev");
-            });
-        } else {
-            this.log("prev button not found");
-        }
-
-        if (nextButton) {
-            this.log("next button found");
-            nextButton.addEventListener("click", () => {
-                this.next();
-                this.log("next");
-            });
-        } else {
-            this.log("next button not found");
-        }
-    }
-
-    addScrollableMass(carouselItems: NodeListOf<HTMLElement>) {
-        // add a dummy scroll block for every carousel item
-        const scrollableMass = document.createElement("div");
-
-        const dummyBlock = document.createElement("div");
-        dummyBlock.classList.add("dummy-block");
-
-        carouselItems.forEach((item, index) => {
-            const dummyDupe = dummyBlock.cloneNode(true) as HTMLDivElement;
-            scrollableMass.appendChild(dummyDupe);
-            this.log("Adding dummy block", index);
-        });
-        
-        this.scrollableMass = scrollableMass;
-        this.carouselBlock?.parentNode?.insertBefore(this.scrollableMass, this.carouselBlock?.nextSibling);
-    }
-
-    prev() {
-        if (this.activeIndex > 0) {
-            this.activeIndex--;
-            this.update();
-        }
-    }
-
-    next() {
-        if (this.activeIndex < this.numItems - 1) {
-            this.activeIndex++;
-            this.update();
-        }
-    }
-
-    update() {
-        this.log("active index:", this.activeIndex);
-        if (this.carousel) {
-            this.carousel.style.transform = `translateX(-${this.activeIndex * 100}vw)`;
-
-            this.updateNumerator(pad(this.activeIndex + 1, 2));
-            this.updateBarProgress();
+    updateProgress() {
+        if (this.barProgress) {
+            const proportion = this.updateBarProgress(this.barProgress);
+            this.updateNumerator(pad(Math.floor(proportion * this.numItems) + 1, 2));
         }
     }
 
@@ -152,57 +130,65 @@ export default class CarouselController extends BlockController {
         }
     }
 
-    updateBarProgress() {
-        if (this.barProgress) {
-            const proportion = (this.activeIndex + 1) / this.numItems;
-            this.barProgress.style.width = `${constrain(proportion, 0, 1) * 100}%`;
-        }
+    updateBarProgress(progressBar: HTMLElement): number {
+        // const proportion = (this.activeIndex + 1) / this.numItems;
+        const proportion = this.scrollOffset / this.blockHeight;
+        progressBar.style.width = `${constrain(proportion, 0, 1) * 100}%`;
+        return proportion;
     }
 
     scroll(scrollY?: number) {
-        if (!this.carouselBlock || !this.scrollableMass) return;
+        this.updateScroll(scrollY);
+    }
 
-        const blockRect = this.carouselBlock.getBoundingClientRect();
-        const blockTop = blockRect.top || 0;
-        const blockHeight = blockRect.height || 0;
+    updateScroll(scrollY?: number) {
+        const carouselSlider = this.carouselBlock?.querySelector(".carousel-slider");
 
-        const scrollableMassBottom = this.scrollableMass.getBoundingClientRect().bottom || 0;
+        if (carouselSlider && this.carouselBlock) {
+            const vertScroll = scrollY || window.scrollY;
 
-        this.log(`Block top: ${blockTop}\nBlock height: ${blockHeight}\nScrollable mass bottom: ${scrollableMassBottom}\nScrollY: ${scrollY}`);
+            const sliderBoundingRect = this.carouselBlock.getBoundingClientRect();
 
-        if (blockTop > 0 && scrollableMassBottom > window.innerHeight) {
-            this.revertZIndex();
-            this.carouselBlock.style.position = "sticky";
-            this.scrollableMass.style.display = `block`;
-        } else if (blockTop > -10 && blockTop < 10) {
-            this.scrollableMass.style.display = `block`;
+            if (sliderBoundingRect) {
+                const theScrollOffset = this.carouselBlock.offsetTop - window.innerHeight;
 
-            if (scrollableMassBottom > window.innerHeight) {
-                this.liftZIndex();
-                this.carouselBlock.style.position = "sticky";
-            } else if (scrollableMassBottom <= window.innerHeight) {
-                this.revertZIndex();
-                this.carouselBlock.style.position = "relative";
-                // this.carouselBlock.style.top = `${window.innerHeight - blockHeight}px`;
+                const theSliderScrollAmount = vertScroll - theScrollOffset - window.innerHeight;
+
+                this.log(
+                    "theScrollOffset:",
+                    theScrollOffset,
+                    "top:",
+                    sliderBoundingRect.top,
+                    "scrollY:",
+                    vertScroll,
+                    "theSliderScrollAmount:",
+                    theSliderScrollAmount
+                );
+
+                // if (sliderBoundingRect.top <= 0 && sliderBoundingRect.bottom >= window.innerHeight)
+                carouselSlider.scrollLeft = theSliderScrollAmount;
+                this.scrollOffset = theSliderScrollAmount;
+
+                this.updateProgress();
             }
-        } else if (blockTop < 0) {
-            this.revertZIndex();
-            this.carouselBlock.style.position = "relative";
-            this.scrollableMass.style.display = `none`;
-        }
-
-        // this.log(`Distance to top: ${blockTop}\nScrollY: ${scrollY}`);
-    }
-
-    liftZIndex() {
-        if (this.carouselBlock) {
-            this.carouselBlock.style.zIndex = "40";
         }
     }
 
-    revertZIndex() {
-        if (this.carouselBlock) {
-            this.carouselBlock.style.zIndex = this.lastZIndex;
-        }
+    loadScroll() {
+        if (!this.carouselBlock || !this.carousel) return;
+
+        let slides = this.carousel.querySelectorAll("li.carousel-item") as NodeListOf<HTMLElement>;
+        let numSlides = slides.length;
+        let slideWidth = slides[0].offsetWidth;
+        let slideHeight = slides[0].offsetHeight;
+
+        let sliderWidth = numSlides * slideWidth;
+
+        let offset = 1;
+        let newHeight = slideHeight + (sliderWidth - window.innerWidth) * offset;
+
+        this.blockHeight = newHeight - slideHeight;
+
+        this.carouselBlock.style.height = `${newHeight}px`;
     }
 }

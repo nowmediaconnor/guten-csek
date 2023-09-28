@@ -4,7 +4,7 @@
  */
 
 import React from "react";
-import { InspectorControls } from "@wordpress/block-editor";
+import { InspectorControls, useBlockProps } from "@wordpress/block-editor";
 import {
     Button,
     PanelBody,
@@ -83,47 +83,55 @@ export const HorizontalCarouselBlockEdit = ({ attributes, setAttributes }: Horiz
             <div>
                 <Heading level="2">Csek Horizontal Carousel Block</Heading>
                 <em className="em-label">Check the inspector panel to add elements</em>
-                <p>{numItems} item{numItems != 1 ? 's' : ''} in list.</p>
+                <p>
+                    {numItems} item{numItems != 1 ? "s" : ""} in list.
+                </p>
             </div>
         </div>
     );
 };
 
 export const HorizontalCarouselBlockSave = ({ attributes }: HorizontalCarouselBlockProps) => {
+    const blockProps = useBlockProps.save();
+
     const { titles, statements, numItems = 1 } = attributes;
 
     const items: JSX.Element[] = [];
     for (let i = 0; i < numItems; i++) {
         items.push(
-            <div key={i} className="carousel-item">
+            <li key={i} className="carousel-item">
                 <h1>{i + 1}</h1>
                 <div className="carousel-item-body">
                     <h2>{titles[i]}</h2>
                     <p>{statements[i]}</p>
                 </div>
-            </div>
+            </li>
         );
     }
 
     return (
-        <div>
-            <div className="carousel">{items}</div>
-
-            <div className="carousel-slider-progress">
-                <div className="status">
-                    <a href="#prev" className="prev">
-                        <i className="fa fa-chevron-left"></i>
-                    </a>
-                    <p>
-                        Progress&nbsp;
-                        <span className="start">01</span>&nbsp;/&nbsp;<span className="stop">04</span>
-                    </p>
-                    <a href="#next" className="next">
-                        <i className="fa fa-chevron-right"></i>
-                    </a>
+        <div {...blockProps}>
+            <div className="carousel-wrapper">
+                <div className="carousel-slider">
+                    <ul className="carousel">{items}</ul>
                 </div>
-                <div className="bar">
-                    <span className="progress"></span>
+
+                <div className="carousel-slider-progress">
+                    <div className="status">
+                        {/* <a href="#prev" className="prev">
+                            <i className="fa fa-chevron-left"></i>
+                        </a> */}
+                        <p>
+                            Progress&nbsp;
+                            <span className="start">01</span>&nbsp;/&nbsp;<span className="stop">04</span>
+                        </p>
+                        {/* <a href="#next" className="next">
+                            <i className="fa fa-chevron-right"></i>
+                        </a> */}
+                    </div>
+                    <div className="bar">
+                        <span className="progress"></span>
+                    </div>
                 </div>
             </div>
         </div>

@@ -425,10 +425,10 @@ window.addEventListener("load", () => {
     window.domController = new DOMController(
         curtainifyController,
         scrollController,
-        carouselController,
         videoCarouselController,
         scrollingProjectsController,
-        expandingVideoController
+        expandingVideoController,
+        carouselController
         // verticalImagesController
         // teamController
     );
