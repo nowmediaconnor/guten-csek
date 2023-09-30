@@ -5,47 +5,47 @@
 
 @font-face {
     font-family: "Syne";
-    src: url("Syne/static/Syne-Regular.ttf") format("truetype");
+    src: url("../fonts/Syne/static/Syne-Regular.ttf") format("truetype");
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
     font-family: "Syne";
-    src: url("Syne/static/Syne-Bold.ttf") format("truetype");
+    src: url("../fonts/Syne/static/Syne-Bold.ttf") format("truetype");
     font-weight: bold;
     font-style: normal;
 }
 
 @font-face {
     font-family: "Syne";
-    src: url("Syne/static/Syne-ExtraBold.ttf") format("truetype");
+    src: url("../fonts/Syne/static/Syne-ExtraBold.ttf") format("truetype");
     font-weight: 800;
     font-style: normal;
 }
 
 @font-face {
     font-family: "Syne";
-    src: url("Syne/static/Syne-Semibold.ttf") format("truetype");
+    src: url("../fonts/Syne/static/Syne-Semibold.ttf") format("truetype");
     font-weight: 600;
     font-style: normal;
 }
 
 @font-face {
     font-family: "Syne";
-    src: url("Syne/static/Syne-Medium.ttf") format("truetype");
+    src: url("../fonts/Syne/static/Syne-Medium.ttf") format("truetype");
     font-weight: 400;
     font-style: normal;
 }
 
 @font-face {
     font-family: "Montserrat";
-    src: url("Montserrat/Montserrat-VariableFont_wght.ttf") format("truetype");
+    src: url("../fonts/Montserrat/Montserrat-VariableFont_wght.ttf") format("truetype");
     font-style: normal;
 }
 
 @font-face {
     font-family: "Montserrat";
-    src: url("Montserrat/Montserrat-Italic-VariableFont_wght.ttf") format("truetype");
+    src: url("../fonts/Montserrat/Montserrat-Italic-VariableFont_wght.ttf") format("truetype");
     font-style: italic;
 }

@@ -96,8 +96,9 @@ export const ProjectSummaryBlockSave = ({ attributes }: GutenbergBlockProps) => 
     return (
         <section
             {...blockProps}
-            className="project-summary-block"
-            style={{ backgroundColor: `${backgroundColor.toString()}` }}>
+            className="project-summary-block featured-image-color"
+            // style={{ backgroundColor: `${backgroundColor.toString()}` }}
+        >
             <div className="max-width">
                 <h2 className="project-tagline">{projectTagline}</h2>
                 <div className="row">

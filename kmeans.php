@@ -44,16 +44,20 @@ function findMainColorOfImage($rgbArray, $numColors = 1, $numIterations = 10)
         }
         $centroids = array_map(function ($cluster) {
             $numPoints = count($cluster);
-            $sumR = array_reduce($cluster, function ($acc, $rgb) {
-                return $acc + $rgb[0];
-            }, 0);
-            $sumG = array_reduce($cluster, function ($acc, $rgb) {
-                return $acc + $rgb[1];
-            }, 0);
-            $sumB = array_reduce($cluster, function ($acc, $rgb) {
-                return $acc + $rgb[2];
-            }, 0);
-            return [$sumR / $numPoints, $sumG / $numPoints, $sumB / $numPoints];
+            if ($numPoints > 0) { // Add this check to avoid division by zero
+                $sumR = array_reduce($cluster, function ($acc, $rgb) {
+                    return $acc + $rgb[0];
+                }, 0);
+                $sumG = array_reduce($cluster, function ($acc, $rgb) {
+                    return $acc + $rgb[1];
+                }, 0);
+                $sumB = array_reduce($cluster, function ($acc, $rgb) {
+                    return $acc + $rgb[2];
+                }, 0);
+                return [$sumR / $numPoints, $sumG / $numPoints, $sumB / $numPoints];
+            } else {
+                return [0, 0, 0]; // Return a default value if the cluster is empty
+            }
         }, $clusters);
         unset($rgb);
     }
