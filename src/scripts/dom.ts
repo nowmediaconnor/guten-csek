@@ -11,6 +11,7 @@ import ScrollDownController from "./controllers/scroll-down-controller";
 import ScrollingProjectsController from "./controllers/scrolling-projects-controller";
 import TeamController from "./controllers/team-controller";
 import VideoCarouselController from "./controllers/video-carousel-controller";
+import { updateFeaturedImageColorDerivatives } from "./global";
 import { clampInt, randomIntInRange, randomPartOfOne } from "./math";
 
 export interface GutenbergBlockProps {
@@ -375,6 +376,8 @@ export default class DOMController extends BlockController implements DOMControl
 
         this.addEventListeners();
 
+        this.setFeaturedImageColors();
+
         // prepareScrollingProjectsBlocks();
         for (const controller of this.blockControllers) {
             controller.setup();
@@ -481,5 +484,9 @@ export default class DOMController extends BlockController implements DOMControl
 
     log(...msg: any[]) {
         if (this.debug) console.log("[DOMController]", ...msg);
+    }
+
+    async setFeaturedImageColors() {
+        await updateFeaturedImageColorDerivatives();
     }
 }
