@@ -32,7 +32,7 @@
             --image-backing-width: 90%;
             position: relative;
             width: var(--image-backing-width);
-            height: calc(3 / 4 * var(--image-backing-width));
+            height: calc(3 / 4 * var(--image-backing-width)); /* 4:3 aspect ratio */
             background-color: var(--csek-dark);
             top: 50%;
             left: 50%;
@@ -48,7 +48,7 @@
             max-height: auto;
             height: 100%;
             object-fit: cover;
-            animation: csek-hover 2s ease-in infinite alternate;
+            animation: csek-hover 2s ease-in-out infinite;
         }
     }
 

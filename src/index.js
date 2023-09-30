@@ -21,6 +21,8 @@ import ExpandingVideoController from "./scripts/controllers/expanding-video-cont
 import ScrollingProjectsController from "./scripts/controllers/scrolling-projects-controller";
 import CurtainifyController from "./scripts/controllers/curtainify-controller";
 import TeamController from "./scripts/controllers/team-controller";
+import NextProjectController from "./scripts/controllers/next-project-controller";
+
 import { ProjectSummaryBlockEdit, ProjectSummaryBlockSave } from "./blocks/misc/project-summary-block";
 import { FeaturedImageBlockEdit, FeaturedImageBlockSave } from "./blocks/misc/featured-image-block";
 import { MultiImageBlockEdit, MultiImageBlockSave } from "./blocks/misc/multi-image-block";
@@ -439,6 +441,9 @@ window.addEventListener("load", () => {
     // Team Block Controller
     const teamController = new TeamController(".wp-block-guten-csek-team-block");
 
+    // Next Project Controller
+    const nextProjectController = new NextProjectController(".wp-block-guten-csek-next-project-block");
+
     // Vertical Scrolling Images Controller
     // const verticalImagesController = new VerticalScrollingImagesController(
     //     ".vertical-scroll-container",
@@ -452,7 +457,8 @@ window.addEventListener("load", () => {
         videoCarouselController,
         scrollingProjectsController,
         expandingVideoController,
-        carouselController
+        carouselController,
+        nextProjectController
         // verticalImagesController
         // teamController
     );
