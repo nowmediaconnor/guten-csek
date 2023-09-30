@@ -62,6 +62,7 @@ export const NextProjectBlockSave = ({ attributes, setAttributes }: GutenbergBlo
         <section {...blockProps}>
             <div className="next-project-wrapper">
                 <div className="next-project-image">
+                    <div className="image-backing"></div>
                     <img src={projectImageURL} alt={projectTitle} />
                 </div>
                 <div className="next-project-info">
