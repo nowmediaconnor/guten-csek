@@ -11,22 +11,29 @@ function createRGBArrayFromImage(GdImage $img, $pace = 2)
     for ($y = 0; $y < imagesy($img); $y += $pace) {
         for ($x = 0; $x < imagesx($img); $x += $pace) {
             $rgb = imagecolorat($img, $x, $y);
+            $a = ($rgb >> 24) & 0x7F;
+            if ($a == 127) {
+                $x += 1;
+                continue;
+            }
+
             $r = ($rgb >> 16) & 0xFF;
             $g = ($rgb >> 8) & 0xFF;
             $b = $rgb & 0xFF;
+
             $rgbArray[] = [$r, $g, $b];
         }
     }
     return $rgbArray;
 }
 
-function findMainColorOfImage($rgbArray, $numColors = 1)
+function findMainColorOfImage($rgbArray, $numColors = 1, $numIterations = 10)
 {
     // Use K-means clustering to cluster the RGB values into K clusters
     $K = $numColors; // Change this to the number of colors you want to find
     $centroids = array_slice($rgbArray, 0, $K);
     $clusters = [];
-    for ($i = 0; $i < 10; $i++) { // Change the number of iterations as needed
+    for ($i = 0; $i < $numIterations; $i++) { // Change the number of iterations as needed
         $clusters = array_fill(0, $K, []);
         foreach ($rgbArray as $rgb) {
             $distances = array_map(function ($centroid) use ($rgb) {

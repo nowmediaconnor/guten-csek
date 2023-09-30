@@ -4,6 +4,8 @@
  * Author: Connor Doman
  */
 
+require 'kmeans.php';
+
 function get_image_color($request)
 {
     $json = $request->get_json_params();
@@ -15,7 +17,7 @@ function get_image_color($request)
     // Initialize an array to store the unique colors
 
     $rgb_data = createRGBArrayFromImage($image_resource, 10);
-    $main_color = findMainColorOfImage($rgb_data);
+    $main_color = findMainColorOfImage($rgb_data, 10);
     unset($rgb_data);
 
     imagedestroy($image_resource);

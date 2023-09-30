@@ -8,7 +8,7 @@ Description: Add custom blocks to wordpress for the Gutenberg system of blocks.
 
 require 'api.php';
 require 'files.php';
-require 'kmeans.php';
+// require 'kmeans.php';
 
 function enqueue_blocks_iteratively()
 {
@@ -109,9 +109,14 @@ add_action('init', 'enqueue_custom_block_assets');
 // API endpoints
 function image_color_endpoint()
 {
+    function get_image($request)
+    {
+        return get_image_color($request);
+    }
+
     register_rest_route('csek/v2', '/img-color', array(
         'methods' => 'POST',
-        'callback' => 'get_image_color',
+        'callback' => 'get_image',
         'permission_callback' => '__return_true',
     ));
 }
