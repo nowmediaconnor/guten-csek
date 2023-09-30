@@ -8,7 +8,6 @@ import { GutenbergBlockProps } from "../../scripts/dom";
 import { InspectorControls, useBlockProps } from "@wordpress/block-editor";
 import { ColorPicker } from "@wordpress/components";
 
-import "../../css/project-summary-block.css";
 import { LegacyColor } from "@wordpress/components/build-types/color-picker/types";
 import { urlExtractSecondLevelDomain } from "../../scripts/strings";
 import { Heading } from "../../components/heading";

@@ -1,0 +1,13 @@
+/*
+ * Created on Sat Sep 30 2023
+ * Author: Connor Doman
+ */
+
+@keyframes csek-hover {
+    0% {
+        transform: translate(-50%, -50%) scale(1);
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(1.025);
+    }
+}

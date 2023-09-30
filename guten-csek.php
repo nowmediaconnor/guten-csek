@@ -6,6 +6,8 @@ Author: Csek Creative
 Description: Add custom blocks to wordpress for the Gutenberg system of blocks.
 */
 
+require 'api.php';
+require 'files.php';
 require 'kmeans.php';
 
 function enqueue_blocks_iteratively()
@@ -40,30 +42,29 @@ function enqueue_blocks_iteratively()
     }
 }
 
-function enqueue_styles_iteratively($directory_path = null)
+function convert_path_to_url($path)
 {
-    if (!$directory_path) {
-        $directory_path = plugin_dir_path(__FILE__) . '/src/css';
-    }
+    $path = str_replace('\\', '/', $path);
+    $path = str_replace(plugin_dir_path(__FILE__), '', $path);
+    $path = plugin_dir_url(__FILE__) . $path;
+    return $path;
+}
 
-    $plugin_url = plugin_dir_url(__FILE__);
-    $files = scandir($directory_path);
+function enqueue_css_folder()
+{
+    $css_directory = plugin_dir_path(__FILE__) . 'src/css';
+    // echo "Enqueuing styles from directory: " . $css_directory . "<br/>";
+
+    $files = get_all_files_from_dir($css_directory, true);
+
     foreach ($files as $file) {
-        if ($file === '.' || $file === '..') {
-            continue;
-        }
+        $handle = pathinfo($file, PATHINFO_FILENAME);
+        // echo "Enqueuing style: " . $handle . "<br/>";
+        $src = convert_path_to_url($file);
+        $deps = [];
+        $ver = filemtime($file);
 
-        $full_path = $directory_path . '/' . $file;
-        if (is_dir($full_path)) {
-            enqueue_styles_iteratively($full_path);
-        } elseif (pathinfo($file, PATHINFO_EXTENSION) === 'css') {
-            $handle = pathinfo($file, PATHINFO_FILENAME);
-            $src = $plugin_url . 'src/css/' . $file;
-            $deps = [];
-            $ver = filemtime($full_path);
-
-            wp_enqueue_style($handle, $src, $deps, $ver);
-        }
+        wp_enqueue_style($handle, $src, $deps, $ver);
     }
 }
 
@@ -78,7 +79,7 @@ function enqueue_custom_block_assets()
     );
 
     // fonts
-    wp_enqueue_style('guten-csek-fonts', plugin_dir_url(__FILE__) . 'fonts/fonts.css');
+    wp_enqueue_style('guten-csek-fonts', plugin_dir_url(__FILE__) . 'src/fonts/fonts.css');
 
     // editor-only css
     wp_register_style(
@@ -97,7 +98,7 @@ function enqueue_custom_block_assets()
     );
 
     // every other stylesheet
-    enqueue_styles_iteratively();
+    enqueue_css_folder();
 
     // enqueue block registration
     enqueue_blocks_iteratively();
@@ -114,25 +115,4 @@ function image_color_endpoint()
         'permission_callback' => '__return_true',
     ));
 }
-
-function get_image_color($request)
-{
-    $json = $request->get_json_params();
-    // Your custom logic to retrieve and return data
-    $base64_image = $json['base64Data'];
-    $image_data = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $base64_image));
-    $image_resource = imagecreatefromstring($image_data);
-
-    // Initialize an array to store the unique colors
-
-    $rgb_data = createRGBArrayFromImage($image_resource, 10);
-    $main_color = findMainColorOfImage($rgb_data);
-    unset($rgb_data);
-
-    imagedestroy($image_resource);
-    // $colorCount = count($uniqueColors);
-
-    return rest_ensure_response(["color" => $main_color], 200);
-}
-
 add_action('rest_api_init', 'image_color_endpoint', 999);
