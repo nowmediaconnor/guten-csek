@@ -1,0 +1,106 @@
+/*
+ * Created on Wed Sep 27 2023
+ * Author: Connor Doman
+ */
+
+.wp-block-guten-csek-next-project-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 50;
+}
+
+.next-project-wrapper {
+    max-width: 75rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    padding: 2rem 0;
+
+    & .next-project-image {
+        max-width: 50rem;
+        max-height: 50rem;
+        width: 30vw;
+        height: 30vw;
+        position: relative;
+        /* border: 1px solid green; */
+
+        & .image-backing {
+            --image-backing-width: 90%;
+            position: relative;
+            width: var(--image-backing-width);
+            height: calc(3 / 4 * var(--image-backing-width));
+            background-color: var(--csek-dark);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            /* box-shadow: 0 0 1rem rgba(0, 0, 0, 0.5); */
+        }
+
+        & img {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            max-height: auto;
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+
+    & .next-project-info {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        gap: 1rem;
+        font-family: "Syne", sans-serif;
+
+        & a {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: flex-start;
+            text-decoration: none;
+            color: var(--csek-dark);
+            cursor: pointer;
+
+            & h1 {
+                font-size: 3rem;
+                font-weight: 700;
+                margin: 0;
+                padding: 0;
+                border-bottom: 1px solid transparent;
+                transition: all 0.2s ease-in-out;
+                line-height: 0.75;
+            }
+
+            & i {
+                opacity: 0%;
+                margin-left: 1rem;
+                font-size: 2rem;
+                color: var(--csek-dark);
+                transition: all 0.2s ease-in-out;
+            }
+
+            &:hover {
+                & h1 {
+                    border-bottom: 1px solid var(--csek-dark);
+                }
+
+                & i {
+                    opacity: 100%;
+                }
+            }
+        }
+
+        & h2 {
+            color: var(--csek-red);
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+    }
+}

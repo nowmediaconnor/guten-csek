@@ -1,5 +1,6 @@
 input[type="text"].csek-input,
-textarea.csek-input {
+textarea.csek-input,
+select.csek-input {
     width: 100%;
 }
 

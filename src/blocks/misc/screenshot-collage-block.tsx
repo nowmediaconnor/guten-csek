@@ -84,7 +84,7 @@ export const ScreenshotCollageBlockEdit = ({ attributes, setAttributes }: Gutenb
 
     return (
         <section {...blockProps} className="p-4">
-            <Heading level="3">Csek Screenshot Collage Block</Heading>
+            <Heading level="2">Csek Screenshot Collage Block</Heading>
             <div className="flex flex-row justify-between gap-4">
                 <div className="flex flex-col">
                     {imagePreviewElements}

@@ -29,6 +29,7 @@ import { FullscreenImageBlockEdit, FullscreenImageBlockSave } from "./blocks/mis
 import { DOMControllerBlockEdit, DOMControllerBlockSave } from "./blocks/dom-controller-block";
 import { ImageCollageBlockEdit, ImageCollageBlockSave } from "./blocks/misc/image-collage-block";
 import { ScreenshotCollageBlockEdit, ScreenshotCollageBlockSave } from "./blocks/misc/screenshot-collage-block";
+import { NextProjectBlockEdit, NextProjectBlockSave } from "./blocks/misc/next-project-block";
 
 // so the "edit" component is a place where i can put fields that will be used to edit block attributes
 
@@ -390,6 +391,29 @@ registerBlockType("guten-csek/screenshot-collage-block", {
     },
     edit: ScreenshotCollageBlockEdit,
     save: ScreenshotCollageBlockSave,
+});
+
+// Next Project Block
+registerBlockType("guten-csek/next-project-block", {
+    title: "Csek Next Project Block",
+    icon: "text",
+    category: "text",
+    attributes: {
+        projectTitle: {
+            type: "string",
+            default: "",
+        },
+        projectTagline: {
+            type: "string",
+            default: "",
+        },
+        projectImageURL: {
+            type: "string",
+            default: "",
+        },
+    },
+    edit: NextProjectBlockEdit,
+    save: NextProjectBlockSave,
 });
 
 window.addEventListener("load", () => {

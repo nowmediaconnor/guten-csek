@@ -31,7 +31,7 @@ export const DOMControllerBlockEdit = ({ attributes, setAttributes }: GutenbergB
 
     return (
         <section>
-            <Heading level="3">Script Manager Block</Heading>
+            <Heading level="2">Script Manager Block</Heading>
             <div className="column csek-card">{domControllerScripts}</div>
         </section>
     );

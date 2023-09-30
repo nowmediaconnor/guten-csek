@@ -18,14 +18,15 @@ export const LeftRightBlockEdit = ({ attributes, setAttributes }: GutenbergBlock
 
     return (
         <section {...blockProps}>
-            <Heading level="3">Csek Left-Right Block</Heading>
-            <Heading level="5">Direction</Heading>
-            <select onChange={(e) => setAttributes({ direction: e.target.value })}>
-                <option value="left">Left to Right</option>
-                <option value="right">Right to Left</option>
-            </select>
-            <div className="row">
-                <div className="column">
+            <Heading level="2">Csek Left-Right Block</Heading>
+
+            <div className="flex flex-row justify-between gap-4">
+                <div className="flex flex-col justify-around align-center w-full gap-2 h-full csek-card">
+                    <Heading level="5">Direction</Heading>
+                    <select onChange={(e) => setAttributes({ direction: e.target.value })} className="csek-input">
+                        <option value="left">Left to Right</option>
+                        <option value="right">Right to Left</option>
+                    </select>
                     <Heading level="5">Body text</Heading>
                     <textarea
                         className="csek-input"
@@ -33,17 +34,7 @@ export const LeftRightBlockEdit = ({ attributes, setAttributes }: GutenbergBlock
                         placeholder="Body text"
                         onChange={(e) => setAttributes({ text: e.target.value })}
                     />
-                </div>
-                <div className="column">
-                    <MediaUploadCheck>
-                        <MediaUpload
-                            onSelect={(v) => setAttributes({ image: v.url })}
-                            allowedTypes={["image"]}
-                            multiple={false}
-                            value={image}
-                            render={({ open }) => <Button onClick={open}>Choose image</Button>}
-                        />
-                    </MediaUploadCheck>
+                    <Heading level="5">Image alt text</Heading>
                     <input
                         className="csek-input"
                         type="text"
@@ -52,7 +43,22 @@ export const LeftRightBlockEdit = ({ attributes, setAttributes }: GutenbergBlock
                         onChange={(e) => setAttributes({ altText: e.target.value })}
                     />
                 </div>
-                <img className="preview-image" src={image} alt={altText} />
+                <div className="column csek-card">
+                    <img className="preview-image" src={image} alt={altText} />
+                    <MediaUploadCheck>
+                        <MediaUpload
+                            onSelect={(v) => setAttributes({ image: v.url })}
+                            allowedTypes={["image"]}
+                            multiple={false}
+                            value={image}
+                            render={({ open }) => (
+                                <Button className="csek-button" onClick={open}>
+                                    Choose image
+                                </Button>
+                            )}
+                        />
+                    </MediaUploadCheck>
+                </div>
             </div>
         </section>
     );

@@ -46,33 +46,35 @@ export const ProjectSummaryBlockEdit = ({ attributes, setAttributes }: Gutenberg
             </InspectorControls>
             <section {...blockProps}>
                 <Heading level="2">Project Summary Block</Heading>
-                <input
-                    type="text"
-                    className="csek-input"
-                    value={projectTagline}
-                    onChange={setProjectTagline}
-                    placeholder="Project tagline"
-                />
-                <textarea
-                    className="csek-input"
-                    value={projectSummary}
-                    onChange={setProjectSummary}
-                    placeholder="Project summary"
-                />
-                <input
-                    type="text"
-                    className="csek-input"
-                    value={taggedServices}
-                    onChange={setTaggedServices}
-                    placeholder="Tagged services (comma-separated)"
-                />
-                <input
-                    type="text"
-                    className="csek-input"
-                    value={websiteLink}
-                    onChange={setWebsiteLink}
-                    placeholder="Website link"
-                />
+                <div className="py-4 flex flex-col gap-4">
+                    <input
+                        type="text"
+                        className="csek-input"
+                        value={projectTagline}
+                        onChange={setProjectTagline}
+                        placeholder="Project tagline"
+                    />
+                    <textarea
+                        className="csek-input"
+                        value={projectSummary}
+                        onChange={setProjectSummary}
+                        placeholder="Project summary"
+                    />
+                    <input
+                        type="text"
+                        className="csek-input"
+                        value={taggedServices}
+                        onChange={setTaggedServices}
+                        placeholder="Tagged services (comma-separated)"
+                    />
+                    <input
+                        type="text"
+                        className="csek-input"
+                        value={websiteLink}
+                        onChange={setWebsiteLink}
+                        placeholder="Website link"
+                    />
+                </div>
             </section>
         </>
     );
