@@ -22,7 +22,7 @@ export const imageToBase64 = async (url: string): Promise<string> => {
 export const getImageColor = async (url: string): Promise<string> => {
     const base64Data = await imageToBase64(url);
 
-    const res = await fetch("wp-json/csek/v2/img-color", {
+    const res = await fetch("/wp-json/csek/v2/img-color", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
