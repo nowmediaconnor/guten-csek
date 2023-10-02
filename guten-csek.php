@@ -30,7 +30,8 @@ function enqueue_blocks_iteratively()
         'screenshot-collage-block',
         'next-project-block',
         'page-header-block',
-        'featured-video-block'
+        'featured-video-block',
+        'chicago-fires-block'
     ];
 
     for ($i = 0; $i < count($block_names); $i++) {

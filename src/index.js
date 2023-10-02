@@ -35,6 +35,7 @@ import { ScreenshotCollageBlockEdit, ScreenshotCollageBlockSave } from "./blocks
 import { NextProjectBlockEdit, NextProjectBlockSave } from "./blocks/misc/next-project-block";
 import { PageHeaderBlockEdit, PageHeaderBlockSave } from "./blocks/misc/page-header-block";
 import { FeaturedVideoBlockEdit, FeaturedVideoBlockSave } from "./blocks/misc/featured-video-block";
+import { ChicagoFiresBlockEdit, ChicagoFiresBlockSave } from "./blocks/misc/chicago-fires-block";
 
 // so the "edit" component is a place where i can put fields that will be used to edit block attributes
 
@@ -453,6 +454,33 @@ registerBlockType("guten-csek/featured-video-block", {
     },
     edit: FeaturedVideoBlockEdit,
     save: FeaturedVideoBlockSave,
+});
+
+// Chicago Fires Block
+registerBlockType("guten-csek/chicago-fires-block", {
+    title: "Csek Chicago Fires Block",
+    icon: "text",
+    category: "text",
+    attributes: {
+        primaryHeading: {
+            type: "string",
+            default: "",
+        },
+        secondaryHeadings: {
+            type: "array",
+            default: [],
+        },
+        primaryMessage: {
+            type: "string",
+            default: "",
+        },
+        secondaryMessages: {
+            type: "array",
+            default: [],
+        },
+    },
+    edit: ChicagoFiresBlockEdit,
+    save: ChicagoFiresBlockSave,
 });
 
 window.addEventListener("load", (e) => {

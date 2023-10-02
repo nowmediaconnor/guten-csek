@@ -20,7 +20,7 @@ export const FeaturedVideoBlockEdit = ({ attributes, setAttributes }: GutenbergB
 
     return (
         <div {...blockProps}>
-            <Heading level="2">Featured Video Block</Heading>
+            <Heading level="2">Csek Featured Video Block</Heading>
             <CsekMediaUpload type="video" urlAttribute={videoURL} onChange={handleChangeVideoURL} />
         </div>
     );
