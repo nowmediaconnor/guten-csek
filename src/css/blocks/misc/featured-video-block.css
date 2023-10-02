@@ -21,6 +21,10 @@
             border-radius: 0.5rem;
             width: 100%;
 
+            & > * {
+                transition: all ease 0.2s;
+            }
+
             & .video-shade {
                 position: absolute;
                 top: 0;
@@ -29,6 +33,7 @@
                 height: 100%;
                 background: linear-gradient(black, transparent);
                 z-index: 2;
+                pointer-events: none;
             }
 
             & video {

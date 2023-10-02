@@ -32,7 +32,7 @@ export const FeaturedVideoBlockSave = ({ attributes }: GutenbergBlockProps) => {
     const { videoURL } = attributes;
 
     return (
-        <div {...blockProps}>
+        <section {...blockProps}>
             <div className="block-container">
                 <div className="video-container">
                     <div className="video-shade"></div>
@@ -45,6 +45,6 @@ export const FeaturedVideoBlockSave = ({ attributes }: GutenbergBlockProps) => {
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
     );
 };

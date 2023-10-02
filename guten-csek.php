@@ -81,7 +81,7 @@ function enqueue_custom_block_assets()
     );
 
     // fonts
-    wp_enqueue_style('guten-csek-fonts', plugin_dir_url(__FILE__) . 'src/fonts/fonts.css');
+    // wp_enqueue_style('guten-csek-fonts', plugin_dir_url(__FILE__) . 'src/fonts/fonts.css');
 
     // editor-only css
     wp_register_style(

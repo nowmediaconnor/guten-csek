@@ -31,7 +31,7 @@ export default class NextProjectController extends BlockController {
     setup(): void {
         this.blocks = document.querySelectorAll(this.blockClassname);
 
-        this.debug = true;
+        // this.debug = true;
 
         if (this.invalid(this.blocks.length > 0)) {
             this.log("No next project blocks found");
