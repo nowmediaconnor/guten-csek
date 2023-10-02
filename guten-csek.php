@@ -28,7 +28,8 @@ function enqueue_blocks_iteratively()
         'dom-controller-block',
         'image-collage-block',
         'screenshot-collage-block',
-        'next-project-block'
+        'next-project-block',
+        'page-header-block'
     ];
 
     for ($i = 0; $i < count($block_names); $i++) {

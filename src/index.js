@@ -32,6 +32,7 @@ import { DOMControllerBlockEdit, DOMControllerBlockSave } from "./blocks/dom-con
 import { ImageCollageBlockEdit, ImageCollageBlockSave } from "./blocks/misc/image-collage-block";
 import { ScreenshotCollageBlockEdit, ScreenshotCollageBlockSave } from "./blocks/misc/screenshot-collage-block";
 import { NextProjectBlockEdit, NextProjectBlockSave } from "./blocks/misc/next-project-block";
+import { PageHeaderBlockEdit, PageHeaderBlockSave } from "./blocks/misc/page-header-block";
 
 // so the "edit" component is a place where i can put fields that will be used to edit block attributes
 
@@ -416,6 +417,25 @@ registerBlockType("guten-csek/next-project-block", {
     },
     edit: NextProjectBlockEdit,
     save: NextProjectBlockSave,
+});
+
+// Page Header Block
+registerBlockType("guten-csek/page-header-block", {
+    title: "Csek Page Header Block",
+    icon: "text",
+    category: "text",
+    attributes: {
+        heading: {
+            type: "string",
+            default: "",
+        },
+        slogan: {
+            type: "string",
+            default: "",
+        },
+    },
+    edit: PageHeaderBlockEdit,
+    save: PageHeaderBlockSave,
 });
 
 window.addEventListener("load", () => {
