@@ -33,6 +33,7 @@ import { ImageCollageBlockEdit, ImageCollageBlockSave } from "./blocks/misc/imag
 import { ScreenshotCollageBlockEdit, ScreenshotCollageBlockSave } from "./blocks/misc/screenshot-collage-block";
 import { NextProjectBlockEdit, NextProjectBlockSave } from "./blocks/misc/next-project-block";
 import { PageHeaderBlockEdit, PageHeaderBlockSave } from "./blocks/misc/page-header-block";
+import { FeaturedVideoBlockEdit, FeaturedVideoBlockSave } from "./blocks/misc/featured-video-block";
 
 // so the "edit" component is a place where i can put fields that will be used to edit block attributes
 
@@ -436,6 +437,21 @@ registerBlockType("guten-csek/page-header-block", {
     },
     edit: PageHeaderBlockEdit,
     save: PageHeaderBlockSave,
+});
+
+// Featured Video Block
+registerBlockType("guten-csek/featured-video-block", {
+    title: "Csek Featured Video Block",
+    icon: "format-video",
+    category: "media",
+    attributes: {
+        videoURL: {
+            type: "string",
+            default: "",
+        },
+    },
+    edit: FeaturedVideoBlockEdit,
+    save: FeaturedVideoBlockSave,
 });
 
 window.addEventListener("load", () => {

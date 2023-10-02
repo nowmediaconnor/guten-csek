@@ -29,7 +29,8 @@ function enqueue_blocks_iteratively()
         'image-collage-block',
         'screenshot-collage-block',
         'next-project-block',
-        'page-header-block'
+        'page-header-block',
+        'featured-video-block'
     ];
 
     for ($i = 0; $i < count($block_names); $i++) {
