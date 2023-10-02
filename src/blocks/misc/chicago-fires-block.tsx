@@ -49,12 +49,6 @@ const ChicagoFireEditor = ({
                 initialValue={message}
                 onChange={onChangeMessage}
             />
-            {/* <Button
-                onClick={handleDelete}
-                className="border border-solid color-red-600 p-2 absolute right-2 top-2"
-                icon="trash">
-                Delete
-            </Button> */}
             <CsekDeleteButton onDelete={handleDelete} className="absolute right-2 top-2" />
         </div>
     );
@@ -137,6 +131,11 @@ export const ChicagoFiresBlockEdit = ({ attributes, setAttributes }: GutenbergBl
     return (
         <div {...blockProps}>
             <Heading level="2">Csek Chicago Fires Block</Heading>
+            <p className="text-sm">
+                The flag of Chicago famously contains 4 stars, each representing one of the city&apos;s great fires.
+                This block evokes that image using 4 statements meant to represent significant influences on company
+                culture.
+            </p>
             <div className="flex flex-col gap-2 py-2">
                 <TextInput
                     label="Primary Heading"
