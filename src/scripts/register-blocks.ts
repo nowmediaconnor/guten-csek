@@ -13,6 +13,7 @@ import {
 export const registerAllBlocks = () => {
     console.log("Registering blocks...");
 
+    // Self description block
     registerBlockType<SelfDescriptionBlockAttributes>("guten-csek/block-self-description", {
         title: "Csek Self Description",
         icon: "text-page",
