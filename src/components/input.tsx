@@ -5,7 +5,7 @@
 
 import React, { useState } from "react";
 import { Heading } from "./heading";
-import { RichText as GutenbergRichText } from "@wordpress/block-editor";
+import { RichText } from "@wordpress/block-editor";
 
 interface InputProps {
     label: string;
@@ -39,7 +39,7 @@ export const TextInput = ({ label, initialValue = "", placeholder, onChange }: I
     );
 };
 
-export const RichText = ({ label, initialValue = "", placeholder, onChange }: InputProps) => {
+export const RichTextInput = ({ label, initialValue = "", placeholder, onChange }: InputProps) => {
     const [text, setText] = useState(initialValue);
 
     const handleChange = (v: string) => {
@@ -53,7 +53,7 @@ export const RichText = ({ label, initialValue = "", placeholder, onChange }: In
         <>
             <Heading level="4">{label}</Heading>
             <em className="italic text-sm text-slate-500">Rich text</em>
-            <GutenbergRichText
+            <RichText
                 tagName="div"
                 className="w-full p-2 border border-solid rounded border-slate-700"
                 placeholder={placeholder || "Enter text here."}
@@ -71,7 +71,5 @@ interface RichTextContentProps {
 }
 
 export const RichTextContent = ({ value, className }: RichTextContentProps) => {
-    return (
-        <GutenbergRichText.Content className={className ? className : "csek-richtext"} tagName="div" value={value} />
-    );
+    return <RichText.Content className={className ? className : "csek-richtext"} tagName="div" value={value} />;
 };

@@ -7,7 +7,7 @@ import React from "@wordpress/element";
 import { GutenbergBlockProps } from "../../scripts/dom";
 import { useBlockProps } from "@wordpress/block-editor";
 import { Heading } from "../../components/heading";
-import { TextInput, RichText, RichTextContent } from "../../components/input";
+import { TextInput, RichTextInput, RichTextContent } from "../../components/input";
 
 export const PageHeaderBlockEdit = ({ attributes, setAttributes }: GutenbergBlockProps) => {
     const blockProps = useBlockProps();
@@ -32,7 +32,7 @@ export const PageHeaderBlockEdit = ({ attributes, setAttributes }: GutenbergBloc
                     onChange={handleChangeHeading}
                     initialValue={heading}
                 />
-                <RichText
+                <RichTextInput
                     label="Caption"
                     placeholder="A caption for the page heading."
                     onChange={handleChangeSlogan}
