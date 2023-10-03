@@ -36,6 +36,7 @@ import { NextProjectBlockEdit, NextProjectBlockSave } from "./blocks/misc/next-p
 import { PageHeaderBlockEdit, PageHeaderBlockSave } from "./blocks/misc/page-header-block";
 import { FeaturedVideoBlockEdit, FeaturedVideoBlockSave } from "./blocks/misc/featured-video-block";
 import { ChicagoFiresBlockEdit, ChicagoFiresBlockSave } from "./blocks/misc/chicago-fires-block";
+import { registerAllBlocks } from "./scripts/register-blocks";
 
 // so the "edit" component is a place where i can put fields that will be used to edit block attributes
 
@@ -482,6 +483,8 @@ registerBlockType("guten-csek/chicago-fires-block", {
     edit: ChicagoFiresBlockEdit,
     save: ChicagoFiresBlockSave,
 });
+
+registerAllBlocks();
 
 window.addEventListener("load", (e) => {
     console.log("Window loaded.");

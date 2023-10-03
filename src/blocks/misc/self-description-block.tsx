@@ -9,6 +9,13 @@ import { GutenbergBlockProps } from "../../scripts/dom";
 import { useBlockProps } from "@wordpress/block-editor";
 import { RichTextInput, TextInput } from "../../components/input";
 
+export interface SelfDescriptionBlockAttributes {
+    heading: string;
+    caption: string;
+    primaryImageURL: string;
+    secondaryImageURL: string;
+}
+
 export const SelfDescriptionBlockEdit = ({ attributes, setAttributes }: GutenbergBlockProps) => {
     const blockProps = useBlockProps();
 
