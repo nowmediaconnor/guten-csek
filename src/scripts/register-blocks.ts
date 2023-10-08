@@ -14,7 +14,7 @@ export const registerAllBlocks = () => {
     console.log("Registering blocks...");
 
     // Self description block
-    registerBlockType<SelfDescriptionBlockAttributes>("guten-csek/block-self-description", {
+    registerBlockType<SelfDescriptionBlockAttributes>("guten-csek/self-description-block", {
         title: "Csek Self Description",
         icon: "text-page",
         category: "common",
@@ -34,6 +34,14 @@ export const registerAllBlocks = () => {
             secondaryImageURL: {
                 type: "string",
                 default: "",
+            },
+            factHeaders: {
+                type: "array",
+                default: [],
+            },
+            factDescriptions: {
+                type: "array",
+                default: [],
             },
         },
         edit: SelfDescriptionBlockEdit,

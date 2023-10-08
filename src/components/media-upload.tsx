@@ -11,7 +11,7 @@ import { Heading } from "./heading";
 import { capitalize } from "../scripts/strings";
 
 interface CsekMediaUploadProps {
-    onChange: (v: any) => void;
+    onChange: (v: string) => void;
     urlAttribute?: string;
     type?: "image" | "video" | "audio";
 }
@@ -22,7 +22,7 @@ export const CsekMediaUpload = ({ onChange, urlAttribute = "", type = "image" }:
 
     const handleChangeURL = (v: any) => {
         if (onChange) {
-            onChange(v);
+            onChange(v.url);
             setResourceURL(v.url);
             setResourceId(v.id);
         }

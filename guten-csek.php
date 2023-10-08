@@ -31,7 +31,8 @@ function enqueue_blocks_iteratively()
         'next-project-block',
         'page-header-block',
         'featured-video-block',
-        'chicago-fires-block'
+        'chicago-fires-block',
+        'self-description-block'
     ];
 
     for ($i = 0; $i < count($block_names); $i++) {
@@ -61,6 +62,7 @@ function enqueue_css_folder()
     $files = get_all_files_from_dir($css_directory, true);
 
     foreach ($files as $file) {
+        // error_log('Enqueuing style: ' . $file);
         $handle = pathinfo($file, PATHINFO_FILENAME);
         // echo "Enqueuing style: " . $handle . "<br/>";
         $src = convert_path_to_url($file);
