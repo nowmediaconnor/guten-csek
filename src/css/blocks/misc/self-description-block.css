@@ -51,7 +51,7 @@
             height: max-content;
             margin-top: 12rem;
 
-            & h1 {
+            & h2 {
                 position: relative;
                 font-size: 2.5rem;
                 font-weight: 600;
@@ -70,5 +70,30 @@
                 z-index: 0;
             }
         }
+    }
+    & .fact-entry {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 2rem;
+
+        & h2 {
+            font-size: 3rem;
+            font-weight: bold;
+            font-family: "Syne", sans-serif;
+            flex-basis: 50%;
+        }
+
+        & p {
+            font-size: 0.9rem;
+            flex-basis: 50%;
+            padding: 0 4rem;
+        }
+    }
+
+    & .fact-entry + .fact-entry {
+        border-top: 1px solid white;
+        padding-top: 2rem;
     }
 }

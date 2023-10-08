@@ -28,16 +28,19 @@ export const TextInput = ({ label, initialValue = "", placeholder, className, on
     };
 
     return (
-        <>
+        <div className={twMerge("", className)}>
             {label ? <Heading level="4">{label}</Heading> : null}
             <input
                 type="text"
-                className={twMerge("w-full rounded border border-solid border-slate-700 px-2 py-1 text-lg", className)}
+                className={twMerge(
+                    "w-full rounded border border-solid border-slate-700 px-2 py-1 text-lg",
+                    label ? "mt-2" : ""
+                )}
                 placeholder={placeholder}
                 onChange={handleChange}
                 value={text}
             />
-        </>
+        </div>
     );
 };
 

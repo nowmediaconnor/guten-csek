@@ -90,22 +90,22 @@ export const SelfDescriptionBlockEdit = ({
         };
 
         return (
-            <div className="flex flex-row justify-between">
+            <div className="flex flex-row gap-2 justify-between items-end">
                 <TextInput
                     label="Fact Header"
                     placeholder="Enter a fact header."
                     onChange={(v) => handleChangeFactHeader(v, i)}
                     initialValue={headerText}
-                    className="w-1/2"
+                    className="basis-2/5"
                 />
                 <TextInput
                     label="Fact Description"
                     placeholder="Enter a fact description."
                     onChange={(v) => handleChangeFactDescription(v, i)}
                     initialValue={descriptionText}
-                    className="w-1/2"
+                    className="basis-2/5"
                 />
-                <CsekDeleteButton className="absolute right-0 top-0" onDelete={handleDelete} />
+                <CsekDeleteButton className="basis-1/5" onDelete={handleDelete} />
             </div>
         );
     });
@@ -176,7 +176,7 @@ export const SelfDescriptionBlockSave = ({ attributes }: GutenCsekBlockProps<Sel
 
         return (
             <div className="fact-entry">
-                <h3>{headerText}</h3>
+                <h2>{headerText}</h2>
                 <p>{descriptionText}</p>
             </div>
         );
@@ -191,14 +191,14 @@ export const SelfDescriptionBlockSave = ({ attributes }: GutenCsekBlockProps<Sel
                     </div>
                     <div className="right-content">
                         <div className="desc-masthead">
-                            <h1>{heading}</h1>
+                            <h2>{heading}</h2>
                             <img className="serif" src="/wp-content/plugins/guten-csek/src/img/serif.svg" />
                         </div>
                         <p>{caption}</p>
                         <img className="secondary-image" src={secondaryImageURL} />
                     </div>
                 </div>
-                <div className="facts-list">{/* Here's where a list of facts go. */}</div>
+                <div className="facts-list">{factEntries}</div>
             </div>
         </section>
     );
