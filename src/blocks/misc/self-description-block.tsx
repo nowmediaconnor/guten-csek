@@ -176,7 +176,7 @@ export const SelfDescriptionBlockSave = ({ attributes }: GutenCsekBlockProps<Sel
 
         return (
             <div className="fact-entry">
-                <h2>{headerText}</h2>
+                <h2 className="js-accumulator">{headerText}</h2>
                 <p>{descriptionText}</p>
             </div>
         );

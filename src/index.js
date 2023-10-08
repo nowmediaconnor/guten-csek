@@ -37,6 +37,7 @@ import { PageHeaderBlockEdit, PageHeaderBlockSave } from "./blocks/misc/page-hea
 import { FeaturedVideoBlockEdit, FeaturedVideoBlockSave } from "./blocks/misc/featured-video-block";
 import { ChicagoFiresBlockEdit, ChicagoFiresBlockSave } from "./blocks/misc/chicago-fires-block";
 import { registerAllBlocks } from "./scripts/register-blocks";
+import { runAccumulators } from "./scripts/accumulators";
 
 // so the "edit" component is a place where i can put fields that will be used to edit block attributes
 
@@ -490,6 +491,10 @@ window.addEventListener("load", (e) => {
     console.log("Window loaded.");
     console.log({ windowWidth: window.innerWidth, windowHeight: window.innerHeight });
 
+    /* Prepare Accumulator Elements */
+    runAccumulators();
+
+    /* Prepare DOM Controller */
     window.domController = prepareBlockControllers();
 
     window.requestAnimationFrame(() => {
