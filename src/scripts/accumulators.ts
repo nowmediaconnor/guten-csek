@@ -37,6 +37,7 @@ export const runAccumulators = () => {
 
                     if (counter >= numberValue) {
                         clearInterval(interval);
+                        number.innerText = numberValue.toString();
                     }
                 }, 32);
 
