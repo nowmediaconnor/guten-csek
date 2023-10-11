@@ -89,17 +89,17 @@ function enqueue_custom_block_assets()
     // editor-only css
     wp_register_style(
         'guten-csek-editor-style',
-        plugins_url('src/editor.css', __FILE__),
+        plugins_url('editor-style.css', __FILE__),
         ['wp-edit-blocks'],
-        filemtime(plugin_dir_path(__FILE__) . 'src/editor.css')
+        filemtime(plugin_dir_path(__FILE__) . 'editor-style.css')
     );
 
     // misc front end css
     wp_register_style(
         'guten-csek-frontend-style',
-        plugins_url('src/style.css', __FILE__),
+        plugins_url('style.css', __FILE__),
         [],
-        filemtime(plugin_dir_path(__FILE__) . 'src/style.css')
+        filemtime(plugin_dir_path(__FILE__) . 'style.css')
     );
 
     // every other stylesheet
@@ -108,7 +108,9 @@ function enqueue_custom_block_assets()
     // enqueue block registration
     enqueue_blocks_iteratively();
 }
+// Only enqueue these scripts if we're not in the admin panel
 add_action('init', 'enqueue_custom_block_assets');
+
 
 
 // API endpoints
