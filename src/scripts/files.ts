@@ -32,7 +32,7 @@ export const getImageColor = async (url: string): Promise<string> => {
     const { color } = await res.json();
 
     if (!color) {
-        throw new Error("Color is null: " + color);
+        throw new Error(`Color is null. URL: ${url}`);
     }
     return color;
 
