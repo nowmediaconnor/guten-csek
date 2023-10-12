@@ -84,7 +84,6 @@ function tuple_as_json($tuple)
 
 function resize_image(GdImage $original_image, $new_width = 500)
 {
-
     // Get the image dimensions
     $original_width = imagesx($original_image);
     $original_height = imagesy($original_image);
@@ -96,9 +95,23 @@ function resize_image(GdImage $original_image, $new_width = 500)
     // Create a new iamge with the new dimensions
     $resized_image = imagecreatetruecolor($width, $height);
 
-    // Copy the original image to the new image
-    imagecopyresampled($resized_image, $original_image, 0, 0, 0, 0, $width, $height, $original_width, $original_height);
+    // Check if the original image has transparency (PNG)
+    if (imageistruecolor($original_image) && imagecolortransparent($original_image) >= 0) {
+        imagealphablending($resized_image, false);
+        imagesavealpha($resized_image, true);
+        $transparent = imagecolorallocatealpha($resized_image, 0, 0, 0, 127);
+        imagefilledrectangle($resized_image, 0, 0, $width, $height, $transparent);
+    } elseif (imagecolorstotal($original_image) <= 256) {
+        // If the original image is paletted with <= 256 colors (e.g., GIF), convert it to truecolor
+        imagepalettecopy($original_image, $resized_image);
+        imagefill($resized_image, 0, 0, imagecolorallocate($resized_image, 0, 0, 0));
+        imagecolortransparent($resized_image, imagecolorallocate($resized_image, 0, 0, 0));
+        imagealphablending($resized_image, false);
+        imagesavealpha($resized_image, true);
+    }
 
+    // Resize and preserve transparency
+    imagecopyresampled($resized_image, $original_image, 0, 0, 0, 0, $width, $height, $original_width, $original_height);
 
     return $resized_image;
 }
@@ -113,17 +126,21 @@ function extract_rgb_array(GdImage $image)
     // Extract RGB values from the image
     for ($x = 0; $x < $width; $x++) {
         for ($y = 0; $y < $height; $y++) {
-            $rgb = imagecolorat($image, $x, $y);
-            $color = imagecolorsforindex($image, $rgb);
-            $a = $color['alpha'];
+            $rgba = imagecolorat($image, $x, $y);
+
+            $alpha = ($rgba & 0x7F000000) >> 24;
             // Skip transparent pixels
-            if ($a == 127) {
+            if ($alpha != 0) {
+                // error_log('Skipping transparent pixel at: (' . $x . ', ' . $y . ')');
                 continue;
             }
+
+            $color = imagecolorsforindex($image, $rgba);
 
             $r = $color['red'];
             $g = $color['green'];
             $b = $color['blue'];
+
             $rgb_array[] = [$r, $g, $b];
         }
     }

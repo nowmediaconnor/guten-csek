@@ -18,7 +18,7 @@ function get_image_color($request)
     // Initialize an array to store the unique colors
     $main_color = get_predominant_color($image_resource);
 
-
+    error_log('Got color: ' . $main_color);
     // $rgb_data = createRGBArrayFromImage($image_resource, 10);
     // $main_color = findMainColorOfImage($rgb_data, 10);
     // unset($rgb_data);
