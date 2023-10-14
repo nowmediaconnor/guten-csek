@@ -25,23 +25,25 @@ export const runAccumulators = () => {
         entries.forEach((entry) => {
             if (entry.isIntersecting) {
                 console.log("Number is visible...");
-                const number: HTMLSpanElement = entry.target as HTMLSpanElement;
-                const numberValue: number = parseInt(number.innerText, 10);
+                setTimeout(() => {
+                    const number: HTMLSpanElement = entry.target as HTMLSpanElement;
+                    const numberValue: number = parseInt(number.innerText, 10);
 
-                const increment: number = Math.ceil(numberValue / 33.333);
+                    const increment: number = Math.ceil(numberValue / 33.333);
 
-                let counter: number = 0;
-                const interval = setInterval(() => {
-                    counter += increment;
-                    number.innerText = counter.toString();
+                    let counter: number = 0;
+                    const interval = setInterval(() => {
+                        counter += increment;
+                        number.innerText = counter.toString();
 
-                    if (counter >= numberValue) {
-                        clearInterval(interval);
-                        number.innerText = numberValue.toString();
-                    }
-                }, 32);
+                        if (counter >= numberValue) {
+                            clearInterval(interval);
+                            number.innerText = numberValue.toString();
+                        }
+                    }, 32);
 
-                observer.unobserve(number);
+                    observer.unobserve(number);
+                }, 100);
             }
         });
     });
