@@ -106,6 +106,7 @@
 }
 
 .bio footer {
+    margin-top: 1rem;
     font-family: "Syne", sans-serif;
     font-weight: bold;
     text-transform: uppercase;
@@ -113,8 +114,37 @@
     color: #888;
 }
 
+.bio footer .social-links {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 0.75rem;
+    margin: 1.5rem 0;
+}
+
 .staff-profile .image {
     width: 50%;
     height: auto;
     object-fit: cover;
+}
+
+.staff-profile .social-link {
+    width: 2rem;
+    height: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid var(--csek-dark);
+    color: var(--csek-dark);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    opacity: 0.5;
+}
+
+.staff-profile .social-link:hover {
+    background-color: var(--csek-dark);
+    color: var(--csek-light);
+    opacity: 1;
 }

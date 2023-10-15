@@ -26,6 +26,7 @@ h4 {
     border: 1px solid #8c8f94;
     padding: 0.25rem;
     border-radius: 0.25rem;
+    margin: 0.25rem 0.5rem;
 }
 
 .csek-input:focus {
@@ -90,6 +91,6 @@ h4 {
     border: 1px solid #8c8f94;
     border-radius: 0.25rem;
     padding: 1rem;
-    margin: 1rem 0;
+    margin: 1rem 0.5rem;
     width: 100%;
 }

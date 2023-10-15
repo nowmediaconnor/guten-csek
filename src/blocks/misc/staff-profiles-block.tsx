@@ -3,18 +3,23 @@
  * Author: Connor Doman
  */
 
-import React from "react";
+import React, { useState } from "react";
 import { useBlockProps } from "@wordpress/block-editor";
 import { GutenCsekBlockProps } from "../../scripts/dom";
 import { CsekAddButton, CsekDeleteButton } from "../../components/button";
 import { RichTextInput, TextInput, RichTextContent } from "../../components/input";
 import { CsekMediaUpload } from "../../components/media-upload";
+import { Heading } from "../../components/heading";
+
+export type SocialMedia = "LinkedIn" | "Facebook" | "Twitter" | "Instagram" | "YouTube" | "TikTok" | "Snapchat";
+
+export type SocialMediaGroup = { [key in SocialMedia]?: string };
 
 export interface StaffProfile {
     name: string;
     position: string;
     description: string;
-    socialMedia: string[]; // e.g. LinkedIn|https://www.linkedin.com/
+    socialMedia: SocialMediaGroup;
     imageURL: string;
 }
 
@@ -23,6 +28,117 @@ export interface StaffProfilesBlockAttributes {
     caption: string;
     profiles: StaffProfile[];
 }
+
+const SOCIAL_MEDIA: SocialMedia[] = ["LinkedIn", "Facebook", "Twitter", "Instagram", "YouTube", "TikTok", "Snapchat"];
+
+interface SocialCheckboxProps {
+    name: SocialMedia;
+    value: string;
+    onChange: (site: string, url: string) => void;
+}
+
+const SocialCheckbox = ({ name, value, onChange }: SocialCheckboxProps) => {
+    const [checked, setChecked] = useState(value !== "");
+    const [url, setURL] = useState(value);
+
+    return (
+        <div className="flex flex-row justify-start items-center">
+            <input
+                type="checkbox"
+                checked={checked}
+                onChange={(e) => {
+                    setChecked(e.target.checked);
+                    if (!e.target.checked) {
+                        setURL("");
+                        onChange(name, "");
+                    }
+                }}
+            />
+            <Heading level="4">{name}</Heading>
+            <TextInput
+                placeholder="Link to profile"
+                initialValue={url}
+                onChange={(v) => {
+                    setURL(v);
+                    onChange(name, v);
+                }}
+                disabled={!checked}
+            />
+        </div>
+    );
+};
+
+interface SocialsSelectProps {
+    initialValue: SocialMediaGroup;
+    onChange: (v: SocialMediaGroup) => void;
+}
+
+const SocialsSelect = ({ initialValue, onChange }: SocialsSelectProps) => {
+    const [socials, setSocials] = useState<SocialMediaGroup>(initialValue);
+
+    const handleChange = (site: string, url: string) => {
+        const newSocials = { ...socials };
+        newSocials[site] = url;
+        setSocials(newSocials);
+        onChange(newSocials);
+    };
+
+    const checkboxes = SOCIAL_MEDIA.map((sm) => {
+        return <SocialCheckbox name={sm} value={socials[sm] || ""} onChange={handleChange} />;
+    });
+
+    return (
+        <div className="csek-card">
+            <Heading level="3">Social Media</Heading>
+            {checkboxes}
+        </div>
+    );
+};
+
+interface StaffProfileComponentEditProps {
+    profile: StaffProfile;
+    onChange: (v: StaffProfile) => void;
+}
+
+const StaffProfileComponentEdit = ({ profile, onChange }: StaffProfileComponentEditProps) => {
+    const [staffProfile, setStaffProfile] = useState<StaffProfile>(profile);
+
+    const handleChangeProfile = (v: StaffProfile) => {
+        setStaffProfile(v);
+        onChange(v);
+    };
+
+    return (
+        <div className="csek-card">
+            <TextInput
+                label="Name"
+                initialValue={staffProfile.name}
+                onChange={(v) => handleChangeProfile({ ...staffProfile, name: v })}
+            />
+            <TextInput
+                label="Position"
+                initialValue={staffProfile.position}
+                onChange={(v) => handleChangeProfile({ ...staffProfile, position: v })}
+            />
+            <RichTextInput
+                label="Description"
+                initialValue={staffProfile.description}
+                onChange={(v) => handleChangeProfile({ ...staffProfile, description: v })}
+            />
+            <div className="flex flex-row">
+                <SocialsSelect
+                    initialValue={staffProfile.socialMedia}
+                    onChange={(v) => handleChangeProfile({ ...staffProfile, socialMedia: v })}
+                />
+                <CsekMediaUpload
+                    type="image"
+                    urlAttribute={staffProfile.imageURL}
+                    onChange={(v) => handleChangeProfile({ ...staffProfile, imageURL: v })}
+                />
+            </div>
+        </div>
+    );
+};
 
 export const StaffProfilesBlockEdit = ({
     attributes,
@@ -52,7 +168,7 @@ export const StaffProfilesBlockEdit = ({
             name: "",
             position: "",
             description: "",
-            socialMedia: [],
+            socialMedia: {},
             imageURL: "",
         });
         setAttributes({ profiles: newProfiles });
@@ -67,26 +183,7 @@ export const StaffProfilesBlockEdit = ({
     const staffProfiles = profiles.map((p, i) => {
         return (
             <div className="border border-solid border-black p-4">
-                <TextInput
-                    label="Name"
-                    initialValue={p.name}
-                    onChange={(v) => handleChangeProfile({ ...p, name: v }, i)}
-                />
-                <TextInput
-                    label="Position"
-                    initialValue={p.position}
-                    onChange={(v) => handleChangeProfile({ ...p, position: v }, i)}
-                />
-                <RichTextInput
-                    label="Description"
-                    initialValue={p.description}
-                    onChange={(v) => handleChangeProfile({ ...p, description: v }, i)}
-                />
-                <CsekMediaUpload
-                    type="image"
-                    urlAttribute={p.imageURL}
-                    onChange={(v) => handleChangeProfile({ ...p, imageURL: v }, i)}
-                />
+                <StaffProfileComponentEdit profile={p} onChange={(v) => handleChangeProfile(v, i)} />
                 <CsekDeleteButton onDelete={() => deleteStaffProfile(i)} />
             </div>
         );
@@ -112,10 +209,9 @@ const CloseButton = () => {
 };
 
 const StaffProfileComponent = ({ name, position, description, socialMedia, imageURL }: StaffProfile) => {
-    const socials = socialMedia.map((sm) => {
-        const [name, url] = sm.split("|");
+    const socials = Object.entries(socialMedia).map(([name, url]) => {
         return (
-            <a href={url}>
+            <a href={url} className="social-link">
                 <i className={`fa fa-${name.toLowerCase()}`}></i>
             </a>
         );
@@ -136,8 +232,8 @@ const StaffProfileComponent = ({ name, position, description, socialMedia, image
                     <footer>
                         {socials ? (
                             <>
-                                <h3>Socials</h3>
-                                {socials}
+                                <h3>Social</h3>
+                                <div className="social-links">{socials}</div>
                             </>
                         ) : null}
                     </footer>
