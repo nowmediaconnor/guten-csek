@@ -1,0 +1,120 @@
+/*
+ * Created on Sat Oct 14 2023
+ * Author: Connor Doman
+ */
+
+.wp-block-guten-csek-staff-profiles-block {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.wp-block-guten-csek-staff-profiles-block .profile-content {
+    width: 100%;
+    max-width: var(--max-width);
+    height: max-content;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.profile-content .close-button {
+    position: absolute;
+    top: -2rem;
+    right: 2rem;
+    color: var(--csek-dark);
+    cursor: pointer;
+    border: 0.5px solid var(--csek-dark);
+    border-radius: 50%;
+    padding: 2rem;
+    width: 5rem;
+    height: 5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.close-button .cross {
+    position: relative;
+    width: 1px;
+    height: 2rem;
+    /* transform: rotate(45deg); Rotate the line by 45 degrees */
+}
+
+.close-button .cross::before,
+.close-button .cross::after {
+    content: "";
+    position: absolute;
+    width: 1px;
+    height: 2rem;
+    background-color: var(--csek-dark);
+}
+
+.close-button .cross::before {
+    transform: rotate(-45deg); /* Rotate the line before by -45 degrees */
+    left: 0;
+}
+
+.close-button .cross::after {
+    transform: rotate(45deg); /* Rotate the line after by 45 degrees */
+    right: 0;
+}
+
+.staff-profile {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.staff-profile .bio {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2rem;
+    margin-right: 2rem;
+    position: relative;
+}
+
+.bio header {
+    font-family: "Syne", sans-serif;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.bio header h1 {
+    font-size: 4rem;
+}
+
+.bio header h2 {
+    font-size: 1rem;
+    color: var(--csek-red);
+}
+
+.bio main {
+    font-family: "Montserrat", sans-serif;
+    font-size: 1rem;
+    width: 80%;
+}
+
+.bio footer {
+    font-family: "Syne", sans-serif;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 1rem;
+    color: #888;
+}
+
+.staff-profile .image {
+    width: 50%;
+    height: auto;
+    object-fit: cover;
+}
