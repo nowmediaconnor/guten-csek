@@ -183,12 +183,50 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-gap: 1rem;
-    grid-auto-flow: column;
     width: 100%;
 }
 
+/* Jim Csek */
+.profiles-area .staff-summary:nth-child(1) {
+    justify-self: flex-end;
+}
+
+/* Nikki Csek */
+.profiles-area .staff-summary:nth-child(2) {
+    justify-self: flex-start;
+}
+
+/* Rob Cupello */
+.profiles-area .staff-summary:nth-child(3) {
+    grid-row: span 2;
+    justify-self: flex-end;
+    align-self: center;
+}
+
+/* Alexa Anderson */
+.profiles-area .staff-summary:nth-child(4) {
+    width: 25rem;
+    justify-self: flex-end;
+}
+
+/* Dylan Bartlett */
 .profiles-area .staff-summary:nth-child(5) {
-    left: 3rem;
+    top: -3rem;
+    left: 2rem;
+    justify-self: flex-end;
+}
+
+/* Alice Vincent */
+.profiles-area .staff-summary:nth-child(6) {
+    top: -10rem;
+    justify-self: flex-end;
+}
+
+/* Ryan Lahay, Jason Mann */
+.profiles-area .staff-summary:nth-child(7),
+.profiles-area .staff-summary:nth-child(8) {
+    top: -3rem;
+    justify-self: flex-start;
 }
 
 .wp-block-guten-csek-staff-profiles-block .staff-summary {
@@ -196,7 +234,7 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-    max-width: 20rem;
+    width: 20rem;
     position: relative;
     justify-self: center;
 

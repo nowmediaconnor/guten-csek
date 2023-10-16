@@ -182,7 +182,7 @@ export const StaffProfilesBlockEdit = ({
 
     const staffProfiles = profiles.map((p, i) => {
         return (
-            <div className="border border-solid border-black p-4">
+            <div className="">
                 <StaffProfileComponentEdit profile={p} onChange={(v) => handleChangeProfile(v, i)} />
                 <CsekDeleteButton onDelete={() => deleteStaffProfile(i)} />
             </div>
@@ -195,7 +195,7 @@ export const StaffProfilesBlockEdit = ({
             <TextInput label="Heading" initialValue={heading} onChange={handleChangeHeading} />
             <TextInput label="Caption" initialValue={caption} onChange={handleChangeCaption} />
             {staffProfiles}
-            <CsekAddButton onAdd={newStaffProfile} />
+            <CsekAddButton onAdd={newStaffProfile} className="my-4" label="Add Staff Profile" />
         </div>
     );
 };
