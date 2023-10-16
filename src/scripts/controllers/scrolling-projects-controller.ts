@@ -16,7 +16,7 @@ export default class ScrollingProjectsController extends BlockController {
     scrollingProjectsBlockClassName: string;
 
     marqueeRefreshRateMilliseconds: number = 12.5; // ms
-    randomProjectRateMilliseconds: number = 10000; // ms
+    randomProjectRateMilliseconds: number = 5000; // ms
     marqueeIntervalId: number | null = null;
     randomProjectIntervalId: number | null = null;
 
@@ -120,7 +120,7 @@ export default class ScrollingProjectsController extends BlockController {
             return;
         }
 
-        this.prepareCanvas();
+        // this.prepareCanvas();
         this.precalculateColors();
 
         this.blurb = this.scrollingProjectsBlock.querySelector(".project-blurb");

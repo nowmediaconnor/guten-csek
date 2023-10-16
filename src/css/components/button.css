@@ -1,0 +1,44 @@
+/*
+ * Created on Mon Oct 16 2023
+ * Author: Connor Doman
+ */
+
+.close-button {
+    color: var(--csek-dark);
+    cursor: pointer;
+    border: 0.5px solid var(--csek-dark);
+    border-radius: 50%;
+    padding: 2rem;
+    width: 6rem;
+    height: 6rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+
+    & .cross {
+        position: relative;
+        width: 1px;
+        height: 2rem;
+        /* transform: rotate(45deg); Rotate the line by 45 degrees */
+
+        &::before,
+        &::after {
+            content: "";
+            position: absolute;
+            width: 1px;
+            height: 2rem;
+            background-color: var(--csek-dark);
+        }
+
+        &::before {
+            transform: rotate(-45deg); /* Rotate the line before by -45 degrees */
+            left: 0;
+        }
+
+        &::after {
+            transform: rotate(45deg); /* Rotate the line after by 45 degrees */
+            right: 0;
+        }
+    }
+}

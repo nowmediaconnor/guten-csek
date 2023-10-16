@@ -3,12 +3,18 @@
  * Author: Connor Doman
  */
 
-import { registerBlockType } from "@wordpress/blocks";
+import { registerBlockType, BlockAttribute } from "@wordpress/blocks";
 import {
     SelfDescriptionBlockAttributes,
     SelfDescriptionBlockEdit,
     SelfDescriptionBlockSave,
 } from "../blocks/misc/self-description-block";
+import {
+    StaffProfile,
+    StaffProfilesBlockAttributes,
+    StaffProfilesBlockEdit,
+    StaffProfilesBlockSave,
+} from "../blocks/misc/staff-profiles-block";
 
 export const registerAllBlocks = () => {
     console.log("Registering blocks...");
@@ -46,5 +52,28 @@ export const registerAllBlocks = () => {
         },
         edit: SelfDescriptionBlockEdit,
         save: SelfDescriptionBlockSave,
+    });
+
+    // Staff profiles block
+    registerBlockType<StaffProfilesBlockAttributes>("guten-csek/staff-profiles-block", {
+        title: "Csek Staff Profiles",
+        icon: "groups",
+        category: "common",
+        attributes: {
+            heading: {
+                type: "string",
+                default: "",
+            },
+            caption: {
+                type: "string",
+                default: "",
+            },
+            profiles: {
+                type: "array",
+                default: [] as StaffProfile[],
+            },
+        },
+        edit: StaffProfilesBlockEdit,
+        save: StaffProfilesBlockSave,
     });
 };

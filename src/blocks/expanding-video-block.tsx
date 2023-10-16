@@ -41,7 +41,7 @@ export const ExpandingVideoBlockEdit = ({ attributes, setAttributes }: Expanding
     };
 
     return (
-        <div {...blockProps} className="p-4 flex flex-col gap-4">
+        <div {...blockProps} className="p-4 flex flex-col">
             <InspectorControls>
                 <div className="flex flex-col">
                     <PanelBody title="Expanding Video Block Media">
@@ -138,12 +138,7 @@ export const ExpandingVideoBlockSave = ({ attributes }: ExpandingVideoBlockProps
                     <div className="row">
                         <div className="image-container-left scroll-fade-away">{firstImageElements}</div>
                         <div className="expanding-video-container">
-                            <video
-                                controls={false}
-                                autoPlay={true}
-                                loop={true}
-                                muted={true}
-                                className="object-cover max-w-none object-center relative left-1/2 translate-x-[-50%]">
+                            <video controls={false} autoPlay={true} loop={true} muted={true}>
                                 <source src={videoURL} />
                             </video>
                             <div className="message">

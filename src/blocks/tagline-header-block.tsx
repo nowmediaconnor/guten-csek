@@ -3,7 +3,7 @@
  * Author: Connor Doman
  */
 import React from "react";
-import { MediaUpload, MediaUploadCheck, InspectorControls } from "@wordpress/block-editor";
+import { MediaUpload, MediaUploadCheck, InspectorControls, useBlockProps } from "@wordpress/block-editor";
 import { Button, PanelBody } from "@wordpress/components";
 import { Heading } from "../components/heading";
 
@@ -58,15 +58,17 @@ export const TaglineHeaderEdit = ({ attributes, setAttributes }: TaglineHeaderPr
 };
 
 export const TaglineHeaderSave = ({ attributes }: TaglineHeaderProps) => {
+    const blockProps = useBlockProps.save();
+
     const { preTagline, tagline, imageURL } = attributes;
 
     return (
-        <div className="flex flex-col items-center justify-center text-csek-black text-center w-[70%] mx-auto -mb-20 scroll-fade-away scroll-down-target">
-            <div className="z-[25]">
-                <h3 className="font-bold text-xl uppercase font-syne">{preTagline}</h3>
-                <h1 className="text-8xl font-bold uppercase font-syne">{tagline}</h1>
+        <div {...blockProps} className="scroll-fade-away scroll-down-target">
+            <div className="heading-text">
+                <h3>{preTagline}</h3>
+                <h1>{tagline}</h1>
             </div>
-            <img src={imageURL} className="w-48 -top-11 relative z-20" alt="Red Csek Creative Serif Symbol" />
+            <img src={imageURL} className="serif" alt="Red Csek Creative Serif Symbol" />
         </div>
     );
 };

@@ -59,7 +59,7 @@ function enqueue_css_folder()
     $css_directory = plugin_dir_path(__FILE__) . 'src/css';
     // echo "Enqueuing styles from directory: " . $css_directory . "<br/>";
 
-    $files = get_all_files_from_dir($css_directory, true);
+    $files = get_all_files_from_dir($css_directory, true, ['app.css', 'app-editor.css', 'style.css', 'editor.css']);
 
     foreach ($files as $file) {
         // error_log('Enqueuing style: ' . $file);
@@ -89,17 +89,17 @@ function enqueue_custom_block_assets()
     // editor-only css
     wp_register_style(
         'guten-csek-editor-style',
-        plugins_url('editor-style.css', __FILE__),
+        plugins_url('css/guten-csek-editor.css', __FILE__),
         ['wp-edit-blocks'],
-        filemtime(plugin_dir_path(__FILE__) . 'editor-style.css')
+        filemtime(plugin_dir_path(__FILE__) . 'css/guten-csek-editor.css')
     );
 
     // misc front end css
     wp_register_style(
         'guten-csek-frontend-style',
-        plugins_url('style.css', __FILE__),
+        plugins_url('css/guten-csek.css', __FILE__),
         [],
-        filemtime(plugin_dir_path(__FILE__) . 'style.css')
+        filemtime(plugin_dir_path(__FILE__) . 'css/guten-csek.css')
     );
 
     // every other stylesheet

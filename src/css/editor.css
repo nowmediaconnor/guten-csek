@@ -14,6 +14,10 @@ section {
     margin: 5rem 0;
 }
 
+h4 {
+    margin: 0;
+}
+
 .is-root-container > div + div {
     margin-top: 3rem;
 }
@@ -22,6 +26,7 @@ section {
     border: 1px solid #8c8f94;
     padding: 0.25rem;
     border-radius: 0.25rem;
+    margin: 0.25rem 0.5rem;
 }
 
 .csek-input:focus {
@@ -42,6 +47,7 @@ section {
 .em-label {
     font-size: 0.75rem;
     color: #8c8f94;
+    margin: 0.25rem 0;
 }
 
 .video-carousel-data h4 {
@@ -85,6 +91,6 @@ section {
     border: 1px solid #8c8f94;
     border-radius: 0.25rem;
     padding: 1rem;
-    margin: 1rem 0;
+    margin: 1rem 0.5rem;
     width: 100%;
 }
