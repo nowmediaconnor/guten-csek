@@ -3,6 +3,7 @@
     --csek-blue: #b4d8df;
     --csek-dark: #131313;
     --csek-light: #e9ebea;
+    --csek-white: #ffffff;
     --max-width: 75rem;
     --half-pad: calc(calc(100% - var(--max-width)) / 2);
 }

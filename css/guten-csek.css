@@ -626,11 +626,6 @@ video {
   margin-bottom: 0.5rem;
 }
 
-.my-8 {
-  margin-top: 2rem;
-  margin-bottom: 2rem;
-}
-
 .my-4 {
   margin-top: 1rem;
   margin-bottom: 1rem;
@@ -921,6 +916,7 @@ video {
   --csek-blue: #b4d8df;
   --csek-dark: #131313;
   --csek-light: #e9ebea;
+  --csek-white: #ffffff;
   --max-width: 75rem;
   --half-pad: calc(calc(100% - var(--max-width)) / 2);
 }
