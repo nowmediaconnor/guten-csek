@@ -208,6 +208,8 @@ const CloseButton = () => {
     );
 };
 
+type StaffProfileComponent = React.ComponentType<StaffProfile>;
+
 const StaffProfileComponent = ({ name, position, description, socialMedia, imageURL }: StaffProfile) => {
     const socials = Object.entries(socialMedia).map(([name, url]) => {
         return (
@@ -246,18 +248,44 @@ const StaffProfileComponent = ({ name, position, description, socialMedia, image
     );
 };
 
+interface StaffProfileSummaryProps extends StaffProfile {
+    fullProfile: React.ReactNode;
+}
+
+const StaffProfileSummary = ({ name, position, imageURL, fullProfile }: StaffProfileSummaryProps) => {
+    return (
+        <div className="staff-summary">
+            <div className="image">
+                <img src={imageURL} alt={name + "'s profile photo"} />
+            </div>
+            <div className="info">
+                <h1>{name}</h1>
+                <span className="separator">•</span>
+                <h2>{position}</h2>
+            </div>
+            {fullProfile}
+        </div>
+    );
+};
+
 export const StaffProfilesBlockSave = ({ attributes }: GutenCsekBlockProps<StaffProfilesBlockAttributes>) => {
     const blockProps = useBlockProps.save();
 
     const { heading, caption, profiles } = attributes;
 
     const profileElements = profiles.map((p) => {
-        return <StaffProfileComponent {...p} />;
+        return <StaffProfileSummary {...p} fullProfile={<StaffProfileComponent {...p} />} />;
     });
 
     return (
         <section {...blockProps} className="">
-            {profileElements}
+            <div className="block-content">
+                <div className="block-header">
+                    <h2>{heading}</h2>
+                    <p>{caption}</p>
+                </div>
+                <div className="profiles-area">{profileElements}</div>
+            </div>
         </section>
     );
 };

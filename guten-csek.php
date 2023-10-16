@@ -89,17 +89,17 @@ function enqueue_custom_block_assets()
     // editor-only css
     wp_register_style(
         'guten-csek-editor-style',
-        plugins_url('build/guten-csek-editor.css', __FILE__),
+        plugins_url('css/guten-csek-editor.css', __FILE__),
         ['wp-edit-blocks'],
-        filemtime(plugin_dir_path(__FILE__) . 'build/guten-csek-editor.css')
+        filemtime(plugin_dir_path(__FILE__) . 'css/guten-csek-editor.css')
     );
 
     // misc front end css
     wp_register_style(
         'guten-csek-frontend-style',
-        plugins_url('build/guten-csek.css', __FILE__),
+        plugins_url('css/guten-csek.css', __FILE__),
         [],
-        filemtime(plugin_dir_path(__FILE__) . 'build/guten-csek.css')
+        filemtime(plugin_dir_path(__FILE__) . 'css/guten-csek.css')
     );
 
     // every other stylesheet
