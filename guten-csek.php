@@ -59,7 +59,7 @@ function enqueue_css_folder()
     $css_directory = plugin_dir_path(__FILE__) . 'src/css';
     // echo "Enqueuing styles from directory: " . $css_directory . "<br/>";
 
-    $files = get_all_files_from_dir($css_directory, true);
+    $files = get_all_files_from_dir($css_directory, true, ['app.css', 'app-editor.css', 'style.css', 'editor.css']);
 
     foreach ($files as $file) {
         // error_log('Enqueuing style: ' . $file);

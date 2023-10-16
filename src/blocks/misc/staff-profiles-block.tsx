@@ -6,7 +6,7 @@
 import React, { useState } from "react";
 import { useBlockProps } from "@wordpress/block-editor";
 import { GutenCsekBlockProps } from "../../scripts/dom";
-import { CsekAddButton, CsekDeleteButton } from "../../components/button";
+import { CloseButton, CsekAddButton, CsekDeleteButton } from "../../components/button";
 import { RichTextInput, TextInput, RichTextContent } from "../../components/input";
 import { CsekMediaUpload } from "../../components/media-upload";
 import { Heading } from "../../components/heading";
@@ -197,14 +197,6 @@ export const StaffProfilesBlockEdit = ({
             {staffProfiles}
             <CsekAddButton onAdd={newStaffProfile} className="my-4" label="Add Staff Profile" />
         </div>
-    );
-};
-
-const CloseButton = () => {
-    return (
-        <button className="close-button">
-            <div className="cross"></div>
-        </button>
     );
 };
 

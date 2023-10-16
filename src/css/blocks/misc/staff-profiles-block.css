@@ -23,48 +23,6 @@
     position: relative;
 }
 
-.profile-content .close-button {
-    position: absolute;
-    top: -5rem;
-    right: 1rem;
-    color: var(--csek-dark);
-    cursor: pointer;
-    border: 0.5px solid var(--csek-dark);
-    border-radius: 50%;
-    padding: 2rem;
-    width: 6rem;
-    height: 6rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.close-button .cross {
-    position: relative;
-    width: 1px;
-    height: 2rem;
-    /* transform: rotate(45deg); Rotate the line by 45 degrees */
-}
-
-.close-button .cross::before,
-.close-button .cross::after {
-    content: "";
-    position: absolute;
-    width: 1px;
-    height: 2rem;
-    background-color: var(--csek-dark);
-}
-
-.close-button .cross::before {
-    transform: rotate(-45deg); /* Rotate the line before by -45 degrees */
-    left: 0;
-}
-
-.close-button .cross::after {
-    transform: rotate(45deg); /* Rotate the line after by 45 degrees */
-    right: 0;
-}
-
 .wp-block-guten-csek-staff-profiles-block .staff-profile {
     position: fixed;
     top: 0;
@@ -77,8 +35,18 @@
     align-items: center;
     background-color: var(--csek-white);
     z-index: 30;
-    /* display: none; */
     cursor: initial;
+    pointer-events: none;
+    opacity: 0;
+    transition: all 0.2s ease-in-out;
+
+    /* Subclasses */
+    &.opened {
+        pointer-events: all;
+        opacity: 1;
+    }
+
+    /* Child elements */
 
     & .bio {
         width: 50%;
@@ -185,54 +153,54 @@
     grid-template-columns: repeat(3, 1fr);
     grid-gap: 1rem;
     width: 100%;
-}
 
-/* Jim Csek */
-.profiles-area .staff-summary:nth-child(1) {
-    justify-self: flex-end;
-}
+    /* Jim Csek */
+    & .staff-summary:nth-child(1) {
+        justify-self: flex-end;
+    }
 
-/* Nikki Csek */
-.profiles-area .staff-summary:nth-child(2) {
-    justify-self: flex-start;
-}
+    /* Nikki Csek */
+    & .staff-summary:nth-child(2) {
+        justify-self: flex-start;
+    }
 
-/* Rob Cupello */
-.profiles-area .staff-summary:nth-child(3) {
-    grid-row: span 2;
-    justify-self: flex-start;
-    align-self: center;
-}
+    /* Rob Cupello */
+    & .staff-summary:nth-child(3) {
+        grid-row: span 2;
+        justify-self: flex-start;
+        align-self: center;
+    }
 
-/* Alexa Anderson */
-.profiles-area .staff-summary:nth-child(4) {
-    width: 25rem;
-    justify-self: flex-end;
-}
+    /* Alexa Anderson */
+    & .staff-summary:nth-child(4) {
+        width: 25rem;
+        justify-self: flex-end;
+    }
 
-/* Dylan Bartlett */
-.profiles-area .staff-summary:nth-child(5) {
-    top: -3rem;
-    justify-self: flex-end;
-}
+    /* Dylan Bartlett */
+    & .staff-summary:nth-child(5) {
+        top: -3rem;
+        justify-self: flex-end;
+    }
 
-/* Alice Vincent */
-.profiles-area .staff-summary:nth-child(6) {
-    top: -10rem;
-    justify-self: flex-end;
-}
+    /* Alice Vincent */
+    & .staff-summary:nth-child(6) {
+        top: -10rem;
+        justify-self: flex-end;
+    }
 
-/* Ryan Lahay, Jason Mann */
-.profiles-area .staff-summary:nth-child(7),
-.profiles-area .staff-summary:nth-child(8) {
-    top: -3rem;
-    justify-self: flex-start;
-}
+    /* Ryan Lahay, Jason Mann */
+    & .staff-summary:nth-child(7),
+    & .staff-summary:nth-child(8) {
+        top: -3rem;
+        justify-self: flex-start;
+    }
 
-/* Just Jason Mann */
-.profiles-area .staff-summary:nth-child(8) {
-    left: -4rem;
-    justify-self: flex-start;
+    /* Just Jason Mann */
+    & .staff-summary:nth-child(8) {
+        left: -4rem;
+        justify-self: flex-start;
+    }
 }
 
 .wp-block-guten-csek-staff-profiles-block .staff-summary {
@@ -245,12 +213,12 @@
     justify-self: center;
     cursor: pointer;
 
-    & .image {
-        transition: all 0.2s ease-in-out;
-    }
-
     &:hover > .image {
         box-shadow: 0 0 1rem -0.25rem var(--csek-dark);
+    }
+
+    & .image {
+        transition: all 0.2s ease-in-out;
     }
 
     & .info {
@@ -273,6 +241,7 @@
             font-family: sans-serif;
             font-size: 2rem;
             margin: 0 0.125rem;
+            color: var(--csek-red);
         }
     }
 }

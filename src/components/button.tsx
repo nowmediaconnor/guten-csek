@@ -52,3 +52,11 @@ export const CsekDeleteButton = ({ label = "Delete", className, onDelete }: Csek
         />
     );
 };
+
+export const CloseButton = () => {
+    return (
+        <button className="close-button">
+            <div className="cross"></div>
+        </button>
+    );
+};

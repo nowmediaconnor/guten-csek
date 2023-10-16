@@ -4,7 +4,7 @@ const tailpress = require("@jeffreyvr/tailwindcss-tailpress");
 /** @type {import('tailwindcss').Config} */
 module.exports = {
     // important: true,
-    content: ["./src/**/*.{tsx,js,ts,css,html}"],
+    content: ["./src/**/*.{tsx,js,ts,css,html}", "./safelist.txt"],
     theme: {
         container: {
             padding: {
