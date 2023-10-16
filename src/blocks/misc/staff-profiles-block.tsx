@@ -12,8 +12,17 @@ import { CsekMediaUpload } from "../../components/media-upload";
 import { Heading } from "../../components/heading";
 
 export type SocialMedia = "LinkedIn" | "Facebook" | "Twitter" | "Instagram" | "YouTube" | "TikTok" | "Snapchat";
-
 export type SocialMediaGroup = { [key in SocialMedia]?: string };
+
+export const SocialMediaIcons: SocialMediaGroup = {
+    LinkedIn: "fa fa-linkedin",
+    Facebook: "fa fa-facebook",
+    Twitter: "fa-brands fa-x-twitter",
+    Instagram: "fa fa-instagram",
+    YouTube: "fa fa-youtube",
+    TikTok: "fa-brands fa-tiktok",
+    Snapchat: "fa fa-snapchat",
+};
 
 export interface StaffProfile {
     name: string;
@@ -206,7 +215,7 @@ const StaffProfileComponent = ({ name, position, description, socialMedia, image
     const socials = Object.entries(socialMedia).map(([name, url]) => {
         return (
             <a href={url} className="social-link">
-                <i className={`fa fa-${name.toLowerCase()}`}></i>
+                <i className={SocialMediaIcons[name]}></i>
             </a>
         );
     });
@@ -215,16 +224,18 @@ const StaffProfileComponent = ({ name, position, description, socialMedia, image
         <div className="staff-profile">
             <div className="profile-content">
                 <div className="bio">
-                    <CloseButton />
                     <header>
-                        <h1>{name}</h1>
+                        <div className="name">
+                            <h1>{name}</h1>
+                            <CloseButton />
+                        </div>
                         <h2>{position}</h2>
                     </header>
                     <main>
                         <RichTextContent value={description} />
                     </main>
                     <footer>
-                        {socials ? (
+                        {socials.length > 0 ? (
                             <>
                                 <h3>Social</h3>
                                 <div className="social-links">{socials}</div>

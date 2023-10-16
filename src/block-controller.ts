@@ -13,6 +13,7 @@ import CurtainifyController from "./scripts/controllers/curtainify-controller";
 import TeamController from "./scripts/controllers/team-controller";
 import NextProjectController from "./scripts/controllers/next-project-controller";
 import FeaturedVideoController from "./scripts/controllers/featured-video-controller";
+import StaffProfilesController from "./scripts/controllers/staff-profiles-controller";
 
 export const prepareBlockControllers = () => {
     /* Prepare DOM Controller */
@@ -43,6 +44,9 @@ export const prepareBlockControllers = () => {
     // Featured Video Controller
     const featuredVideoController = new FeaturedVideoController(".wp-block-guten-csek-featured-video-block");
 
+    // Staff Profiles Block
+    const staffProfilesController = new StaffProfilesController(".wp-block-guten-csek-staff-profiles-block");
+
     // Vertical Scrolling Images Controller
     // const verticalImagesController = new VerticalScrollingImagesController(
     //     ".vertical-scroll-container",
@@ -58,7 +62,8 @@ export const prepareBlockControllers = () => {
         expandingVideoController,
         carouselController,
         nextProjectController,
-        featuredVideoController
+        featuredVideoController,
+        staffProfilesController
         // verticalImagesController
         // teamController
     );

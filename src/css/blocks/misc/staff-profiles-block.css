@@ -38,7 +38,7 @@
     cursor: initial;
     pointer-events: none;
     opacity: 0;
-    transition: all 0.2s ease-in-out;
+    transition: opacity 500ms ease-in-out;
 
     /* Subclasses */
     &.opened {
@@ -65,11 +65,25 @@
 
             & h1 {
                 font-size: 4rem;
+                line-height: 1;
             }
 
             & h2 {
                 font-size: 1rem;
                 color: var(--csek-red);
+                margin: 0.25rem 0;
+            }
+
+            & .name {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: flex-start;
+
+                & .close-button {
+                    position: relative;
+                    top: -2rem;
+                }
             }
         }
 
@@ -102,6 +116,9 @@
         width: 50%;
         height: auto;
         object-fit: cover;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
     }
 
     & .social-link {
