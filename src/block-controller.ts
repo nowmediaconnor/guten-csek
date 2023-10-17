@@ -23,7 +23,7 @@ export const prepareBlockControllers = () => {
     // prepareCurtainElements();
 
     // "Scroll Down" controller
-    const scrollController = new ScrollDownController("scroll-down", ".scroll-down-target");
+    const scrollController = new ScrollDownController("scroll-down", ".header-scroll-down-target");
     // Scrolling carousel
     const carouselController = new CarouselController(".wp-block-guten-csek-horizontal-carousel-block");
     // Video carousel
