@@ -3,7 +3,7 @@
  * Author: Connor Doman
  */
 
-import { registerBlockType, BlockAttribute } from "@wordpress/blocks";
+import { registerBlockType } from "@wordpress/blocks";
 import {
     SelfDescriptionBlockAttributes,
     SelfDescriptionBlockEdit,
@@ -15,6 +15,7 @@ import {
     StaffProfilesBlockEdit,
     StaffProfilesBlockSave,
 } from "../blocks/misc/staff-profiles-block";
+import { LetsTalkBlockAttributes, LetsTalkBlockEdit, LetsTalkBlockSave } from "../blocks/misc/lets-talk-block";
 
 export const registerAllBlocks = () => {
     console.log("Registering blocks...");
@@ -56,7 +57,7 @@ export const registerAllBlocks = () => {
 
     // Staff profiles block
     registerBlockType<StaffProfilesBlockAttributes>("guten-csek/staff-profiles-block", {
-        title: "Csek Staff Profiles",
+        title: "Csek Staff Showcase",
         icon: "groups",
         category: "common",
         attributes: {
@@ -75,5 +76,28 @@ export const registerAllBlocks = () => {
         },
         edit: StaffProfilesBlockEdit,
         save: StaffProfilesBlockSave,
+    });
+
+    // Let's Talk / CTA block
+    registerBlockType<LetsTalkBlockAttributes>("guten-csek/lets-talk-block", {
+        title: "Csek Let's Talk (CTA)",
+        icon: "megaphone",
+        category: "common",
+        attributes: {
+            heading: {
+                type: "string",
+                default: "Want to discuss our capabilities? Get in touch.",
+            },
+            buttonText: {
+                type: "string",
+                default: "Let's Talk",
+            },
+            imageURL: {
+                type: "string",
+                default: "",
+            },
+        },
+        edit: LetsTalkBlockEdit,
+        save: LetsTalkBlockSave,
     });
 };
