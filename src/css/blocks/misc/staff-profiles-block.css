@@ -9,13 +9,12 @@
     justify-content: center;
     align-items: center;
     position: relative;
-    padding: 4rem 0;
+    margin-bottom: -10rem;
 }
 
 .wp-block-guten-csek-staff-profiles-block .profile-content {
     width: 100%;
     max-width: var(--max-width);
-    height: max-content;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -150,6 +149,7 @@
     font-family: "Montserrat", sans-serif;
     gap: 6rem;
     margin-bottom: 2rem;
+    padding-top: 4rem;
 
     & h2 {
         font-family: "Syne", sans-serif;
@@ -168,6 +168,7 @@
 .wp-block-guten-csek-staff-profiles-block .profiles-area {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto;
     grid-gap: 1rem;
     width: 100%;
 
@@ -226,6 +227,7 @@
     justify-content: flex-start;
     align-items: flex-start;
     width: 20rem;
+    height: fit-content;
     position: relative;
     justify-self: center;
     cursor: pointer;

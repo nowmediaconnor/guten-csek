@@ -58,7 +58,7 @@
 }
 
 .wp-block-guten-csek-block-quote-block .serif {
-    filter: saturate(0) brightness(2.5);
+    /* filter: hue-rotate(150deg) saturate(1%) brightness(195.8%); */
     position: absolute;
     right: 4rem;
     top: 2rem;
