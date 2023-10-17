@@ -19,6 +19,11 @@ export interface GutenbergBlockProps {
     setAttributes?: any;
 }
 
+export interface GutenCsekBlockProps<T> extends GutenbergBlockProps {
+    attributes: T;
+    setAttributes?: any;
+}
+
 export interface ControllerScript {
     name: string;
     shortName: string;

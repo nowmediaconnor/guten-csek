@@ -1,0 +1,77 @@
+/*
+ * Created on Mon Oct 02 2023
+ * Author: Connor Doman
+ */
+
+.wp-block-guten-csek-chicago-fires-block {
+    background-color: var(--csek-dark);
+    width: 100%;
+    font-family: "Syne", sans-serif;
+
+    & h2,
+    & h3 {
+        color: var(--csek-red);
+        font-size: 1rem;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+    & p {
+        color: #fff;
+    }
+
+    & .block-container {
+        max-width: var(--max-width);
+        position: relative;
+        padding: 4rem 0;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 4rem;
+
+        & .primary-text {
+            text-align: center;
+            max-width: 70%;
+
+            & h2 {
+                margin: 1rem 0;
+            }
+
+            & p {
+                font-size: 2rem;
+                font-weight: bold;
+                line-height: 1.1;
+            }
+        }
+
+        & .fires {
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-start;
+            gap: 2rem;
+
+            & .secondary-text {
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: flex-start;
+                flex-basis: 25%;
+                gap: 1rem;
+
+                & h3 {
+                    text-align: left;
+                }
+
+                & p {
+                    text-align: left;
+                    font-family: "Montserrat", sans-serif;
+                    line-height: 1.1;
+                    font-size: 0.9rem;
+                }
+            }
+        }
+    }
+}

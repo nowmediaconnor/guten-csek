@@ -1,0 +1,100 @@
+/*
+ * Created on Sun Oct 08 2023
+ * Author: Connor Doman
+ */
+
+.wp-block-guten-csek-self-description-block {
+    background-color: var(--csek-blue);
+    color: var(--csek-dark);
+    width: 100%;
+    padding: 6rem 0;
+    font-family: "Montserrat", sans-serif;
+
+    & .block-container {
+        max-width: var(--max-width);
+        margin: 0 auto;
+    }
+
+    & .left-right-area {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: flex-start;
+
+        & .left-content {
+            width: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        & .right-content {
+            width: 50%;
+            padding: 4rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+
+            & p {
+                font-size: 0.9rem;
+                margin: 2rem 0;
+            }
+
+            & .secondary-image {
+                max-width: 75%;
+                height: auto;
+            }
+        }
+
+        & .desc-masthead {
+            position: relative;
+            height: max-content;
+            margin-top: 12rem;
+
+            & h2 {
+                position: relative;
+                font-size: 2.5rem;
+                font-weight: 600;
+                margin: 1.5rem 0 2rem 0;
+                font-family: "Syne", sans-serif;
+                line-height: 1.1;
+                z-index: 1;
+            }
+
+            & .serif {
+                position: absolute;
+                top: 0;
+                right: 0;
+                filter: grayscale(100%) brightness(0) invert(100%);
+                width: 15rem;
+                z-index: 0;
+            }
+        }
+    }
+    & .fact-entry {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 2rem;
+        font-family: "Syne", sans-serif;
+
+        & h2 {
+            font-size: 3rem;
+            font-weight: bold;
+            flex-basis: 50%;
+        }
+
+        & p {
+            font-size: 1rem;
+            flex-basis: 50%;
+            padding: 0 4rem;
+            font-weight: 600;
+        }
+    }
+
+    & .fact-entry + .fact-entry {
+        border-top: 1px solid white;
+        padding-top: 2rem;
+    }
+}

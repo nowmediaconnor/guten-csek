@@ -1,0 +1,65 @@
+/*
+ * Created on Mon Oct 02 2023
+ * Author: Connor Doman
+ */
+
+.wp-block-guten-csek-featured-video-block {
+    width: 100%;
+    position: relative;
+    padding: 3rem 0;
+
+    & .block-container {
+        max-width: var(--max-width);
+        margin: 0 auto;
+        position: relative;
+
+        & .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 0.5rem;
+            width: 100%;
+
+            & > * {
+                transition: all ease 0.2s;
+            }
+
+            & .video-shade {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(black, transparent);
+                z-index: 2;
+                pointer-events: none;
+            }
+
+            & video {
+                z-index: 1;
+            }
+
+            & .playbutton {
+                font-family: "Syne", sans-serif;
+                font-weight: bold;
+                text-transform: uppercase;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                width: 7rem;
+                height: 7rem;
+                border-radius: 50%;
+                background: var(--csek-blue);
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 0.5rem;
+                cursor: pointer;
+                z-index: 3;
+            }
+        }
+    }
+}

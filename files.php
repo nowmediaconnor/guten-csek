@@ -4,7 +4,7 @@
  * Author: Connor Doman
  */
 
-function find_files_recursively($dir, $recursive = true, $found_files = []): array
+function find_files_recursively($dir, $recursive = true, $found_files = [], $ignore = []): array
 {
     if (is_dir($dir)) {
 
@@ -12,7 +12,8 @@ function find_files_recursively($dir, $recursive = true, $found_files = []): arr
         $dirs = [];
 
         foreach ($files as $file) {
-            if ($file === '.' || $file === '..') {
+            // echo "Found file: " . $file . " Ignored? " . (in_array($file, $ignore) ? "yes" : "no") . "<br/>";
+            if ($file === '.' || $file === '..' || in_array($file, $ignore)) {
                 continue;
             }
 
@@ -28,7 +29,7 @@ function find_files_recursively($dir, $recursive = true, $found_files = []): arr
 
         if ($recursive) {
             foreach ($dirs as $dir) {
-                $found_files = find_files_recursively($dir, $recursive, $found_files);
+                $found_files = find_files_recursively($dir, $recursive, $found_files, $ignore);
             }
         }
         return $found_files;
@@ -36,7 +37,7 @@ function find_files_recursively($dir, $recursive = true, $found_files = []): arr
     return [$dir];
 }
 
-function get_all_files_from_dir($dir, $recursive = false): array
+function get_all_files_from_dir($dir, $recursive = false, $ignore = []): array
 {
-    return find_files_recursively($dir, $recursive);
+    return find_files_recursively($dir, $recursive, [], $ignore);
 }

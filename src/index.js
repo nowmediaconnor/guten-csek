@@ -6,14 +6,6 @@
 const { registerBlockType } = wp.blocks;
 
 import DOMController from "./scripts/dom";
-import { TaglineHeaderEdit, TaglineHeaderSave } from "./blocks/tagline-header-block";
-import { ExpandingVideoBlockEdit, ExpandingVideoBlockSave } from "./blocks/expanding-video-block";
-import { BlockquoteEdit, BlockquoteSave } from "./blocks/blockquote-block";
-import { ScrollingProjectsBlockEdit, ScrollingProjectsBlockSave } from "./blocks/scrolling-projects-block";
-import { TeamBlockEdit, TeamBlockSave } from "./blocks/team-block";
-import { VideoCarouselBlockEdit, VideoCarouselBlockSave } from "./blocks/video-carousel-block";
-import { HorizontalCarouselBlockEdit, HorizontalCarouselBlockSave } from "./blocks/horizontal-carousel-block";
-
 import ScrollDownController from "./scripts/controllers/scroll-down-controller";
 import CarouselController from "./scripts/controllers/carousel-controller";
 import VideoCarouselController from "./scripts/controllers/video-carousel-controller";
@@ -23,6 +15,15 @@ import CurtainifyController from "./scripts/controllers/curtainify-controller";
 import TeamController from "./scripts/controllers/team-controller";
 import NextProjectController from "./scripts/controllers/next-project-controller";
 
+import { prepareBlockControllers } from "./block-controller";
+
+import { TaglineHeaderEdit, TaglineHeaderSave } from "./blocks/tagline-header-block";
+import { ExpandingVideoBlockEdit, ExpandingVideoBlockSave } from "./blocks/expanding-video-block";
+import { BlockquoteEdit, BlockquoteSave } from "./blocks/blockquote-block";
+import { ScrollingProjectsBlockEdit, ScrollingProjectsBlockSave } from "./blocks/scrolling-projects-block";
+import { TeamBlockEdit, TeamBlockSave } from "./blocks/team-block";
+import { VideoCarouselBlockEdit, VideoCarouselBlockSave } from "./blocks/video-carousel-block";
+import { HorizontalCarouselBlockEdit, HorizontalCarouselBlockSave } from "./blocks/horizontal-carousel-block";
 import { ProjectSummaryBlockEdit, ProjectSummaryBlockSave } from "./blocks/misc/project-summary-block";
 import { FeaturedImageBlockEdit, FeaturedImageBlockSave } from "./blocks/misc/featured-image-block";
 import { MultiImageBlockEdit, MultiImageBlockSave } from "./blocks/misc/multi-image-block";
@@ -32,6 +33,11 @@ import { DOMControllerBlockEdit, DOMControllerBlockSave } from "./blocks/dom-con
 import { ImageCollageBlockEdit, ImageCollageBlockSave } from "./blocks/misc/image-collage-block";
 import { ScreenshotCollageBlockEdit, ScreenshotCollageBlockSave } from "./blocks/misc/screenshot-collage-block";
 import { NextProjectBlockEdit, NextProjectBlockSave } from "./blocks/misc/next-project-block";
+import { PageHeaderBlockEdit, PageHeaderBlockSave } from "./blocks/misc/page-header-block";
+import { FeaturedVideoBlockEdit, FeaturedVideoBlockSave } from "./blocks/misc/featured-video-block";
+import { ChicagoFiresBlockEdit, ChicagoFiresBlockSave } from "./blocks/misc/chicago-fires-block";
+import { registerAllBlocks } from "./scripts/register-blocks";
+import { runAccumulators } from "./scripts/accumulators";
 
 // so the "edit" component is a place where i can put fields that will be used to edit block attributes
 
@@ -418,52 +424,84 @@ registerBlockType("guten-csek/next-project-block", {
     save: NextProjectBlockSave,
 });
 
-window.addEventListener("load", () => {
+// Page Header Block
+registerBlockType("guten-csek/page-header-block", {
+    title: "Csek Page Header Block",
+    icon: "text",
+    category: "text",
+    attributes: {
+        heading: {
+            type: "string",
+            default: "",
+        },
+        slogan: {
+            type: "string",
+            default: "",
+        },
+    },
+    edit: PageHeaderBlockEdit,
+    save: PageHeaderBlockSave,
+});
+
+// Featured Video Block
+registerBlockType("guten-csek/featured-video-block", {
+    title: "Csek Featured Video Block",
+    icon: "format-video",
+    category: "media",
+    attributes: {
+        videoURL: {
+            type: "string",
+            default: "",
+        },
+    },
+    edit: FeaturedVideoBlockEdit,
+    save: FeaturedVideoBlockSave,
+});
+
+// Chicago Fires Block
+registerBlockType("guten-csek/chicago-fires-block", {
+    title: "Csek Chicago Fires Block",
+    icon: "text",
+    category: "text",
+    attributes: {
+        primaryHeading: {
+            type: "string",
+            default: "",
+        },
+        secondaryHeadings: {
+            type: "array",
+            default: [],
+        },
+        primaryMessage: {
+            type: "string",
+            default: "",
+        },
+        secondaryMessages: {
+            type: "array",
+            default: [],
+        },
+    },
+    edit: ChicagoFiresBlockEdit,
+    save: ChicagoFiresBlockSave,
+});
+
+registerAllBlocks();
+
+window.addEventListener("load", (e) => {
+    console.log("Window loaded.");
+    console.log({ windowWidth: window.innerWidth, windowHeight: window.innerHeight });
+
+    /* Prepare Accumulator Elements */
+    runAccumulators();
+
     /* Prepare DOM Controller */
+    window.domController = prepareBlockControllers();
 
-    // First, prepare curtain elements
-    const curtainifyController = new CurtainifyController();
-    // prepareCurtainElements();
-
-    // "Scroll Down" controller
-    const scrollController = new ScrollDownController("scroll-down", ".scroll-down-target");
-    // Scrolling carousel
-    const carouselController = new CarouselController(".wp-block-guten-csek-horizontal-carousel-block");
-    // Video carousel
-    const videoCarouselController = new VideoCarouselController(".wp-block-guten-csek-video-carousel-block");
-    // Scrolling projects block
-    const scrollingProjectsController = new ScrollingProjectsController(
-        ".wp-block-guten-csek-scrolling-projects-block"
-    );
-    // Expanding video controller
-    const expandingVideoController = new ExpandingVideoController(".expanding-video-container");
-
-    // Team Block Controller
-    const teamController = new TeamController(".wp-block-guten-csek-team-block");
-
-    // Next Project Controller
-    const nextProjectController = new NextProjectController(".wp-block-guten-csek-next-project-block");
-
-    // Vertical Scrolling Images Controller
-    // const verticalImagesController = new VerticalScrollingImagesController(
-    //     ".vertical-scroll-container",
-    //     ".vertical-scroll-grid"
-    // );
-
-    // DOM controller
-    window.domController = new DOMController(
-        curtainifyController,
-        scrollController,
-        videoCarouselController,
-        scrollingProjectsController,
-        expandingVideoController,
-        carouselController,
-        nextProjectController
-        // verticalImagesController
-        // teamController
-    );
-
-    // window.domController.hideLoadingPanel();
+    window.requestAnimationFrame(() => {
+        window.domController.setup();
+        window.domController.overrideAllDebug(false);
+        window.domController.overrideDebug(true, "FeaturedVideoController");
+    });
 
     setTimeout(() => {
         // hide loading panel if DOM controller is not in use...

@@ -3,6 +3,7 @@
     --csek-blue: #b4d8df;
     --csek-dark: #131313;
     --csek-light: #e9ebea;
+    --csek-white: #ffffff;
     --max-width: 75rem;
     --half-pad: calc(calc(100% - var(--max-width)) / 2);
 }
@@ -61,7 +62,9 @@ body {
 
 .hide {
     opacity: 0;
-    transition: opacity ease 0.2s, width ease 2s;
+    transition:
+        opacity ease 0.2s,
+        width ease 2s;
     width: 0;
 }
 
@@ -90,6 +93,11 @@ body {
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
+}
+
+.block-content {
+    max-width: var(--max-width);
+    margin: 0 auto;
 }
 
 /* Specific Elements */

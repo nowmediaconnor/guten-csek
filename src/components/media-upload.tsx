@@ -8,21 +8,44 @@ import { GutenbergBlockProps } from "../scripts/dom";
 import { Button } from "@wordpress/components";
 import React, { useState } from "@wordpress/element";
 import { Heading } from "./heading";
+import { capitalize } from "../scripts/strings";
 
 interface CsekMediaUploadProps {
-    onChange: (v: any) => void;
+    onChange: (v: string) => void;
     urlAttribute?: string;
+    type?: "image" | "video" | "audio";
 }
 
-export const CsekMediaUpload = ({ onChange, urlAttribute = "" }: CsekMediaUploadProps) => {
-    const [imageURL, setImageURL] = useState(urlAttribute);
-    const [imageId, setImageId] = useState(0);
+export const CsekMediaUpload = ({ onChange, urlAttribute = "", type = "image" }: CsekMediaUploadProps) => {
+    const [resourceURL, setResourceURL] = useState(urlAttribute);
+    const [resourceId, setResourceId] = useState(0);
 
     const handleChangeURL = (v: any) => {
         if (onChange) {
-            onChange(v);
-            setImageURL(v.url);
-            setImageId(v.id);
+            onChange(v.url);
+            setResourceURL(v.url);
+            setResourceId(v.id);
+        }
+    };
+
+    const mediaPreview = (): JSX.Element => {
+        switch (type) {
+            case "image":
+                return <img className="preview-image" src={resourceURL} />;
+            case "video":
+                return (
+                    <video className="preview-image" controls={true} autoPlay={false} loop={false} muted={false}>
+                        <source src={resourceURL} />
+                    </video>
+                );
+            case "audio":
+                return (
+                    <audio controls={true}>
+                        <source src={resourceURL} />
+                    </audio>
+                );
+            default:
+                return <></>;
         }
     };
 
@@ -31,18 +54,18 @@ export const CsekMediaUpload = ({ onChange, urlAttribute = "" }: CsekMediaUpload
             <MediaUploadCheck>
                 <MediaUpload
                     onSelect={handleChangeURL}
-                    allowedTypes={["image"]}
+                    allowedTypes={[type]}
                     multiple={false}
-                    value={imageId}
+                    value={resourceId}
                     render={({ open }) => (
                         <Button onClick={open} className="csek-button">
-                            Choose image
+                            Choose {type}
                         </Button>
                     )}
                 />
             </MediaUploadCheck>
-            <Heading level="4">Image preview</Heading>
-            <img className="preview-image" src={imageURL} />
+            <Heading level="4">{capitalize(type)} preview</Heading>
+            {mediaPreview()}
         </div>
     );
 };

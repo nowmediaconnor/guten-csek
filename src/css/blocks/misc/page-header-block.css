@@ -1,0 +1,44 @@
+/*
+ * Created on Mon Oct 02 2023
+ * Author: Connor Doman
+ */
+
+.wp-block-guten-csek-page-header-block {
+    width: 100%;
+    position: relative;
+    padding: 2rem 0;
+    min-height: max-content;
+
+    & .block-container {
+        position: relative;
+        max-width: var(--max-width);
+        margin: 0 auto;
+        padding: 2rem 0 3rem 0;
+
+        & img {
+            position: absolute;
+            z-index: -1;
+            top: 2rem;
+        }
+
+        & h1 {
+            font-family: "Syne", sans-serif;
+            font-size: 5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            position: relative;
+            left: 18%;
+            top: -2rem;
+            line-height: 1;
+        }
+
+        & .csek-richtext {
+            font-family: "Syne", sans-serif;
+            text-align: left;
+            width: max-content;
+            margin: 0 auto;
+            text-transform: uppercase;
+        }
+    }
+}

@@ -1,0 +1,67 @@
+{
+    "version": 1,
+    "settings": {
+        "layout": {
+            "contentSize": "960px",
+            "wideSize": "1280px"
+        },
+        "color": {
+            "palette": [
+                {
+                    "name": "Csek Red",
+                    "slug": "csek-red",
+                    "color": "#f40201"
+                },
+                {
+                    "name": "Accent Blue",
+                    "slug": "csek-blue",
+                    "color": "#b4d8df"
+                },
+                {
+                    "name": "Dark",
+                    "slug": "csek-dark",
+                    "color": "#131313"
+                },
+                {
+                    "name": "Light",
+                    "slug": "csek-light",
+                    "color": "#e9ebea"
+                }
+            ]
+        },
+        "typography": {
+            "fontSizes": [
+                {
+                    "name": "Small",
+                    "slug": "small",
+                    "size": "0.875rem"
+                },
+                {
+                    "slug": "regular",
+                    "name": "Regular",
+                    "size": "1.5rem"
+                },
+                {
+                    "slug": "large",
+                    "name": "Large",
+                    "size": "1.125rem"
+                },
+                {
+                    "slug": "xl",
+                    "name": "XL",
+                    "size": "1.25rem"
+                },
+                {
+                    "slug": "xxl",
+                    "name": "2XL",
+                    "size": "1.5rem"
+                },
+                {
+                    "slug": "xxxl",
+                    "name": "3XL",
+                    "size": "1.875rem"
+                }
+            ]
+        }
+    }
+}

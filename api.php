@@ -4,7 +4,8 @@
  * Author: Connor Doman
  */
 
-require 'kmeans.php';
+require 'image-color.php';
+
 
 function get_image_color($request)
 {
@@ -15,13 +16,15 @@ function get_image_color($request)
     $image_resource = imagecreatefromstring($image_data);
 
     // Initialize an array to store the unique colors
+    $main_color = get_predominant_color($image_resource);
 
-    $rgb_data = createRGBArrayFromImage($image_resource, 10);
-    $main_color = findMainColorOfImage($rgb_data, 10);
-    unset($rgb_data);
+    error_log('Got color: ' . $main_color);
+    // $rgb_data = createRGBArrayFromImage($image_resource, 10);
+    // $main_color = findMainColorOfImage($rgb_data, 10);
+    // unset($rgb_data);
 
-    imagedestroy($image_resource);
-    // $colorCount = count($uniqueColors);
+    // imagedestroy($image_resource);
+    // // $colorCount = count($uniqueColors);
 
     return rest_ensure_response(["color" => $main_color], 200);
 }

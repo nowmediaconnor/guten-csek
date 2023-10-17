@@ -28,7 +28,11 @@ function enqueue_blocks_iteratively()
         'dom-controller-block',
         'image-collage-block',
         'screenshot-collage-block',
-        'next-project-block'
+        'next-project-block',
+        'page-header-block',
+        'featured-video-block',
+        'chicago-fires-block',
+        'self-description-block'
     ];
 
     for ($i = 0; $i < count($block_names); $i++) {
@@ -55,9 +59,10 @@ function enqueue_css_folder()
     $css_directory = plugin_dir_path(__FILE__) . 'src/css';
     // echo "Enqueuing styles from directory: " . $css_directory . "<br/>";
 
-    $files = get_all_files_from_dir($css_directory, true);
+    $files = get_all_files_from_dir($css_directory, true, ['app.css', 'app-editor.css', 'style.css', 'editor.css']);
 
     foreach ($files as $file) {
+        // error_log('Enqueuing style: ' . $file);
         $handle = pathinfo($file, PATHINFO_FILENAME);
         // echo "Enqueuing style: " . $handle . "<br/>";
         $src = convert_path_to_url($file);
@@ -79,22 +84,22 @@ function enqueue_custom_block_assets()
     );
 
     // fonts
-    wp_enqueue_style('guten-csek-fonts', plugin_dir_url(__FILE__) . 'src/fonts/fonts.css');
+    // wp_enqueue_style('guten-csek-fonts', plugin_dir_url(__FILE__) . 'src/fonts/fonts.css');
 
     // editor-only css
     wp_register_style(
         'guten-csek-editor-style',
-        plugins_url('src/editor.css', __FILE__),
+        plugins_url('css/guten-csek-editor.css', __FILE__),
         ['wp-edit-blocks'],
-        filemtime(plugin_dir_path(__FILE__) . 'src/editor.css')
+        filemtime(plugin_dir_path(__FILE__) . 'css/guten-csek-editor.css')
     );
 
     // misc front end css
     wp_register_style(
         'guten-csek-frontend-style',
-        plugins_url('src/style.css', __FILE__),
+        plugins_url('css/guten-csek.css', __FILE__),
         [],
-        filemtime(plugin_dir_path(__FILE__) . 'src/style.css')
+        filemtime(plugin_dir_path(__FILE__) . 'css/guten-csek.css')
     );
 
     // every other stylesheet
@@ -103,7 +108,9 @@ function enqueue_custom_block_assets()
     // enqueue block registration
     enqueue_blocks_iteratively();
 }
+// Only enqueue these scripts if we're not in the admin panel
 add_action('init', 'enqueue_custom_block_assets');
+
 
 
 // API endpoints

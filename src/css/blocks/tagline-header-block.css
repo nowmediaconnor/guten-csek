@@ -7,4 +7,36 @@
 
 .wp-block-guten-csek-tagline-header-block {
     transition: all ease 0.2s;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: var(--csek-dark);
+    text-align: center;
+    width: 70%;
+    margin: 0 auto;
+    margin-bottom: -5rem;
+}
+
+.wp-block-guten-csek-tagline-header-block .heading-text {
+    z-index: 25;
+    font-weight: bold;
+    font-family: "Syne", sans-serif;
+    text-transform: uppercase;
+}
+
+.wp-block-guten-csek-tagline-header-block .heading-text h3 {
+    font-size: 1.25rem;
+}
+
+.wp-block-guten-csek-tagline-header-block .heading-text h1 {
+    font-size: 6rem;
+    line-height: 1;
+}
+
+.wp-block-guten-csek-tagline-header-block .serif {
+    width: 12rem;
+    top: -2.75rem;
+    position: relative;
+    z-index: 20;
 }

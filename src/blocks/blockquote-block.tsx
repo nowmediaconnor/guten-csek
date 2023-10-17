@@ -52,7 +52,7 @@ export const BlockquoteSave = ({ attributes }: BlockquoteProps) => {
                         {authorRole && <p className="author-role">{authorRole}</p>}
                     </div>
                 </div>
-                <img className="serif" src="/wp-content/plugins/guten-csek/src/img/serif.svg" />
+                <img className="serif" src="/wp-content/plugins/guten-csek/src/img/serif-light.svg" />
             </div>
         </div>
     );
