@@ -1,5 +1,5 @@
 ---
-name: New Block
+name: Block
 about: Outline a new site block with this template.
 title: "[Block] "
 labels: block, feature
@@ -41,3 +41,7 @@ e.g.
 
 - Depends on #XX
 - Requires `Another Block` to be present on the page for full functionality
+
+## Expected Delivery Time
+
+How long do you think this will take you to complete? Consider how many dependencies it has and the size of other blocks. Give an answer in the form of "hours spent" or "will be delivered by yyyy-mm-dd"
