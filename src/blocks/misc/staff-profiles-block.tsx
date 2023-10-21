@@ -292,7 +292,7 @@ export const StaffProfilesBlockSave = ({ attributes }: GutenCsekBlockProps<Staff
     });
 
     return (
-        <section {...blockProps} className="">
+        <section {...blockProps} className="" style={{ marginBottom: alternateLayout ? "0" : "-15rem" }}>
             <div className="block-content">
                 <div className="block-header">
                     <h2>{heading}</h2>
