@@ -204,7 +204,7 @@ export const StaffProfilesBlockEdit = ({
 
     return (
         <div {...blockProps} className="csek-block">
-            <CsekBlockHeading>Staff Profiles Block</CsekBlockHeading>
+            <CsekBlockHeading>Csek Staff Showcase Block</CsekBlockHeading>
             <div className="csek-card flex flex-col gap-2">
                 <TextInput label="Heading" initialValue={heading} onChange={handleChangeHeading} />
                 <TextInput label="Caption" initialValue={caption} onChange={handleChangeCaption} />
@@ -292,11 +292,11 @@ export const StaffProfilesBlockSave = ({ attributes }: GutenCsekBlockProps<Staff
     });
 
     return (
-        <section {...blockProps} className="" style={{ marginBottom: alternateLayout ? "0" : "-15rem" }}>
+        <section {...blockProps} className="" style={{ marginBottom: alternateLayout ? "0" : "-10rem" }}>
             <div className="block-content">
                 <div className="block-header">
                     <h2>{heading}</h2>
-                    <p>{caption}</p>
+                    {caption ? <p>{caption}</p> : null}
                 </div>
                 <div className={`profiles-area ${alternateLayout ? "alternate" : ""}`}>{profileElements}</div>
             </div>

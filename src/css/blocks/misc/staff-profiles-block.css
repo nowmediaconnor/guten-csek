@@ -234,9 +234,19 @@
     position: relative;
     padding-bottom: 5rem;
 
-    /* even numbered columns that arent the 4th column */
+    /* even numbered items that arent the 4th column */
     & .staff-summary:nth-child(2n):not(:nth-child(4n)) {
         top: 5rem;
+    }
+
+    /* column 3 but not multiples of 6 */
+    & .staff-summary:nth-child(3n):not(:nth-child(2n)) {
+        top: 1rem;
+    }
+
+    /* column 4 */
+    & .staff-summary:nth-child(4n) {
+        top: 3rem;
     }
 
     & .staff-summary .image {
