@@ -9,7 +9,6 @@
     justify-content: center;
     align-items: center;
     position: relative;
-    margin-bottom: -10rem;
 }
 
 .wp-block-guten-csek-staff-profiles-block .profile-content {
@@ -165,7 +164,9 @@
     }
 }
 
-.wp-block-guten-csek-staff-profiles-block .profiles-area {
+/* 3x3 organic grid*/
+
+.wp-block-guten-csek-staff-profiles-block .profiles-area:not(.alternate) {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: auto;
@@ -221,12 +222,53 @@
     }
 }
 
+/* 2x4 grid alternate layout */
+
+.wp-block-guten-csek-staff-profiles-block .profiles-area.alternate {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: auto;
+    grid-auto-flow: row;
+    grid-gap: 1rem;
+    width: 100%;
+    position: relative;
+    padding-bottom: 5rem;
+
+    /* even numbered items that arent the 4th column */
+    & .staff-summary:nth-child(2n):not(:nth-child(4n)) {
+        top: 5rem;
+    }
+
+    /* column 3 but not multiples of 6 */
+    & .staff-summary:nth-child(3n):not(:nth-child(2n)) {
+        top: 1rem;
+    }
+
+    /* column 4 */
+    & .staff-summary:nth-child(4n) {
+        top: 3rem;
+    }
+
+    & .staff-summary .image {
+        width: 100%;
+        overflow: hidden;
+        aspect-ratio: 1 / 1;
+
+        & img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: top center;
+        }
+    }
+}
+
 .wp-block-guten-csek-staff-profiles-block .staff-summary {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-    width: 20rem;
+    max-width: 20rem;
     height: fit-content;
     position: relative;
     justify-self: center;

@@ -7,9 +7,9 @@ import React, { useState } from "react";
 import { useBlockProps } from "@wordpress/block-editor";
 import { GutenCsekBlockProps } from "../../scripts/dom";
 import { CloseButton, CsekAddButton, CsekDeleteButton } from "../../components/button";
-import { RichTextInput, TextInput, RichTextContent } from "../../components/input";
+import { RichTextInput, TextInput, RichTextContent, CheckboxInput } from "../../components/input";
 import { CsekMediaUpload } from "../../components/media-upload";
-import { Heading } from "../../components/heading";
+import { CsekBlockHeading, Heading } from "../../components/heading";
 
 export type SocialMedia = "LinkedIn" | "Facebook" | "Twitter" | "Instagram" | "YouTube" | "TikTok" | "Snapchat";
 export type SocialMediaGroup = { [key in SocialMedia]?: string };
@@ -36,9 +36,8 @@ export interface StaffProfilesBlockAttributes {
     heading: string;
     caption: string;
     profiles: StaffProfile[];
+    alternateLayout: boolean;
 }
-
-const SOCIAL_MEDIA: SocialMedia[] = ["LinkedIn", "Facebook", "Twitter", "Instagram", "YouTube", "TikTok", "Snapchat"];
 
 interface SocialCheckboxProps {
     name: SocialMedia;
@@ -92,12 +91,13 @@ const SocialsSelect = ({ initialValue, onChange }: SocialsSelectProps) => {
         onChange(newSocials);
     };
 
-    const checkboxes = SOCIAL_MEDIA.map((sm) => {
+    // typescript is dumb (but not as dumb as javascript)
+    const checkboxes = (Object.keys(SocialMediaIcons) as SocialMedia[]).map((sm: SocialMedia) => {
         return <SocialCheckbox name={sm} value={socials[sm] || ""} onChange={handleChange} />;
     });
 
     return (
-        <div className="csek-card">
+        <div className="csek-card gap-2 flex flex-col">
             <Heading level="3">Social Media</Heading>
             {checkboxes}
         </div>
@@ -118,7 +118,7 @@ const StaffProfileComponentEdit = ({ profile, onChange }: StaffProfileComponentE
     };
 
     return (
-        <div className="csek-card">
+        <div className="csek-card flex flex-col gap-2">
             <TextInput
                 label="Name"
                 initialValue={staffProfile.name}
@@ -134,7 +134,7 @@ const StaffProfileComponentEdit = ({ profile, onChange }: StaffProfileComponentE
                 initialValue={staffProfile.description}
                 onChange={(v) => handleChangeProfile({ ...staffProfile, description: v })}
             />
-            <div className="flex flex-row">
+            <div className="flex flex-row gap-2">
                 <SocialsSelect
                     initialValue={staffProfile.socialMedia}
                     onChange={(v) => handleChangeProfile({ ...staffProfile, socialMedia: v })}
@@ -155,7 +155,7 @@ export const StaffProfilesBlockEdit = ({
 }: GutenCsekBlockProps<StaffProfilesBlockAttributes>) => {
     const blockProps = useBlockProps();
 
-    const { heading, caption, profiles } = attributes;
+    const { heading, caption, profiles, alternateLayout } = attributes;
 
     const handleChangeHeading = (v: string) => {
         setAttributes({ heading: v });
@@ -169,6 +169,10 @@ export const StaffProfilesBlockEdit = ({
         const newProfiles = [...profiles];
         newProfiles[i] = v;
         setAttributes({ profiles: newProfiles });
+    };
+
+    const handleUseAlternateLayout = (v: boolean) => {
+        setAttributes({ alternateLayout: v });
     };
 
     const newStaffProfile = () => {
@@ -191,19 +195,26 @@ export const StaffProfilesBlockEdit = ({
 
     const staffProfiles = profiles.map((p, i) => {
         return (
-            <div className="">
+            <div className="flex flex-col gap-2">
                 <StaffProfileComponentEdit profile={p} onChange={(v) => handleChangeProfile(v, i)} />
-                <CsekDeleteButton onDelete={() => deleteStaffProfile(i)} />
+                <CsekDeleteButton onDelete={() => deleteStaffProfile(i)} label={`Delete "${p.name}"`} />
             </div>
         );
     });
 
     return (
-        <div {...blockProps} className="p-4 flex flex-col">
-            <h2>Staff Profiles Block</h2>
-            <TextInput label="Heading" initialValue={heading} onChange={handleChangeHeading} />
-            <TextInput label="Caption" initialValue={caption} onChange={handleChangeCaption} />
-            {staffProfiles}
+        <div {...blockProps} className="csek-block">
+            <CsekBlockHeading>Csek Staff Showcase Block</CsekBlockHeading>
+            <div className="csek-card flex flex-col gap-2">
+                <TextInput label="Heading" initialValue={heading} onChange={handleChangeHeading} />
+                <TextInput label="Caption" initialValue={caption} onChange={handleChangeCaption} />
+                <CheckboxInput
+                    label="Alternate Layout"
+                    initialValue={alternateLayout}
+                    onChange={handleUseAlternateLayout}
+                />
+            </div>
+            <div className="flex flex-col gap-2">{staffProfiles}</div>
             <CsekAddButton onAdd={newStaffProfile} className="my-4" label="Add Staff Profile" />
         </div>
     );
@@ -274,20 +285,20 @@ const StaffProfileSummary = ({ name, position, imageURL, fullProfile }: StaffPro
 export const StaffProfilesBlockSave = ({ attributes }: GutenCsekBlockProps<StaffProfilesBlockAttributes>) => {
     const blockProps = useBlockProps.save();
 
-    const { heading, caption, profiles } = attributes;
+    const { heading, caption, profiles, alternateLayout } = attributes;
 
     const profileElements = profiles.map((p) => {
         return <StaffProfileSummary {...p} fullProfile={<StaffProfileComponent {...p} />} />;
     });
 
     return (
-        <section {...blockProps} className="">
+        <section {...blockProps} className="" style={{ marginBottom: alternateLayout ? "0" : "-10rem" }}>
             <div className="block-content">
                 <div className="block-header">
                     <h2>{heading}</h2>
-                    <p>{caption}</p>
+                    {caption ? <p>{caption}</p> : null}
                 </div>
-                <div className="profiles-area">{profileElements}</div>
+                <div className={`profiles-area ${alternateLayout ? "alternate" : ""}`}>{profileElements}</div>
             </div>
         </section>
     );

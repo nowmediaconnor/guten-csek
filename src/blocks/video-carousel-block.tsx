@@ -4,22 +4,10 @@
  */
 
 import React from "react";
-import { MediaUploadCheck, MediaUpload, InspectorControls, RichText, useBlockProps } from "@wordpress/block-editor";
-import {
-    Button,
-    PanelBody,
-    IconButton,
-    TextControl,
-    Panel,
-    Card,
-    CardHeader,
-    CardBody,
-    __experimentalText as Text,
-    __experimentalVStack as VStack,
-    CardFooter,
-    TextareaControl,
-} from "@wordpress/components";
+import { MediaUploadCheck, MediaUpload, RichText, useBlockProps } from "@wordpress/block-editor";
+import { Button } from "@wordpress/components";
 import { Heading } from "../components/heading";
+import { CsekBlockHeading } from "../components/heading";
 
 interface Video {
     videoTitle: string;
@@ -120,7 +108,7 @@ export const VideoCarouselBlockEdit = ({ attributes, setAttributes }: VideoCarou
     });
     return (
         <div {...blockProps}>
-            <Heading level="2">Csek Video Carousel Block</Heading>
+            <CsekBlockHeading>Csek Video Carousel Block</CsekBlockHeading>
             {videoElements}
             <Button onClick={handleAddVideo} icon="plus" className="csek-button">
                 Add Video

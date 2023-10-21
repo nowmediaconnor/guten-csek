@@ -4,7 +4,7 @@
  */
 
 import React from "react";
-import { Heading } from "../../components/heading";
+import { CsekBlockHeading } from "../../components/heading";
 import { useBlockProps } from "@wordpress/block-editor";
 import { GutenCsekBlockProps } from "../../scripts/dom";
 import { TextInput } from "../../components/input";
@@ -35,7 +35,7 @@ export const LetsTalkBlockEdit = ({ attributes, setAttributes }: GutenCsekBlockP
 
     return (
         <div {...blockProps}>
-            <Heading level="2">Csek Let's Talk Block (CTA)</Heading>
+            <CsekBlockHeading>Csek Let's Talk Block (CTA)</CsekBlockHeading>
             <TextInput label="Heading" placeholder="Want to learn more?" initialValue={heading} onChange={setHeading} />
             <TextInput
                 label="Button Text"

@@ -8,6 +8,7 @@ import { GutenbergBlockProps } from "../../scripts/dom";
 import { MediaUpload, MediaUploadCheck, useBlockProps } from "@wordpress/block-editor";
 import { Button, __experimentalNumberControl as NumberControl } from "@wordpress/components";
 import { Heading } from "../../components/heading";
+import { CsekBlockHeading } from "../../components/heading";
 
 export const MultiImageBlockEdit = ({ attributes, setAttributes }: GutenbergBlockProps) => {
     const blockProps = useBlockProps();
@@ -58,7 +59,7 @@ export const MultiImageBlockEdit = ({ attributes, setAttributes }: GutenbergBloc
 
     return (
         <section {...blockProps}>
-            <Heading level="2">Csek Multi Image Block</Heading>
+            <CsekBlockHeading>Csek Multi Image Block</CsekBlockHeading>
             <div className="py-4 flex flex-col gap-4">
                 <Heading level="5">Block Title</Heading>
                 <input

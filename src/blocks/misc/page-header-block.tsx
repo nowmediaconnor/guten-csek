@@ -6,7 +6,7 @@
 import React from "@wordpress/element";
 import { GutenbergBlockProps } from "../../scripts/dom";
 import { useBlockProps } from "@wordpress/block-editor";
-import { Heading } from "../../components/heading";
+import { CsekBlockHeading } from "../../components/heading";
 import { TextInput, RichTextInput, RichTextContent } from "../../components/input";
 
 export const PageHeaderBlockEdit = ({ attributes, setAttributes }: GutenbergBlockProps) => {
@@ -24,7 +24,7 @@ export const PageHeaderBlockEdit = ({ attributes, setAttributes }: GutenbergBloc
 
     return (
         <div {...blockProps}>
-            <Heading level="2">Csek Page Header Block</Heading>
+            <CsekBlockHeading>Csek Page Header Block</CsekBlockHeading>
             <div className="flex flex-col gap-2 border border-solid border-slate-700 p-2 rounded my-2">
                 <TextInput
                     label="Page Heading"

@@ -8,6 +8,7 @@ import { GutenbergBlockProps } from "../../scripts/dom";
 import { MediaUpload, MediaUploadCheck, useBlockProps } from "@wordpress/block-editor";
 import { Button } from "@wordpress/components";
 import { Heading } from "../../components/heading";
+import { CsekBlockHeading } from "../../components/heading";
 
 export const FullscreenImageBlockEdit = ({ attributes, setAttributes }: GutenbergBlockProps) => {
     const blockProps = useBlockProps();
@@ -24,7 +25,7 @@ export const FullscreenImageBlockEdit = ({ attributes, setAttributes }: Gutenber
 
     return (
         <section {...blockProps}>
-            <Heading level="2">Csek Fullscreen Image Block</Heading>
+            <CsekBlockHeading>Csek Fullscreen Image Block</CsekBlockHeading>
 
             <div className="py-4 flex flex-col gap-4">
                 <input

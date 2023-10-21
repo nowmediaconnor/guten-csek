@@ -5,17 +5,7 @@
 
 const { registerBlockType } = wp.blocks;
 
-import DOMController from "./scripts/dom";
-import ScrollDownController from "./scripts/controllers/scroll-down-controller";
-import CarouselController from "./scripts/controllers/carousel-controller";
-import VideoCarouselController from "./scripts/controllers/video-carousel-controller";
-import ExpandingVideoController from "./scripts/controllers/expanding-video-controller";
-import ScrollingProjectsController from "./scripts/controllers/scrolling-projects-controller";
-import CurtainifyController from "./scripts/controllers/curtainify-controller";
-import TeamController from "./scripts/controllers/team-controller";
-import NextProjectController from "./scripts/controllers/next-project-controller";
-
-import { prepareBlockControllers } from "./block-controller";
+import { prepareBlockControllers } from "./domcontroller";
 
 import { TaglineHeaderEdit, TaglineHeaderSave } from "./blocks/tagline-header-block";
 import { ExpandingVideoBlockEdit, ExpandingVideoBlockSave } from "./blocks/expanding-video-block";

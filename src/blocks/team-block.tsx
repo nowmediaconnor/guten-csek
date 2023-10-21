@@ -7,6 +7,7 @@ import { MediaUploadCheck, MediaUpload, InspectorControls, useBlockProps } from 
 import { Button, PanelBody } from "@wordpress/components";
 import React from "react";
 import { Heading } from "../components/heading";
+import { CsekBlockHeading } from "../components/heading";
 
 interface TeamBlockProps {
     attributes: any;
@@ -55,7 +56,7 @@ export const TeamBlockEdit = ({ attributes, setAttributes }: TeamBlockProps) => 
                     </PanelBody>
                 </div>
             </InspectorControls>
-            <Heading level="2">Team Block</Heading>
+            <CsekBlockHeading>Team Block</CsekBlockHeading>
             <div className="w-full flex flex-col gap-4">
                 <p>{images.length} images selected.</p>
                 <input type="text" value={title} onChange={onSetBlockTitle} placeholder="Block Title" />

@@ -8,6 +8,7 @@ import { Heading } from "../../components/heading";
 import { GutenbergBlockProps } from "../../scripts/dom";
 import { useBlockProps } from "@wordpress/block-editor";
 import { CsekMediaUpload } from "../../components/media-upload";
+import { CsekBlockHeading } from "../../components/heading";
 
 export const FeaturedVideoBlockEdit = ({ attributes, setAttributes }: GutenbergBlockProps) => {
     const blockProps = useBlockProps();
@@ -20,7 +21,7 @@ export const FeaturedVideoBlockEdit = ({ attributes, setAttributes }: GutenbergB
 
     return (
         <div {...blockProps}>
-            <Heading level="2">Csek Featured Video Block</Heading>
+            <CsekBlockHeading>Csek Featured Video Block</CsekBlockHeading>
             <CsekMediaUpload type="video" urlAttribute={videoURL} onChange={handleChangeVideoURL} />
         </div>
     );

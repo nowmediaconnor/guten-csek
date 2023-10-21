@@ -10,6 +10,7 @@ import { useBlockProps } from "@wordpress/block-editor";
 import { RichTextInput, TextInput } from "../../components/input";
 import { CsekMediaUpload } from "../../components/media-upload";
 import { CsekAddButton, CsekDeleteButton } from "../../components/button";
+import { CsekBlockHeading } from "../../components/heading";
 
 export interface SelfDescriptionBlockAttributes {
     heading: string;
@@ -121,7 +122,7 @@ export const SelfDescriptionBlockEdit = ({
 
     return (
         <div {...blockProps}>
-            <Heading level="2">Csek Self Description Block</Heading>
+            <CsekBlockHeading>Csek Self Description Block</CsekBlockHeading>
             <div className="flex flex-row gap-2 border border-solid border-slate-700 p-2 rounded my-2">
                 <div className="flex flex-col gap-2 w-1/2">
                     <TextInput

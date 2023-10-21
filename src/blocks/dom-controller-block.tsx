@@ -6,6 +6,7 @@
 import React from "react";
 import { ControllerScript, GutenbergBlockProps, controllerScriptRegistry } from "../scripts/dom";
 import { Heading } from "../components/heading";
+import { CsekBlockHeading } from "../components/heading";
 
 export const DOMControllerBlockEdit = ({ attributes, setAttributes }: GutenbergBlockProps) => {
     const { controllerScripts, enabledScripts } = attributes;
@@ -31,7 +32,7 @@ export const DOMControllerBlockEdit = ({ attributes, setAttributes }: GutenbergB
 
     return (
         <section>
-            <Heading level="2">Script Manager Block</Heading>
+            <CsekBlockHeading>Script Manager Block</CsekBlockHeading>
             <div className="column csek-card">{domControllerScripts}</div>
         </section>
     );

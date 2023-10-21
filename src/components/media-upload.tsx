@@ -50,7 +50,7 @@ export const CsekMediaUpload = ({ onChange, urlAttribute = "", type = "image" }:
     };
 
     return (
-        <div className="flex flex-col gap-4 py-4 csek-card">
+        <div className="flex flex-col gap-4 py-4 csek-card w-max">
             <MediaUploadCheck>
                 <MediaUpload
                     onSelect={handleChangeURL}

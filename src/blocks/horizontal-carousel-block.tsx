@@ -20,6 +20,7 @@ import {
     CardFooter,
 } from "@wordpress/components";
 import { Heading } from "../components/heading";
+import { CsekBlockHeading } from "../components/heading";
 
 export interface HorizontalCarouselBlockProps {
     attributes: {
@@ -81,7 +82,7 @@ export const HorizontalCarouselBlockEdit = ({ attributes, setAttributes }: Horiz
                 </PanelBody>
             </InspectorControls>
             <div>
-                <Heading level="2">Csek Horizontal Carousel Block</Heading>
+                <CsekBlockHeading>Csek Horizontal Carousel Block</CsekBlockHeading>
                 <em className="em-label">Check the inspector panel to add elements</em>
                 <p>
                     {numItems} item{numItems != 1 ? "s" : ""} in list.

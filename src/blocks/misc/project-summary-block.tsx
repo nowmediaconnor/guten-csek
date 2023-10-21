@@ -10,7 +10,7 @@ import { ColorPicker } from "@wordpress/components";
 
 import { LegacyColor } from "@wordpress/components/build-types/color-picker/types";
 import { urlExtractSecondLevelDomain } from "../../scripts/strings";
-import { Heading } from "../../components/heading";
+import { CsekBlockHeading } from "../../components/heading";
 
 export const ProjectSummaryBlockEdit = ({ attributes, setAttributes }: GutenbergBlockProps) => {
     const blockProps = useBlockProps();
@@ -44,7 +44,7 @@ export const ProjectSummaryBlockEdit = ({ attributes, setAttributes }: Gutenberg
                 <ColorPicker color={backgroundColor} onChangeComplete={setBackgroundColor} copyFormat="hex" />
             </InspectorControls>
             <section {...blockProps}>
-                <Heading level="2">Project Summary Block</Heading>
+                <CsekBlockHeading>Project Summary Block</CsekBlockHeading>
                 <div className="py-4 flex flex-col gap-4">
                     <input
                         type="text"
