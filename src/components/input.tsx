@@ -106,3 +106,41 @@ export const CheckboxInput = ({ label, initialValue = false, onChange }: Checkbo
         </div>
     );
 };
+
+interface TextAreaProps {
+    label?: string;
+    initialValue?: string;
+    placeholder?: string;
+    className?: string;
+    disabled?: boolean;
+    onChange?: (v: string) => void;
+}
+
+export const TextArea = ({ label, initialValue = "", placeholder, className, disabled, onChange }: TextAreaProps) => {
+    const [text, setText] = useState<string>(initialValue);
+
+    const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+        const newValue = e.target.value as string;
+        setText(newValue);
+        if (onChange) {
+            onChange(newValue);
+        }
+    };
+
+    return (
+        <div className={twMerge("w-full", className)}>
+            {label ? <Heading level="4">{label}</Heading> : null}
+            <textarea
+                className={twMerge(
+                    "w-full h-40 rounded border border-solid border-slate-700 px-2 py-1 text-lg",
+                    "csek-input",
+                    label ? "mt-2" : ""
+                )}
+                placeholder={placeholder}
+                onChange={handleChange}
+                value={text}
+                disabled={disabled}
+            />
+        </div>
+    );
+};
