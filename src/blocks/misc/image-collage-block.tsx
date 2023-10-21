@@ -8,6 +8,7 @@ import { GutenbergBlockProps } from "../../scripts/dom";
 import { MediaUpload, useBlockProps } from "@wordpress/block-editor";
 import { Button, ColorPicker } from "@wordpress/components";
 import { Heading } from "../../components/heading";
+import { CsekBlockHeading } from "../../components/heading";
 
 export const ImageCollageBlockEdit = ({ attributes, setAttributes }: GutenbergBlockProps) => {
     const blockProps = useBlockProps();
@@ -80,7 +81,7 @@ export const ImageCollageBlockEdit = ({ attributes, setAttributes }: GutenbergBl
 
     return (
         <section {...blockProps} className="p-4">
-            <Heading level="2">Csek Image Collage Block</Heading>
+            <CsekBlockHeading>Csek Image Collage Block</CsekBlockHeading>
             <div className="flex flex-row justify-between gap-4">
                 <div className="flex flex-col">
                     {imagePreviewElements}

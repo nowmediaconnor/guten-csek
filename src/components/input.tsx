@@ -81,3 +81,28 @@ interface RichTextContentProps {
 export const RichTextContent = ({ value, className }: RichTextContentProps) => {
     return <RichText.Content className={className ? className : "csek-richtext"} tagName="div" value={value} />;
 };
+
+interface CheckboxInputProps {
+    label: string;
+    initialValue?: boolean;
+    onChange?: (v: boolean) => void;
+}
+
+export const CheckboxInput = ({ label, initialValue = false, onChange }: CheckboxInputProps) => {
+    const [checked, setChecked] = useState(initialValue);
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const newValue = e.target.checked as boolean;
+        setChecked(newValue);
+        if (onChange) {
+            onChange(newValue);
+        }
+    };
+
+    return (
+        <div className="flex flex-row justify-start items-center">
+            <input type="checkbox" checked={checked} onChange={handleChange} />
+            <Heading level="4">{label}</Heading>
+        </div>
+    );
+};

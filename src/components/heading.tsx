@@ -27,12 +27,25 @@ export const Heading = ({ level, text, className, children }: HeadingProps) => {
         case "3":
             return <h3 className={twMerge(commonClasses, "", className)}>{content}</h3>;
         case "2":
-            return (
-                <h2 className={twMerge(commonClasses, "border-0 border-b border-black border-solid pb-2", className)}>
-                    {content}
-                </h2>
-            );
+            return <h2 className={twMerge(commonClasses, "", className)}>{content}</h2>;
         default:
             return <h1 className={twMerge(commonClasses, "underline", className)}>{content}</h1>;
     }
+};
+
+interface CsekBlockHeadingProps {
+    text?: string;
+    className?: string;
+    children?: React.ReactNode;
+}
+
+export const CsekBlockHeading = ({ text, className, children }: CsekBlockHeadingProps) => {
+    return (
+        <Heading
+            level="2"
+            children={children}
+            text={text}
+            className={twMerge("border-b-2 border-solid border-black pb-px my-2", className)}
+        />
+    );
 };

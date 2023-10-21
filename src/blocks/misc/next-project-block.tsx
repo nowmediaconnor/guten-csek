@@ -8,6 +8,7 @@ import { GutenbergBlockProps } from "../../scripts/dom";
 import React from "react";
 import { CsekMediaUpload } from "../../components/media-upload";
 import { Heading } from "../../components/heading";
+import { CsekBlockHeading } from "../../components/heading";
 
 export const NextProjectBlockEdit = ({ attributes, setAttributes }: GutenbergBlockProps) => {
     const blockProps = useBlockProps();
@@ -27,7 +28,7 @@ export const NextProjectBlockEdit = ({ attributes, setAttributes }: GutenbergBlo
 
     return (
         <div {...blockProps}>
-            <Heading level="2">Csek Next Project Block</Heading>
+            <CsekBlockHeading>Csek Next Project Block</CsekBlockHeading>
             <div className="flex flex-row gap-4">
                 <div className="flex flex-col gap-2 csek-card">
                     <Heading level="3">Project name</Heading>

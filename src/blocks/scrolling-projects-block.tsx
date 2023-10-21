@@ -8,6 +8,7 @@ import { shuffle } from "../scripts/array";
 import { MediaUpload, MediaUploadCheck, RichText, useBlockProps } from "@wordpress/block-editor";
 import { Button } from "@wordpress/components";
 import { Heading } from "../components/heading";
+import { CsekBlockHeading } from "../components/heading";
 
 interface ScrollingProjectsProps {
     attributes: {
@@ -103,7 +104,7 @@ export const ScrollingProjectsBlockEdit = ({ attributes, setAttributes }: Scroll
     });
     return (
         <div {...blockProps}>
-            <Heading level="2">Csek Scrolling Projects Block</Heading>
+            <CsekBlockHeading>Csek Scrolling Projects Block</CsekBlockHeading>
             {videoElements}
             <Button onClick={handleAddProject} icon="plus" className="csek-button">
                 Add Project

@@ -12,6 +12,7 @@ import {
 } from "@wordpress/block-editor";
 import { Button, PanelBody } from "@wordpress/components";
 import { Heading } from "../components/heading";
+import { CsekBlockHeading } from "../components/heading";
 
 interface ExpandingVideoBlockProps {
     attributes: any;
@@ -72,7 +73,7 @@ export const ExpandingVideoBlockEdit = ({ attributes, setAttributes }: Expanding
                     </PanelBody>
                 </div>
             </InspectorControls>
-            <Heading level="2">Csek Curtain Video Block</Heading>
+            <CsekBlockHeading>Csek Curtain Video Block</CsekBlockHeading>
             <Heading level="4">Message Heading</Heading>
             <input
                 type="text"

@@ -6,6 +6,7 @@ import React from "react";
 import { MediaUpload, MediaUploadCheck, InspectorControls, useBlockProps } from "@wordpress/block-editor";
 import { Button, PanelBody } from "@wordpress/components";
 import { Heading } from "../components/heading";
+import { CsekBlockHeading } from "../components/heading";
 
 interface TaglineHeaderProps {
     attributes: any;
@@ -42,7 +43,7 @@ export const TaglineHeaderEdit = ({ attributes, setAttributes }: TaglineHeaderPr
                     </MediaUploadCheck>
                 </PanelBody>
             </InspectorControls>
-            <Heading level="2">Tagline Header Block</Heading>
+            <CsekBlockHeading>Tagline Header Block</CsekBlockHeading>
             <div className="z-10 w-full flex flex-col gap-4">
                 <input
                     type="text"

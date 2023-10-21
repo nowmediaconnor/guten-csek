@@ -4,7 +4,7 @@
  */
 
 import React from "react";
-import { Heading } from "../components/heading";
+import { CsekBlockHeading } from "../components/heading";
 
 interface BlockquoteProps {
     attributes: any;
@@ -29,7 +29,7 @@ export const BlockquoteEdit = ({ attributes, setAttributes }: BlockquoteProps) =
 
     return (
         <div className="flex flex-col w-full gap-4">
-            <Heading level="2">Blockquote</Heading>
+            <CsekBlockHeading>Blockquote</CsekBlockHeading>
             <input type="text" placeholder="Heading" value={heading} onChange={setHeading} />
             <textarea placeholder="Quote" value={quote} onChange={setQuote} />
             <input type="text" placeholder="Author" value={author} onChange={setAuthor} />

@@ -220,6 +220,61 @@
         justify-self: flex-start;
     }
 }
+.wp-block-guten-csek-staff-profiles-block .profiles-area.alternate {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto;
+    grid-gap: 1rem;
+    width: 100%;
+
+    /* Jim Csek */
+    & .staff-summary:nth-child(1) {
+        justify-self: flex-end;
+    }
+
+    /* Nikki Csek */
+    & .staff-summary:nth-child(2) {
+        justify-self: flex-start;
+    }
+
+    /* Rob Cupello */
+    & .staff-summary:nth-child(3) {
+        grid-row: span 2;
+        justify-self: flex-start;
+        align-self: center;
+    }
+
+    /* Alexa Anderson */
+    & .staff-summary:nth-child(4) {
+        width: 25rem;
+        justify-self: flex-end;
+    }
+
+    /* Dylan Bartlett */
+    & .staff-summary:nth-child(5) {
+        top: -3rem;
+        justify-self: flex-end;
+    }
+
+    /* Alice Vincent */
+    & .staff-summary:nth-child(6) {
+        top: -10rem;
+        justify-self: flex-end;
+    }
+
+    /* Ryan Lahay, Jason Mann */
+    & .staff-summary:nth-child(7),
+    & .staff-summary:nth-child(8) {
+        top: -3rem;
+        justify-self: flex-start;
+    }
+
+    /* Just Jason Mann */
+    & .staff-summary:nth-child(8) {
+        left: -4rem;
+        justify-self: flex-start;
+    }
+}
 
 .wp-block-guten-csek-staff-profiles-block .staff-summary {
     display: flex;

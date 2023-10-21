@@ -73,6 +73,10 @@ export const registerAllBlocks = () => {
                 type: "array",
                 default: [] as StaffProfile[],
             },
+            alternateLayout: {
+                type: "boolean",
+                default: false,
+            },
         },
         edit: StaffProfilesBlockEdit,
         save: StaffProfilesBlockSave,

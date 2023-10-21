@@ -10,6 +10,7 @@ import { GutenbergBlockProps } from "../../scripts/dom";
 import { MediaUpload, MediaUploadCheck, useBlockProps } from "@wordpress/block-editor";
 import { Button } from "@wordpress/components";
 import { Heading } from "../../components/heading";
+import { CsekBlockHeading } from "../../components/heading";
 
 export const LeftRightBlockEdit = ({ attributes, setAttributes }: GutenbergBlockProps) => {
     const blockProps = useBlockProps();
@@ -18,7 +19,7 @@ export const LeftRightBlockEdit = ({ attributes, setAttributes }: GutenbergBlock
 
     return (
         <section {...blockProps}>
-            <Heading level="2">Csek Left-Right Block</Heading>
+            <CsekBlockHeading>Csek Left-Right Block</CsekBlockHeading>
 
             <div className="flex flex-row justify-between gap-4">
                 <div className="flex flex-col justify-around align-center w-full gap-2 h-full csek-card">

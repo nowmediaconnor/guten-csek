@@ -10,6 +10,7 @@ import { Heading } from "../../components/heading";
 import { TextInput } from "../../components/input";
 import { Button } from "@wordpress/components";
 import { CsekAddButton, CsekDeleteButton } from "../../components/button";
+import { CsekBlockHeading } from "../../components/heading";
 
 const NUMBER_OF_FIRES = 4;
 
@@ -130,7 +131,7 @@ export const ChicagoFiresBlockEdit = ({ attributes, setAttributes }: GutenbergBl
 
     return (
         <div {...blockProps}>
-            <Heading level="2">Csek Chicago Fires Block</Heading>
+            <CsekBlockHeading>Csek Chicago Fires Block</CsekBlockHeading>
             <p className="text-sm">
                 The flag of Chicago famously contains 4 stars, each representing one of the city&apos;s great fires.
                 This block evokes that image using 4 statements meant to represent significant influences on company
