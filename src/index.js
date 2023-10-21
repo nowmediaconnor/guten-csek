@@ -200,37 +200,6 @@ registerBlockType("guten-csek/horizontal-carousel-block", {
 
 /* Misc Blocks */
 
-// Masthead Block
-registerBlockType("guten-csek/project-summary-block", {
-    title: "Csek Project Summary Block",
-    icon: "text",
-    category: "layout",
-    attributes: {
-        backgroundColor: {
-            type: "string",
-            default: "000000",
-        },
-        projectTagline: {
-            type: "string",
-            default: "",
-        },
-        projectSummary: {
-            type: "string",
-            default: "",
-        },
-        taggedServices: {
-            type: "array",
-            default: [],
-        },
-        websiteLink: {
-            type: "string",
-            default: "",
-        },
-    },
-    edit: ProjectSummaryBlockEdit,
-    save: ProjectSummaryBlockSave,
-});
-
 // Featured Image Block
 registerBlockType("guten-csek/featured-image-block", {
     title: "Csek Featured Image Block",

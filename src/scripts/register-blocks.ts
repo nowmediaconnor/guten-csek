@@ -16,6 +16,16 @@ import {
     StaffProfilesBlockSave,
 } from "../blocks/misc/staff-profiles-block";
 import { LetsTalkBlockAttributes, LetsTalkBlockEdit, LetsTalkBlockSave } from "../blocks/misc/lets-talk-block";
+import {
+    ProjectSummaryBlockAttributes,
+    ProjectSummaryBlockEdit,
+    ProjectSummaryBlockSave,
+} from "../blocks/misc/project-summary-block";
+import {
+    FeaturedImageBlockAttributes,
+    FeaturedImageBlockEdit,
+    FeaturedImageBlockSave,
+} from "../blocks/misc/featured-image-block";
 
 export const registerAllBlocks = () => {
     console.log("Registering blocks...");
@@ -103,5 +113,59 @@ export const registerAllBlocks = () => {
         },
         edit: LetsTalkBlockEdit,
         save: LetsTalkBlockSave,
+    });
+
+    // Project summary block
+    registerBlockType<ProjectSummaryBlockAttributes>("guten-csek/project-summary-block", {
+        title: "Csek Project Summary",
+        icon: "text-page",
+        category: "common",
+        attributes: {
+            backgroundColor: {
+                type: "string",
+                default: "000000",
+            },
+            projectTagline: {
+                type: "string",
+                default: "",
+            },
+            projectSummary: {
+                type: "string",
+                default: "",
+            },
+            taggedServices: {
+                type: "array",
+                default: [],
+            },
+            websiteLink: {
+                type: "string",
+                default: "",
+            },
+            usesCustomBackgroundColor: {
+                type: "boolean",
+                default: false,
+            },
+        },
+        edit: ProjectSummaryBlockEdit,
+        save: ProjectSummaryBlockSave,
+    });
+
+    // Featured Image Block
+    registerBlockType<FeaturedImageBlockAttributes>("guten-csek/featured-image-block", {
+        title: "Csek Featured Image Block",
+        icon: "format-image",
+        category: "media",
+        attributes: {
+            imageURL: {
+                type: "string",
+                default: "",
+            },
+            imageAlt: {
+                type: "string",
+                default: "",
+            },
+        },
+        edit: FeaturedImageBlockEdit,
+        save: FeaturedImageBlockSave,
     });
 };

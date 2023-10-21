@@ -10,6 +10,7 @@ import { urlExtractSecondLevelDomain } from "../../scripts/strings";
 import { CsekBlockHeading } from "../../components/heading";
 import { CheckboxInput, TextArea, TextInput } from "../../components/input";
 import CsekColorPicker from "../../components/color-picker";
+import { OutboundLink } from "../../components/links";
 
 export interface ProjectSummaryBlockAttributes {
     backgroundColor: string;
@@ -100,7 +101,7 @@ export const ProjectSummaryBlockEdit = ({
     );
 };
 
-export const ProjectSummaryBlockSave = ({ attributes }: GutenbergBlockProps) => {
+export const ProjectSummaryBlockSave = ({ attributes }: GutenCsekBlockProps<ProjectSummaryBlockAttributes>) => {
     const blockProps = useBlockProps.save();
 
     const { backgroundColor, projectTagline, projectSummary, taggedServices, websiteLink, usesCustomBackgroundColor } =
@@ -135,7 +136,7 @@ export const ProjectSummaryBlockSave = ({ attributes }: GutenbergBlockProps) => 
                     <div className="column website-link">
                         <h4>Check out our partner</h4>
                         <h3>
-                            <a href={websiteLink}>{urlExtractSecondLevelDomain(websiteLink)}</a>
+                            <OutboundLink href={websiteLink}>{urlExtractSecondLevelDomain(websiteLink)}</OutboundLink>
                             <i className="fa-solid fa-arrow-up-right-from-square"></i>
                         </h3>
                     </div>
