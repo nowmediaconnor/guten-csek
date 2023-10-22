@@ -6,7 +6,7 @@
 import React from "react";
 import { CsekBlockHeading } from "../../components/heading";
 import { useBlockProps } from "@wordpress/block-editor";
-import { GutenCsekBlockProps } from "../../scripts/dom";
+import { GutenCsekBlockEditProps, GutenCsekBlockSaveProps } from "../../scripts/dom";
 import { TextInput } from "../../components/input";
 import { CsekMediaUpload } from "../../components/media-upload";
 
@@ -16,7 +16,7 @@ export interface LetsTalkBlockAttributes {
     imageURL: string;
 }
 
-export const LetsTalkBlockEdit = ({ attributes, setAttributes }: GutenCsekBlockProps<LetsTalkBlockAttributes>) => {
+export const LetsTalkBlockEdit = ({ attributes, setAttributes }: GutenCsekBlockEditProps<LetsTalkBlockAttributes>) => {
     const blockProps = useBlockProps();
 
     const { heading, buttonText, imageURL } = attributes;
@@ -48,7 +48,7 @@ export const LetsTalkBlockEdit = ({ attributes, setAttributes }: GutenCsekBlockP
     );
 };
 
-export const LetsTalkBlockSave = ({ attributes }: GutenCsekBlockProps<LetsTalkBlockAttributes>) => {
+export const LetsTalkBlockSave = ({ attributes }: GutenCsekBlockSaveProps<LetsTalkBlockAttributes>) => {
     const blockProps = useBlockProps.save();
 
     const { heading, buttonText, imageURL } = attributes;

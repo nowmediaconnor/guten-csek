@@ -130,7 +130,7 @@ function extract_rgb_array(GdImage $image)
 
             $alpha = ($rgba & 0x7F000000) >> 24;
             // Skip transparent pixels
-            if ($alpha != 0) {
+            if ($alpha >= 127) {
                 // error_log('Skipping transparent pixel at: (' . $x . ', ' . $y . ')');
                 continue;
             }

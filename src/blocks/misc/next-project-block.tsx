@@ -4,26 +4,35 @@
  */
 
 import { useBlockProps } from "@wordpress/block-editor";
-import { GutenbergBlockProps } from "../../scripts/dom";
+import { GutenCsekBlockEditProps, GutenCsekBlockSaveProps } from "../../scripts/dom";
 import React from "react";
 import { CsekMediaUpload } from "../../components/media-upload";
-import { Heading } from "../../components/heading";
 import { CsekBlockHeading } from "../../components/heading";
+import { TextInput } from "../../components/input";
 
-export const NextProjectBlockEdit = ({ attributes, setAttributes }: GutenbergBlockProps) => {
+export interface NextProjectBlockAttributes {
+    projectTitle: string;
+    projectLink: string;
+    projectImageURL: string;
+}
+
+export const NextProjectBlockEdit = ({
+    attributes,
+    setAttributes,
+}: GutenCsekBlockEditProps<NextProjectBlockAttributes>) => {
     const blockProps = useBlockProps();
     const { projectTitle, projectLink, projectImageURL } = attributes;
 
-    const updateProjectTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setAttributes({ projectTitle: event.target.value });
+    const updateProjectTitle = (value: string) => {
+        setAttributes({ projectTitle: value });
     };
 
-    const updateProjectLink = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setAttributes({ projectLink: event.target.value });
+    const updateProjectLink = (value: string) => {
+        setAttributes({ projectLink: value });
     };
 
-    const updateProjectImageURL = (v: any) => {
-        setAttributes({ projectImageURL: v.url });
+    const updateProjectImageURL = (url: string) => {
+        setAttributes({ projectImageURL: url });
     };
 
     return (
@@ -31,22 +40,8 @@ export const NextProjectBlockEdit = ({ attributes, setAttributes }: GutenbergBlo
             <CsekBlockHeading>Csek Next Project Block</CsekBlockHeading>
             <div className="flex flex-row gap-4">
                 <div className="flex flex-col gap-2 csek-card">
-                    <Heading level="3">Project name</Heading>
-                    <input
-                        className="csek-input"
-                        type="text"
-                        value={projectTitle}
-                        onChange={updateProjectTitle}
-                        placeholder="Project name"
-                    />
-                    <Heading level="3">Project link</Heading>
-                    <input
-                        className="csek-input"
-                        type="text"
-                        value={projectLink}
-                        onChange={updateProjectLink}
-                        placeholder="Project link"
-                    />
+                    <TextInput label="Project name" onChange={updateProjectTitle} initialValue={projectTitle} />
+                    <TextInput label="Project link" onChange={updateProjectLink} initialValue={projectLink} />
                 </div>
                 <CsekMediaUpload onChange={updateProjectImageURL} urlAttribute={projectImageURL} />
             </div>
@@ -54,7 +49,7 @@ export const NextProjectBlockEdit = ({ attributes, setAttributes }: GutenbergBlo
     );
 };
 
-export const NextProjectBlockSave = ({ attributes, setAttributes }: GutenbergBlockProps) => {
+export const NextProjectBlockSave = ({ attributes }: GutenCsekBlockSaveProps<NextProjectBlockAttributes>) => {
     const blockProps = useBlockProps.save();
 
     const { projectTitle, projectLink, projectImageURL } = attributes;

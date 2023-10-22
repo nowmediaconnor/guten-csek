@@ -200,56 +200,6 @@ registerBlockType("guten-csek/horizontal-carousel-block", {
 
 /* Misc Blocks */
 
-// Masthead Block
-registerBlockType("guten-csek/project-summary-block", {
-    title: "Csek Project Summary Block",
-    icon: "text",
-    category: "layout",
-    attributes: {
-        backgroundColor: {
-            type: "string",
-            default: "000000",
-        },
-        projectTagline: {
-            type: "string",
-            default: "",
-        },
-        projectSummary: {
-            type: "string",
-            default: "",
-        },
-        taggedServices: {
-            type: "array",
-            default: [],
-        },
-        websiteLink: {
-            type: "string",
-            default: "",
-        },
-    },
-    edit: ProjectSummaryBlockEdit,
-    save: ProjectSummaryBlockSave,
-});
-
-// Featured Image Block
-registerBlockType("guten-csek/featured-image-block", {
-    title: "Csek Featured Image Block",
-    icon: "format-image",
-    category: "media",
-    attributes: {
-        imageURL: {
-            type: "string",
-            default: "",
-        },
-        imageAlt: {
-            type: "string",
-            default: "",
-        },
-    },
-    edit: FeaturedImageBlockEdit,
-    save: FeaturedImageBlockSave,
-});
-
 // Multi Image Block
 registerBlockType("guten-csek/multi-image-block", {
     title: "Csek Multi Image Block",
@@ -275,51 +225,6 @@ registerBlockType("guten-csek/multi-image-block", {
     },
     edit: MultiImageBlockEdit,
     save: MultiImageBlockSave,
-});
-
-// Left-Right Block
-registerBlockType("guten-csek/left-right-block", {
-    title: "Csek Left-Right Block",
-    icon: "columns",
-    category: "text",
-    attributes: {
-        text: {
-            type: "string",
-            default: "",
-        },
-        image: {
-            type: "string",
-            default: "",
-        },
-        altText: {
-            type: "string",
-            default: "",
-        },
-        direction: {
-            enum: ["left", "right"],
-        },
-    },
-    edit: LeftRightBlockEdit,
-    save: LeftRightBlockSave,
-});
-
-// Fullscreen Image Block
-registerBlockType("guten-csek/fullscreen-image-block", {
-    title: "Csek Fullscreen Image Block",
-    icon: "format-image",
-    category: "media",
-    attributes: {
-        imageURL: {
-            type: "string",
-            default: "",
-        },
-        imageAlt: {
-            type: "string",
-            default: "",
-        },
-    },
-    edit: FullscreenImageBlockEdit,
-    save: FullscreenImageBlockSave,
 });
 
 // DOM Controller Block
@@ -389,29 +294,6 @@ registerBlockType("guten-csek/screenshot-collage-block", {
     },
     edit: ScreenshotCollageBlockEdit,
     save: ScreenshotCollageBlockSave,
-});
-
-// Next Project Block
-registerBlockType("guten-csek/next-project-block", {
-    title: "Csek Next Project Block",
-    icon: "text",
-    category: "text",
-    attributes: {
-        projectTitle: {
-            type: "string",
-            default: "",
-        },
-        projectTagline: {
-            type: "string",
-            default: "",
-        },
-        projectImageURL: {
-            type: "string",
-            default: "",
-        },
-    },
-    edit: NextProjectBlockEdit,
-    save: NextProjectBlockSave,
 });
 
 // Page Header Block

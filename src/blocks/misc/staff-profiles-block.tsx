@@ -5,7 +5,7 @@
 
 import React, { useState } from "react";
 import { useBlockProps } from "@wordpress/block-editor";
-import { GutenCsekBlockProps } from "../../scripts/dom";
+import { GutenCsekBlockEditProps, GutenCsekBlockSaveProps } from "../../scripts/dom";
 import { CloseButton, CsekAddButton, CsekDeleteButton } from "../../components/button";
 import { RichTextInput, TextInput, RichTextContent, CheckboxInput } from "../../components/input";
 import { CsekMediaUpload } from "../../components/media-upload";
@@ -152,7 +152,7 @@ const StaffProfileComponentEdit = ({ profile, onChange }: StaffProfileComponentE
 export const StaffProfilesBlockEdit = ({
     attributes,
     setAttributes,
-}: GutenCsekBlockProps<StaffProfilesBlockAttributes>) => {
+}: GutenCsekBlockEditProps<StaffProfilesBlockAttributes>) => {
     const blockProps = useBlockProps();
 
     const { heading, caption, profiles, alternateLayout } = attributes;
@@ -282,7 +282,7 @@ const StaffProfileSummary = ({ name, position, imageURL, fullProfile }: StaffPro
     );
 };
 
-export const StaffProfilesBlockSave = ({ attributes }: GutenCsekBlockProps<StaffProfilesBlockAttributes>) => {
+export const StaffProfilesBlockSave = ({ attributes }: GutenCsekBlockSaveProps<StaffProfilesBlockAttributes>) => {
     const blockProps = useBlockProps.save();
 
     const { heading, caption, profiles, alternateLayout } = attributes;

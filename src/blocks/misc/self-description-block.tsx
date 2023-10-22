@@ -5,7 +5,7 @@
 
 import React from "react";
 import { Heading } from "../../components/heading";
-import { GutenCsekBlockProps, GutenbergBlockProps } from "../../scripts/dom";
+import { GutenCsekBlockEditProps, GutenCsekBlockSaveProps, GutenbergBlockProps } from "../../scripts/dom";
 import { useBlockProps } from "@wordpress/block-editor";
 import { RichTextInput, TextInput } from "../../components/input";
 import { CsekMediaUpload } from "../../components/media-upload";
@@ -24,7 +24,7 @@ export interface SelfDescriptionBlockAttributes {
 export const SelfDescriptionBlockEdit = ({
     attributes,
     setAttributes,
-}: GutenCsekBlockProps<SelfDescriptionBlockAttributes>) => {
+}: GutenCsekBlockEditProps<SelfDescriptionBlockAttributes>) => {
     const blockProps = useBlockProps();
 
     const { heading, caption, primaryImageURL, secondaryImageURL, factHeaders, factDescriptions } = attributes;
@@ -166,7 +166,7 @@ export const SelfDescriptionBlockEdit = ({
     );
 };
 
-export const SelfDescriptionBlockSave = ({ attributes }: GutenCsekBlockProps<SelfDescriptionBlockAttributes>) => {
+export const SelfDescriptionBlockSave = ({ attributes }: GutenCsekBlockSaveProps<SelfDescriptionBlockAttributes>) => {
     const blockProps = useBlockProps.save();
 
     const { heading, caption, primaryImageURL, secondaryImageURL, factHeaders, factDescriptions } = attributes;

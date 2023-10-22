@@ -16,6 +16,27 @@ import {
     StaffProfilesBlockSave,
 } from "../blocks/misc/staff-profiles-block";
 import { LetsTalkBlockAttributes, LetsTalkBlockEdit, LetsTalkBlockSave } from "../blocks/misc/lets-talk-block";
+import {
+    ProjectSummaryBlockAttributes,
+    ProjectSummaryBlockEdit,
+    ProjectSummaryBlockSave,
+} from "../blocks/misc/project-summary-block";
+import {
+    FeaturedImageBlockAttributes,
+    FeaturedImageBlockEdit,
+    FeaturedImageBlockSave,
+} from "../blocks/misc/featured-image-block";
+import { LeftRightBlockAttributes, LeftRightBlockEdit, LeftRightBlockSave } from "../blocks/misc/left-right-block";
+import {
+    FullscreenImageBlockAttributes,
+    FullscreenImageBlockEdit,
+    FullscreenImageBlockSave,
+} from "../blocks/misc/fullscreen-image-block";
+import {
+    NextProjectBlockAttributes,
+    NextProjectBlockEdit,
+    NextProjectBlockSave,
+} from "../blocks/misc/next-project-block";
 
 export const registerAllBlocks = () => {
     console.log("Registering blocks...");
@@ -103,5 +124,128 @@ export const registerAllBlocks = () => {
         },
         edit: LetsTalkBlockEdit,
         save: LetsTalkBlockSave,
+    });
+
+    // Project summary block
+    registerBlockType<ProjectSummaryBlockAttributes>("guten-csek/project-summary-block", {
+        title: "Csek Project Summary",
+        icon: "text-page",
+        category: "common",
+        attributes: {
+            backgroundColor: {
+                type: "string",
+                default: "000000",
+            },
+            projectTagline: {
+                type: "string",
+                default: "",
+            },
+            projectSummary: {
+                type: "string",
+                default: "",
+            },
+            taggedServices: {
+                type: "array",
+                default: [],
+            },
+            websiteLink: {
+                type: "string",
+                default: "",
+            },
+            usesCustomBackgroundColor: {
+                type: "boolean",
+                default: false,
+            },
+        },
+        edit: ProjectSummaryBlockEdit,
+        save: ProjectSummaryBlockSave,
+    });
+
+    // Featured Image Block
+    registerBlockType<FeaturedImageBlockAttributes>("guten-csek/featured-image-block", {
+        title: "Csek Featured Image Block",
+        icon: "format-image",
+        category: "media",
+        attributes: {
+            imageURL: {
+                type: "string",
+                default: "",
+            },
+            imageAlt: {
+                type: "string",
+                default: "",
+            },
+        },
+        edit: FeaturedImageBlockEdit,
+        save: FeaturedImageBlockSave,
+    });
+
+    // Fullscreen Image Block
+    registerBlockType<FullscreenImageBlockAttributes>("guten-csek/fullscreen-image-block", {
+        title: "Csek Fullscreen Image Block",
+        icon: "format-image",
+        category: "media",
+        attributes: {
+            imageURL: {
+                type: "string",
+                default: "",
+            },
+            imageAlt: {
+                type: "string",
+                default: "",
+            },
+        },
+        edit: FullscreenImageBlockEdit,
+        save: FullscreenImageBlockSave,
+    });
+
+    // Left-Right Block
+    registerBlockType<LeftRightBlockAttributes>("guten-csek/left-right-block", {
+        title: "Csek Left-Right Block",
+        icon: "columns",
+        category: "text",
+        attributes: {
+            text: {
+                type: "string",
+                default: "",
+            },
+            imageURL: {
+                type: "string",
+                default: "",
+            },
+            altText: {
+                type: "string",
+                default: "",
+            },
+            leftToRight: {
+                type: "boolean",
+                default: true,
+            },
+        },
+        edit: LeftRightBlockEdit,
+        save: LeftRightBlockSave,
+    });
+
+    // Next Project Block
+    registerBlockType<NextProjectBlockAttributes>("guten-csek/next-project-block", {
+        title: "Csek Next Project Block",
+        icon: "text",
+        category: "text",
+        attributes: {
+            projectTitle: {
+                type: "string",
+                default: "",
+            },
+            projectLink: {
+                type: "string",
+                default: "",
+            },
+            projectImageURL: {
+                type: "string",
+                default: "",
+            },
+        },
+        edit: NextProjectBlockEdit,
+        save: NextProjectBlockSave,
     });
 };

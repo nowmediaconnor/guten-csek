@@ -4,85 +4,108 @@
  */
 
 import React from "react";
-import { GutenbergBlockProps } from "../../scripts/dom";
-import { InspectorControls, useBlockProps } from "@wordpress/block-editor";
-import { ColorPicker } from "@wordpress/components";
-
-import { LegacyColor } from "@wordpress/components/build-types/color-picker/types";
+import { GutenCsekBlockEditProps, GutenCsekBlockSaveProps } from "../../scripts/dom";
+import { useBlockProps } from "@wordpress/block-editor";
 import { urlExtractSecondLevelDomain } from "../../scripts/strings";
 import { CsekBlockHeading } from "../../components/heading";
+import { CheckboxInput, TextArea, TextInput } from "../../components/input";
+import CsekColorPicker from "../../components/color-picker";
+import { OutboundLink } from "../../components/links";
 
-export const ProjectSummaryBlockEdit = ({ attributes, setAttributes }: GutenbergBlockProps) => {
+export interface ProjectSummaryBlockAttributes {
+    backgroundColor: string;
+    projectTagline: string;
+    projectSummary: string;
+    taggedServices: string[];
+    websiteLink: string;
+    usesCustomBackgroundColor: boolean;
+}
+
+export const ProjectSummaryBlockEdit = ({
+    attributes,
+    setAttributes,
+}: GutenCsekBlockEditProps<ProjectSummaryBlockAttributes>) => {
     const blockProps = useBlockProps();
-    const { backgroundColor, projectTagline, projectSummary, taggedServices, websiteLink } = attributes;
 
-    const setBackgroundColor = (colors: LegacyColor) => {
-        console.log(JSON.stringify(colors, null, 4));
-        setAttributes({ backgroundColor: colors["hex"] });
+    const { backgroundColor, projectTagline, projectSummary, taggedServices, websiteLink, usesCustomBackgroundColor } =
+        attributes;
+
+    const setBackgroundColor = (hexColor: string) => {
+        console.log(JSON.stringify(hexColor, null, 4));
+        setAttributes({ backgroundColor: hexColor });
     };
 
-    const setProjectTagline = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setAttributes({ projectTagline: event.target.value });
+    const setProjectTagline = (value: string) => {
+        setAttributes({ projectTagline: value });
     };
 
-    const setProjectSummary = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-        setAttributes({ projectSummary: event.target.value });
+    const setProjectSummary = (value: string) => {
+        setAttributes({ projectSummary: value });
     };
 
-    const setTaggedServices = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const services = event.target.value.split(",").map((service) => service.trim());
+    const setTaggedServices = (value: string) => {
+        const services = value.split(",").map((service) => service.trim());
         setAttributes({ taggedServices: services });
     };
 
-    const setWebsiteLink = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setAttributes({ websiteLink: event.target.value });
+    const setWebsiteLink = (value: string) => {
+        setAttributes({ websiteLink: value });
+    };
+
+    const setUsesCustomBackgroundColor = (value: boolean) => {
+        setAttributes({ usesCustomBackgroundColor: value });
     };
 
     return (
-        <>
-            <InspectorControls>
-                <ColorPicker color={backgroundColor} onChangeComplete={setBackgroundColor} copyFormat="hex" />
-            </InspectorControls>
-            <section {...blockProps}>
-                <CsekBlockHeading>Project Summary Block</CsekBlockHeading>
-                <div className="py-4 flex flex-col gap-4">
-                    <input
-                        type="text"
-                        className="csek-input"
-                        value={projectTagline}
-                        onChange={setProjectTagline}
-                        placeholder="Project tagline"
+        <section {...blockProps}>
+            <CsekBlockHeading>Project Summary Block</CsekBlockHeading>
+            <div className="csek-card py-4 flex flex-col gap-4">
+                <TextInput
+                    label="Project tagline"
+                    initialValue={projectTagline}
+                    onChange={setProjectTagline}
+                    placeholder="Project tagline"
+                />
+                <TextArea
+                    label="Project summary"
+                    initialValue={projectSummary}
+                    onChange={setProjectSummary}
+                    placeholder="Project summary"
+                />
+                <TextInput
+                    label="Tagged services"
+                    initialValue={taggedServices.join(", ")}
+                    onChange={setTaggedServices}
+                    placeholder="Tagged services (comma-separated)"
+                />
+                <TextInput
+                    label="Website link"
+                    initialValue={websiteLink}
+                    onChange={setWebsiteLink}
+                    placeholder="Website link"
+                />
+                <CheckboxInput label="Use custom background color" onChange={setUsesCustomBackgroundColor} />
+                <p className="em-label">
+                    If you do not to use a custom color, Csek will use machine learning to determine a color based on
+                    the post&apos;s featured image.
+                </p>
+                {usesCustomBackgroundColor ? (
+                    <CsekColorPicker
+                        label="Background color"
+                        initialValue={backgroundColor}
+                        onChange={setBackgroundColor}
                     />
-                    <textarea
-                        className="csek-input"
-                        value={projectSummary}
-                        onChange={setProjectSummary}
-                        placeholder="Project summary"
-                    />
-                    <input
-                        type="text"
-                        className="csek-input"
-                        value={taggedServices}
-                        onChange={setTaggedServices}
-                        placeholder="Tagged services (comma-separated)"
-                    />
-                    <input
-                        type="text"
-                        className="csek-input"
-                        value={websiteLink}
-                        onChange={setWebsiteLink}
-                        placeholder="Website link"
-                    />
-                </div>
-            </section>
-        </>
+                ) : null}
+            </div>
+        </section>
     );
 };
 
-export const ProjectSummaryBlockSave = ({ attributes }: GutenbergBlockProps) => {
+export const ProjectSummaryBlockSave = ({ attributes }: GutenCsekBlockSaveProps<ProjectSummaryBlockAttributes>) => {
     const blockProps = useBlockProps.save();
 
-    const { backgroundColor, projectTagline, projectSummary, taggedServices, websiteLink } = attributes;
+    const { backgroundColor, projectTagline, projectSummary, taggedServices, websiteLink, usesCustomBackgroundColor } =
+        attributes;
 
     const listOfServices = taggedServices?.map((service: string, index: number) => {
         return (
@@ -93,12 +116,15 @@ export const ProjectSummaryBlockSave = ({ attributes }: GutenbergBlockProps) => 
     });
     // const listOfServices = [];
 
+    const customStyle: React.CSSProperties = {
+        backgroundColor: `${backgroundColor}`,
+    };
+
     return (
         <section
             {...blockProps}
             className="project-summary-block featured-image-color"
-            // style={{ backgroundColor: `${backgroundColor.toString()}` }}
-        >
+            style={usesCustomBackgroundColor ? customStyle : {}}>
             <div className="max-width">
                 <h2 className="project-tagline">{projectTagline}</h2>
                 <div className="row">
@@ -110,7 +136,7 @@ export const ProjectSummaryBlockSave = ({ attributes }: GutenbergBlockProps) => 
                     <div className="column website-link">
                         <h4>Check out our partner</h4>
                         <h3>
-                            <a href={websiteLink}>{urlExtractSecondLevelDomain(websiteLink)}</a>
+                            <OutboundLink href={websiteLink}>{urlExtractSecondLevelDomain(websiteLink)}</OutboundLink>
                             <i className="fa-solid fa-arrow-up-right-from-square"></i>
                         </h3>
                     </div>
