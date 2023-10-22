@@ -19,9 +19,13 @@ export interface GutenbergBlockProps {
     setAttributes?: any;
 }
 
-export interface GutenCsekBlockProps<T> extends GutenbergBlockProps {
+export interface GutenCsekBlockEditProps<T> extends GutenbergBlockProps {
     attributes: T;
-    setAttributes?: any;
+    setAttributes: (attributes: Partial<T>) => void;
+}
+
+export interface GutenCsekBlockSaveProps<T> extends GutenbergBlockProps {
+    attributes: T;
 }
 
 export interface ControllerScript {

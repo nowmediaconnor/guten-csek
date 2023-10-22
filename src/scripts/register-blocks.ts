@@ -26,6 +26,7 @@ import {
     FeaturedImageBlockEdit,
     FeaturedImageBlockSave,
 } from "../blocks/misc/featured-image-block";
+import { LeftRightBlockAttributes, LeftRightBlockEdit, LeftRightBlockSave } from "../blocks/misc/left-right-block";
 
 export const registerAllBlocks = () => {
     console.log("Registering blocks...");
@@ -167,5 +168,32 @@ export const registerAllBlocks = () => {
         },
         edit: FeaturedImageBlockEdit,
         save: FeaturedImageBlockSave,
+    });
+
+    // Left-Right Block
+    registerBlockType<LeftRightBlockAttributes>("guten-csek/left-right-block", {
+        title: "Csek Left-Right Block",
+        icon: "columns",
+        category: "text",
+        attributes: {
+            text: {
+                type: "string",
+                default: "",
+            },
+            imageURL: {
+                type: "string",
+                default: "",
+            },
+            altText: {
+                type: "string",
+                default: "",
+            },
+            leftToRight: {
+                type: "boolean",
+                default: true,
+            },
+        },
+        edit: LeftRightBlockEdit,
+        save: LeftRightBlockSave,
     });
 };

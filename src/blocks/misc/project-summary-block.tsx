@@ -4,8 +4,8 @@
  */
 
 import React from "react";
-import { GutenCsekBlockProps, GutenbergBlockProps } from "../../scripts/dom";
-import { InspectorControls, useBlockProps } from "@wordpress/block-editor";
+import { GutenCsekBlockEditProps, GutenCsekBlockSaveProps } from "../../scripts/dom";
+import { useBlockProps } from "@wordpress/block-editor";
 import { urlExtractSecondLevelDomain } from "../../scripts/strings";
 import { CsekBlockHeading } from "../../components/heading";
 import { CheckboxInput, TextArea, TextInput } from "../../components/input";
@@ -24,7 +24,7 @@ export interface ProjectSummaryBlockAttributes {
 export const ProjectSummaryBlockEdit = ({
     attributes,
     setAttributes,
-}: GutenCsekBlockProps<ProjectSummaryBlockAttributes>) => {
+}: GutenCsekBlockEditProps<ProjectSummaryBlockAttributes>) => {
     const blockProps = useBlockProps();
 
     const { backgroundColor, projectTagline, projectSummary, taggedServices, websiteLink, usesCustomBackgroundColor } =
@@ -101,7 +101,7 @@ export const ProjectSummaryBlockEdit = ({
     );
 };
 
-export const ProjectSummaryBlockSave = ({ attributes }: GutenCsekBlockProps<ProjectSummaryBlockAttributes>) => {
+export const ProjectSummaryBlockSave = ({ attributes }: GutenCsekBlockSaveProps<ProjectSummaryBlockAttributes>) => {
     const blockProps = useBlockProps.save();
 
     const { backgroundColor, projectTagline, projectSummary, taggedServices, websiteLink, usesCustomBackgroundColor } =

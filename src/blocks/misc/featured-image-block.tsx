@@ -4,7 +4,7 @@
  */
 
 import React from "react";
-import { GutenCsekBlockProps, GutenbergBlockProps } from "../../scripts/dom";
+import { GutenCsekBlockEditProps, GutenCsekBlockSaveProps } from "../../scripts/dom";
 import { useBlockProps } from "@wordpress/block-editor";
 import { CsekBlockHeading } from "../../components/heading";
 
@@ -19,7 +19,7 @@ export interface FeaturedImageBlockAttributes {
 export const FeaturedImageBlockEdit = ({
     attributes,
     setAttributes,
-}: GutenCsekBlockProps<FeaturedImageBlockAttributes>) => {
+}: GutenCsekBlockEditProps<FeaturedImageBlockAttributes>) => {
     const blockProps = useBlockProps();
 
     const { imageURL, imageAlt } = attributes;
@@ -48,7 +48,7 @@ export const FeaturedImageBlockEdit = ({
     );
 };
 
-export const FeaturedImageBlockSave = ({ attributes }: GutenCsekBlockProps<FeaturedImageBlockAttributes>) => {
+export const FeaturedImageBlockSave = ({ attributes }: GutenCsekBlockSaveProps<FeaturedImageBlockAttributes>) => {
     const blockProps = useBlockProps.save();
 
     const { imageURL, imageAlt } = attributes;
