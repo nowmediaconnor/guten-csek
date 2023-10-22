@@ -227,25 +227,6 @@ registerBlockType("guten-csek/multi-image-block", {
     save: MultiImageBlockSave,
 });
 
-// Fullscreen Image Block
-registerBlockType("guten-csek/fullscreen-image-block", {
-    title: "Csek Fullscreen Image Block",
-    icon: "format-image",
-    category: "media",
-    attributes: {
-        imageURL: {
-            type: "string",
-            default: "",
-        },
-        imageAlt: {
-            type: "string",
-            default: "",
-        },
-    },
-    edit: FullscreenImageBlockEdit,
-    save: FullscreenImageBlockSave,
-});
-
 // DOM Controller Block
 registerBlockType("guten-csek/dom-controller-block", {
     title: "Csek Script Manager Block",

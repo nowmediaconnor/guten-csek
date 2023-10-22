@@ -4,54 +4,51 @@
  */
 
 import React from "react";
-import { GutenbergBlockProps } from "../../scripts/dom";
-import { MediaUpload, MediaUploadCheck, useBlockProps } from "@wordpress/block-editor";
-import { Button } from "@wordpress/components";
-import { Heading } from "../../components/heading";
+import { GutenCsekBlockEditProps, GutenCsekBlockSaveProps } from "../../scripts/dom";
+import { useBlockProps } from "@wordpress/block-editor";
 import { CsekBlockHeading } from "../../components/heading";
 
-export const FullscreenImageBlockEdit = ({ attributes, setAttributes }: GutenbergBlockProps) => {
+import { CsekMediaUpload } from "../../components/media-upload";
+import { TextInput } from "../../components/input";
+
+export interface FullscreenImageBlockAttributes {
+    imageURL: string;
+    imageAlt: string;
+}
+
+export const FullscreenImageBlockEdit = ({
+    attributes,
+    setAttributes,
+}: GutenCsekBlockEditProps<FullscreenImageBlockAttributes>) => {
     const blockProps = useBlockProps();
 
     const { imageURL, imageAlt } = attributes;
 
-    const onChangeImageURL = (v) => {
-        setAttributes({ imageURL: v.url });
+    const onChangeImageURL = (url: string) => {
+        setAttributes({ imageURL: url });
     };
 
-    const onChangeImageAlt = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setAttributes({ imageAlt: event.target.value });
+    const onChangeImageAlt = (value: string) => {
+        setAttributes({ imageAlt: value });
     };
 
     return (
         <section {...blockProps}>
             <CsekBlockHeading>Csek Fullscreen Image Block</CsekBlockHeading>
-
-            <div className="py-4 flex flex-col gap-4">
-                <input
-                    className="csek-input"
-                    type="text"
-                    value={imageAlt}
+            <div className="csek-card flex flex-col gap-4">
+                <TextInput
+                    initialValue={imageAlt}
                     onChange={onChangeImageAlt}
                     placeholder="Image alt text"
+                    label="Image Alt Text"
                 />
-                <MediaUploadCheck>
-                    <MediaUpload
-                        onSelect={onChangeImageURL}
-                        allowedTypes={["image"]}
-                        multiple={false}
-                        value={imageURL}
-                        render={({ open }) => <Button onClick={open}>Choose image</Button>}
-                    />
-                </MediaUploadCheck>
-                <Heading level="4">Image preview</Heading>
-                <img className="featured-image" src={attributes.imageURL} alt={attributes.imageAlt} />
+                <CsekMediaUpload onChange={onChangeImageURL} urlAttribute={imageURL} type="image" />
             </div>
         </section>
     );
 };
 
-export const FullscreenImageBlockSave = ({ attributes, setAttributes }: GutenbergBlockProps) => {
+export const FullscreenImageBlockSave = ({ attributes }: GutenCsekBlockSaveProps<FullscreenImageBlockAttributes>) => {
     const blockProps = useBlockProps.save();
 
     const { imageURL, imageAlt } = attributes;

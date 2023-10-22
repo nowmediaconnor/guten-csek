@@ -27,6 +27,11 @@ import {
     FeaturedImageBlockSave,
 } from "../blocks/misc/featured-image-block";
 import { LeftRightBlockAttributes, LeftRightBlockEdit, LeftRightBlockSave } from "../blocks/misc/left-right-block";
+import {
+    FullscreenImageBlockAttributes,
+    FullscreenImageBlockEdit,
+    FullscreenImageBlockSave,
+} from "../blocks/misc/fullscreen-image-block";
 
 export const registerAllBlocks = () => {
     console.log("Registering blocks...");
@@ -168,6 +173,25 @@ export const registerAllBlocks = () => {
         },
         edit: FeaturedImageBlockEdit,
         save: FeaturedImageBlockSave,
+    });
+
+    // Fullscreen Image Block
+    registerBlockType<FullscreenImageBlockAttributes>("guten-csek/fullscreen-image-block", {
+        title: "Csek Fullscreen Image Block",
+        icon: "format-image",
+        category: "media",
+        attributes: {
+            imageURL: {
+                type: "string",
+                default: "",
+            },
+            imageAlt: {
+                type: "string",
+                default: "",
+            },
+        },
+        edit: FullscreenImageBlockEdit,
+        save: FullscreenImageBlockSave,
     });
 
     // Left-Right Block
