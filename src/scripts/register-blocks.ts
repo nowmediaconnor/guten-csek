@@ -32,6 +32,11 @@ import {
     FullscreenImageBlockEdit,
     FullscreenImageBlockSave,
 } from "../blocks/misc/fullscreen-image-block";
+import {
+    NextProjectBlockAttributes,
+    NextProjectBlockEdit,
+    NextProjectBlockSave,
+} from "../blocks/misc/next-project-block";
 
 export const registerAllBlocks = () => {
     console.log("Registering blocks...");
@@ -219,5 +224,28 @@ export const registerAllBlocks = () => {
         },
         edit: LeftRightBlockEdit,
         save: LeftRightBlockSave,
+    });
+
+    // Next Project Block
+    registerBlockType<NextProjectBlockAttributes>("guten-csek/next-project-block", {
+        title: "Csek Next Project Block",
+        icon: "text",
+        category: "text",
+        attributes: {
+            projectTitle: {
+                type: "string",
+                default: "",
+            },
+            projectLink: {
+                type: "string",
+                default: "",
+            },
+            projectImageURL: {
+                type: "string",
+                default: "",
+            },
+        },
+        edit: NextProjectBlockEdit,
+        save: NextProjectBlockSave,
     });
 };

@@ -296,29 +296,6 @@ registerBlockType("guten-csek/screenshot-collage-block", {
     save: ScreenshotCollageBlockSave,
 });
 
-// Next Project Block
-registerBlockType("guten-csek/next-project-block", {
-    title: "Csek Next Project Block",
-    icon: "text",
-    category: "text",
-    attributes: {
-        projectTitle: {
-            type: "string",
-            default: "",
-        },
-        projectTagline: {
-            type: "string",
-            default: "",
-        },
-        projectImageURL: {
-            type: "string",
-            default: "",
-        },
-    },
-    edit: NextProjectBlockEdit,
-    save: NextProjectBlockSave,
-});
-
 // Page Header Block
 registerBlockType("guten-csek/page-header-block", {
     title: "Csek Page Header Block",
