@@ -14,9 +14,10 @@ interface CsekMediaUploadProps {
     onChange: (v: string) => void;
     urlAttribute?: string;
     type?: "image" | "video" | "audio";
+    label?: string;
 }
 
-export const CsekMediaUpload = ({ onChange, urlAttribute = "", type = "image" }: CsekMediaUploadProps) => {
+export const CsekMediaUpload = ({ onChange, urlAttribute = "", type = "image", label }: CsekMediaUploadProps) => {
     const [resourceURL, setResourceURL] = useState(urlAttribute);
     const [resourceId, setResourceId] = useState(0);
 
@@ -50,7 +51,8 @@ export const CsekMediaUpload = ({ onChange, urlAttribute = "", type = "image" }:
     };
 
     return (
-        <div className="flex flex-col gap-4 py-4 csek-card w-max">
+        <div className="flex flex-col gap-4 py-4 csek-card w-fit">
+            {label ? <Heading level="3">{label}</Heading> : null}
             <MediaUploadCheck>
                 <MediaUpload
                     onSelect={handleChangeURL}

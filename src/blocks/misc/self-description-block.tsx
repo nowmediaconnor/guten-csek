@@ -139,22 +139,18 @@ export const SelfDescriptionBlockEdit = ({
                     />
                 </div>
                 <div className="flex flex-col gap-2 w-1/2">
-                    <div>
-                        <Heading level="4">Primary Image</Heading>
-                        <CsekMediaUpload
-                            type="image"
-                            onChange={handleChangePrimaryImageURL}
-                            urlAttribute={primaryImageURL}
-                        />
-                    </div>
-                    <div>
-                        <Heading level="4">Secondary Image</Heading>
-                        <CsekMediaUpload
-                            type="image"
-                            onChange={handleChangeSecondaryImageURL}
-                            urlAttribute={secondaryImageURL}
-                        />
-                    </div>
+                    <CsekMediaUpload
+                        type="image"
+                        onChange={handleChangePrimaryImageURL}
+                        urlAttribute={primaryImageURL}
+                        label="Primary Image"
+                    />
+                    <CsekMediaUpload
+                        type="image"
+                        onChange={handleChangeSecondaryImageURL}
+                        urlAttribute={secondaryImageURL}
+                        label="Secondary Image"
+                    />
                 </div>
             </div>
             <div className="flex flex-col gap-2 border border-solid border-slate-700 p-2 rounded my-2">

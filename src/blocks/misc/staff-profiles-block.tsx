@@ -143,6 +143,7 @@ const StaffProfileComponentEdit = ({ profile, onChange }: StaffProfileComponentE
                     type="image"
                     urlAttribute={staffProfile.imageURL}
                     onChange={(v) => handleChangeProfile({ ...staffProfile, imageURL: v })}
+                    label="Profile Photo"
                 />
             </div>
         </div>
