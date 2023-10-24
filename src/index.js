@@ -56,33 +56,6 @@ registerBlockType("guten-csek/tagline-header-block", {
     save: TaglineHeaderSave,
 });
 
-// Expanding Video Block
-registerBlockType("guten-csek/expanding-video-block", {
-    title: "Csek Expanding Video Block",
-    icon: "format-video",
-    category: "media",
-    attributes: {
-        videoURL: {
-            type: "string",
-            default: "",
-        },
-        images: {
-            type: "array",
-            default: [],
-        },
-        messageHeading: {
-            type: "string",
-            default: "",
-        },
-        message: {
-            type: "string",
-            default: "",
-        },
-    },
-    edit: ExpandingVideoBlockEdit,
-    save: ExpandingVideoBlockSave,
-});
-
 // Block Quote Block
 registerBlockType("guten-csek/block-quote-block", {
     title: "Csek Block Quote Block",
