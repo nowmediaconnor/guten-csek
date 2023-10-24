@@ -129,23 +129,32 @@ export const ExpandingVideoBlockSave = ({ attributes }: GutenCsekBlockSaveProps<
 
     const maxImages = images.length < 6 ? images.length : 6;
     // const randomImages = images.sort(() => Math.random() - Math.random()).slice(0, maxImages);
-    const randomImages = images;
+    const randomImages = images.slice(0, maxImages);
 
-    const firstImageElements = randomImages.slice(0, maxImages / 2).map((image: string, index: number) => {
-        return <img src={image} className="floating-image" />;
-    });
+    // const firstImageElements = randomImages.slice(0, maxImages / 2).map((image: string, index: number) => {
+    //     return <img src={image} className="floating-image" />;
+    // });
 
-    const secondImageElements = randomImages.slice(maxImages / 2).map((image: string, index: number) => {
-        return <img src={image} className="floating-image" />;
-    });
+    // const secondImageElements = randomImages.slice(maxImages / 2).map((image: string, index: number) => {
+    //     return <img src={image} className="floating-image" />;
+    // });
+    const firstImageElements: JSX.Element[] = [];
+    const secondImageElements: JSX.Element[] = [];
+
+    for (let i = 0; i < randomImages.length; i++) {
+        if (i < maxImages / 2) {
+            firstImageElements.push(<img src={randomImages[i]} className="floating-image" />);
+        } else {
+            secondImageElements.push(<img src={randomImages[i]} className="floating-image" />);
+        }
+    }
 
     return (
         <>
-            {/* <div id="test-thresh" className="threshold"></div> */}
-            <div className="curtain-reel undefined">
+            <section {...blockProps} className={blockProps.className + " curtain-reel"}>
                 <div className="content-block curtain">
                     <div className="row">
-                        <div className="image-container-left scroll-fade-away">{firstImageElements}</div>
+                        <div className="image-container left">{firstImageElements}</div>
                         <div className="expanding-video-container">
                             <video controls={false} autoPlay={true} loop={true} muted={true}>
                                 <source src={videoURL} />
@@ -155,10 +164,10 @@ export const ExpandingVideoBlockSave = ({ attributes }: GutenCsekBlockSaveProps<
                                 <p>{message}</p>
                             </div>
                         </div>
-                        <div className="image-container-right scroll-fade-away">{secondImageElements}</div>
+                        <div className="image-container right">{secondImageElements}</div>
                     </div>
                 </div>
-            </div>
+            </section>
             {children as React.ReactNode}
         </>
     );

@@ -33,7 +33,7 @@ export const prepareBlockControllers = () => {
         ".wp-block-guten-csek-scrolling-projects-block"
     );
     // Expanding video controller
-    const expandingVideoController = new ExpandingVideoController(".expanding-video-container");
+    const expandingVideoController = new ExpandingVideoController(".wp-block-guten-csek-expanding-video-block");
 
     // Team Block Controller
     const teamController = new TeamController(".wp-block-guten-csek-team-block");
