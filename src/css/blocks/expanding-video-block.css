@@ -15,8 +15,8 @@
 }
 
 .expanding-video-container {
-    width: 30vw;
-    height: 75vh;
+    width: 40vw;
+    height: 65vh;
     overflow: hidden;
     border-radius: 0.5rem;
     transition: all ease 1.2s;
@@ -38,7 +38,6 @@
     width: 100vw;
     height: 100vh;
     border-radius: 0;
-    transition: all ease 1.2s;
 }
 
 .expanded > video {
@@ -58,6 +57,7 @@
     width: 30%;
     display: grid;
     grid-template-rows: 1fr 1fr;
+    grid-auto-rows: min-content;
     grid-auto-flow: column dense;
     justify-content: flex-start;
     align-items: flex-start;
