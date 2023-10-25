@@ -274,6 +274,7 @@ export default class ScrollingProjectsController extends BlockController {
 
         this.projectImage.addEventListener("load", (e) => {
             if (!e.target) return;
+
             const elmt = e.target as HTMLElement;
             elmt.style.left = `${imgX * 100}%`;
             elmt.style.top = `${imgY * 100}%`;
