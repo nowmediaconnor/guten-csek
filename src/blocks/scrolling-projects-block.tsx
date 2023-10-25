@@ -9,6 +9,10 @@ import { MediaUpload, MediaUploadCheck, RichText, useBlockProps } from "@wordpre
 import { Button } from "@wordpress/components";
 import { Heading } from "../components/heading";
 import { CsekBlockHeading } from "../components/heading";
+import { GutenCsekBlockEditProps, GutenCsekBlockSaveProps } from "../scripts/dom";
+import { TextInput } from "../components/input";
+import { CsekMediaUpload } from "../components/media-upload";
+import { CsekAddButton, CsekDeleteButton } from "../components/button";
 
 interface ScrollingProjectsProps {
     attributes: {
@@ -23,7 +27,14 @@ interface Project {
     imageUrl: string;
 }
 
-export const ScrollingProjectsBlockEdit = ({ attributes, setAttributes }: ScrollingProjectsProps) => {
+export interface ScrollingProjectsBlockAttributes {
+    projects: Project[];
+}
+
+export const ScrollingProjectsBlockEdit = ({
+    attributes,
+    setAttributes,
+}: GutenCsekBlockEditProps<ScrollingProjectsBlockAttributes>) => {
     const blockProps = useBlockProps();
 
     const { projects } = attributes;
@@ -46,75 +57,73 @@ export const ScrollingProjectsBlockEdit = ({ attributes, setAttributes }: Scroll
         setAttributes({ projects: newProjects });
     };
 
+    const handleChangeProjectTitle = (value: string, index: number) => {
+        const newProjects = [...projects];
+        newProjects[index].name = value;
+        setAttributes({ projects: newProjects });
+    };
+
+    const handleChangeProjectLink = (value: string, index: number) => {
+        const newProjects = [...projects];
+        newProjects[index].link = value;
+        setAttributes({ projects: newProjects });
+    };
+
+    const handleChangeProjectImage = (value: string, index: number) => {
+        const newProjects = [...projects];
+        newProjects[index].imageUrl = value;
+        setAttributes({ projects: newProjects });
+    };
+
     const videoElements = projects.map((project: Project, index: number) => {
         return (
-            <div key={index} className="video-carousel-data">
+            <div key={index} className="csek-card flex flex-col gap-4">
                 <div className="flex flex-row justify-between items-center">
                     <Heading level="2">Project {index + 1}</Heading>
-                    <Button
-                        className="csek-video-remove"
-                        icon="trash"
+                    <CsekDeleteButton
                         label="Remove project"
-                        onClick={() => handleRemoveProject(index)}>
-                        Delete
-                    </Button>
-                </div>
-                <Heading level="4">Title</Heading>
-                <input
-                    type="text"
-                    className="csek-input"
-                    placeholder="Project name"
-                    value={project.name}
-                    onChange={(e) =>
-                        handleProjectChange(
-                            { name: e.target.value, link: project.link, imageUrl: project.imageUrl },
-                            index
-                        )
-                    }
-                />
-                <Heading level="4">Caption</Heading>
-                <input
-                    type="text"
-                    className="csek-input"
-                    placeholder="Link to project or project page"
-                    value={project.link}
-                    onChange={(e) =>
-                        handleProjectChange(
-                            { name: project.name, link: e.target.value, imageUrl: project.imageUrl },
-                            index
-                        )
-                    }
-                />
-                <Heading level="4">Image</Heading>
-                <MediaUploadCheck>
-                    <MediaUpload
-                        onSelect={(media) =>
-                            handleProjectChange({ name: project.name, link: project.link, imageUrl: media.url }, index)
-                        }
-                        allowedTypes={["image"]}
-                        render={({ open }) => (
-                            <Button className="csek-video-upload" icon="camera-alt" label="Upload Image" onClick={open}>
-                                Choose Image
-                            </Button>
-                        )}
+                        onDelete={() => handleRemoveProject(index)}
+                        className="flex-shrink-0"
                     />
-                </MediaUploadCheck>
+                </div>
+                <div className="flex flex-row justify-between items-start gap-4">
+                    <div className="csek-card flex flex-col gap-2">
+                        <TextInput
+                            label="Title"
+                            placeholder="Title"
+                            initialValue={project.name}
+                            onChange={(v) => handleChangeProjectTitle(v, index)}
+                        />
+                        <TextInput
+                            label="Link"
+                            placeholder="https://example.com"
+                            initialValue={project.link}
+                            onChange={(v) => handleChangeProjectLink(v, index)}
+                        />
+                    </div>
+                    <CsekMediaUpload
+                        label="Image"
+                        type="image"
+                        urlAttribute={project.imageUrl}
+                        onChange={(v) => handleChangeProjectImage(v, index)}
+                    />
+                </div>
             </div>
         );
     });
     return (
-        <div {...blockProps}>
+        <div {...blockProps} className="csek-block">
             <CsekBlockHeading>Csek Scrolling Projects Block</CsekBlockHeading>
-            {videoElements}
-            <Button onClick={handleAddProject} icon="plus" className="csek-button">
-                Add Project
-            </Button>
             <p>{projects.length} projects added.</p>
+            {videoElements}
+            <CsekAddButton onAdd={handleAddProject} label="Add Project" />
         </div>
     );
 };
 
-export const ScrollingProjectsBlockSave = ({ attributes }: ScrollingProjectsProps) => {
+export const ScrollingProjectsBlockSave = ({
+    attributes,
+}: GutenCsekBlockSaveProps<ScrollingProjectsBlockAttributes>) => {
     const blockProps = useBlockProps.save();
 
     const { projects } = attributes;
