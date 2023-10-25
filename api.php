@@ -13,7 +13,14 @@ function get_image_color($request)
     // Your custom logic to retrieve and return data
     $base64_image = $json['base64Data'];
     $image_data = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $base64_image));
-    $image_resource = imagecreatefromstring($image_data);
+
+    try {
+
+        $image_resource = imagecreatefromstring($image_data);
+    } catch (Error $e) {
+        error_log('Error: ' . $e->getMessage() . ' on line ' . $e->getLine() . ' from image file "' . $json['fileName'] . '"');
+        return rest_ensure_response(["error" => $e->getMessage()], 500);
+    }
 
     // Initialize an array to store the unique colors
     $main_color = get_predominant_color($image_resource, 2);

@@ -11,7 +11,7 @@ import { randomInRange, randomIntInRange } from "../math";
 export default class ScrollingProjectsController extends BlockController {
     name: string;
 
-    debug: boolean = false;
+    debug: boolean = true;
 
     scrollingProjectsBlockClassName: string;
 
@@ -93,10 +93,14 @@ export default class ScrollingProjectsController extends BlockController {
         }
 
         for (const source of uniqueSources) {
-            const imageColor: string = await getImageColor(source);
+            try {
+                const imageColor: string = await getImageColor(source);
 
-            this.colorCache.set(source, imageColor);
-            this.log(imageColor);
+                this.colorCache.set(source, imageColor);
+                this.log(imageColor);
+            } catch (err: any) {
+                this.log("Error:", err);
+            }
         }
 
         for (let i = 0; i < allImages.length; i++) {
@@ -265,26 +269,26 @@ export default class ScrollingProjectsController extends BlockController {
         const color = img.getAttribute("data-color");
 
         const blurbRect = this.blurb.getBoundingClientRect();
-        const imgX = randomInRange(0.25, 0.75);
-        const imgY = randomInRange(0.25, 0.75);
-        const linkX = randomInRange(0.1, 0.9);
-        const linkY = randomInRange(0.1, 0.9);
+        const imgX = randomInRange(0.5, 0.5);
+        const imgY = randomInRange(0.5, 0.5);
+        const linkX = randomInRange(0.75, 0.75);
+        const linkY = randomInRange(0.75, 0.75);
 
         this.projectImage.src = img.src;
 
         this.projectImage.addEventListener("load", (e) => {
             if (!e.target) return;
 
-            const elmt = e.target as HTMLElement;
+            const elmt = e.target as HTMLImageElement;
             elmt.style.left = `${imgX * 100}%`;
             elmt.style.top = `${imgY * 100}%`;
             elmt.style.opacity = "1";
-
-            if (this.viewProjectButton) {
-                this.viewProjectButton.style.left = `${linkX * 100}%`;
-                this.viewProjectButton.style.top = `${linkY * 100}%`;
-            }
         });
+
+        if (this.viewProjectButton) {
+            this.viewProjectButton.style.left = `${linkX * 100}%`;
+            this.viewProjectButton.style.top = `${linkY * 100}%`;
+        }
 
         this.log("color:", color);
         this.blurb?.style.setProperty("--project-blurb-color", color);
