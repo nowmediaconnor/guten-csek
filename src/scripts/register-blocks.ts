@@ -42,6 +42,7 @@ import {
     ExpandingVideoBlockSave,
     ExpandingVideoBlockAttributes,
 } from "../blocks/expanding-video-block";
+import { BlockquoteBlockEdit, BlockquoteBlockSave, BlockquoteBlockAttributes } from "../blocks/blockquote-block";
 
 export const registerAllBlocks = () => {
     console.log("Registering blocks...");
@@ -279,5 +280,32 @@ export const registerAllBlocks = () => {
         },
         edit: ExpandingVideoBlockEdit,
         save: ExpandingVideoBlockSave,
+    });
+
+    // Block Quote Block
+    registerBlockType<BlockquoteBlockAttributes>("guten-csek/block-quote-block", {
+        title: "Csek Blockquote Block",
+        icon: "format-quote",
+        category: "text",
+        attributes: {
+            heading: {
+                type: "string",
+                default: "",
+            },
+            quote: {
+                type: "string",
+                default: "",
+            },
+            author: {
+                type: "string",
+                default: "",
+            },
+            authorRole: {
+                type: "string",
+                default: "",
+            },
+        },
+        edit: BlockquoteBlockEdit,
+        save: BlockquoteBlockSave,
     });
 };

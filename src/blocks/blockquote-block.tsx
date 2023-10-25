@@ -5,44 +5,61 @@
 
 import React from "react";
 import { CsekBlockHeading } from "../components/heading";
+import { TextArea, TextInput } from "../components/input";
+import { useBlockProps } from "@wordpress/block-editor";
+import { GutenCsekBlockEditProps, GutenCsekBlockSaveProps } from "../scripts/dom";
 
-interface BlockquoteProps {
-    attributes: any;
-    setAttributes?: any;
+export interface BlockquoteBlockAttributes {
+    heading: string;
+    quote: string;
+    author: string;
+    authorRole: string;
 }
 
-export const BlockquoteEdit = ({ attributes, setAttributes }: BlockquoteProps) => {
+export const BlockquoteBlockEdit = ({
+    attributes,
+    setAttributes,
+}: GutenCsekBlockEditProps<BlockquoteBlockAttributes>) => {
+    const blockProps = useBlockProps();
+
     const { heading, quote, author, authorRole } = attributes;
 
-    const setHeading = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setAttributes({ heading: e.target.value });
+    const setHeading = (value: string) => {
+        setAttributes({ heading: value });
     };
-    const setQuote = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-        setAttributes({ quote: e.target.value });
+    const setQuote = (value: string) => {
+        setAttributes({ quote: value });
     };
-    const setAuthor = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setAttributes({ author: e.target.value });
+    const setAuthor = (value: string) => {
+        setAttributes({ author: value });
     };
-    const setAuthorRole = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setAttributes({ authorRole: e.target.value });
+    const setAuthorRole = (value: string) => {
+        setAttributes({ authorRole: value });
     };
 
     return (
-        <div className="flex flex-col w-full gap-4">
-            <CsekBlockHeading>Blockquote</CsekBlockHeading>
-            <input type="text" placeholder="Heading" value={heading} onChange={setHeading} />
-            <textarea placeholder="Quote" value={quote} onChange={setQuote} />
-            <input type="text" placeholder="Author" value={author} onChange={setAuthor} />
-            <input type="text" placeholder="Author's Role (Optional)" value={authorRole} onChange={setAuthorRole} />
+        <div {...blockProps} className="csek-block">
+            <CsekBlockHeading>Csek Blockquote Block</CsekBlockHeading>
+            <TextInput placeholder="Heading" label="Heading" initialValue={heading} onChange={setHeading} />
+            <TextArea placeholder="Quote" label="Quote" initialValue={quote} onChange={setQuote} />
+            <TextInput placeholder="Author" label="Author" initialValue={author} onChange={setAuthor} />
+            <TextInput
+                placeholder="Author's Role (Optional)"
+                label="Author's Role"
+                initialValue={authorRole}
+                onChange={setAuthorRole}
+            />
         </div>
     );
 };
 
-export const BlockquoteSave = ({ attributes }: BlockquoteProps) => {
+export const BlockquoteBlockSave = ({ attributes }: GutenCsekBlockSaveProps<BlockquoteBlockAttributes>) => {
+    const blockProps = useBlockProps.save();
+
     const { heading, quote, author, authorRole } = attributes;
 
     return (
-        <div>
+        <section {...blockProps}>
             <div className="quote-area">
                 <h2 className="block-title">{heading}</h2>
                 <div className="quote">
@@ -54,6 +71,6 @@ export const BlockquoteSave = ({ attributes }: BlockquoteProps) => {
                 </div>
                 <img className="serif" src="/wp-content/plugins/guten-csek/src/img/serif-light.svg" />
             </div>
-        </div>
+        </section>
     );
 };
