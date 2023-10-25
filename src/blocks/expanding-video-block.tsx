@@ -117,27 +117,9 @@ export const ExpandingVideoBlockSave = ({ attributes }: GutenCsekBlockSaveProps<
 
     const { videoURL, images, messageHeading, message } = attributes;
 
-    // there will be 3 columns: images, video, images
-    // the video will be the middle column and will expand to fill the viewport as the screen is scrolled
-    // the images will be the left and right columns and will be pushed offscreen as the video expands
-
-    // pick a random subset of up to 6 images
-    // shuffle that subset
-    // split the images into 2 arrays of 3
-    // the left array will be the left column
-    // the right array will be the right column
-
     const maxImages = images.length < 6 ? images.length : 6;
-    // const randomImages = images.sort(() => Math.random() - Math.random()).slice(0, maxImages);
     const randomImages = images.slice(0, maxImages);
 
-    // const firstImageElements = randomImages.slice(0, maxImages / 2).map((image: string, index: number) => {
-    //     return <img src={image} className="floating-image" />;
-    // });
-
-    // const secondImageElements = randomImages.slice(maxImages / 2).map((image: string, index: number) => {
-    //     return <img src={image} className="floating-image" />;
-    // });
     const firstImageElements: JSX.Element[] = [];
     const secondImageElements: JSX.Element[] = [];
 
@@ -149,12 +131,29 @@ export const ExpandingVideoBlockSave = ({ attributes }: GutenCsekBlockSaveProps<
         }
     }
 
+    const leftImageColumns: JSX.Element[] = [];
+    const rightImageColumns: JSX.Element[] = [];
+
+    const rowHeight = 2;
+
+    for (let i = 0; i < maxImages / (2 * rowHeight); i++) {
+        const rightColumnTemp: JSX.Element[] = [];
+        const leftColumnTemp: JSX.Element[] = [];
+        for (let j = 0; j < rowHeight; j++) {
+            leftColumnTemp.push(firstImageElements[i * rowHeight + j]);
+            rightColumnTemp.push(secondImageElements[i * rowHeight + j]);
+        }
+
+        leftImageColumns.push(<div className="image-column">{leftColumnTemp}</div>);
+        rightImageColumns.push(<div className="image-column">{rightColumnTemp}</div>);
+    }
+
     return (
         <>
             <section {...blockProps} className={blockProps.className + " curtain-reel"}>
                 <div className="content-block curtain">
                     <div className="row">
-                        <div className="image-container left">{firstImageElements}</div>
+                        <div className="image-container left">{leftImageColumns}</div>
                         <div className="expanding-video-container">
                             <video controls={false} autoPlay={true} loop={true} muted={true}>
                                 <source src={videoURL} />
@@ -164,7 +163,7 @@ export const ExpandingVideoBlockSave = ({ attributes }: GutenCsekBlockSaveProps<
                                 <p>{message}</p>
                             </div>
                         </div>
-                        <div className="image-container right">{secondImageElements}</div>
+                        <div className="image-container right">{rightImageColumns}</div>
                     </div>
                 </div>
             </section>

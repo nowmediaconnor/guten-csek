@@ -4,6 +4,7 @@
  */
 
 import { getSiblings, ControllerProperties, BlockController } from "../dom";
+import { randomIntInRange } from "../math";
 
 export default class ExpandingVideoController extends BlockController {
     name: string;
@@ -12,6 +13,8 @@ export default class ExpandingVideoController extends BlockController {
     expandingVideos: NodeListOf<HTMLElement>;
     isInitialized: boolean;
     floatingImages: NodeListOf<HTMLElement>;
+
+    static scrollThreshold: number = 150;
 
     constructor(blockClassName: string) {
         super();
@@ -39,7 +42,7 @@ export default class ExpandingVideoController extends BlockController {
         this.floatingImages = block?.querySelectorAll(".floating-image") as NodeListOf<HTMLElement>;
 
         this.floatingImages.forEach((image: HTMLElement) => {
-            image.style.animationDelay = `${Math.random() * 750}ms`;
+            image.style.animationDelay = `${randomIntInRange(100, 750)}ms`;
         });
 
         this.addScrollEventListener();
@@ -80,7 +83,7 @@ export default class ExpandingVideoController extends BlockController {
 
             const rect = parent.getBoundingClientRect();
             // this.log(JSON.stringify(rect, null, 4));
-            if (rect.top <= 300) {
+            if (rect.top <= ExpandingVideoController.scrollThreshold) {
                 this.expandVideo(container);
             } else {
                 this.retractVideo(container);
