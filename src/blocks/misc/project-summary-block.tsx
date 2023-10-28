@@ -53,6 +53,7 @@ export const ProjectSummaryBlockEdit = ({
     };
 
     const setUsesCustomBackgroundColor = (value: boolean) => {
+        console.log("setUsesCustomBackgroundColor", value);
         setAttributes({ usesCustomBackgroundColor: value });
     };
 
@@ -84,7 +85,11 @@ export const ProjectSummaryBlockEdit = ({
                     onChange={setWebsiteLink}
                     placeholder="Website link"
                 />
-                <CheckboxInput label="Use custom background color" onChange={setUsesCustomBackgroundColor} />
+                <CheckboxInput
+                    label="Use custom background color"
+                    onChange={setUsesCustomBackgroundColor}
+                    initialValue={usesCustomBackgroundColor}
+                />
                 <p className="em-label">
                     If you do not to use a custom color, Csek will use machine learning to determine a color based on
                     the post&apos;s featured image.
@@ -114,31 +119,35 @@ export const ProjectSummaryBlockSave = ({ attributes }: GutenCsekBlockSaveProps<
             </li>
         );
     });
-    // const listOfServices = [];
 
-    const customStyle: React.CSSProperties = {
-        backgroundColor: `${backgroundColor}`,
-    };
+    const customStyle: React.CSSProperties = usesCustomBackgroundColor
+        ? {
+              backgroundColor: `${backgroundColor}`,
+          }
+        : {};
+
+    const customClassName = ["project-summary-block", usesCustomBackgroundColor ? "" : "featured-image-color"];
 
     return (
-        <section
-            {...blockProps}
-            className="project-summary-block featured-image-color"
-            style={usesCustomBackgroundColor ? customStyle : {}}>
-            <div className="max-width">
-                <h2 className="project-tagline">{projectTagline}</h2>
-                <div className="row">
-                    <p className="project-summary">{projectSummary}</p>
-                    <div className="column tagged-services">
-                        <h4>Our services</h4>
-                        <ul>{listOfServices}</ul>
-                    </div>
-                    <div className="column website-link">
-                        <h4>Check out our partner</h4>
-                        <h3>
-                            <OutboundLink href={websiteLink}>{urlExtractSecondLevelDomain(websiteLink)}</OutboundLink>
-                            <i className="fa-solid fa-arrow-up-right-from-square"></i>
-                        </h3>
+        <section {...blockProps}>
+            <div className={customClassName.join(" ")} style={customStyle}>
+                <div className="max-width">
+                    <h2 className="project-tagline">{projectTagline}</h2>
+                    <div className="row">
+                        <p className="project-summary">{projectSummary}</p>
+                        <div className="column tagged-services">
+                            <h4>Our services:</h4>
+                            <ul>{listOfServices}</ul>
+                        </div>
+                        <div className="column website-link">
+                            <h4>Check out our partner</h4>
+                            <h3>
+                                <OutboundLink href={websiteLink}>
+                                    {urlExtractSecondLevelDomain(websiteLink)}
+                                </OutboundLink>
+                                <i className="fa-solid fa-arrow-up-right-from-square"></i>
+                            </h3>
+                        </div>
                     </div>
                 </div>
             </div>

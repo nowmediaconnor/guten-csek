@@ -3,6 +3,11 @@
  * Author: Connor Doman
  */
 
+.wp-blocks-guten-cesk-project-summary-block {
+    width: 100%;
+    position: relative;
+}
+
 .project-summary-block > * {
     display: flex;
     flex-direction: column;
