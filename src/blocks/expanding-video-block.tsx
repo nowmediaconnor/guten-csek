@@ -8,15 +8,17 @@ import { Panel, PanelBody } from "@wordpress/components";
 import { CsekBlockHeading } from "../components/heading";
 import { CsekMediaUpload } from "../components/media-upload";
 import { CsekAddButton, CsekDeleteButton } from "../components/button";
-import { TextArea, TextInput } from "../components/input";
+import { CsekSelectDropdown, TextArea, TextInput } from "../components/input";
 import Label from "../components/label";
 import { GutenCsekBlockEditProps, GutenCsekBlockSaveProps } from "../scripts/dom";
+import CsekCard from "../components/card";
 
 export interface ExpandingVideoBlockAttributes {
-    videoURL: string;
+    expandingMediaURL: string;
     images: string[];
     messageHeading: string;
     message: string;
+    expandingElementType: "video" | "image";
 }
 
 export const ExpandingVideoBlockEdit = ({
@@ -26,10 +28,10 @@ export const ExpandingVideoBlockEdit = ({
     const blockProps = useBlockProps();
     const { children, ...innerBlockProps } = useInnerBlocksProps(blockProps);
 
-    const { videoURL, images, messageHeading, message } = attributes;
+    const { expandingMediaURL, images, messageHeading, message, expandingElementType = "video" } = attributes;
 
-    const onSelectVideo = (media: any) => {
-        setAttributes({ videoURL: media.url });
+    const onSelectMedia = (url: string) => {
+        setAttributes({ expandingMediaURL: url });
     };
 
     const onSelectImages = (newImages: any) => {
@@ -60,6 +62,10 @@ export const ExpandingVideoBlockEdit = ({
         setAttributes({ message: v });
     };
 
+    const onUpdateMediaType = (v: string) => {
+        setAttributes({ expandingElementType: v as "video" | "image" });
+    };
+
     const imageUploaders = images.map((image: string, index: number) => {
         return (
             <div className="relative">
@@ -84,12 +90,14 @@ export const ExpandingVideoBlockEdit = ({
                 <Panel>
                     <PanelBody title="Curtain Video" className="flex flex-col gap-2">
                         <CsekMediaUpload
-                            type="video"
+                            type={expandingElementType}
                             label="Cover Video"
-                            onChange={onSelectVideo}
-                            urlAttribute={videoURL}
+                            onChange={onSelectMedia}
+                            urlAttribute={expandingMediaURL}
                         />
-                        {videoURL ? <p>Video&nbsp;URL: {videoURL.split("https://")[1].slice(0, 25)}...</p> : null}
+                        {expandingMediaURL ? (
+                            <p>Video&nbsp;URL: {expandingMediaURL.split("https://")[1].slice(0, 25)}...</p>
+                        ) : null}
                     </PanelBody>
                     <PanelBody title="Surrounding Images" className="flex flex-col gap-2">
                         {imageUploaders}
@@ -99,14 +107,24 @@ export const ExpandingVideoBlockEdit = ({
                 </Panel>
             </InspectorControls>
             <CsekBlockHeading>Csek Curtain Video Block</CsekBlockHeading>
+            <CsekSelectDropdown
+                label="Expanding Media Type"
+                options={[
+                    { value: "video", label: "Video" },
+                    { value: "image", label: "Image" },
+                ]}
+                defaultOption={1}
+                onChange={onUpdateMediaType}
+                initialValue={expandingElementType}
+            />
             <Label>Select the Cover Video and Surrounding Images from the Inspector.</Label>
             <TextInput label="Message Heading" onChange={onUpdateMessageHeading} initialValue={messageHeading} />
             <TextArea label="Message Body" onChange={onUpdateMessage} initialValue={message} />
-            <div className="csek-card">
+            <CsekCard>
                 <h4 className="m-0">Inner Block</h4>
                 <Label em>Click the box below to add a block that will appear behind the curtains</Label>
                 <div className="csek-input p-4">{children as React.ReactNode}</div>
-            </div>
+            </CsekCard>
         </div>
     );
 };
@@ -115,7 +133,7 @@ export const ExpandingVideoBlockSave = ({ attributes }: GutenCsekBlockSaveProps<
     const blockProps = useBlockProps.save();
     const { children, ...innerBlockProps } = useInnerBlocksProps.save(blockProps);
 
-    const { videoURL, images, messageHeading, message } = attributes;
+    const { expandingMediaURL, images, messageHeading, message, expandingElementType } = attributes;
 
     const maxImages = images.length < 6 ? images.length : 6;
     const randomImages = images.slice(0, maxImages);
@@ -148,6 +166,15 @@ export const ExpandingVideoBlockSave = ({ attributes }: GutenCsekBlockSaveProps<
         rightImageColumns.push(<div className="image-column">{rightColumnTemp}</div>);
     }
 
+    const expandingElement =
+        expandingElementType === "video" ? (
+            <video controls={false} autoPlay={true} loop={true} muted={true}>
+                <source src={expandingMediaURL} />
+            </video>
+        ) : (
+            <img src={expandingMediaURL} />
+        );
+
     return (
         <>
             <section {...blockProps} className={blockProps.className + " curtain-reel"}>
@@ -155,9 +182,7 @@ export const ExpandingVideoBlockSave = ({ attributes }: GutenCsekBlockSaveProps<
                     <div className="row">
                         <div className="image-container left">{leftImageColumns}</div>
                         <div className="expanding-video-container">
-                            <video controls={false} autoPlay={true} loop={true} muted={true}>
-                                <source src={videoURL} />
-                            </video>
+                            {expandingElement}
                             <div className="message">
                                 <h2>{messageHeading}</h2>
                                 <p>{message}</p>

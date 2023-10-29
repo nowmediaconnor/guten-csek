@@ -162,6 +162,10 @@ export const registerAllBlocks = () => {
                 type: "boolean",
                 default: false,
             },
+            companySector: {
+                type: "string",
+                default: "",
+            },
         },
         edit: ProjectSummaryBlockEdit,
         save: ProjectSummaryBlockSave,
@@ -261,7 +265,7 @@ export const registerAllBlocks = () => {
         icon: "format-video",
         category: "media",
         attributes: {
-            videoURL: {
+            expandingMediaURL: {
                 type: "string",
                 default: "",
             },
@@ -276,6 +280,10 @@ export const registerAllBlocks = () => {
             message: {
                 type: "string",
                 default: "",
+            },
+            expandingElementType: {
+                type: "string",
+                default: "video",
             },
         },
         edit: ExpandingVideoBlockEdit,
