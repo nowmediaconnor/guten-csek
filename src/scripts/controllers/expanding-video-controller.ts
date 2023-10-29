@@ -4,22 +4,33 @@
  */
 
 import { getSiblings, ControllerProperties, BlockController } from "../dom";
+import { randomIntInRange } from "../math";
 
 export default class ExpandingVideoController extends BlockController {
     name: string;
     debug: boolean = false;
-    expandingVideoClassName: string;
+    blockClassName: string;
     expandingVideos: NodeListOf<HTMLElement>;
     isInitialized: boolean;
+    floatingImages: NodeListOf<HTMLElement>;
 
-    constructor(expandingVideoClassName: string) {
+    static scrollThreshold: number = 150;
+
+    constructor(blockClassName: string) {
         super();
         this.name = "ExpandingVideoController";
-        this.expandingVideoClassName = expandingVideoClassName;
+        this.blockClassName = blockClassName;
     }
 
     setup() {
-        this.expandingVideos = document.querySelectorAll(this.expandingVideoClassName);
+        const block = document.querySelector(this.blockClassName);
+
+        if (this.invalid(block)) {
+            this.log("No expanding video block found.");
+            return;
+        }
+
+        this.expandingVideos = block?.querySelectorAll(".expanding-video-container") as NodeListOf<HTMLElement>;
 
         if (this.invalid(this.expandingVideos.length > 0)) {
             this.log("No expanding videos found.");
@@ -27,6 +38,12 @@ export default class ExpandingVideoController extends BlockController {
         } else {
             this.log(`Found ${this.expandingVideos.length} expanding videos`);
         }
+
+        this.floatingImages = block?.querySelectorAll(".floating-image") as NodeListOf<HTMLElement>;
+
+        this.floatingImages.forEach((image: HTMLElement) => {
+            image.style.animationDelay = `${randomIntInRange(100, 750)}ms`;
+        });
 
         this.addScrollEventListener();
         this.isInitialized = true;
@@ -66,7 +83,7 @@ export default class ExpandingVideoController extends BlockController {
 
             const rect = parent.getBoundingClientRect();
             // this.log(JSON.stringify(rect, null, 4));
-            if (rect.top <= 300) {
+            if (rect.top <= ExpandingVideoController.scrollThreshold) {
                 this.expandVideo(container);
             } else {
                 this.retractVideo(container);

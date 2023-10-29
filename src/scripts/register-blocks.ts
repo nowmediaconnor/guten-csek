@@ -37,6 +37,12 @@ import {
     NextProjectBlockEdit,
     NextProjectBlockSave,
 } from "../blocks/misc/next-project-block";
+import {
+    ExpandingVideoBlockEdit,
+    ExpandingVideoBlockSave,
+    ExpandingVideoBlockAttributes,
+} from "../blocks/expanding-video-block";
+import { BlockquoteBlockEdit, BlockquoteBlockSave, BlockquoteBlockAttributes } from "../blocks/blockquote-block";
 
 export const registerAllBlocks = () => {
     console.log("Registering blocks...");
@@ -247,5 +253,59 @@ export const registerAllBlocks = () => {
         },
         edit: NextProjectBlockEdit,
         save: NextProjectBlockSave,
+    });
+
+    // Expanding Video Block
+    registerBlockType<ExpandingVideoBlockAttributes>("guten-csek/expanding-video-block", {
+        title: "Csek Curtain Video Block",
+        icon: "format-video",
+        category: "media",
+        attributes: {
+            videoURL: {
+                type: "string",
+                default: "",
+            },
+            images: {
+                type: "array",
+                default: [],
+            },
+            messageHeading: {
+                type: "string",
+                default: "",
+            },
+            message: {
+                type: "string",
+                default: "",
+            },
+        },
+        edit: ExpandingVideoBlockEdit,
+        save: ExpandingVideoBlockSave,
+    });
+
+    // Block Quote Block
+    registerBlockType<BlockquoteBlockAttributes>("guten-csek/block-quote-block", {
+        title: "Csek Blockquote Block",
+        icon: "format-quote",
+        category: "text",
+        attributes: {
+            heading: {
+                type: "string",
+                default: "",
+            },
+            quote: {
+                type: "string",
+                default: "",
+            },
+            author: {
+                type: "string",
+                default: "",
+            },
+            authorRole: {
+                type: "string",
+                default: "",
+            },
+        },
+        edit: BlockquoteBlockEdit,
+        save: BlockquoteBlockSave,
     });
 };

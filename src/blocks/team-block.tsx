@@ -8,68 +8,108 @@ import { Button, PanelBody } from "@wordpress/components";
 import React from "react";
 import { Heading } from "../components/heading";
 import { CsekBlockHeading } from "../components/heading";
+import { CsekMediaUpload } from "../components/media-upload";
+import { GutenCsekBlockEditProps, GutenCsekBlockSaveProps } from "../scripts/dom";
+import Label from "../components/label";
+import { TextInput } from "../components/input";
+import { CsekAddButton, CsekDeleteButton } from "../components/button";
 
 interface TeamBlockProps {
     attributes: any;
     setAttributes?: any;
 }
 
-export const TeamBlockEdit = ({ attributes, setAttributes }: TeamBlockProps) => {
+export interface TeamBlockAttributes {
+    images: string[];
+    title: string;
+    tagline: string;
+    copyText: string;
+    cta: string;
+    ctaLink: string;
+}
+
+export const TeamBlockEdit = ({ attributes, setAttributes }: GutenCsekBlockEditProps<TeamBlockAttributes>) => {
+    const blockProps = useBlockProps();
+
     const { images, title, tagline, copyText, cta, ctaLink } = attributes;
 
-    const onSelectImages = (media: any) => {
-        setAttributes({ images: media.map((image: { url: string }) => image.url) });
+    const onSetBlockTitle = (value: string) => {
+        setAttributes({ title: value });
+    };
+    const onSetTagline = (value: string) => {
+        setAttributes({ tagline: value });
+    };
+    const onSetCopyText = (value: string) => {
+        setAttributes({ copyText: value });
+    };
+    const onSetCTA = (value: string) => {
+        setAttributes({ cta: value });
+    };
+    const onSetCTALink = (value: string) => {
+        setAttributes({ ctaLink: value });
     };
 
-    const onSetBlockTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setAttributes({ title: e.target.value });
+    const handleChangeImageURL = (v: string, index: number) => {
+        const newImages = [...images];
+        newImages[index] = v;
+        setAttributes({ images: newImages });
     };
-    const onSetTagline = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setAttributes({ tagline: e.target.value });
+
+    const addImage = () => {
+        setAttributes({ images: [...images, ""] });
     };
-    const onSetCopyText = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-        setAttributes({ copyText: e.target.value });
+
+    const removeImage = (index: number) => {
+        const newImages = [...images];
+        newImages.splice(index, 1);
+        setAttributes({ images: newImages });
     };
-    const onSetCTA = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setAttributes({ cta: e.target.value });
-    };
-    const onSetCTALink = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setAttributes({ ctaLink: e.target.value });
-    };
+
+    const imageSelectors = images.map((image: string, index: number) => {
+        return (
+            <div className="relative">
+                <CsekDeleteButton
+                    onDelete={() => removeImage(index)}
+                    label="Remove"
+                    className="absolute top-2 right-2"
+                />
+                <CsekMediaUpload
+                    label={`Team member ${index + 1}`}
+                    urlAttribute={image}
+                    onChange={(v) => handleChangeImageURL(v, index)}
+                />
+            </div>
+        );
+    });
 
     return (
-        <div>
+        <div {...blockProps} className="csek-block">
             <InspectorControls>
-                <div className="flex flex-col">
-                    <PanelBody title="Expanding Video Block Media">
-                        <MediaUploadCheck>
-                            <Heading level="3">Headshot Images</Heading>
-                            <MediaUpload
-                                onSelect={onSelectImages}
-                                allowedTypes={["image"]}
-                                multiple={true}
-                                value={images}
-                                render={({ open }) => <Button onClick={open}>Select images</Button>}
-                            />
-                            <p>{images.length} images selected.</p>
-                        </MediaUploadCheck>
-                    </PanelBody>
-                </div>
+                <PanelBody title="Expanding Video Block Media" className="flex flex-col gap-2">
+                    {imageSelectors}
+                    <CsekAddButton onAdd={addImage} label="Add Team Member" />
+                </PanelBody>
             </InspectorControls>
-            <CsekBlockHeading>Team Block</CsekBlockHeading>
-            <div className="w-full flex flex-col gap-4">
+            <CsekBlockHeading>Csek Team Block</CsekBlockHeading>
+            <Label>Check the inspector to update team photos.</Label>
+            <div className="csek-card flex flex-col gap-4">
                 <p>{images.length} images selected.</p>
-                <input type="text" value={title} onChange={onSetBlockTitle} placeholder="Block Title" />
-                <input type="text" value={tagline} onChange={onSetTagline} placeholder="Tagline" />
-                <textarea value={copyText} onChange={onSetCopyText} placeholder="Copy Text" />
-                <input type="text" value={cta} onChange={onSetCTA} placeholder="Call To Action" />
-                <input type="text" value={ctaLink} onChange={onSetCTALink} placeholder="Call To Action Link" />
+                <TextInput placeholder="Title" label="Title" initialValue={title} onChange={onSetBlockTitle} />
+                <TextInput placeholder="Tagline" label="Tagline" initialValue={tagline} onChange={onSetTagline} />
+                <TextInput placeholder="Copy Text" label="Copy Text" initialValue={copyText} onChange={onSetCopyText} />
+                <TextInput placeholder="Call To Action" label="Call To Action" initialValue={cta} onChange={onSetCTA} />
+                <TextInput
+                    placeholder="Call To Action Link"
+                    label="Call To Action Link"
+                    initialValue={ctaLink}
+                    onChange={onSetCTALink}
+                />
             </div>
         </div>
     );
 };
 
-export const TeamBlockSave = ({ attributes }: TeamBlockProps) => {
+export const TeamBlockSave = ({ attributes }: GutenCsekBlockSaveProps<TeamBlockAttributes>) => {
     const blockProps = useBlockProps.save();
     const { images, title, tagline, copyText, cta, ctaLink } = attributes;
 

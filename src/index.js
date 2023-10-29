@@ -8,21 +8,14 @@ const { registerBlockType } = wp.blocks;
 import { prepareBlockControllers } from "./domcontroller";
 
 import { TaglineHeaderEdit, TaglineHeaderSave } from "./blocks/tagline-header-block";
-import { ExpandingVideoBlockEdit, ExpandingVideoBlockSave } from "./blocks/expanding-video-block";
-import { BlockquoteEdit, BlockquoteSave } from "./blocks/blockquote-block";
 import { ScrollingProjectsBlockEdit, ScrollingProjectsBlockSave } from "./blocks/scrolling-projects-block";
 import { TeamBlockEdit, TeamBlockSave } from "./blocks/team-block";
 import { VideoCarouselBlockEdit, VideoCarouselBlockSave } from "./blocks/video-carousel-block";
 import { HorizontalCarouselBlockEdit, HorizontalCarouselBlockSave } from "./blocks/horizontal-carousel-block";
-import { ProjectSummaryBlockEdit, ProjectSummaryBlockSave } from "./blocks/misc/project-summary-block";
-import { FeaturedImageBlockEdit, FeaturedImageBlockSave } from "./blocks/misc/featured-image-block";
 import { MultiImageBlockEdit, MultiImageBlockSave } from "./blocks/misc/multi-image-block";
-import { LeftRightBlockEdit, LeftRightBlockSave } from "./blocks/misc/left-right-block";
-import { FullscreenImageBlockEdit, FullscreenImageBlockSave } from "./blocks/misc/fullscreen-image-block";
 import { DOMControllerBlockEdit, DOMControllerBlockSave } from "./blocks/dom-controller-block";
 import { ImageCollageBlockEdit, ImageCollageBlockSave } from "./blocks/misc/image-collage-block";
 import { ScreenshotCollageBlockEdit, ScreenshotCollageBlockSave } from "./blocks/misc/screenshot-collage-block";
-import { NextProjectBlockEdit, NextProjectBlockSave } from "./blocks/misc/next-project-block";
 import { PageHeaderBlockEdit, PageHeaderBlockSave } from "./blocks/misc/page-header-block";
 import { FeaturedVideoBlockEdit, FeaturedVideoBlockSave } from "./blocks/misc/featured-video-block";
 import { ChicagoFiresBlockEdit, ChicagoFiresBlockSave } from "./blocks/misc/chicago-fires-block";
@@ -54,60 +47,6 @@ registerBlockType("guten-csek/tagline-header-block", {
     },
     edit: TaglineHeaderEdit,
     save: TaglineHeaderSave,
-});
-
-// Expanding Video Block
-registerBlockType("guten-csek/expanding-video-block", {
-    title: "Csek Expanding Video Block",
-    icon: "format-video",
-    category: "media",
-    attributes: {
-        videoURL: {
-            type: "string",
-            default: "",
-        },
-        images: {
-            type: "array",
-            default: [],
-        },
-        messageHeading: {
-            type: "string",
-            default: "",
-        },
-        message: {
-            type: "string",
-            default: "",
-        },
-    },
-    edit: ExpandingVideoBlockEdit,
-    save: ExpandingVideoBlockSave,
-});
-
-// Block Quote Block
-registerBlockType("guten-csek/block-quote-block", {
-    title: "Csek Block Quote Block",
-    icon: "format-quote",
-    category: "text",
-    attributes: {
-        heading: {
-            type: "string",
-            default: "",
-        },
-        quote: {
-            type: "string",
-            default: "",
-        },
-        author: {
-            type: "string",
-            default: "",
-        },
-        authorRole: {
-            type: "string",
-            default: "",
-        },
-    },
-    edit: BlockquoteEdit,
-    save: BlockquoteSave,
 });
 
 // Scrolling Projects Block

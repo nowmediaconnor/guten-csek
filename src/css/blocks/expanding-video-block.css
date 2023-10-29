@@ -5,48 +5,21 @@
 
 /* Expanding Video Block*/
 
-.wp-block-guten-csek-expanding-video-block {
-    --transition-speed: 1.2s;
-    transition: all ease 0.2s;
-    height: 100vh;
-    position: relative;
-    top: 0;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    justify-content: flex-start;
-    align-items: center;
-    overflow: hidden;
-}
-
 .wp-block-guten-csek-expanding-video-block .row {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    align-items: center;
-    /* position: relative; */
+    align-items: flex-start;
     gap: 2rem;
 }
 
-.wp-block-guten-csek-expanding-video-block .threshold {
-    height: 1px;
-    overflow: hidden;
-    width: 100%;
-    position: absolute;
-    bottom: 110vh;
-    z-index: 100;
-}
-
 .expanding-video-container {
-    width: 30vw;
+    width: 40vw;
     height: 75vh;
     overflow: hidden;
     border-radius: 0.5rem;
     transition: all ease 1.2s;
     position: relative;
-    /* position: absolute;
-    top: 0; */
 }
 
 .expanding-video-container video {
@@ -62,7 +35,6 @@
     width: 100vw;
     height: 100vh;
     border-radius: 0;
-    transition: all ease 1.2s;
 }
 
 .expanded > video {
@@ -77,36 +49,39 @@
     animation: hover 2s ease-in-out infinite alternate;
 }
 
-.image-container-left {
+.image-container {
     position: relative;
+    min-width: 30vh;
     width: 30%;
-    display: grid;
+    display: flex;
     flex-direction: row;
-    grid-template-rows: 1fr 1fr;
-    grid-auto-flow: column;
-    justify-content: flex-end;
-    align-items: flex-end;
+    justify-content: flex-start;
+    align-items: center;
     gap: 2rem;
-    flex: 0 1 auto;
-}
-
-.image-container-right {
-    position: relative;
-    width: 30%;
-    display: grid;
-    flex-direction: row;
-    grid-template-rows: 1fr 1fr;
-    grid-auto-flow: column;
-    justify-content: flex-end;
-    align-items: flex-end;
-    gap: 2rem;
-    flex: 0 1 auto;
-}
-
-.scroll-fade-away {
     transition-property: opacity, width;
-    transition-duration: 1s;
+    transition-duration: 750ms;
     transition-timing-function: ease-in-out;
+    margin-top: 2rem;
+
+    &.left {
+        flex-direction: row-reverse;
+    }
+
+    &.right {
+        flex-direction: row;
+    }
+
+    & .image-column {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        justify-content: center;
+        align-items: center;
+
+        & img {
+            max-width: 15rem;
+        }
+    }
 }
 
 .disappear {

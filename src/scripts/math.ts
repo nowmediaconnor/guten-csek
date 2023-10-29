@@ -19,10 +19,22 @@ export const map = (n: number, start1: number, stop1: number, start2: number, st
     }
 };
 
+/**
+ * Generate a random floating point number between min and max
+ * @param min the lower bound of the range
+ * @param max the upper bound of the range (exclusive)
+ * @returns a random number between min and max
+ */
 export const randomInRange = (min: number, max: number): number => {
     return Math.random() * (max - min) + min;
 };
 
+/**
+ * Generate a random integer between min and max
+ * @param min the lower bound of the range
+ * @param max the upper bound of the range (inclusive)
+ * @returns a random integer between min and max
+ */
 export const randomIntInRange = (min: number, max: number): number => {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 };

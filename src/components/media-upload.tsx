@@ -4,11 +4,10 @@
  */
 
 import { MediaUpload, MediaUploadCheck } from "@wordpress/block-editor";
-import { GutenbergBlockProps } from "../scripts/dom";
-import { Button } from "@wordpress/components";
 import React, { useState } from "@wordpress/element";
 import { Heading } from "./heading";
 import { capitalize } from "../scripts/strings";
+import { CsekAddButton } from "./button";
 
 interface CsekMediaUploadProps {
     onChange: (v: string) => void;
@@ -60,9 +59,7 @@ export const CsekMediaUpload = ({ onChange, urlAttribute = "", type = "image", l
                     multiple={false}
                     value={resourceId}
                     render={({ open }) => (
-                        <Button onClick={open} className="csek-button">
-                            Choose {type}
-                        </Button>
+                        <CsekAddButton onAdd={open} className="csek-button" label={`Choose ${type}`} />
                     )}
                 />
             </MediaUploadCheck>

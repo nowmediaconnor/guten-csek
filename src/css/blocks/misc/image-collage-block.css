@@ -16,14 +16,15 @@
     align-items: center;
 
     .masonry {
+        --brick-width: 15rem;
+        --brick-aspect: calc(307 / 165);
         width: 100%;
         display: grid;
         /* grid-auto-columns: 15rem; */
         grid-template-columns: repeat(3, 15rem);
-        grid-template-rows: repeat(3, 21rem);
         justify-content: center;
         align-items: center;
-        row-gap: 3rem;
+        row-gap: 3.25rem;
         column-gap: 5rem;
         height: 100vh;
         position: relative;
@@ -34,7 +35,7 @@
             border-radius: 2rem;
             box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);
             overflow: hidden;
-            height: 21rem;
+            height: calc(var(--brick-width) * var(--brick-aspect));
             position: relative;
         }
         .brick:nth-child(3n + 2) {
