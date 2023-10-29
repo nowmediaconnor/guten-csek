@@ -23,17 +23,17 @@
     & .block-container {
         max-width: var(--max-width);
         position: relative;
-        padding: 4rem 0;
+        padding: 8rem 0;
         margin: 0 auto;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        gap: 4rem;
+        gap: 9rem;
 
         & .primary-text {
             text-align: center;
-            max-width: 70%;
+            max-width: 100%;
 
             & h2 {
                 margin: 1rem 0;

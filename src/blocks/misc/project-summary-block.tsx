@@ -18,6 +18,7 @@ export interface ProjectSummaryBlockAttributes {
     projectSummary: string;
     taggedServices: string[];
     websiteLink: string;
+    companySector: string;
     usesCustomBackgroundColor: boolean;
 }
 
@@ -27,8 +28,15 @@ export const ProjectSummaryBlockEdit = ({
 }: GutenCsekBlockEditProps<ProjectSummaryBlockAttributes>) => {
     const blockProps = useBlockProps();
 
-    const { backgroundColor, projectTagline, projectSummary, taggedServices, websiteLink, usesCustomBackgroundColor } =
-        attributes;
+    const {
+        backgroundColor,
+        projectTagline,
+        projectSummary,
+        taggedServices,
+        websiteLink,
+        companySector,
+        usesCustomBackgroundColor,
+    } = attributes;
 
     const setBackgroundColor = (hexColor: string) => {
         console.log(JSON.stringify(hexColor, null, 4));
@@ -53,8 +61,11 @@ export const ProjectSummaryBlockEdit = ({
     };
 
     const setUsesCustomBackgroundColor = (value: boolean) => {
-        console.log("setUsesCustomBackgroundColor", value);
         setAttributes({ usesCustomBackgroundColor: value });
+    };
+
+    const setCompanySector = (value: string) => {
+        setAttributes({ companySector: value });
     };
 
     return (
@@ -85,6 +96,12 @@ export const ProjectSummaryBlockEdit = ({
                     onChange={setWebsiteLink}
                     placeholder="Website link"
                 />
+                <TextInput
+                    label="Company sector"
+                    initialValue={companySector}
+                    onChange={setCompanySector}
+                    placeholder="Company sector"
+                />
                 <CheckboxInput
                     label="Use custom background color"
                     onChange={setUsesCustomBackgroundColor}
@@ -109,8 +126,15 @@ export const ProjectSummaryBlockEdit = ({
 export const ProjectSummaryBlockSave = ({ attributes }: GutenCsekBlockSaveProps<ProjectSummaryBlockAttributes>) => {
     const blockProps = useBlockProps.save();
 
-    const { backgroundColor, projectTagline, projectSummary, taggedServices, websiteLink, usesCustomBackgroundColor } =
-        attributes;
+    const {
+        backgroundColor,
+        projectTagline,
+        projectSummary,
+        taggedServices,
+        websiteLink,
+        companySector,
+        usesCustomBackgroundColor,
+    } = attributes;
 
     const listOfServices = taggedServices?.map((service: string, index: number) => {
         return (
@@ -147,6 +171,8 @@ export const ProjectSummaryBlockSave = ({ attributes }: GutenCsekBlockSaveProps<
                                 </OutboundLink>
                                 <i className="fa-solid fa-arrow-up-right-from-square"></i>
                             </h3>
+                            <h4>Sector</h4>
+                            <h3>{companySector}</h3>
                         </div>
                     </div>
                 </div>
