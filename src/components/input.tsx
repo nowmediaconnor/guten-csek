@@ -47,7 +47,7 @@ export const TextInput = ({ label, initialValue = "", placeholder, className, di
     );
 };
 
-export const RichTextInput = ({ label, initialValue = "", placeholder, onChange }: InputProps) => {
+export const RichTextInput = ({ label, initialValue = "", placeholder, className, onChange }: InputProps) => {
     const [text, setText] = useState(initialValue);
 
     const handleChange = (v: string) => {
@@ -63,7 +63,7 @@ export const RichTextInput = ({ label, initialValue = "", placeholder, onChange 
             <em className="italic text-sm text-slate-500">Rich text</em>
             <RichText
                 tagName="div"
-                className="csek-card"
+                className={twMerge("csek-card flex-grow", className)}
                 placeholder={placeholder || "Enter text here."}
                 label={label}
                 value={text}

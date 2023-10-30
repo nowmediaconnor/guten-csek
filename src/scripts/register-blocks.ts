@@ -46,6 +46,11 @@ import { BlockquoteBlockEdit, BlockquoteBlockSave, BlockquoteBlockAttributes } f
 import { TaglineHeaderAttributes, TaglineHeaderEdit, TaglineHeaderSave } from "../blocks/tagline-header-block";
 import { ParagraphBlockAttributes, ParagraphBlockEdit, ParagraphBlockSave } from "../blocks/misc/paragraph-block";
 import { MultiImageBlockAttributes, MultiImageBlockEdit, MultiImageBlockSave } from "../blocks/misc/multi-image-block";
+import {
+    EmphasizedTextBlockAttributes,
+    EmphasizedTextBlockEdit,
+    EmphasizedTextBlockSave,
+} from "../blocks/misc/emphasized-text-block";
 
 export const registerAllBlocks = () => {
     console.log("Registering blocks...");
@@ -176,7 +181,7 @@ export const registerAllBlocks = () => {
 
     // Featured Image Block
     registerBlockType<FeaturedImageBlockAttributes>("guten-csek/featured-image-block", {
-        title: "Csek Featured Image Block",
+        title: "Csek Featured Image",
         icon: "format-image",
         category: "media",
         attributes: {
@@ -195,7 +200,7 @@ export const registerAllBlocks = () => {
 
     // Fullscreen Image Block
     registerBlockType<FullscreenImageBlockAttributes>("guten-csek/fullscreen-image-block", {
-        title: "Csek Fullscreen Image Block",
+        title: "Csek Fullscreen Image",
         icon: "format-image",
         category: "media",
         attributes: {
@@ -214,7 +219,7 @@ export const registerAllBlocks = () => {
 
     // Left-Right Block
     registerBlockType<LeftRightBlockAttributes>("guten-csek/left-right-block", {
-        title: "Csek Left-Right Block",
+        title: "Csek Left-Right",
         icon: "columns",
         category: "text",
         attributes: {
@@ -241,7 +246,7 @@ export const registerAllBlocks = () => {
 
     // Next Project Block
     registerBlockType<NextProjectBlockAttributes>("guten-csek/next-project-block", {
-        title: "Csek Next Project Block",
+        title: "Csek Next Project",
         icon: "text",
         category: "text",
         attributes: {
@@ -264,7 +269,7 @@ export const registerAllBlocks = () => {
 
     // Expanding Video Block
     registerBlockType<ExpandingVideoBlockAttributes>("guten-csek/expanding-video-block", {
-        title: "Csek Curtain Video Block",
+        title: "Csek Curtain Video",
         icon: "format-video",
         category: "media",
         attributes: {
@@ -295,7 +300,7 @@ export const registerAllBlocks = () => {
 
     // Block Quote Block
     registerBlockType<BlockquoteBlockAttributes>("guten-csek/block-quote-block", {
-        title: "Csek Blockquote Block",
+        title: "Csek Blockquote",
         icon: "format-quote",
         category: "text",
         attributes: {
@@ -349,7 +354,7 @@ export const registerAllBlocks = () => {
 
     // Paragraph Block
     registerBlockType<ParagraphBlockAttributes>("guten-csek/paragraph-block", {
-        title: "Csek Paragraph Block",
+        title: "Csek Paragraph",
         icon: "text",
         category: "text",
         attributes: {
@@ -364,7 +369,7 @@ export const registerAllBlocks = () => {
 
     // Multi Image Block
     registerBlockType<MultiImageBlockAttributes>("guten-csek/multi-image-block", {
-        title: "Csek Multi Image Block",
+        title: "Csek Multi Image",
         icon: "format-image",
         category: "media",
         attributes: {
@@ -383,5 +388,24 @@ export const registerAllBlocks = () => {
         },
         edit: MultiImageBlockEdit,
         save: MultiImageBlockSave,
+    });
+
+    // Emhpasized Text Block
+    registerBlockType<EmphasizedTextBlockAttributes>("guten-csek/emphasized-text-block", {
+        title: "Csek Emphasized Text",
+        icon: "text",
+        category: "text",
+        attributes: {
+            text: {
+                type: "string",
+                default: "",
+            },
+            color: {
+                type: "string",
+                default: "#000000",
+            },
+        },
+        edit: EmphasizedTextBlockEdit,
+        save: EmphasizedTextBlockSave,
     });
 };
