@@ -7,69 +7,80 @@ import { MediaUpload, MediaUploadCheck, InspectorControls, useBlockProps } from 
 import { Button, PanelBody } from "@wordpress/components";
 import { Heading } from "../components/heading";
 import { CsekBlockHeading } from "../components/heading";
+import { GutenCsekBlockEditProps, GutenCsekBlockSaveProps } from "../scripts/dom";
+import { CsekMediaUpload } from "../components/media-upload";
+import { TextInput } from "../components/input";
+import CsekCard from "../components/card";
 
 interface TaglineHeaderProps {
     attributes: any;
     setAttributes?: any;
 }
 
-export const TaglineHeaderEdit = ({ attributes, setAttributes }: TaglineHeaderProps) => {
-    const { preTagline, tagline, imageURL } = attributes;
+export interface TaglineHeaderAttributes {
+    preTagline: string;
+    tagline: string;
+    subTagline: string;
+    imageURL: string;
+}
 
-    const preTaglineChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setAttributes({ preTagline: e.target.value });
+export const TaglineHeaderEdit = ({ attributes, setAttributes }: GutenCsekBlockEditProps<TaglineHeaderAttributes>) => {
+    const { preTagline, tagline, subTagline, imageURL } = attributes;
+
+    const preTaglineChange = (value: string) => {
+        setAttributes({ preTagline: value });
     };
 
-    const taglineChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setAttributes({ tagline: e.target.value });
+    const taglineChange = (value: string) => {
+        setAttributes({ tagline: value });
     };
 
-    const onSelectImage = (media: any) => {
-        setAttributes({ imageURL: media.url });
+    const subTaglineChange = (value: string) => {
+        setAttributes({ subTagline: value });
+    };
+
+    const onSelectImage = (url: string) => {
+        setAttributes({ imageURL: url });
     };
 
     return (
-        <div className="p-4 flex flex-col gap-4">
+        <div className="csek-block">
             <InspectorControls>
                 <PanelBody title="Tagline Header Editor">
-                    <MediaUploadCheck>
-                        <Heading level="2">Tagline accent image:</Heading>
-                        <MediaUpload
-                            onSelect={onSelectImage}
-                            // type="image"
-                            value={imageURL}
-                            render={({ open }) => <Button onClick={open}>Select Image</Button>}
-                        />
-                    </MediaUploadCheck>
+                    <CsekMediaUpload
+                        label="Accent image"
+                        urlAttribute={imageURL}
+                        onChange={onSelectImage}
+                        type="image"
+                    />
                 </PanelBody>
             </InspectorControls>
             <CsekBlockHeading>Tagline Header Block</CsekBlockHeading>
-            <div className="z-10 w-full flex flex-col gap-4">
-                <input
-                    type="text"
-                    value={preTagline}
-                    onChange={(e) => preTaglineChange(e)}
-                    placeholder="Pre-tagline text"
-                />
-                <input type="text" value={tagline} onChange={(e) => taglineChange(e)} placeholder="Tagline text" />
-            </div>
+            <CsekCard className="flex flex-col gap-2">
+                <TextInput label="Pre-Tagline" initialValue={preTagline} onChange={preTaglineChange} />
+                <TextInput label="Tagline" initialValue={tagline} onChange={taglineChange} />
+                <TextInput label="Subtagline" initialValue={subTagline} onChange={subTaglineChange} />
+            </CsekCard>
             {imageURL && <img src={imageURL} className="w-48 relative mx-auto" alt="Tagline Header Image" />}
         </div>
     );
 };
 
-export const TaglineHeaderSave = ({ attributes }: TaglineHeaderProps) => {
+export const TaglineHeaderSave = ({ attributes }: GutenCsekBlockSaveProps<TaglineHeaderAttributes>) => {
     const blockProps = useBlockProps.save();
 
-    const { preTagline, tagline, imageURL } = attributes;
+    const { preTagline, tagline, subTagline, imageURL } = attributes;
 
     return (
-        <div {...blockProps} className="scroll-fade-away scroll-down-target">
-            <div className="heading-text">
-                <h3>{preTagline}</h3>
-                <h1>{tagline}</h1>
+        <div {...blockProps} className="scroll-fade-away">
+            <div className="block-content">
+                <div className="heading-text">
+                    <h3>{preTagline}</h3>
+                    <h1>{tagline}</h1>
+                    <h2>{subTagline}</h2>
+                </div>
+                <img src={imageURL} className="serif" alt="Red Csek Creative Serif Symbol" />
             </div>
-            <img src={imageURL} className="serif" alt="Red Csek Creative Serif Symbol" />
         </div>
     );
 };

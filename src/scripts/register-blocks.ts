@@ -43,6 +43,7 @@ import {
     ExpandingVideoBlockAttributes,
 } from "../blocks/expanding-video-block";
 import { BlockquoteBlockEdit, BlockquoteBlockSave, BlockquoteBlockAttributes } from "../blocks/blockquote-block";
+import { TaglineHeaderAttributes, TaglineHeaderEdit, TaglineHeaderSave } from "../blocks/tagline-header-block";
 
 export const registerAllBlocks = () => {
     console.log("Registering blocks...");
@@ -315,5 +316,32 @@ export const registerAllBlocks = () => {
         },
         edit: BlockquoteBlockEdit,
         save: BlockquoteBlockSave,
+    });
+
+    // Tagline Header Block
+    registerBlockType<TaglineHeaderAttributes>("guten-csek/tagline-header-block", {
+        title: "Csek Tagline Header",
+        icon: "text",
+        category: "text",
+        attributes: {
+            preTagline: {
+                type: "string",
+                default: "Welcome to",
+            },
+            tagline: {
+                type: "string",
+                default: "The House of More.",
+            },
+            subTagline: {
+                type: "string",
+                default: "We are a full-service marketing agency that delivers results.",
+            },
+            imageURL: {
+                type: "string",
+                default: "",
+            },
+        },
+        edit: TaglineHeaderEdit,
+        save: TaglineHeaderSave,
     });
 };

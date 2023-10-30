@@ -26,29 +26,6 @@ import { runAccumulators } from "./scripts/accumulators";
 
 // "save" is the component that will render on the front-end
 
-// Tagline Header Block
-registerBlockType("guten-csek/tagline-header-block", {
-    title: "Csek Tagline Header",
-    icon: "text",
-    category: "text",
-    attributes: {
-        preTagline: {
-            type: "string",
-            default: "Welcome to",
-        },
-        tagline: {
-            type: "string",
-            default: "The House of More.",
-        },
-        imageURL: {
-            type: "string",
-            default: "",
-        },
-    },
-    edit: TaglineHeaderEdit,
-    save: TaglineHeaderSave,
-});
-
 // Scrolling Projects Block
 registerBlockType("guten-csek/scrolling-projects-block", {
     title: "Csek Scrolling Projects Block",
