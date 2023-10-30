@@ -57,13 +57,12 @@ export const MultiImageBlockEdit = ({
     const imageInputs: JSX.Element[] = images.map((image, index) => {
         return (
             <CsekCard className="flex flex-col gap-2">
-                <CsekMediaUpload
-                    label={`Image ${index + 1}`}
-                    urlAttribute={images[index]}
-                    onChange={(v) => onChangeImageURL(v, index)}
-                />
+                <Heading level="4" className="my-2">
+                    Image {index + 1}
+                </Heading>
+                <CsekMediaUpload urlAttribute={images[index]} onChange={(v) => onChangeImageURL(v, index)} />
                 <TextInput
-                    label={`Image ${index + 1} alt text`}
+                    label={`Alt text`}
                     initialValue={altTexts[index]}
                     onChange={(e) => onChangeAltText(e, index)}
                 />
@@ -76,8 +75,10 @@ export const MultiImageBlockEdit = ({
             <CsekBlockHeading>Csek Multi Image Block</CsekBlockHeading>
             <CsekCard>
                 <TextInput label="Block Title" initialValue={title} onChange={onTitleChange} />
-                <Heading level="4">Image previews</Heading>
-                <div className="flex flex-col gap-4">{imageInputs}</div>
+                <Heading level="4" className="my-2">
+                    Image previews
+                </Heading>
+                <div className="grid grid-cols-2 gap-4">{imageInputs}</div>
             </CsekCard>
         </section>
     );

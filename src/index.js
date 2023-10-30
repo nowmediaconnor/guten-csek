@@ -116,33 +116,6 @@ registerBlockType("guten-csek/horizontal-carousel-block", {
 
 /* Misc Blocks */
 
-// Multi Image Block
-registerBlockType("guten-csek/multi-image-block", {
-    title: "Csek Multi Image Block",
-    icon: "format-image",
-    category: "media",
-    attributes: {
-        images: {
-            type: "array",
-            default: [],
-        },
-        numberOfImages: {
-            type: "string",
-            default: "1",
-        },
-        title: {
-            type: "string",
-            default: "",
-        },
-        altTexts: {
-            type: "array",
-            default: [],
-        },
-    },
-    edit: MultiImageBlockEdit,
-    save: MultiImageBlockSave,
-});
-
 // DOM Controller Block
 registerBlockType("guten-csek/dom-controller-block", {
     title: "Csek Script Manager Block",

@@ -45,6 +45,7 @@ import {
 import { BlockquoteBlockEdit, BlockquoteBlockSave, BlockquoteBlockAttributes } from "../blocks/blockquote-block";
 import { TaglineHeaderAttributes, TaglineHeaderEdit, TaglineHeaderSave } from "../blocks/tagline-header-block";
 import { ParagraphBlockAttributes, ParagraphBlockEdit, ParagraphBlockSave } from "../blocks/misc/paragraph-block";
+import { MultiImageBlockAttributes, MultiImageBlockEdit, MultiImageBlockSave } from "../blocks/misc/multi-image-block";
 
 export const registerAllBlocks = () => {
     console.log("Registering blocks...");
@@ -359,5 +360,28 @@ export const registerAllBlocks = () => {
         },
         edit: ParagraphBlockEdit,
         save: ParagraphBlockSave,
+    });
+
+    // Multi Image Block
+    registerBlockType<MultiImageBlockAttributes>("guten-csek/multi-image-block", {
+        title: "Csek Multi Image Block",
+        icon: "format-image",
+        category: "media",
+        attributes: {
+            images: {
+                type: "array",
+                default: [],
+            },
+            title: {
+                type: "string",
+                default: "",
+            },
+            altTexts: {
+                type: "array",
+                default: [],
+            },
+        },
+        edit: MultiImageBlockEdit,
+        save: MultiImageBlockSave,
     });
 };
