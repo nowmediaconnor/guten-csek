@@ -44,6 +44,7 @@ import {
 } from "../blocks/expanding-video-block";
 import { BlockquoteBlockEdit, BlockquoteBlockSave, BlockquoteBlockAttributes } from "../blocks/blockquote-block";
 import { TaglineHeaderAttributes, TaglineHeaderEdit, TaglineHeaderSave } from "../blocks/tagline-header-block";
+import { ParagraphBlockAttributes, ParagraphBlockEdit, ParagraphBlockSave } from "../blocks/misc/paragraph-block";
 
 export const registerAllBlocks = () => {
     console.log("Registering blocks...");
@@ -343,5 +344,20 @@ export const registerAllBlocks = () => {
         },
         edit: TaglineHeaderEdit,
         save: TaglineHeaderSave,
+    });
+
+    // Paragraph Block
+    registerBlockType<ParagraphBlockAttributes>("guten-csek/paragraph-block", {
+        title: "Csek Paragraph Block",
+        icon: "text",
+        category: "text",
+        attributes: {
+            text: {
+                type: "string",
+                default: "",
+            },
+        },
+        edit: ParagraphBlockEdit,
+        save: ParagraphBlockSave,
     });
 };

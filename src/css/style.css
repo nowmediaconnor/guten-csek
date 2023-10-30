@@ -16,6 +16,7 @@ html,
 body {
     overflow-x: clip;
     /* scroll-behavior: smooth; */
+    font-family: "Montserrat", sans-serif;
 }
 
 /* Floating images at top of home page */
