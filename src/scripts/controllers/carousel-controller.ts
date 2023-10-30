@@ -76,7 +76,7 @@ export default class CarouselController extends BlockController {
                 const skipCarousel = document.getElementById("skip-carousel");
                 if (skipCarousel) {
                     skipCarousel.scrollIntoView();
-                    window.scrollTo(0, window.scrollY - 100);
+                    window.scrollTo(0, window.scrollY - window.innerHeight);
                 }
             });
         }
