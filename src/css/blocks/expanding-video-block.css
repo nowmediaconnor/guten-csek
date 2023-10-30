@@ -22,7 +22,8 @@
     position: relative;
 }
 
-.expanding-video-container video {
+.expanding-video-container video,
+.expanding-video-container img {
     object-fit: cover;
     max-width: none;
     object-position: center;
@@ -31,13 +32,18 @@
     transform: translateX(-50%);
 }
 
+.expanding-video-container img {
+    object-position: bottom;
+}
+
 .expanded {
     width: 100vw;
     height: 100vh;
     border-radius: 0;
 }
 
-.expanded > video {
+.expanded > video,
+.expanded > img {
     filter: brightness(0.5);
     transition: all ease 1.2s;
 }

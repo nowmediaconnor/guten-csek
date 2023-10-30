@@ -101,6 +101,10 @@ body {
     position: relative;
 }
 
+.darken-body {
+    background-color: var(--csek-dark);
+}
+
 /* Specific Elements */
 
 #loading {

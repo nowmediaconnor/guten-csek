@@ -155,6 +155,8 @@ interface CsekSelectDropdownProps {
     initialValue?: string;
     className?: string;
     hint?: string;
+    defaultOption?: number;
+    placeholder?: string;
     options: SelectOption[];
     onChange?: (v: string) => void;
 }
@@ -165,6 +167,8 @@ export const CsekSelectDropdown = ({
     className,
     hint,
     options,
+    placeholder,
+    defaultOption = 0,
     onChange,
 }: CsekSelectDropdownProps) => {
     const [selected, setSelected] = useState<string>(initialValue);
@@ -189,8 +193,8 @@ export const CsekSelectDropdown = ({
                 )}
                 onChange={handleChange}
                 value={selected}>
-                {options.map((option) => (
-                    <option key={option.value} value={option.value}>
+                {options.map((option, index: number) => (
+                    <option key={option.value} value={option.value} selected={index === defaultOption}>
                         {option.label}
                     </option>
                 ))}
