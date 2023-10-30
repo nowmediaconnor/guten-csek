@@ -21,17 +21,18 @@ import {
 } from "@wordpress/components";
 import { Heading } from "../components/heading";
 import { CsekBlockHeading } from "../components/heading";
+import { GutenCsekBlockEditProps, GutenCsekBlockSaveProps } from "../scripts/dom";
 
-export interface HorizontalCarouselBlockProps {
-    attributes: {
-        titles: string[];
-        statements: string[];
-        numItems: number;
-    };
-    setAttributes?: any;
+export interface HorizontalCarouselBlockAttributes {
+    titles: string[];
+    statements: string[];
+    numItems: number;
 }
 
-export const HorizontalCarouselBlockEdit = ({ attributes, setAttributes }: HorizontalCarouselBlockProps) => {
+export const HorizontalCarouselBlockEdit = ({
+    attributes,
+    setAttributes,
+}: GutenCsekBlockEditProps<HorizontalCarouselBlockAttributes>) => {
     const { titles, statements, numItems = 1 } = attributes;
 
     const titleChange = (value: string, index: number) => {
@@ -92,7 +93,9 @@ export const HorizontalCarouselBlockEdit = ({ attributes, setAttributes }: Horiz
     );
 };
 
-export const HorizontalCarouselBlockSave = ({ attributes }: HorizontalCarouselBlockProps) => {
+export const HorizontalCarouselBlockSave = ({
+    attributes,
+}: GutenCsekBlockSaveProps<HorizontalCarouselBlockAttributes>) => {
     const blockProps = useBlockProps.save();
 
     const { titles, statements, numItems = 1 } = attributes;
@@ -111,30 +114,32 @@ export const HorizontalCarouselBlockSave = ({ attributes }: HorizontalCarouselBl
     }
 
     return (
-        <div {...blockProps}>
-            <div className="carousel-wrapper">
-                <div className="carousel-slider">
-                    <ul className="carousel">{items}</ul>
-                </div>
-
-                <div className="carousel-slider-progress">
-                    <div className="status">
-                        {/* <a href="#prev" className="prev">
-                            <i className="fa fa-chevron-left"></i>
-                        </a> */}
-                        <p>
-                            Progress&nbsp;
-                            <span className="start">01</span>&nbsp;/&nbsp;<span className="stop">04</span>
-                        </p>
-                        {/* <a href="#next" className="next">
-                            <i className="fa fa-chevron-right"></i>
-                        </a> */}
+        <>
+            <div {...blockProps}>
+                <div className="carousel-wrapper">
+                    <div className="carousel-slider">
+                        <ul className="carousel">{items}</ul>
                     </div>
-                    <div className="bar">
-                        <span className="progress"></span>
+
+                    <div className="carousel-slider-progress">
+                        <div className="status">
+                            <p>
+                                Progress&nbsp;
+                                <span className="start">01</span>&nbsp;/&nbsp;<span className="stop">04</span>
+                            </p>
+                            <p>
+                                <a className="skip" href="#skip-carousel">
+                                    Skip
+                                </a>
+                            </p>
+                        </div>
+                        <div className="bar">
+                            <span className="progress"></span>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+            <span id="skip-carousel"></span>
+        </>
     );
 };

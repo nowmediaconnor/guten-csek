@@ -27,6 +27,7 @@ export default class CarouselController extends BlockController {
     progressNumerator: HTMLElement | null;
     progressDenominator: HTMLElement | null;
     barProgress: HTMLElement | null;
+    skipButton: HTMLElement | null;
 
     isInitialized: boolean;
 
@@ -50,11 +51,14 @@ export default class CarouselController extends BlockController {
         this.progressNumerator = this.carouselBlock.querySelector(".carousel-slider-progress .start");
         this.progressDenominator = this.carouselBlock.querySelector(".carousel-slider-progress .stop");
         this.barProgress = this.carouselBlock.querySelector(".carousel-slider-progress .bar .progress");
+        this.skipButton = this.carouselBlock.querySelector(".carousel-slider-progress .skip");
 
         const carouselItems: NodeListOf<HTMLElement> = this.carouselBlock.querySelectorAll(".carousel-item");
         this.numItems = carouselItems.length;
 
         this.debug = true;
+
+        this.addEventListeners();
 
         this.loadScroll();
         this.updateScroll();
@@ -65,7 +69,18 @@ export default class CarouselController extends BlockController {
         this.isInitialized = true;
     }
 
-    addEventListeners() {}
+    addEventListeners() {
+        if (this.skipButton) {
+            this.skipButton.addEventListener("click", (e) => {
+                e.preventDefault();
+                const skipCarousel = document.getElementById("skip-carousel");
+                if (skipCarousel) {
+                    skipCarousel.scrollIntoView();
+                    window.scrollTo(0, window.scrollY - 100);
+                }
+            });
+        }
+    }
 
     update() {}
 
