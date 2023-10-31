@@ -7,7 +7,7 @@ import React from "react";
 import { GutenCsekBlockEditProps, GutenCsekBlockSaveProps } from "../../scripts/dom";
 import { CsekBlockHeading } from "../../components/heading";
 import CsekCard from "../../components/card";
-import { RichTextInput } from "../../components/input";
+import { RichTextContent, RichTextInput } from "../../components/input";
 import CsekColorPicker from "../../components/color-picker";
 import { useBlockProps } from "@wordpress/block-editor";
 
@@ -55,9 +55,9 @@ export const EmphasizedTextBlockSave = ({ attributes }: GutenCsekBlockSaveProps<
     const { text, color, backgroundColor } = attributes;
 
     return (
-        <section {...blockProps} style={{ backgroundColor: backgroundColor }}>
+        <section {...blockProps} style={{ backgroundColor: backgroundColor, color: color }}>
             <div className="block-content">
-                <p style={{ color: color }}>{text}</p>
+                <RichTextContent value={text} />
             </div>
         </section>
     );

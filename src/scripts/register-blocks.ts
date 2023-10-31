@@ -404,6 +404,10 @@ export const registerAllBlocks = () => {
                 type: "string",
                 default: "#000000",
             },
+            backgroundColor: {
+                type: "string",
+                default: "#FFFFFF",
+            },
         },
         edit: EmphasizedTextBlockEdit,
         save: EmphasizedTextBlockSave,
