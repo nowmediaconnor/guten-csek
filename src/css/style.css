@@ -15,6 +15,8 @@
 html,
 body {
     overflow-x: clip;
+    /* scroll-behavior: smooth; */
+    font-family: "Montserrat", sans-serif;
 }
 
 /* Floating images at top of home page */
@@ -66,6 +68,7 @@ body {
         opacity ease 0.2s,
         width ease 2s;
     width: 0;
+    height: 0;
 }
 
 .block-title {

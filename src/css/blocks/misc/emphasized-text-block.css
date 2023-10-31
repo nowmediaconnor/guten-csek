@@ -1,0 +1,11 @@
+/*
+ * Created on Mon Oct 30 2023
+ * Author: Connor Doman
+ */
+
+.wp-block-guten-csek-emphasized-text-block {
+    padding: 7rem;
+    font-family: "Syne", sans-serif;
+    font-size: 2.5rem;
+    font-weight: bold;
+}

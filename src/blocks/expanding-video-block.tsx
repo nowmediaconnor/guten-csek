@@ -8,7 +8,7 @@ import { Panel, PanelBody } from "@wordpress/components";
 import { CsekBlockHeading } from "../components/heading";
 import { CsekMediaUpload } from "../components/media-upload";
 import { CsekAddButton, CsekDeleteButton } from "../components/button";
-import { CsekSelectDropdown, TextArea, TextInput } from "../components/input";
+import { CsekSelectDropdown, RichTextContent, RichTextInput, TextArea, TextInput } from "../components/input";
 import Label from "../components/label";
 import { GutenCsekBlockEditProps, GutenCsekBlockSaveProps } from "../scripts/dom";
 import CsekCard from "../components/card";
@@ -119,7 +119,8 @@ export const ExpandingVideoBlockEdit = ({
             />
             <Label>Select the Cover Video and Surrounding Images from the Inspector.</Label>
             <TextInput label="Message Heading" onChange={onUpdateMessageHeading} initialValue={messageHeading} />
-            <TextArea label="Message Body" onChange={onUpdateMessage} initialValue={message} />
+            <RichTextInput label="Message Body" onChange={onUpdateMessage} initialValue={message} />
+            {/* <TextArea label="Message Body" onChange={onUpdateMessage} initialValue={message} /> */}
             <CsekCard>
                 <h4 className="m-0">Inner Block</h4>
                 <Label em>Click the box below to add a block that will appear behind the curtains</Label>
@@ -185,7 +186,7 @@ export const ExpandingVideoBlockSave = ({ attributes }: GutenCsekBlockSaveProps<
                             {expandingElement}
                             <div className="message">
                                 <h2>{messageHeading}</h2>
-                                <p>{message}</p>
+                                <RichTextContent value={message} />
                             </div>
                         </div>
                         <div className="image-container right">{rightImageColumns}</div>

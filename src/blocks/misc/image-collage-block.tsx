@@ -4,13 +4,26 @@
  */
 
 import React from "react";
-import { GutenbergBlockProps } from "../../scripts/dom";
+import { GutenCsekBlockEditProps, GutenCsekBlockSaveProps, GutenbergBlockProps } from "../../scripts/dom";
 import { MediaUpload, useBlockProps } from "@wordpress/block-editor";
 import { Button, ColorPicker } from "@wordpress/components";
 import { Heading } from "../../components/heading";
 import { CsekBlockHeading } from "../../components/heading";
+import { CsekMediaUpload } from "../../components/media-upload";
+import { TextInput } from "../../components/input";
+import { CsekDeleteButton } from "../../components/button";
+import CsekCard from "../../components/card";
 
-export const ImageCollageBlockEdit = ({ attributes, setAttributes }: GutenbergBlockProps) => {
+export interface ImageCollageBlockAttributes {
+    images: string[];
+    imageAlts: string[];
+    backgroundColor: string;
+}
+
+export const ImageCollageBlockEdit = ({
+    attributes,
+    setAttributes,
+}: GutenCsekBlockEditProps<ImageCollageBlockAttributes>) => {
     const blockProps = useBlockProps();
 
     const { images, imageAlts, backgroundColor } = attributes;
@@ -19,14 +32,14 @@ export const ImageCollageBlockEdit = ({ attributes, setAttributes }: GutenbergBl
         setAttributes({ backgroundColor: colors["hex"] });
     };
 
-    const setImageAt = (index: number, image: string) => {
+    const setImageAt = (image: string, index: number) => {
         const newImages = [...images];
         if (index > newImages.length) newImages.push(image);
         else newImages[index] = image;
         setAttributes({ images: newImages });
     };
 
-    const setImageAltAt = (index: number, alt: string) => {
+    const setImageAltAt = (alt: string, index: number) => {
         const newImageAlts = [...imageAlts];
         if (index >= newImageAlts.length) newImageAlts.push(alt);
         else newImageAlts[index] = alt;
@@ -35,8 +48,8 @@ export const ImageCollageBlockEdit = ({ attributes, setAttributes }: GutenbergBl
 
     const newImage = () => {
         const len = images.length;
-        setImageAt(len, "");
-        setImageAltAt(len, "");
+        setImageAt("", len);
+        setImageAltAt("", len);
     };
 
     const deleteImageAt = (index: number) => {
@@ -47,58 +60,34 @@ export const ImageCollageBlockEdit = ({ attributes, setAttributes }: GutenbergBl
 
     const imagePreviewElements = images.map((image: any, index: number) => {
         return (
-            <div className="csek-card w-full">
-                <Heading level="4">Image Preview</Heading>
-                <div className="flex flex-col gap-2">
-                    <img className="preview-image" src={image} alt={imageAlts[index]} />
-                    <MediaUpload
-                        onSelect={(v) => setImageAt(index, v.url)}
-                        allowedTypes={["image"]}
-                        multiple={false}
-                        value={image}
-                        render={({ open }) => (
-                            <Button className="csek-button" onClick={open} icon="format-image">
-                                Choose image
-                            </Button>
-                        )}
-                    />
-                </div>
-                <Heading level="4">Image Alt Text</Heading>
-                <input
-                    className="csek-input"
-                    type="text"
-                    onChange={(e) => setImageAltAt(index, e.target.value as string)}
-                    placeholder=""
-                    value={imageAlts[index]}
-                />
+            <CsekCard className="flex flex-col gap-2">
+                <Heading level="4">Image {index + 1}</Heading>
+                <CsekMediaUpload urlAttribute={images[index]} onChange={(v) => setImageAt(v, index)} />
+                <TextInput label="Alt text" initialValue={imageAlts[index]} onChange={(v) => setImageAltAt(v, index)} />
                 <br />
-                <Button onClick={() => deleteImageAt(index)} icon="trash">
-                    Delete
-                </Button>
-            </div>
+                <CsekDeleteButton onDelete={() => deleteImageAt(index)} />
+            </CsekCard>
         );
     });
 
     return (
-        <section {...blockProps} className="p-4">
+        <section {...blockProps} className="csek-block">
             <CsekBlockHeading>Csek Image Collage Block</CsekBlockHeading>
-            <div className="flex flex-row justify-between gap-4">
-                <div className="flex flex-col">
-                    {imagePreviewElements}
-                    <Button className="csek-button" onClick={() => newImage()} icon="plus">
-                        Add Card
-                    </Button>
-                </div>
-                <div className="flex flex-col csek-card h-max">
+            <div className="grid grid-cols-3 gap-4">
+                <CsekCard className="flex flex-col gap-2 col-span-3">
                     <Heading level="4">Background Color</Heading>
                     <ColorPicker color={backgroundColor} onChangeComplete={setBackgroundColor} copyFormat="hex" />
-                </div>
+                </CsekCard>
+                {imagePreviewElements}
+                <Button className="csek-button" onClick={() => newImage()} icon="plus">
+                    Add Card
+                </Button>
             </div>
         </section>
     );
 };
 
-export const ImageCollageBlockSave = ({ attributes }: GutenbergBlockProps) => {
+export const ImageCollageBlockSave = ({ attributes }: GutenCsekBlockSaveProps<ImageCollageBlockAttributes>) => {
     const blockProps = useBlockProps.save();
 
     const { images, imageAlts, backgroundColor } = attributes;

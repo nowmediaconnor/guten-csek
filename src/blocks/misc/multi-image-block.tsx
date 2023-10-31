@@ -4,76 +4,82 @@
  */
 
 import React from "react";
-import { GutenbergBlockProps } from "../../scripts/dom";
+import { GutenCsekBlockEditProps, GutenbergBlockProps } from "../../scripts/dom";
 import { MediaUpload, MediaUploadCheck, useBlockProps } from "@wordpress/block-editor";
 import { Button, __experimentalNumberControl as NumberControl } from "@wordpress/components";
 import { Heading } from "../../components/heading";
 import { CsekBlockHeading } from "../../components/heading";
+import { CsekMediaUpload } from "../../components/media-upload";
+import CsekCard from "../../components/card";
+import { TextInput } from "../../components/input";
 
-export const MultiImageBlockEdit = ({ attributes, setAttributes }: GutenbergBlockProps) => {
+export interface MultiImageBlockAttributes {
+    title: string;
+    images: string[];
+    altTexts: string[];
+}
+
+export const MultiImageBlockEdit = ({
+    attributes,
+    setAttributes,
+}: GutenCsekBlockEditProps<MultiImageBlockAttributes>) => {
     const blockProps = useBlockProps();
-    const { title, numberOfImages, images, altTexts } = attributes;
+    const { title, images, altTexts } = attributes;
 
-    const onNumberOfImagesChange = (n: string | undefined) => {
-        setAttributes({ numberOfImages: n });
-    };
-
-    const onChangeImageURL = (v, index) => {
+    const onChangeImageURL = (v: string, index: number) => {
         const newImages = [...images];
-        newImages[index] = v.url;
+        newImages[index] = v;
         setAttributes({ images: newImages });
     };
 
-    const onChangeAltText = (e: React.ChangeEvent<HTMLInputElement>, index) => {
+    const onChangeAltText = (v: string, index: number) => {
         const newAltTexts = [...altTexts];
-        newAltTexts[index] = e.target.value;
+        newAltTexts[index] = v;
         setAttributes({ altTexts: newAltTexts });
     };
 
-    const imageInputs: JSX.Element[] = [];
-    for (let i = 0; i < numberOfImages; i++) {
-        imageInputs.push(
-            <div className="row csek-card">
-                <div className="flex flex-col gap-4 w-full">
-                    <MediaUploadCheck>
-                        <MediaUpload
-                            onSelect={(v) => onChangeImageURL(v, i)}
-                            allowedTypes={["image"]}
-                            multiple={false}
-                            value={images[i]}
-                            render={({ open }) => <Button onClick={open}>Choose image {i + 1}</Button>}
-                        />
-                    </MediaUploadCheck>
-                    <input
-                        className="csek-input"
-                        type="text"
-                        value={altTexts[i]}
-                        placeholder={`Image ${i + 1} alt text`}
-                        onChange={(e) => onChangeAltText(e, i)}
-                    />
-                </div>
-                <img className="preview-image" src={images[i]} alt={altTexts[i]} />
-            </div>
+    const onTitleChange = (v: string) => {
+        setAttributes({ title: v });
+    };
+
+    const addImage = () => {
+        const newImages = [...images];
+        newImages.push("");
+        setAttributes({ images: newImages });
+    };
+
+    const removeImage = (index: number) => {
+        const newImages = [...images];
+        newImages.splice(index, 1);
+        setAttributes({ images: newImages });
+    };
+
+    const imageInputs: JSX.Element[] = images.map((image, index) => {
+        return (
+            <CsekCard className="flex flex-col gap-2">
+                <Heading level="4" className="my-2">
+                    Image {index + 1}
+                </Heading>
+                <CsekMediaUpload urlAttribute={images[index]} onChange={(v) => onChangeImageURL(v, index)} />
+                <TextInput
+                    label={`Alt text`}
+                    initialValue={altTexts[index]}
+                    onChange={(e) => onChangeAltText(e, index)}
+                />
+            </CsekCard>
         );
-    }
+    });
 
     return (
         <section {...blockProps}>
             <CsekBlockHeading>Csek Multi Image Block</CsekBlockHeading>
-            <div className="py-4 flex flex-col gap-4">
-                <Heading level="5">Block Title</Heading>
-                <input
-                    className="csek-input"
-                    type="text"
-                    value={title}
-                    onChange={(e) => setAttributes({ title: e.target.value })}
-                    placeholder="Block Title"
-                />
-                <Heading level="5">Number of Images</Heading>
-                <NumberControl value={numberOfImages} onChange={onNumberOfImagesChange} />
-                <Heading level="4">Image previews</Heading>
-                <div className="flex flex-col gap-4">{imageInputs}</div>
-            </div>
+            <CsekCard>
+                <TextInput label="Block Title" initialValue={title} onChange={onTitleChange} />
+                <Heading level="4" className="my-2">
+                    Image previews
+                </Heading>
+                <div className="grid grid-cols-2 gap-4">{imageInputs}</div>
+            </CsekCard>
         </section>
     );
 };

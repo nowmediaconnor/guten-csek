@@ -6,6 +6,12 @@
 /* Tagline Header Block */
 
 .wp-block-guten-csek-tagline-header-block {
+    width: 100%;
+    margin: 0 auto;
+    margin-bottom: 2rem;
+}
+
+.wp-block-guten-csek-tagline-header-block .block-content {
     transition: all ease 0.2s;
     display: flex;
     flex-direction: column;
@@ -13,9 +19,7 @@
     align-items: center;
     color: var(--csek-dark);
     text-align: center;
-    width: 70%;
-    margin: 0 auto;
-    margin-bottom: -5rem;
+    position: relative;
 }
 
 .wp-block-guten-csek-tagline-header-block .heading-text {
@@ -23,6 +27,7 @@
     font-weight: bold;
     font-family: "Syne", sans-serif;
     text-transform: uppercase;
+    max-width: var(--max-width);
 }
 
 .wp-block-guten-csek-tagline-header-block .heading-text h3 {
@@ -33,10 +38,17 @@
     font-size: 6rem;
     line-height: 1;
 }
+.wp-block-guten-csek-tagline-header-block .heading-text h2 {
+    font-size: 1.5rem;
+    line-height: 1;
+    max-width: calc(var(--max-width) / 2);
+    margin: 0 auto;
+    font-family: "Syne", sans-serif;
+}
 
 .wp-block-guten-csek-tagline-header-block .serif {
     width: 12rem;
-    top: -2.75rem;
-    position: relative;
+    position: absolute;
+    bottom: -4rem;
     z-index: 20;
 }

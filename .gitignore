@@ -1,5 +1,7 @@
 node_modules/
 build/
 .DS_Store
-css/
-css/*.css
+/css/
+/css/*.css
+
+!/src/css/**/*

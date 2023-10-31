@@ -20,6 +20,7 @@
     border-radius: 0.5rem;
     transition: all ease 1.2s;
     position: relative;
+    z-index: 20;
 }
 
 .expanding-video-container video,
@@ -29,11 +30,14 @@
     object-position: center;
     position: relative;
     left: 50%;
-    transform: translateX(-50%);
+    top: 25%;
+    transform: translate(-50%, -25%);
 }
 
 .expanding-video-container img {
-    object-position: bottom;
+    object-position: top;
+    object-fit: cover;
+    width: 100vw;
 }
 
 .expanded {
@@ -98,7 +102,8 @@
 .message {
     position: absolute;
     bottom: 0;
-    left: 0;
+    left: 50%;
+    transform: translateX(-50%);
     width: 100%;
     padding: 0 10%;
     height: 0;
@@ -112,17 +117,16 @@
     opacity: 0;
     overflow: hidden;
     font-family: Montserrat, sans-serif;
+    max-width: var(--max-width);
 }
 
 .message h2 {
-    font-size: 1.5rem;
+    font-size: 1.75rem;
     font-weight: 500;
-    max-width: 75rem;
 }
 
 .message p {
     font-size: 1rem;
-    max-width: 75rem;
     white-space: no-wrap;
 }
 
