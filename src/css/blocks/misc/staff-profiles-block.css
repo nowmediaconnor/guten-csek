@@ -19,6 +19,15 @@
     justify-content: center;
     align-items: center;
     position: relative;
+
+    & .image {
+        width: 50%;
+        height: auto;
+        object-fit: cover;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
 }
 
 .wp-block-guten-csek-staff-profiles-block .staff-profile {
@@ -108,15 +117,6 @@
                 margin: 1.5rem 0;
             }
         }
-    }
-
-    & .image {
-        width: 50%;
-        height: auto;
-        object-fit: cover;
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
     }
 
     & .social-link {
@@ -249,7 +249,7 @@
         top: 3rem;
     }
 
-    & .staff-summary .image {
+    & .staff-summary > .image {
         width: 100%;
         overflow: hidden;
         aspect-ratio: 1 / 1;
