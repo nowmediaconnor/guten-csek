@@ -10,6 +10,7 @@ import { CloseButton, CsekAddButton, CsekDeleteButton } from "../../components/b
 import { RichTextInput, TextInput, RichTextContent, CheckboxInput } from "../../components/input";
 import { CsekMediaUpload } from "../../components/media-upload";
 import { CsekBlockHeading, Heading } from "../../components/heading";
+import { OutboundLink } from "../../components/links";
 
 export type SocialMedia = "LinkedIn" | "Facebook" | "Twitter" | "Instagram" | "YouTube" | "TikTok" | "Snapchat";
 export type SocialMediaGroup = { [key in SocialMedia]?: string };
@@ -226,9 +227,9 @@ type StaffProfileComponent = React.ComponentType<StaffProfile>;
 const StaffProfileComponent = ({ name, position, description, socialMedia, imageURL }: StaffProfile) => {
     const socials = Object.entries(socialMedia).map(([name, url]) => {
         return (
-            <a href={url} className="social-link">
+            <OutboundLink href={url} className="social-link">
                 <i className={SocialMediaIcons[name]}></i>
-            </a>
+            </OutboundLink>
         );
     });
 
