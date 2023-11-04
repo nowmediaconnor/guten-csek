@@ -95,9 +95,11 @@ h4 {
     border-radius: 0.25rem;
     padding: 1rem;
     width: 100%;
+    position: relative;
 }
 
 .csek-block {
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;

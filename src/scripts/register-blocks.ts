@@ -51,6 +51,12 @@ import {
     EmphasizedTextBlockEdit,
     EmphasizedTextBlockSave,
 } from "../blocks/misc/emphasized-text-block";
+import {
+    CyclingStackBlockAttributes,
+    CyclingStackBlockEdit,
+    CyclingStackBlockSave,
+} from "../blocks/misc/cycling-stack-block";
+import { PageHeaderBlockAttributes, PageHeaderBlockEdit, PageHeaderBlockSave } from "../blocks/misc/page-header-block";
 
 export const registerAllBlocks = () => {
     console.log("Registering blocks...");
@@ -411,5 +417,47 @@ export const registerAllBlocks = () => {
         },
         edit: EmphasizedTextBlockEdit,
         save: EmphasizedTextBlockSave,
+    });
+
+    // Page Header Block
+    registerBlockType<PageHeaderBlockAttributes>("guten-csek/page-header-block", {
+        title: "Csek Page Header Block",
+        icon: "text",
+        category: "text",
+        attributes: {
+            heading: {
+                type: "string",
+                default: "",
+            },
+            slogan: {
+                type: "string",
+                default: "",
+            },
+            usesInnerBlock: {
+                type: "boolean",
+                default: false,
+            },
+        },
+        edit: PageHeaderBlockEdit,
+        save: PageHeaderBlockSave,
+    });
+
+    // Cycling Stack Block
+    registerBlockType<CyclingStackBlockAttributes>("guten-csek/cycling-stack-block", {
+        title: "Csek Cycling Stack",
+        icon: "text",
+        category: "text",
+        attributes: {
+            cyclingWords: {
+                type: "array",
+                default: [],
+            },
+            keyword: {
+                type: "string",
+                default: "",
+            },
+        },
+        edit: CyclingStackBlockEdit,
+        save: CyclingStackBlockSave,
     });
 };

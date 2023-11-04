@@ -18,5 +18,5 @@ export const InnerBlockEdit = ({ blockProps }: InnerBlockEditProps) => {
 
 export const InnerBlockSave = ({ blockProps }: InnerBlockEditProps) => {
     const { children, ...innerBlockProps } = useInnerBlocksProps.save(blockProps);
-    return <div className="csek-inner-block">{children as React.ReactNode}</div>;
+    return <>{children as React.ReactNode}</>;
 };

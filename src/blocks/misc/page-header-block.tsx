@@ -11,7 +11,7 @@ import { TextInput, RichTextInput, RichTextContent, CheckboxInput } from "../../
 import CsekCard from "../../components/card";
 import { InnerBlockEdit, InnerBlockSave } from "../../components/innerblock";
 
-interface PageHeaderBlockAttributes {
+export interface PageHeaderBlockAttributes {
     heading: string;
     slogan: string;
     usesInnerBlock: boolean;
@@ -33,6 +33,10 @@ export const PageHeaderBlockEdit = ({
         setAttributes({ slogan: v });
     };
 
+    const handleChangeUsesInnerBlock = (v: boolean) => {
+        setAttributes({ usesInnerBlock: v });
+    };
+
     return (
         <div {...blockProps}>
             <CsekBlockHeading>Csek Page Header Block</CsekBlockHeading>
@@ -45,7 +49,8 @@ export const PageHeaderBlockEdit = ({
                 />
                 <CheckboxInput
                     label="Use inner block for subheader"
-                    onChange={(v) => setAttributes({ usesInnerBlock: v })}
+                    onChange={handleChangeUsesInnerBlock}
+                    initialValue={usesInnerBlock}
                 />
                 {usesInnerBlock ? (
                     <InnerBlockEdit blockProps={blockProps} />
@@ -72,7 +77,9 @@ export const PageHeaderBlockSave = ({ attributes }: GutenCsekBlockSaveProps<Page
             <div className="block-container">
                 <img src="/wp-content/plugins/guten-csek/src/img/serif.svg" className="serif" />
                 <h1>{heading}</h1>
-                {usesInnerBlock ? <InnerBlockSave blockProps={blockProps} /> : <RichTextContent value={slogan} />}
+                <div className="subheader">
+                    {usesInnerBlock ? <InnerBlockSave blockProps={blockProps} /> : <RichTextContent value={slogan} />}
+                </div>
             </div>
         </section>
     );
