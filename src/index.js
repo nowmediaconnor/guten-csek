@@ -185,25 +185,6 @@ registerBlockType("guten-csek/screenshot-collage-block", {
     save: ScreenshotCollageBlockSave,
 });
 
-// Page Header Block
-registerBlockType("guten-csek/page-header-block", {
-    title: "Csek Page Header Block",
-    icon: "text",
-    category: "text",
-    attributes: {
-        heading: {
-            type: "string",
-            default: "",
-        },
-        slogan: {
-            type: "string",
-            default: "",
-        },
-    },
-    edit: PageHeaderBlockEdit,
-    save: PageHeaderBlockSave,
-});
-
 // Featured Video Block
 registerBlockType("guten-csek/featured-video-block", {
     title: "Csek Featured Video Block",

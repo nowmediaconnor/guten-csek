@@ -1,0 +1,30 @@
+/*
+ * Created on Sat Nov 04 2023
+ * Author: Connor Doman
+ */
+
+.cycling-stack {
+    --cycling-stack-font-size: 1.5rem;
+    font-family: "Syne", sans-serif;
+    font-size: var(--cycling-stack-font-size);
+    line-height: 1.1;
+
+    & .words-list {
+        position: relative;
+        height: calc(2 * var(--cycling-stack-font-size));
+        overflow: hidden;
+
+        & .cycling-word {
+            position: absolute;
+            bottom: 0;
+            opacity: 0;
+            transition:
+                opacity 500ms,
+                transform 500ms;
+        }
+    }
+
+    & .keyword {
+        font-weight: bold;
+    }
+}

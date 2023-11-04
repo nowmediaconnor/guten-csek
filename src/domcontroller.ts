@@ -14,6 +14,7 @@ import TeamController from "./scripts/controllers/team-controller";
 import NextProjectController from "./scripts/controllers/next-project-controller";
 import FeaturedVideoController from "./scripts/controllers/featured-video-controller";
 import StaffProfilesController from "./scripts/controllers/staff-profiles-controller";
+import CyclingStackController from "./scripts/controllers/cycling-stack-controller";
 
 export const prepareBlockControllers = () => {
     /* Prepare DOM Controller */
@@ -47,11 +48,8 @@ export const prepareBlockControllers = () => {
     // Staff Profiles Block
     const staffProfilesController = new StaffProfilesController(".wp-block-guten-csek-staff-profiles-block");
 
-    // Vertical Scrolling Images Controller
-    // const verticalImagesController = new VerticalScrollingImagesController(
-    //     ".vertical-scroll-container",
-    //     ".vertical-scroll-grid"
-    // );
+    // Cycling Stack Component
+    const cyclingStackController = new CyclingStackController();
 
     // DOM controller
     return new DOMController(
@@ -63,7 +61,8 @@ export const prepareBlockControllers = () => {
         carouselController,
         nextProjectController,
         featuredVideoController,
-        staffProfilesController
+        staffProfilesController,
+        cyclingStackController
         // verticalImagesController
         // teamController
     );
