@@ -7,7 +7,7 @@ import { BlockController } from "../dom";
 
 export default class CyclingStackController extends BlockController {
     static blockClassName: string = "cycling-stack";
-    static animationDurationMS: number = 1000; // ms
+    static animationDurationMS: number = 4000; // ms
 
     allCyclingStacks: NodeListOf<Element>;
 
@@ -61,13 +61,13 @@ export default class CyclingStackController extends BlockController {
     }
 
     start(): void {
-        setTimeout(() => {
-            this.allCyclingStacks.forEach((cyclingStack) => {
-                const wordsList = cyclingStack.querySelector(".words-list") as HTMLDivElement;
-                setInterval(() => {
-                    this.revolve(wordsList);
-                }, CyclingStackController.animationDurationMS * 2);
-            });
-        }, CyclingStackController.animationDurationMS);
+        this.allCyclingStacks.forEach((cyclingStack) => {
+            // setTimeout(() => {
+            const wordsList = cyclingStack.querySelector(".words-list") as HTMLDivElement;
+            setInterval(() => {
+                this.revolve(wordsList);
+            }, CyclingStackController.animationDurationMS);
+            // }, CyclingStackController.animationDurationMS);
+        });
     }
 }
