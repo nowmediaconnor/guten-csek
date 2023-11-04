@@ -1,0 +1,21 @@
+/*
+ * Created on Sat Nov 04 2023
+ * Author: Connor Doman
+ */
+
+.cycling-stack {
+    & .words-list {
+        position: relative;
+        height: 3rem;
+        overflow: hidden;
+
+        & .cycling-word {
+            position: absolute;
+            bottom: 0;
+            opacity: 0;
+            transition:
+                opacity 200ms,
+                transform 200ms;
+        }
+    }
+}
