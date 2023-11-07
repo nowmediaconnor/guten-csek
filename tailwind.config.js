@@ -54,6 +54,9 @@ module.exports = {
             maxWidth: {
                 ...customWidths,
             },
+            perspective: {
+                2: "2rem",
+            },
         },
         screens: {
             xs: "480px",

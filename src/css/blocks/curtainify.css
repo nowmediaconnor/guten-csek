@@ -4,15 +4,8 @@
  */
 
 .curtain-reel {
-    position: sticky;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    top: 0;
-    height: max-content;
-    width: 100%;
+    @apply sticky flex flex-col justify-start top-0 h-max w-full z-[15];
     perspective: 2rem;
-    z-index: 15;
 }
 
 .curtain-reel .right-curtain {
@@ -20,59 +13,30 @@
 }
 
 .content-block {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    height: 100vh;
-    width: 100vw;
-    position: absolute;
-    background: transparent;
-    color: white;
+    @apply flex flex-col justify-start items-center h-screen w-screen absolute bg-transparent text-white;
 }
 
 .left-curtain {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100vh;
-    width: 50%;
-    background-color: white;
-    z-index: 1;
+    @apply absolute top-0 left-0 h-screen w-1/2 bg-white z-[1] overflow-hidden;
     backface-visibility: hidden;
-    overflow: hidden;
     transform-style: preserve-3d;
 }
 
 .right-curtain {
-    position: absolute;
-    top: 0;
-    right: 0;
-    height: 100vh;
-    width: 50%;
-    background-color: white;
-    z-index: 1;
+    @apply absolute top-0 right-0 h-screen w-1/2 bg-white z-[1] overflow-hidden;
     backface-visibility: hidden;
-    overflow: hidden;
     transform-style: preserve-3d;
 }
 
 .right-curtain > .curtain {
-    position: absolute;
-    left: -100%;
+    @apply absolute -left-full;
 }
+
 .left-curtain > .curtain {
-    position: absolute;
-    left: 0;
+    @apply absolute left-0;
 }
 
 .shadow-block {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    height: 100vh;
-    width: 50%;
+    @apply absolute top-0 left-1/2 transform -translate-x-1/2 h-screen w-1/2 pointer-events-none;
     background: radial-gradient(transparent, rgba(0, 0, 0, 0.5));
-    pointer-events: none;
 }
