@@ -10,7 +10,11 @@
 }
 
 .expanding-video-container {
-    @apply w-[40vw] h-[75vh] overflow-hidden rounded-md relative z-20 transition-all duration-1200;
+    @apply w-11/12 md:w-[40vw] h-[75vh] overflow-hidden rounded-xl relative z-20 transition-all duration-1200 drop-shadow-md md:drop-shadow-none top-[2rem];
+}
+
+.expanding-video-container.expanded {
+    @apply top-0;
 }
 
 .expanding-video-container video,
@@ -19,7 +23,7 @@
 }
 
 .expanding-video-container img {
-    @apply w-screen object-cover object-top;
+    @apply w-screen object-cover object-top h-full;
 }
 
 .expanded {
@@ -37,7 +41,7 @@
 }
 
 .image-container {
-    @apply relative min-w-[30vh] w-1/3 flex flex-row justify-start items-center gap-8 mt-8 transition-all duration-750 ease-in-out;
+    @apply relative min-w-[30vh] w-1/3 hidden md:flex flex-row justify-start items-center gap-8 mt-8 transition-all duration-750 ease-in-out;
 
     &.left {
         @apply flex-row-reverse;
@@ -61,7 +65,7 @@
 }
 
 .message {
-    @apply absolute bottom-0 left-1/2 transform -translate-x-1/2 w-full px-[10vw] h-0 text-center flex flex-col items-center justify-center gap-4 transition-all duration-3000 ease-out opacity-0 overflow-hidden font-montserrat max-w-csek-max;
+    @apply absolute h-full top-full left-1/2 transform -translate-x-1/2 w-full px-[10vw] text-center flex flex-col items-center justify-center gap-4 transition-all duration-3000 ease-out opacity-0 overflow-hidden font-montserrat max-w-csek-max;
 }
 
 .message h2 {
@@ -73,5 +77,5 @@
 }
 
 .expanded .message {
-    @apply h-full opacity-100 delay-1200;
+    @apply top-0 opacity-100 delay-1200;
 }
