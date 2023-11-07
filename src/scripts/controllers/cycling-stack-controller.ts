@@ -7,7 +7,7 @@ import { BlockController } from "../dom";
 
 export default class CyclingStackController extends BlockController {
     static blockClassName: string = "cycling-stack";
-    static animationDurationMS: number = 4000; // ms
+    static animationDurationMS: number = 2500; // ms
 
     allCyclingStacks: NodeListOf<Element>;
 
@@ -37,9 +37,9 @@ export default class CyclingStackController extends BlockController {
             words[currentIndex].style.animation = `csekSlideAndFadeIn ${CyclingStackController.animationDurationMS}ms`;
         });
 
-        this.isInitialized = true;
-
         this.start();
+
+        this.isInitialized = true;
     }
 
     revolve(wordsList: HTMLDivElement): void {

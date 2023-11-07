@@ -5,6 +5,7 @@
 
 .cycling-stack {
     --cycling-stack-font-size: 1.5rem;
+    --cycling-stack-delay: 200ms;
     font-family: "Syne", sans-serif;
     font-size: var(--cycling-stack-font-size);
     line-height: 1.1;
@@ -19,8 +20,8 @@
             bottom: 0;
             opacity: 0;
             transition:
-                opacity 500ms,
-                transform 500ms;
+                opacity var(--cycling-stack-delay),
+                transform var(--cycling-stack-delay);
         }
     }
 
