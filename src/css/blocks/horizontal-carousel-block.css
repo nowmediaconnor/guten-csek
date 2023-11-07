@@ -29,15 +29,15 @@ ul.carousel {
 }
 
 li.carousel-item {
-    @apply inline-flex flex-row justify-center items-start w-screen h-screen relative whitespace-normal align-bottom;
+    @apply inline-flex flex-col-reverse md:flex-row justify-start md:justify-center md:items-start px-4 md:px-0 w-screen h-screen relative whitespace-normal align-bottom;
 }
 
 li.carousel-item h1 {
-    @apply text-[40rem] text-white m-0 p-0 leading-none align-middle;
+    @apply self-end md:self-auto text-[20rem] md:text-[40rem] text-white mb-16 md:m-0 p-0 leading-none align-middle;
 }
 
 li.carousel-item .carousel-item-body {
-    @apply flex flex-col justify-center items-start min-w-[50vw] max-w-[50rem] px-0 py-4 h-full whitespace-normal;
+    @apply my-8 md:my-0 md:flex flex-col justify-center items-start min-w-[50vw] max-w-[50rem] px-0 py-4 h-full whitespace-normal;
 }
 
 .carousel-slider-progress {
