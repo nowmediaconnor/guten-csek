@@ -6,132 +6,72 @@
 /* Expanding Video Block*/
 
 .wp-block-guten-csek-expanding-video-block .row {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: flex-start;
-    gap: 2rem;
+    @apply flex flex-row justify-center items-start gap-8;
 }
 
 .expanding-video-container {
-    width: 40vw;
-    height: 75vh;
-    overflow: hidden;
-    border-radius: 0.5rem;
-    transition: all ease 1.2s;
-    position: relative;
-    z-index: 20;
+    @apply w-[40vw] h-[75vh] overflow-hidden rounded-md relative z-20 transition-all duration-1200;
 }
 
 .expanding-video-container video,
 .expanding-video-container img {
-    object-fit: cover;
-    max-width: none;
-    object-position: center;
-    position: relative;
-    left: 50%;
-    top: 25%;
-    transform: translate(-50%, -25%);
+    @apply object-cover max-w-none object-center relative left-1/2 top-1/4 transform -translate-x-1/2 -translate-y-1/4;
 }
 
 .expanding-video-container img {
-    object-position: top;
-    object-fit: cover;
-    width: 100vw;
+    @apply w-screen object-cover object-top;
 }
 
 .expanded {
-    width: 100vw;
-    height: 100vh;
-    border-radius: 0;
+    @apply w-screen h-screen rounded-none;
 }
 
 .expanded > video,
 .expanded > img {
-    filter: brightness(0.5);
-    transition: all ease 1.2s;
+    @apply filter brightness-50 transition-all duration-1200;
 }
 
 .floating-image {
-    position: relative;
-    width: 20rem;
-    border-radius: 0.5rem;
+    @apply relative w-80 rounded-md;
     animation: hover 2s ease-in-out infinite alternate;
 }
 
 .image-container {
-    position: relative;
-    min-width: 30vh;
-    width: 30%;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
-    gap: 2rem;
-    transition-property: opacity, width;
-    transition-duration: 750ms;
-    transition-timing-function: ease-in-out;
-    margin-top: 2rem;
+    @apply relative min-w-[30vh] w-1/3 flex flex-row justify-start items-center gap-8 mt-8 transition-all duration-750 ease-in-out;
 
     &.left {
-        flex-direction: row-reverse;
+        @apply flex-row-reverse;
     }
 
     &.right {
-        flex-direction: row;
+        @apply flex-row;
     }
 
     & .image-column {
-        display: flex;
-        flex-direction: column;
-        gap: 2rem;
-        justify-content: center;
-        align-items: center;
+        @apply flex flex-col gap-4 justify-center items-center;
 
         & img {
-            max-width: 15rem;
+            @apply max-w-[15rem];
         }
     }
 }
 
 .disappear {
-    opacity: 0;
-    width: 0;
+    @apply opacity-0 w-0;
 }
 
 .message {
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 100%;
-    padding: 0 10%;
-    height: 0;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
-    transition: all 3s ease;
-    opacity: 0;
-    overflow: hidden;
-    font-family: Montserrat, sans-serif;
-    max-width: var(--max-width);
+    @apply absolute bottom-0 left-1/2 transform -translate-x-1/2 w-full px-[10vw] h-0 text-center flex flex-col items-center justify-center gap-4 transition-all duration-3000 ease-out opacity-0 overflow-hidden font-montserrat max-w-csek-max;
 }
 
 .message h2 {
-    font-size: 1.75rem;
-    font-weight: 500;
+    @apply text-3xl leading-none font-semibold;
 }
 
 .message p {
-    font-size: 1rem;
-    white-space: no-wrap;
+    @apply whitespace-nowrap;
 }
 
 .expanded .message {
-    height: 100%;
-    opacity: 1;
-    transition-delay: 1.2s;
+    @apply h-full opacity-100 delay-1200;
 }

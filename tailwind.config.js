@@ -1,10 +1,17 @@
 const theme = require("./theme.json");
 const tailpress = require("@jeffreyvr/tailwindcss-tailpress");
 
-const widthSizes = {
+const customWidths = {
     "csek-max": "75rem",
     "half-max": "37.5rem",
     serif: "12rem",
+};
+
+const customTimings = {
+    750: "750ms",
+    1200: "1200ms",
+    2000: "2000ms",
+    3000: "3000ms",
 };
 
 /** @type {import('tailwindcss').Config} */
@@ -35,14 +42,17 @@ module.exports = {
             animation: {
                 "spin-slow": "spin 3s linear infinite",
             },
-            spacing: {
-                header: "5rem",
+            transitionDuration: {
+                ...customTimings,
+            },
+            transitionDelay: {
+                ...customTimings,
             },
             width: {
-                ...widthSizes,
+                ...customWidths,
             },
             maxWidth: {
-                ...widthSizes,
+                ...customWidths,
             },
         },
         screens: {
