@@ -3,3 +3,27 @@
 @import "tailwindcss/utilities";
 
 @import "style.css";
+@import "blocks/block-quote-block.css";
+@import "blocks/curtainify.css";
+@import "blocks/expanding-video-block.css";
+@import "blocks/horizontal-carousel-block.css";
+@import "blocks/misc/chicago-fires-block.css";
+@import "blocks/misc/emphasized-text-block.css";
+@import "blocks/misc/featured-image-block.css";
+@import "blocks/misc/featured-video-block.css";
+@import "blocks/misc/fullscreen-image-block.css";
+@import "blocks/misc/image-collage-block.css";
+@import "blocks/misc/left-right-block.css";
+@import "blocks/misc/lets-talk-block.css";
+@import "blocks/misc/multi-image-block.css";
+@import "blocks/misc/next-project-block.css";
+@import "blocks/misc/page-header-block.css";
+@import "blocks/misc/paragraph-block.css";
+@import "blocks/misc/project-summary-block.css";
+@import "blocks/misc/screenshot-collage-block.css";
+@import "blocks/misc/self-description-block.css";
+@import "blocks/misc/staff-profiles-block.css";
+@import "blocks/scrolling-projects-block.css";
+@import "blocks/tagline-header-block.css";
+@import "blocks/team-block.css";
+@import "blocks/video-carousel-block.css";
