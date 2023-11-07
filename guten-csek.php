@@ -59,12 +59,11 @@ function enqueue_css_folder()
     $css_directory = plugin_dir_path(__FILE__) . 'src/css';
     // echo "Enqueuing styles from directory: " . $css_directory . "<br/>";
 
-    $files = get_all_files_from_dir($css_directory, true, ['app.css', 'app-editor.css', 'style.css', 'editor.css']);
+    $files = get_all_files_from_dir($css_directory, true, ['app.css', 'app-editor.css', 'style.css', 'editor.css', 'blocks']);
 
     foreach ($files as $file) {
         // error_log('Enqueuing style: ' . $file);
         $handle = pathinfo($file, PATHINFO_FILENAME);
-        // echo "Enqueuing style: " . $handle . "<br/>";
         $src = convert_path_to_url($file);
         $deps = [];
         $ver = filemtime($file);
@@ -103,7 +102,7 @@ function enqueue_custom_block_assets()
     );
 
     // every other stylesheet
-    // enqueue_css_folder();
+    enqueue_css_folder();
 
     // enqueue block registration
     enqueue_blocks_iteratively();
