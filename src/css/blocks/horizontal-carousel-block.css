@@ -6,131 +6,59 @@
 /* Horizontal Carousel Block */
 
 .wp-block-guten-csek-horizontal-carousel-block {
-    /* width: 100%; */
-    /* height: 100vh; */
-    background: var(--csek-dark);
-    color: white;
-    font-family: "Syne", sans-serif;
-    display: flex;
-    justify-content: space-around;
-    align-items: flex-start;
+    @apply bg-csek-dark text-white font-syne flex justify-around items-start;
 }
 .wp-block-guten-csek-horizontal-carousel-block h2 {
-    font-size: 3rem;
-    font-weight: bold;
-    color: var(--csek-red);
+    @apply text-5xl font-bold text-csek-red;
 }
 
 .wp-block-guten-csek-horizontal-carousel-block p {
-    font-family: Montserrat, sans-serif;
+    @apply font-montserrat;
 }
 
 .carousel-wrapper {
-    position: sticky;
-    top: 0;
-    left: 0;
-    width: 100%;
-    /* overflow: hidden; */
+    @apply sticky top-0 left-0 w-full;
 }
 
 .carousel-wrapper .carousel-slider {
-    overflow: hidden;
-    width: 100%;
+    @apply overflow-hidden w-full;
 }
 
 ul.carousel {
-    white-space: nowrap;
-    height: auto;
-    width: 100vw;
-    /* overflow-x: auto; */
-    transition: transform ease 0.75s;
+    @apply whitespace-nowrap h-auto w-screen transition-all ease-in-out duration-200;
 }
 
 li.carousel-item {
-    display: inline-flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: flex-start;
-    width: 100vw;
-    height: 100vh;
-    position: relative;
-    white-space: initial;
-    vertical-align: bottom;
+    @apply inline-flex flex-row justify-center items-start w-screen h-screen relative whitespace-normal align-bottom;
 }
 
 li.carousel-item h1 {
-    font-size: 40rem;
-    color: white;
-    margin: 0;
-    padding: 0;
-    line-height: 1;
-    vertical-align: middle;
+    @apply text-[40rem] text-white m-0 p-0 leading-none align-middle;
 }
 
 li.carousel-item .carousel-item-body {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    min-width: 50vw;
-    max-width: 50rem;
-    padding: 0 2rem;
-    height: 100%;
-    white-space: normal;
+    @apply flex flex-col justify-center items-start min-w-[50vw] max-w-[50rem] px-0 py-4 h-full whitespace-normal;
 }
 
 .carousel-slider-progress {
-    width: 100%;
-    max-width: var(--max-width);
-    height: 3rem;
-    display: flex;
-    flex-direction: column;
-    margin: 0 auto;
-    gap: 0.25rem;
-    position: absolute;
-    bottom: 0;
-    padding: 0 1rem;
-    left: 50%;
-    transform: translateX(-50%);
+    @apply w-full max-w-csek-max h-12 flex flex-col mx-auto gap-1 absolute bottom-0 px-4 py-0 left-1/2 transform -translate-x-1/2;
 }
 
 .carousel-slider-progress .bar {
-    display: inline-block;
-    width: 100%;
-    height: 0.25rem;
-    background-color: gray;
-    position: relative;
-    line-height: 0;
-    box-sizing: border-box;
-    max-width: var(--max-width);
+    @apply inline-block w-full h-1 bg-slate-400 relative leading-[0] box-border max-w-csek-max;
 }
 
 .carousel-slider-progress .bar .progress {
-    display: inline-flex;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 25%;
-    height: 0.25rem;
-    background-color: var(--csek-red);
-    line-height: 0;
-    transition: all ease 0.75s;
+    @apply inline-flex absolute top-0 left-0 w-1/4 h-1 bg-csek-red leading-[0] transition-all ease-in-out duration-750;
 }
 
 .carousel-slider-progress .status {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    gap: 0.5rem;
+    @apply flex flex-row justify-between gap-2;
 }
 .carousel-slider-progress .status i {
-    font-size: 0.75rem;
+    @apply text-xs;
 }
 
 .dummy-block {
-    display: block;
-    height: 100vh;
-    width: 100%;
-    position: relative;
-    z-index: -20;
+    @apply block h-screen w-full relative -z-20;
 }
