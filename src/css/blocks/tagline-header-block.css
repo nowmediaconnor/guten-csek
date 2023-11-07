@@ -18,16 +18,16 @@
 }
 
 .wp-block-guten-csek-tagline-header-block .heading-text h3 {
-    @apply text-xl;
+    @apply text-lg md:text-xl;
 }
 
 .wp-block-guten-csek-tagline-header-block .heading-text h1 {
-    @apply text-8xl leading-none;
+    @apply text-5xl md:text-8xl leading-none;
 }
 .wp-block-guten-csek-tagline-header-block .heading-text h2 {
-    @apply text-2xl leading-none max-w-half-max mx-auto font-syne;
+    @apply text-lg md:text-2xl leading-none max-w-half-max mx-auto font-syne;
 }
 
 .wp-block-guten-csek-tagline-header-block .serif {
-    @apply w-serif absolute -bottom-16 z-20;
+    @apply w-24 md:w-serif absolute -bottom-24 md:-bottom-16 z-20;
 }
