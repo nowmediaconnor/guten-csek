@@ -12,9 +12,6 @@
         @apply mx-auto text-left text-3xl md:text-4xl leading-[1.2] z-10;
     }
 
-    & .block-title {
-    }
-
     & .quote-area {
         @apply relative mx-auto w-11/12 max-w-csek-max box-border py-8;
     }
