@@ -6,52 +6,27 @@
 /* Team Block */
 
 .wp-block-guten-csek-team-block {
-    width: 100%;
-    font-family: Syne, sans-serif;
-    padding: 4rem 0;
-    position: relative;
-    background: white;
-    overflow: hidden;
-    box-sizing: border-box;
+    @apply w-full font-syne py-16 relative bg-white overflow-hidden box-border;
 
     & .block-content {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        position: relative;
-        margin: 2rem auto;
-        max-width: var(--max-width);
-        box-sizing: border-box;
-        height: 60vh;
+        @apply flex flex-col justify-center relative mx-auto my-8 max-w-csek-max box-border h-[60vh];
 
         & .tagline {
-            font-size: 5rem;
-            line-height: 1;
+            @apply text-7xl leading-none;
         }
 
         & .copy-text {
-            font-family: Montserrat, sans-serif;
-            width: 30rem;
-            align-self: flex-end;
-            margin: 0 4rem;
+            @apply font-montserrat w-96 self-end mx-16;
 
             & .learn-more {
-                font-weight: 700;
-                margin-bottom: 1rem;
-                text-transform: uppercase;
-                margin-top: 2rem;
+                @apply font-bold mb-4 mt-8 uppercase;
 
                 & a {
-                    display: flex;
-                    align-items: center;
-                    gap: 1rem;
+                    @apply flex items-center gap-4;
                 }
 
                 & .bar {
-                    display: inline-block;
-                    width: 2rem;
-                    height: 1px;
-                    border: 1px solid var(--csek-red);
+                    @apply inline-block w-8 h-px border-csek-red border-solid border;
                 }
             }
         }
@@ -59,76 +34,43 @@
 }
 
 .headshot {
-    min-width: 4rem;
-    min-height: 4rem;
-    max-width: 10rem;
-    max-height: 10rem;
-    overflow: hidden;
-    border-radius: 100%;
-    position: absolute;
-    box-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.2);
-    aspect-ratio: 1/1;
+    @apply min-w-[4rem] min-h-[4rem] max-w-[10rem] max-h-[10rem] overflow-hidden rounded-full absolute shadow-md aspect-square;
 }
 
 .headshots {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    @apply absolute top-0 left-0 w-full h-full;
 
     /* Nikki Csek */
     & .headshot:nth-child(1) {
-        top: 5%;
-        right: 25%;
-        width: 10rem;
-        height: 10rem;
+        @apply top-[5%] right-[25%] w-40 h-40;
     }
 
     /* Alexa Anderson */
     & .headshot:nth-child(2) {
-        top: 30%;
-        right: 5%;
-        width: 6rem;
-        height: 6rem;
+        @apply top-[30%] right-[5%] w-24 h-24;
     }
 
     /* Cassie Clark */
     & .headshot:nth-child(3) {
-        bottom: 0%;
-        right: 15%;
-        width: 8rem;
-        height: 8rem;
+        @apply bottom-0 right-[15%] w-32 h-32;
     }
 
     /* Andrew Nash */
     & .headshot:nth-child(4) {
-        top: 5%;
-        left: 15%;
-        width: 6rem;
-        height: 6rem;
+        @apply top-[5%] left-[15%] w-24 h-24;
     }
 
     /* Jim Csek */
     & .headshot:nth-child(5) {
-        top: 50%;
-        left: 5%;
-        width: 10rem;
-        height: 10rem;
+        @apply top-1/2 left-[5%] w-40 h-40;
     }
 
     /* Scott Matthews */
     & .headshot:nth-child(6) {
-        bottom: 5%;
-        left: 25%;
-        width: 4rem;
-        height: 4rem;
+        @apply bottom-[5%] left-[25%] w-16 h-16;
     }
 }
 
 .headshot > img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: top;
+    @apply w-full h-full object-cover object-top;
 }
