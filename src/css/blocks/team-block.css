@@ -6,17 +6,17 @@
 /* Team Block */
 
 .wp-block-guten-csek-team-block {
-    @apply w-full font-syne py-16 relative bg-white overflow-hidden box-border;
+    @apply w-full font-syne md:py-16 relative bg-white overflow-hidden box-border border-t border-b border-green-500 border-solid;
 
     & .block-content {
-        @apply flex flex-col justify-center relative mx-auto my-8 max-w-csek-max box-border h-[60vh];
+        @apply flex flex-col justify-center relative mx-auto my-8 w-11/12 max-w-csek-max box-border h-max;
 
         & .tagline {
-            @apply text-7xl leading-none;
+            @apply text-7xl leading-none my-8;
         }
 
         & .copy-text {
-            @apply font-montserrat w-96 self-end mx-16;
+            @apply font-montserrat w-11/12 md:w-96 self-end md:mx-24;
 
             & .learn-more {
                 @apply font-bold mb-4 mt-8 uppercase;
@@ -35,10 +35,11 @@
 
 .headshot {
     @apply min-w-[4rem] min-h-[4rem] max-w-[10rem] max-h-[10rem] overflow-hidden rounded-full absolute shadow-md aspect-square;
+    perspective: 2rem;
 }
 
 .headshots {
-    @apply absolute top-0 left-0 w-full h-full;
+    @apply hidden md:block absolute top-0 left-0 w-full h-full;
 
     /* Nikki Csek */
     & .headshot:nth-child(1) {
@@ -47,17 +48,17 @@
 
     /* Alexa Anderson */
     & .headshot:nth-child(2) {
-        @apply top-[30%] right-[5%] w-24 h-24;
+        @apply top-[40%] right-[5%] w-24 h-24;
     }
 
     /* Cassie Clark */
     & .headshot:nth-child(3) {
-        @apply bottom-0 right-[15%] w-32 h-32;
+        @apply bottom-4 right-[15%] w-32 h-32;
     }
 
     /* Andrew Nash */
     & .headshot:nth-child(4) {
-        @apply top-[5%] left-[15%] w-24 h-24;
+        @apply top-[7.5%] left-[20%] w-24 h-24;
     }
 
     /* Jim Csek */

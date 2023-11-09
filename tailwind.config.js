@@ -26,6 +26,7 @@ module.exports = {
                 lg: "0rem",
             },
         },
+
         extend: {
             colors: tailpress.colorMapper(tailpress.theme("settings.color.palette", theme)),
             fontSize: tailpress.fontSizeMapper(tailpress.theme("settings.typography.fontSizes", theme)),
