@@ -17,27 +17,27 @@
 }
 
 .carousel-wrapper {
-    @apply sticky top-0 left-0 w-full;
+    @apply sticky top-0 left-0 w-full h-screen;
 }
 
 .carousel-wrapper .carousel-slider {
-    @apply overflow-hidden w-full;
+    @apply overflow-hidden w-full h-full;
 }
 
 ul.carousel {
-    @apply whitespace-nowrap h-auto w-screen transition-all ease-in-out duration-200;
+    @apply relative list-none whitespace-nowrap h-full w-screen transition-all ease-in-out duration-200;
 }
 
 li.carousel-item {
-    @apply inline-flex flex-col-reverse md:flex-row justify-start md:justify-center md:items-start px-4 md:px-0 w-screen h-screen relative whitespace-normal align-bottom;
+    @apply top-0 inline-flex flex-col-reverse md:flex-row justify-between md:justify-center items-end md:items-start px-4 md:px-0 w-screen h-full mt-4 relative whitespace-normal;
 }
 
 li.carousel-item h1 {
-    @apply self-end md:self-auto text-[20rem] md:text-[40rem] text-white mb-16 md:m-0 p-0 leading-none align-middle;
+    @apply self-end md:self-auto text-[20rem] md:text-[40rem] text-white mb-20 md:m-0 p-0 leading-none align-middle;
 }
 
 li.carousel-item .carousel-item-body {
-    @apply my-8 md:my-0 md:flex flex-col justify-center items-start min-w-[50vw] max-w-[50rem] px-0 py-4 h-full whitespace-normal;
+    @apply my-0 flex gap-4 flex-col justify-start md:justify-center items-start min-w-[50vw] max-w-[50rem] px-0 py-4 h-full whitespace-normal;
 }
 
 .carousel-slider-progress {
@@ -45,7 +45,7 @@ li.carousel-item .carousel-item-body {
 }
 
 .carousel-slider-progress .bar {
-    @apply inline-block w-full h-1 bg-slate-400 relative leading-[0] box-border max-w-csek-max;
+    @apply inline-block w-full h-1 bg-zinc-400 relative leading-[0] box-border max-w-csek-max;
 }
 
 .carousel-slider-progress .bar .progress {
