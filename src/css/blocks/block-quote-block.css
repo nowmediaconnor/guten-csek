@@ -6,24 +6,27 @@
 /* Block Quote */
 
 .wp-block-guten-csek-block-quote-block {
-    @apply w-full fony-syne px-16 relative;
+    @apply w-full font-syne md:px-16 py-8 md:py-16 relative;
 
     & blockquote {
-        @apply mx-auto text-left text-4xl leading-5 z-10;
+        @apply mx-auto text-left text-3xl md:text-4xl leading-[1.2] z-10;
+    }
+
+    & .block-title {
     }
 
     & .quote-area {
-        @apply relative mx-4 max-w-csek-max box-border py-4;
+        @apply relative mx-auto w-11/12 max-w-csek-max box-border py-8;
     }
-    & .quote::before {
-        @apply text-csek-red text-8xl absolute left-12 top-12;
+    & .quote-area::before {
+        @apply text-csek-red text-8xl absolute left-4 md:left-12 top-16 md:top-20;
         content: "\201C";
     }
     & .quote {
-        @apply ml-24 mt-8 mb-4 flex flex-col;
+        @apply ml-10 md:ml-24 mr-4 mt-10 md:mt-8 mb-4 flex flex-col;
 
         & .byline {
-            @apply mt-4 font-bold font-montserrat leading-5 uppercase;
+            @apply mt-4 font-bold font-montserrat leading-[1.2] uppercase;
 
             & .author {
                 @apply text-csek-red;
@@ -32,6 +35,6 @@
     }
 
     & .serif {
-        @apply absolute top-8 right-8;
+        @apply absolute top-0 md:top-8 right-0;
     }
 }
