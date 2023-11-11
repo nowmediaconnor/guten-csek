@@ -34,16 +34,18 @@
 }
 
 .headshot {
-    @apply min-w-[4rem] min-h-[4rem] max-w-[10rem] max-h-[10rem] overflow-hidden rounded-full absolute shadow-md aspect-square;
-    perspective: 2rem;
+    --delay: 0ms;
+    @apply min-w-[4rem] min-h-[4rem] max-w-[10rem] max-h-[10rem] overflow-hidden rounded-full drop-shadow-lg absolute aspect-square;
+    transition: transform 0.5s ease;
+    transition-delay: var(--delay);
 }
 
 .headshots {
-    @apply absolute top-0 left-0 w-full h-full;
+    @apply absolute top-0 left-0 w-full h-full pointer-events-none;
 
     /* Nikki Csek */
     & .headshot:nth-child(1) {
-        @apply top-4 md:top-[5%] right-1/2 md:right-[25%] w-28 md:w-40 h-28 md:h-40 translate-x-1/2 md:translate-x-0;
+        @apply top-4 right-1/2 md:right-[25%] w-28 md:w-40 h-28 md:h-40 translate-x-1/2 md:translate-x-0;
     }
 
     /* Alexa Anderson */

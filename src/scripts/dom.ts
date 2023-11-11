@@ -281,6 +281,12 @@ export abstract class BlockController implements ControllerProperties {
             console.log(`[${this.name}]`, ...msg);
         }
     }
+
+    err(...msg: any[]): void {
+        if (this.debug) {
+            console.error(`[${this.name}]`, ...msg);
+        }
+    }
 }
 
 interface DOMControllerState extends ControllerProperties {

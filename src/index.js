@@ -242,12 +242,12 @@ window.addEventListener("load", (e) => {
     window.requestAnimationFrame(() => {
         window.domController.setup();
         window.domController.overrideAllDebug(false);
-        window.domController.overrideDebug(true, "FeaturedVideoController");
+        window.domController.overrideDebug(true, "TeamController");
     });
 
     setTimeout(() => {
         // hide loading panel if DOM controller is not in use...
-        if (!window.domController.isStarted) {
+        if (!window.domController.isStarted || !window.domController) {
             window.domController.hideLoadingPanel();
         }
     }, 1000);
