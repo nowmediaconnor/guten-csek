@@ -5,3 +5,5 @@ build/
 /css/*.css
 
 !/src/css/**/*
+
+*.util.js
