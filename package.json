@@ -40,5 +40,8 @@
         "circletype": "^2.3.0",
         "tailwind-merge": "^1.14.0",
         "typescript-cubic-spline": "^1.0.1"
+    },
+    "resolutions": {
+        "**/axios": "^1.6.1"
     }
 }
