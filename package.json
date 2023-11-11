@@ -16,20 +16,25 @@
     },
     "devDependencies": {
         "@jeffreyvr/tailwindcss-tailpress": "^2.0.0",
+        "@playwright/test": "^1.39.0",
         "@types/wordpress__block-editor": "^11.5.1",
         "@types/wordpress__components": "^23.0.1",
         "@wordpress/block-editor": "^12.7.0",
         "@wordpress/components": "^25.5.0",
-        "@wordpress/scripts": "^26.10.0",
+        "@wordpress/scripts": "^26.16.0",
         "autoprefixer": "^10.4.16",
         "concurrently": "^8.2.1",
         "cross-env": "^7.0.3",
         "esbuild": "^0.19.4",
+        "eslint": "^8.53.0",
         "eslint-plugin-react-hooks": "^4.6.0",
         "postcss": "^8.4.31",
         "postcss-import": "^15.1.0",
         "postcss-nested-ancestors": "^3.0.0",
-        "tailwindcss": "^3.3.3"
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0",
+        "tailwindcss": "^3.3.3",
+        "typescript": "^5.2.2"
     },
     "dependencies": {
         "circletype": "^2.3.0",
