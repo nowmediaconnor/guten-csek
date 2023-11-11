@@ -7,13 +7,15 @@ import React from "@wordpress/element";
 import { GutenCsekBlockEditProps, GutenCsekBlockSaveProps, GutenbergBlockProps } from "../../scripts/dom";
 import { useBlockProps } from "@wordpress/block-editor";
 import { CsekBlockHeading } from "../../components/heading";
+import { Label } from "../../components/label";
 import { TextInput, RichTextInput, RichTextContent, CheckboxInput } from "../../components/input";
 import CsekCard from "../../components/card";
 import { InnerBlockEdit, InnerBlockSave } from "../../components/innerblock";
 
 export interface PageHeaderBlockAttributes {
     heading: string;
-    slogan: string;
+    subheading: string;
+    featuredText: string;
     usesInnerBlock: boolean;
 }
 
@@ -23,14 +25,18 @@ export const PageHeaderBlockEdit = ({
 }: GutenCsekBlockEditProps<PageHeaderBlockAttributes>) => {
     const blockProps = useBlockProps();
 
-    const { heading, slogan, usesInnerBlock } = attributes;
+    const { heading, subheading, featuredText, usesInnerBlock } = attributes;
 
     const handleChangeHeading = (v: string) => {
         setAttributes({ heading: v });
     };
 
-    const handleChangeSlogan = (v: string) => {
-        setAttributes({ slogan: v });
+    const handleChangeSubheading = (v: string) => {
+        setAttributes({ subheading: v });
+    };
+
+    const handleChangeFeaturedText = (v: string) => {
+        setAttributes({ featuredText: v });
     };
 
     const handleChangeUsesInnerBlock = (v: boolean) => {
@@ -47,19 +53,26 @@ export const PageHeaderBlockEdit = ({
                     onChange={handleChangeHeading}
                     initialValue={heading}
                 />
+                <TextInput
+                    label="Subheading"
+                    placeholder="Enter a subheading."
+                    onChange={handleChangeSubheading}
+                    initialValue={subheading}
+                />
                 <CheckboxInput
-                    label="Use inner block for subheader"
+                    label="Use inner block for featured content?"
                     onChange={handleChangeUsesInnerBlock}
                     initialValue={usesInnerBlock}
                 />
+                <Label em>The inner block will be shown below the subheader</Label>
                 {usesInnerBlock ? (
                     <InnerBlockEdit blockProps={blockProps} />
                 ) : (
                     <RichTextInput
                         label="Caption"
                         placeholder="A caption for the page heading."
-                        onChange={handleChangeSlogan}
-                        initialValue={slogan}
+                        onChange={handleChangeFeaturedText}
+                        initialValue={featuredText}
                     />
                 )}
             </CsekCard>
@@ -70,15 +83,20 @@ export const PageHeaderBlockEdit = ({
 export const PageHeaderBlockSave = ({ attributes }: GutenCsekBlockSaveProps<PageHeaderBlockAttributes>) => {
     const blockProps = useBlockProps.save();
 
-    const { heading, slogan, usesInnerBlock } = attributes;
+    const { heading, subheading, featuredText, usesInnerBlock } = attributes;
 
     return (
         <section {...blockProps}>
             <div className="block-container">
                 <img src="/wp-content/plugins/guten-csek/src/img/serif.svg" className="serif" />
                 <h1>{heading}</h1>
+                <h2>{subheading}</h2>
                 <div className="subheader">
-                    {usesInnerBlock ? <InnerBlockSave blockProps={blockProps} /> : <RichTextContent value={slogan} />}
+                    {usesInnerBlock ? (
+                        <InnerBlockSave blockProps={blockProps} />
+                    ) : (
+                        <RichTextContent value={featuredText} />
+                    )}
                 </div>
             </div>
         </section>
