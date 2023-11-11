@@ -23,9 +23,9 @@
             top: 2rem;
         }
 
-        & h1 {
+        & h1,
+        h2 {
             font-family: "Syne", sans-serif;
-            font-size: 5rem;
             font-weight: 700;
             margin-bottom: 0.5rem;
             text-transform: uppercase;
@@ -33,6 +33,15 @@
             left: calc(var(--serif-width) - 1rem);
             top: -2rem;
             line-height: 1;
+        }
+
+        & h1 {
+            font-size: 4rem;
+        }
+
+        & h2 {
+            font-size: 2rem;
+            left: calc(var(--serif-width) + 1rem);
         }
 
         & .csek-richtext {
