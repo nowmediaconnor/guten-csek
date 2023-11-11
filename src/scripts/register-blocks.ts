@@ -429,7 +429,11 @@ export const registerAllBlocks = () => {
                 type: "string",
                 default: "",
             },
-            slogan: {
+            subheading: {
+                type: "string",
+                default: "",
+            },
+            featuredText: {
                 type: "string",
                 default: "",
             },
