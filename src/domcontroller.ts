@@ -37,7 +37,7 @@ export const prepareBlockControllers = () => {
     const expandingVideoController = new ExpandingVideoController(".wp-block-guten-csek-expanding-video-block");
 
     // Team Block Controller
-    const teamController = new TeamController(".wp-block-guten-csek-team-block");
+    const teamController = new TeamController();
 
     // Next Project Controller
     const nextProjectController = new NextProjectController(".wp-block-guten-csek-next-project-block");
@@ -62,8 +62,8 @@ export const prepareBlockControllers = () => {
         nextProjectController,
         featuredVideoController,
         staffProfilesController,
-        cyclingStackController
+        cyclingStackController,
+        teamController
         // verticalImagesController
-        // teamController
     );
 };
