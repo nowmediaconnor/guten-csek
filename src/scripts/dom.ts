@@ -260,6 +260,10 @@ export abstract class BlockController implements ControllerProperties {
     debug: boolean;
     isInitialized: boolean;
 
+    static isMobile(): boolean {
+        return window.innerWidth <= 768;
+    }
+
     constructor() {
         this.name = "BlockController";
     }
