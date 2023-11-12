@@ -253,6 +253,7 @@ export interface ControllerProperties {
     setup(): void;
     beforeReload?(): void;
     scroll?(scrollY?: number): void;
+    onMouseMove?(e: MouseEvent): void;
 }
 
 export abstract class BlockController implements ControllerProperties {
@@ -441,6 +442,14 @@ export default class DOMController extends BlockController implements DOMControl
             for (const controller of this.blockControllers) {
                 if (controller.scroll) {
                     controller.scroll(scrollY);
+                }
+            }
+        });
+        // prepare mouse move listeners
+        window.addEventListener("mousemove", (e) => {
+            for (const controller of this.blockControllers) {
+                if (controller.onMouseMove) {
+                    controller.onMouseMove(e);
                 }
             }
         });
