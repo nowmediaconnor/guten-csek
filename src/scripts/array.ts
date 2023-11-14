@@ -21,6 +21,10 @@ export const shuffle = (array: any[]) => {
     return newArray;
 };
 
+export const randomElement = (array: any[]) => {
+    return array[randomIntInRange(0, array.length)];
+};
+
 export const arrayMax = (array: number[]) => {
     return Math.max(...array);
 };

@@ -48,27 +48,6 @@ export default class ScrollingProjectsController extends BlockController {
         this.highglightedProjectName = "";
     }
 
-    prepareCanvas() {
-        const canvas: HTMLCanvasElement =
-            (document.getElementById("buffer-canvas") as HTMLCanvasElement) ??
-            (document.createElement("canvas") as HTMLCanvasElement);
-
-        canvas.setAttribute("id", "buffer-canvas");
-        canvas.style.display = "none";
-        canvas.width = 1;
-        canvas.height = 1;
-
-        this.canvas = canvas;
-
-        document.body.appendChild(this.canvas);
-    }
-
-    resetCanvas() {
-        if (!this.canvas) return;
-        this.canvas.width = 1;
-        this.canvas.height = 1;
-    }
-
     async precalculateColors() {
         if (!this.scrollingProjectsBlock) return;
 
@@ -130,8 +109,17 @@ export default class ScrollingProjectsController extends BlockController {
         this.blurb = this.scrollingProjectsBlock.querySelector(".project-blurb");
         this.projectImage = this.scrollingProjectsBlock.querySelector(".project-image");
         this.viewProjectButton = this.scrollingProjectsBlock.querySelector(".view-button");
+        // this.prepareRibbons(this.scrollingProjectsBlock);
 
-        const containers: NodeListOf<HTMLElement> = this.scrollingProjectsBlock.querySelectorAll(".project-ribbon");
+        this.randomProjectIntervalId = window.setInterval(() => {
+            while (!this.selectRandomProject());
+        }, this.randomProjectRateMilliseconds);
+
+        this.isInitialized = true;
+    }
+
+    prepareRibbons(projectsBlock: HTMLElement) {
+        const containers: NodeListOf<HTMLElement> = projectsBlock.querySelectorAll(".project-ribbon");
 
         for (let i = 0; i < containers.length; i++) {
             const evenRow = i % 2 === 0;
@@ -197,16 +185,10 @@ export default class ScrollingProjectsController extends BlockController {
                 currentOffset -= speed;
             };
 
-            this.marqueeIntervalId = window.setInterval(() => {
-                animateMarquee(evenRow ? 1 : -1);
-            }, this.marqueeRefreshRateMilliseconds);
+            // this.marqueeIntervalId = window.setInterval(() => {
+            //     animateMarquee(evenRow ? 1 : -1);
+            // }, this.marqueeRefreshRateMilliseconds);
         }
-
-        this.randomProjectIntervalId = window.setInterval(() => {
-            while (!this.selectRandomProject());
-        }, this.randomProjectRateMilliseconds);
-
-        this.isInitialized = true;
     }
 
     clearHighlightedLinks() {
@@ -222,7 +204,7 @@ export default class ScrollingProjectsController extends BlockController {
     selectRandomProject() {
         this.log("Selecting random project...");
 
-        this.clearHighlightedLinks();
+        // this.clearHighlightedLinks();
 
         if (!this.blurb || !this.projectImage || !this.viewProjectButton) {
             this.log("No blurb, project image, or view project button found");
@@ -251,6 +233,7 @@ export default class ScrollingProjectsController extends BlockController {
             return false;
         }
         this.highglightedProjectName = name;
+        this.scrollingProjectsBlock?.setAttribute("data-project", name);
 
         const link = randomProject.querySelector("a");
         if (!link) {

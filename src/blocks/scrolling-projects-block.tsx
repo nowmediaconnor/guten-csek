@@ -144,7 +144,7 @@ export const ScrollingProjectsBlockSave = ({
     });
 
     return (
-        <div {...blockProps}>
+        <section {...blockProps}>
             <div className="project-blurb">
                 <img className="project-image" src="/wp-content/plugins/guten-csek/src/img/project-template.png" />
                 <div className="view-button">
@@ -168,6 +168,6 @@ export const ScrollingProjectsBlockSave = ({
                     <ul>{listItems}</ul>
                 </div>
             </div>
-        </div>
+        </section>
     );
 };

@@ -17,6 +17,12 @@ export class Strip {
     width: number;
     height: number;
 
+    fadeInAmt: number = 0;
+    fadeOutAmt: number = 1;
+
+    activeWord: string = "";
+    oldWord: string = "";
+
     constructor(mq: MarqueeCanvas, words: string[]) {
         this.mq = mq;
         this.words = shuffle(words);
@@ -39,13 +45,37 @@ export class Strip {
         );
     }
 
-    update() {}
+    update() {
+        if (this.activeWord !== this.mq.activeWord) {
+            this.oldWord = this.activeWord;
+            this.activeWord = this.mq.activeWord;
+            this.fadeInAmt = 0;
+            this.fadeOutAmt = 1;
+        }
+
+        this.fadeInAmt += 0.1;
+        this.fadeOutAmt -= 0.1;
+
+        if (this.fadeInAmt > 1) this.fadeInAmt = 1;
+        if (this.fadeOutAmt < 0) this.fadeOutAmt = 0;
+    }
 
     draw(x: number = 0, y: number = 0) {
         let localOffset = 0;
         for (let i = 0; i < this.words.length; i++) {
             const word = this.words[i];
-            this.mq.text(word, x + localOffset, y, Row.color);
+
+            this.mq.text(word, x + localOffset, y, Row.lightColor);
+
+            if (word === this.activeWord) {
+                this.mq.ctx.globalAlpha = this.fadeInAmt;
+                this.mq.text(word, x + localOffset, y, Row.darkColor);
+            } else if (word === this.oldWord) {
+                this.mq.ctx.globalAlpha = this.fadeOutAmt;
+                this.mq.text(word, x + localOffset, y, Row.darkColor);
+            }
+            this.mq.ctx.globalAlpha = 1;
+
             localOffset += this.mq.textDimensions(word).w + Strip.wordSpacing;
         }
     }
@@ -93,6 +123,10 @@ export class Ribbon {
 
     update(direction: Direction) {
         this.offset += direction * Row.scrollSpeed;
+
+        for (const s of this.strips) {
+            s.update();
+        }
     }
 
     draw(x: number = 0, y: number = 0) {
@@ -112,7 +146,8 @@ export class Ribbon {
 
 export class Row {
     static scrollSpeed: number = 1;
-    static color: string = "#e9ebea";
+    static lightColor: string = "#e9ebea";
+    static darkColor: string = "#131313";
 
     mq: MarqueeCanvas;
     primaryRibbon: Ribbon;

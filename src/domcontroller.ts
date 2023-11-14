@@ -60,7 +60,7 @@ export const prepareBlockControllers = () => {
         curtainifyController,
         scrollController,
         videoCarouselController,
-        // scrollingProjectsController,
+        scrollingProjectsController,
         expandingVideoController,
         carouselController,
         nextProjectController,

@@ -18,6 +18,10 @@ export default class ProjectsMarqueeController extends BlockController {
 
     marqueeInterval: number;
 
+    activeWord: string;
+
+    projectNames: string[];
+
     constructor(className?: string) {
         super();
         this.name = "ProjectsMarqueeController";
@@ -51,35 +55,62 @@ export default class ProjectsMarqueeController extends BlockController {
         const blockWidth = blockRect.width;
         const blockHeight = blockRect.height;
 
-        const companyNames = [
-            "Quantum Dynamics",
-            "Pinnacle Solutions",
-            "Nebula Innovations",
-            "Vertex Enterprises",
-            "Horizon Technologies",
-        ];
+        this.getProjectsFromBlock();
+        // const companyNames = [
+        //     "Quantum Dynamics",
+        //     "Pinnacle Solutions",
+        //     "Nebula Innovations",
+        //     "Vertex Enterprises",
+        //     "Horizon Technologies",
+        // ];
 
         Strip.wordSpacing = 128;
         this.marquee = new MarqueeCanvas(block, blockWidth, blockHeight, 3);
         this.marquee.placeCanvas(0, 0);
-        this.marquee.words = companyNames;
+        this.marquee.words = this.projectNames;
         this.marquee.setup();
+    }
+
+    getProjectsFromBlock() {
+        const projectsArea = this.block?.querySelector(".projects") as HTMLElement;
+
+        if (this.invalid(projectsArea)) {
+            this.err("Projects area not found");
+            return;
+        }
+
+        const projects: NodeListOf<HTMLAnchorElement> = projectsArea.querySelectorAll(".projects ul li a");
+
+        if (this.invalid(projects)) {
+            this.err("Projects not found");
+            return;
+        }
+
+        const projectNames: string[] = [];
+
+        for (let i = 0; i < projects.length; i++) {
+            const innerText = projects[i].innerText;
+            if (!innerText) continue;
+
+            if (!projectNames.includes(innerText)) projectNames.push(innerText);
+        }
+
+        this.projectNames = projectNames;
     }
 
     startMarquee() {
         this.marqueeInterval = window.setInterval(() => {
             try {
+                if (!this.block) throw new Error("Block not found");
+
+                this.marquee.activeWord = this.block.getAttribute("data-project") || "";
+
                 this.marquee.update();
                 this.marquee.draw();
             } catch (err: any) {
                 this.err(err.message, err.stack);
                 this.stopMarquee();
             }
-
-            // if (this.marquee.frameCount >= 10000) {
-            //     this.marquee.resetRows();
-            //     console.log("Animation looped");
-            // }
         }, 32);
     }
 

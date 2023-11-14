@@ -3,6 +3,7 @@
  * Author: Connor Doman
  */
 
+import { randomElement } from "../array";
 import { Row } from "./row";
 
 export class MarqueeCanvas {
@@ -23,14 +24,16 @@ export class MarqueeCanvas {
 
     backgroundColor: string = "transparent";
 
-    lineColor: string = Row.color;
+    lineColor: string = Row.lightColor;
     lineWidth: number = 0.9;
     lineStart: number;
     lineEnd: number;
 
     rows: Row[] = [];
 
-    _words: string[] = [];
+    activeWord: string = "";
+
+    private _words: string[] = [];
 
     constructor(parent: HTMLElement, w?: number, h?: number, rows?: number) {
         this.parent = parent;
@@ -181,7 +184,7 @@ export class MarqueeCanvas {
             tempTopPosition += elementHeight + spaceAround;
         }
 
-        console.log({ topPosition, topPositions });
+        // console.log({ topPosition, topPositions });
 
         // Return the top positions
         return topPositions;
