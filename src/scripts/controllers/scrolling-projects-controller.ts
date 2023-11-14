@@ -268,11 +268,6 @@ export default class ScrollingProjectsController extends BlockController {
             elmt.style.opacity = "1";
         });
 
-        if (this.viewProjectButton) {
-            this.viewProjectButton.style.left = `${linkX * 100}%`;
-            this.viewProjectButton.style.top = `${linkY * 100}%`;
-        }
-
         this.log("color:", color);
         this.blurb?.style.setProperty("--project-blurb-color", color);
 
@@ -289,5 +284,20 @@ export default class ScrollingProjectsController extends BlockController {
             const elmt = e.target as HTMLElement;
             elmt.style.color = "red";
         });
+    }
+
+    onMouseMove(e: MouseEvent) {
+        // if mouse is intersecting with project blurb backing, move view button to those coordinates. do not run if mouse is not intersecting with project blurb backing
+        if (!this.scrollingProjectsBlock || !this.viewProjectButton) return;
+
+        const blockRect = this.scrollingProjectsBlock.getBoundingClientRect();
+
+        const x = e.clientX;
+        const y = e.clientY;
+
+        if (x < blockRect.left || x > blockRect.right || y < blockRect.top || y > blockRect.bottom) return;
+
+        this.viewProjectButton.style.left = `${x - blockRect.left}px`;
+        this.viewProjectButton.style.top = `${y - blockRect.top}px`;
     }
 }
