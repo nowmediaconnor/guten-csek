@@ -15,6 +15,7 @@ import NextProjectController from "./scripts/controllers/next-project-controller
 import FeaturedVideoController from "./scripts/controllers/featured-video-controller";
 import StaffProfilesController from "./scripts/controllers/staff-profiles-controller";
 import CyclingStackController from "./scripts/controllers/cycling-stack-controller";
+import ProjectsMarqueeController from "./scripts/controllers/projects-marquee-controller";
 
 export const prepareBlockControllers = () => {
     /* Prepare DOM Controller */
@@ -51,19 +52,23 @@ export const prepareBlockControllers = () => {
     // Cycling Stack Component
     const cyclingStackController = new CyclingStackController();
 
+    // Projects Marquee Controller
+    const projectsMarqueeController = new ProjectsMarqueeController();
+
     // DOM controller
     return new DOMController(
         curtainifyController,
         scrollController,
         videoCarouselController,
-        scrollingProjectsController,
+        // scrollingProjectsController,
         expandingVideoController,
         carouselController,
         nextProjectController,
         featuredVideoController,
         staffProfilesController,
         cyclingStackController,
-        teamController
+        teamController,
+        projectsMarqueeController
         // verticalImagesController
     );
 };

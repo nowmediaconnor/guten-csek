@@ -398,9 +398,15 @@ export default class DOMController extends BlockController implements DOMControl
         this.setFeaturedImageColors();
 
         // prepareScrollingProjectsBlocks();
+
         for (const controller of this.blockControllers) {
-            controller.setup();
-            this.log("Set up", controller.name);
+            try {
+                controller.setup();
+                this.log("Set up", controller.name);
+            } catch (err: any) {
+                this.err("Error setting up:", controller.name, err);
+                controller.isInitialized = true;
+            }
         }
 
         // check if all controllers are loaded and show page

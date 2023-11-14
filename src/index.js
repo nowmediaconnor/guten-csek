@@ -242,7 +242,7 @@ window.addEventListener("load", (e) => {
     window.requestAnimationFrame(() => {
         window.domController.setup();
         window.domController.overrideAllDebug(false);
-        window.domController.overrideDebug(true, "TeamController");
+        window.domController.overrideDebug(true, "ProjectsMarqueeController");
     });
 
     setTimeout(() => {
