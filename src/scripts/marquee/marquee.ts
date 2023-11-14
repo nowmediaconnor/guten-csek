@@ -23,6 +23,11 @@ export class MarqueeCanvas {
 
     backgroundColor: string = "transparent";
 
+    lineColor: string = Row.color;
+    lineWidth: number = 0.9;
+    lineStart: number;
+    lineEnd: number;
+
     rows: Row[] = [];
 
     _words: string[] = [];
@@ -36,6 +41,10 @@ export class MarqueeCanvas {
 
         this.canvas = MarqueeCanvas.createHiDPICanvas(this.width, this.height, MarqueeCanvas.PIXEL_RATIO);
         this.ctx = this.canvas.getContext("2d") as CanvasRenderingContext2D;
+
+        const lineSize = this.width * this.lineWidth;
+        this.lineStart = (this.width - lineSize) / 2;
+        this.lineEnd = this.width - this.lineStart;
     }
 
     set words(words: string[]) {
@@ -85,10 +94,12 @@ export class MarqueeCanvas {
         for (let i = 0; i < this.rowCount; i++) {
             const row = this.rows[i];
 
-            const h = ((this.rowSpace + row.height) / 2) * (i + 1);
-            // row.draw(-row.width - row.wordSpacing, spacing[i], "red");
-            // row.draw(0, spacing[i]);
             row.draw(0, this.spacing[i]);
+
+            if (i !== this.rowCount - 1) {
+                const y = this.spacing[i] + row.height * 0.9;
+                this.drawHorizontalLine(y);
+            }
         }
 
         // this.drawFrameCount();
@@ -97,6 +108,14 @@ export class MarqueeCanvas {
 
     drawFrameCount() {
         this.text(this.frameCount.toString(), 14, 21, "lightgreen", "14pt serif");
+    }
+
+    drawHorizontalLine(y: number) {
+        this.ctx.beginPath();
+        this.ctx.moveTo(this.lineStart, y);
+        this.ctx.lineTo(this.lineEnd, y);
+        this.ctx.strokeStyle = this.lineColor;
+        this.ctx.stroke();
     }
 
     wipe() {

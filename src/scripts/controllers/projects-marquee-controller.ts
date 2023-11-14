@@ -5,6 +5,7 @@
 
 import { BlockController } from "../dom";
 import { MarqueeCanvas } from "../marquee/marquee";
+import { Strip } from "../marquee/row";
 
 export default class ProjectsMarqueeController extends BlockController {
     debug: boolean = true;
@@ -58,6 +59,7 @@ export default class ProjectsMarqueeController extends BlockController {
             "Horizon Technologies",
         ];
 
+        Strip.wordSpacing = 128;
         this.marquee = new MarqueeCanvas(block, blockWidth, blockHeight, 3);
         this.marquee.placeCanvas(0, 0);
         this.marquee.words = companyNames;
@@ -78,7 +80,7 @@ export default class ProjectsMarqueeController extends BlockController {
             //     this.marquee.resetRows();
             //     console.log("Animation looped");
             // }
-        }, 16);
+        }, 32);
     }
 
     stopMarquee() {

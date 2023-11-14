@@ -3,6 +3,7 @@
  * Author: Connor Doman
  */
 
+import { shuffle } from "../array";
 import { MarqueeCanvas } from "./marquee";
 
 export type Direction = 1 | -1;
@@ -18,7 +19,7 @@ export class Strip {
 
     constructor(mq: MarqueeCanvas, words: string[]) {
         this.mq = mq;
-        this.words = words;
+        this.words = shuffle(words);
 
         const dimensions = this.calculateDimensions();
         this.width = dimensions.w;
