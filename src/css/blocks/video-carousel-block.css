@@ -31,7 +31,7 @@
 
     & .video-caption {
         & h2 {
-            @apply text-3xl leading-5 my-4 font-bold font-syne max-w-half-max;
+            @apply text-3xl leading-none my-4 font-bold font-syne max-w-half-max;
         }
 
         & .video-playbutton {
@@ -46,7 +46,15 @@
     }
 
     & .carousel-slider-progress {
-        @apply justify-center absolute h-16 max-w-csek-max left-1/2 -translate-x-1/2 bg-csek-dark/50 text-white font-montserrat;
+        @apply justify-around gap-4 absolute h-max py-4 max-w-csek-max left-1/2 -translate-x-1/2 bg-csek-dark/50 text-white font-montserrat;
+
+        & .status {
+            @apply justify-between text-2xl md:text-base md:justify-start;
+
+            & i {
+                @apply text-2xl md:text-base;
+            }
+        }
     }
 
     & .video-player {
