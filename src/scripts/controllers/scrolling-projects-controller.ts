@@ -222,23 +222,36 @@ export default class ScrollingProjectsController extends BlockController {
     }
 
     onMouseMove(e: MouseEvent, blockIndex: number) {
-        if (ScrollingProjectsController.isMobile) return;
-
         // if mouse is intersecting with project blurb backing, move view button to those coordinates. do not run if mouse is not intersecting with project blurb backing
         const blockElements = this.getBlockElements(blockIndex);
         if (!blockElements) return;
 
-        const { block, blurb, projectImage, viewProjectButton } = blockElements;
+        const { block, viewProjectButton } = blockElements;
 
         const blockRect = block.getBoundingClientRect();
+        const buttonRect = viewProjectButton.getBoundingClientRect();
+
+        const buttonHalfWidth = buttonRect.width / 2;
+        const buttonHalfHeight = buttonRect.height / 2;
 
         const x = e.clientX;
         const y = e.clientY;
 
         if (x < blockRect.left || x > blockRect.right || y < blockRect.top || y > blockRect.bottom) return;
 
-        viewProjectButton.style.left = `${x - blockRect.left}px`;
-        viewProjectButton.style.top = `${y - blockRect.top}px`;
+        const newX = x - blockRect.left;
+        const newY = y - blockRect.top;
+
+        viewProjectButton.style.left = `${newX}px`;
+        viewProjectButton.style.top = `${newY}px`;
+
+        if (newX < buttonHalfWidth) viewProjectButton.style.left = `${buttonHalfWidth}px`;
+        else if (newX > blockRect.width - buttonHalfWidth)
+            viewProjectButton.style.left = `${blockRect.width - buttonHalfWidth}px`;
+
+        if (newY < buttonHalfHeight) viewProjectButton.style.top = `${buttonHalfHeight}px`;
+        else if (newY > blockRect.height - buttonHalfHeight)
+            viewProjectButton.style.top = `${blockRect.height - buttonHalfHeight}px`;
     }
 
     getBlockElements(blockIndex: number) {

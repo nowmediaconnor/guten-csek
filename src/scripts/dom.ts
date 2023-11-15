@@ -365,16 +365,20 @@ export default class DOMController extends BlockController implements DOMControl
                         controller.scroll(scrollY);
                     }
                 });
-                // prepare mouse move listeners
-                if (controller.blocks)
+                if (controller.blocks) {
+                    // prepare mouse move listeners
                     controller.blocks.forEach((block, index) => {
-                        this.log("Adding mouse listener to", controller.name, "block", index, "...");
-                        block.addEventListener("mousemove", (e) => {
-                            if (controller.onMouseMove) {
-                                controller.onMouseMove(e, index);
-                            }
-                        });
+                        if (DOMController.isMobile) return;
+                        if (controller.onMouseMove) {
+                            block.addEventListener("mousemove", (e) => {
+                                if (controller.onMouseMove) controller.onMouseMove(e, index);
+                            });
+                            block.addEventListener("mouseenter", (e) => {
+                                if (controller.onMouseMove) controller.onMouseMove(e, index);
+                            });
+                        }
                     });
+                }
             } catch (err: any) {
                 this.err(`Error in ${controller.name} adding event listeners:`, err);
             }
