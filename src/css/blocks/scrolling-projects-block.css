@@ -6,10 +6,10 @@
 /* Scrolling Projects Block */
 
 .wp-block-guten-csek-scrolling-projects-block {
-    @apply w-full h-[75vh] font-syne py-16 relative bg-white overflow-hidden box-border;
+    @apply w-full h-[30rem] md:h-[75vh] font-syne md:py-8 relative bg-white overflow-hidden box-border;
 
     & .view-button {
-        @apply absolute -left-full -top-full flex justify-center items-center text-csek-light z-40 text-xs w-24 h-24 rounded-full bg-csek-dark/50 font-montserrat font-semibold text-center uppercase -translate-x-1/2 -translate-y-1/2 backdrop-blur-md;
+        @apply absolute left-3/4 top-3/4 md:-left-full md:-top-full flex justify-center items-center text-csek-light z-40 text-xs w-24 h-24 rounded-full bg-csek-dark/50 font-montserrat font-semibold text-center uppercase -translate-x-1/2 -translate-y-1/2 backdrop-blur-md;
     }
 }
 .wp-block-guten-csek-scrolling-projects-block .projects {
@@ -52,7 +52,7 @@
 .project-blurb {
     --project-blurb-color: var(--csek-blue);
     --project-blurb-aspect: calc(265 / 321);
-    --project-blurb-height: 50vh;
+    --project-blurb-height: 20rem;
     @apply absolute w-[75vh] h-[75vh] top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-30;
 }
 
