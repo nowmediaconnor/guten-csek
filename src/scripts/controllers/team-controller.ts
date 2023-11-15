@@ -87,4 +87,6 @@ export default class TeamController extends BlockController {
 
         headshot.style.transform = `translateY(${posY * speed}px)`;
     }
+
+    onMouseMove(e: MouseEvent, blockIndex: number): void {}
 }

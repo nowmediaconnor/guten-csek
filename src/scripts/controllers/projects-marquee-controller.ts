@@ -118,4 +118,6 @@ export default class ProjectsMarqueeController extends BlockController {
     stopMarquee() {
         window.clearInterval(this.marqueeInterval);
     }
+
+    onMouseMove(e: MouseEvent, blockIndex: number): void {}
 }

@@ -93,4 +93,6 @@ export default class FeaturedVideoController extends BlockController {
     showPlayButton() {
         this.playButton.style.display = "flex";
     }
+
+    onMouseMove(e: MouseEvent, blockIndex: number): void {}
 }

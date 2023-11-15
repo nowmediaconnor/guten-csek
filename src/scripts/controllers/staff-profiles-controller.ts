@@ -54,4 +54,6 @@ export default class StaffProfilesController extends BlockController {
             });
         });
     }
+
+    onMouseMove(e: MouseEvent, blockIndex: number): void {}
 }

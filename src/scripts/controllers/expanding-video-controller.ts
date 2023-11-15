@@ -98,4 +98,6 @@ export default class ExpandingVideoController extends BlockController {
             this.onScroll(pos);
         });
     }
+
+    onMouseMove(e: MouseEvent, blockIndex: number): void {}
 }

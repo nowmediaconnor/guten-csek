@@ -26,4 +26,6 @@ export default class CurtainifyController extends BlockController {
     beforeReload() {
         window.scrollTo(0, 0);
     }
+
+    onMouseMove(e: MouseEvent, blockIndex: number): void {}
 }

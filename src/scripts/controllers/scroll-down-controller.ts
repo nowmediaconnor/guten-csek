@@ -57,4 +57,6 @@ export default class ScrollDownController extends BlockController {
         }
         this.scrollDownElement.style.opacity = "1";
     }
+
+    onMouseMove(e: MouseEvent, blockIndex: number): void {}
 }

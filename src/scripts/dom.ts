@@ -164,88 +164,6 @@ export const prepareExpandingVideoBlocks = () => {
     }
 };
 
-export const prepareScrollingProjectsBlocks = () => {
-    const scrollingProjectsBlocks = document.querySelectorAll(".wp-block-guten-csek-scrolling-projects-block");
-
-    const animationRateMilliseconds = 12.5; // ms
-
-    for (const block of scrollingProjectsBlocks) {
-        const containers = block.querySelectorAll(".project-ribbon");
-
-        let ribbonRow = 0;
-
-        for (const ribbon of containers) {
-            const evenRow = ribbonRow % 2 === 0;
-
-            if (!evenRow) {
-                ribbon.classList.add("reverse");
-            }
-
-            const speed = randomIntInRange(3, 3) * 0.125 * (evenRow ? 1 : 1);
-
-            const containerRect = ribbon.getBoundingClientRect();
-            const list = ribbon.querySelector("ul");
-
-            if (!list) continue;
-
-            const allListItems = list.querySelectorAll("li");
-
-            const items = shuffle(Array.from(allListItems));
-
-            // console.log({ items });
-
-            list.innerHTML = "";
-            for (const item of items) {
-                if (!item) continue;
-
-                list.appendChild(item);
-                const dash = document.createElement("li");
-                dash.innerHTML = "&nbsp;&mdash;&nbsp;";
-                list.appendChild(dash);
-            }
-
-            let currentOffset = 0;
-
-            const animateMarquee = (direction: number) => {
-                direction = clampInt(direction, -1, 1);
-
-                if (direction === 0) return;
-
-                const endListItem =
-                    direction > 0 ? list.querySelector("li:first-child") : list.querySelector("li:first-child");
-
-                if (!endListItem) return;
-
-                const endListItemRect = endListItem.getBoundingClientRect();
-                const endListItemSide = direction > 0 ? endListItemRect.right : endListItemRect.left;
-                const containerSide = direction > 0 ? containerRect.left : containerRect.right;
-
-                switch (direction) {
-                    case 1:
-                        if (endListItemSide < containerSide) {
-                            currentOffset = -1;
-                            list.appendChild(endListItem);
-                        }
-                        list.style.left = `${currentOffset}px`;
-                        break;
-                    case -1:
-                        if (endListItemSide > containerSide) {
-                            currentOffset = 1;
-                            list.appendChild(endListItem);
-                        }
-                        list.style.right = `${currentOffset}px`;
-                        break;
-                }
-
-                currentOffset -= speed;
-            };
-
-            window.setInterval(() => animateMarquee(evenRow ? 1 : -1), animationRateMilliseconds);
-            ribbonRow++;
-        }
-    }
-};
-
 export interface ControllerProperties {
     name: string;
     debug: boolean;
@@ -254,7 +172,7 @@ export interface ControllerProperties {
     setup(): void;
     beforeReload?(): void;
     scroll?(scrollY?: number): void;
-    onMouseMove?(e: MouseEvent, block: HTMLElement): void;
+    onMouseMove?(e: MouseEvent, blockIndex: number): void;
 }
 
 export abstract class BlockController implements ControllerProperties {
@@ -272,6 +190,8 @@ export abstract class BlockController implements ControllerProperties {
     }
 
     abstract setup(): void;
+
+    abstract onMouseMove?(e: MouseEvent, blockIndex: number): void;
 
     invalid(truthy: any): boolean {
         if (truthy) {
@@ -397,15 +317,7 @@ export default class DOMController extends BlockController implements DOMControl
 
         prepareExpandingVideoBlocks();
 
-        try {
-            this.addEventListeners();
-        } catch (err: any) {
-            this.err("Error adding event listeners:", err);
-        }
-
         this.setFeaturedImageColors();
-
-        // prepareScrollingProjectsBlocks();
 
         for (const controller of this.blockControllers) {
             try {
@@ -416,6 +328,8 @@ export default class DOMController extends BlockController implements DOMControl
                 controller.isInitialized = true;
             }
         }
+
+        this.addEventListeners();
 
         // check if all controllers are loaded and show page
         this.loadingInterval = window.setInterval(() => {
@@ -432,33 +346,38 @@ export default class DOMController extends BlockController implements DOMControl
     addEventListeners() {
         // block controller listeners
         for (const controller of this.blockControllers) {
-            // prepare reload listeners
-            window.addEventListener("beforeunload", (e) => {
-                this.beforeReload();
+            try {
+                // prepare reload listeners
+                window.addEventListener("beforeunload", (e) => {
+                    this.beforeReload();
 
-                if (controller.beforeReload) {
-                    controller.beforeReload();
-                }
-            });
-            // prepare scroll listeners
-            window.addEventListener("scroll", (e) => {
-                // this.scroll();
-
-                const scrollY = window.scrollY;
-
-                if (controller.scroll) {
-                    controller.scroll(scrollY);
-                }
-            });
-            // prepare mouse move listeners
-            if (controller.blocks)
-                controller.blocks.forEach((block) => {
-                    block.addEventListener("mousemove", (e) => {
-                        if (controller.onMouseMove) {
-                            controller.onMouseMove(e, block);
-                        }
-                    });
+                    if (controller.beforeReload) {
+                        controller.beforeReload();
+                    }
                 });
+                // prepare scroll listeners
+                window.addEventListener("scroll", (e) => {
+                    // this.scroll();
+
+                    const scrollY = window.scrollY;
+
+                    if (controller.scroll) {
+                        controller.scroll(scrollY);
+                    }
+                });
+                // prepare mouse move listeners
+                if (controller.blocks)
+                    controller.blocks.forEach((block, index) => {
+                        this.log("Adding mouse listener to", controller.name, "block", index, "...");
+                        block.addEventListener("mousemove", (e) => {
+                            if (controller.onMouseMove) {
+                                controller.onMouseMove(e, index);
+                            }
+                        });
+                    });
+            } catch (err: any) {
+                this.err(`Error in ${controller.name} adding event listeners:`, err);
+            }
         }
 
         // header/footer listeners
@@ -525,6 +444,8 @@ export default class DOMController extends BlockController implements DOMControl
     log(...msg: any[]) {
         if (this.debug) console.log("[DOMController]", ...msg);
     }
+
+    onMouseMove(e: MouseEvent, blockIndex: number): void {}
 
     async setFeaturedImageColors() {
         await updateFeaturedImageColorDerivatives();

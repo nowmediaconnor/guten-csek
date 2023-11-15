@@ -241,4 +241,6 @@ export default class VideoCarouselController extends BlockController {
         }
         this.update();
     }
+
+    onMouseMove(e: MouseEvent, blockIndex: number): void {}
 }

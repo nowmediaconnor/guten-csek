@@ -108,9 +108,12 @@ export default class ScrollingProjectsController extends BlockController {
             return;
         }
 
+        this.log(`Found ${this.blocks.length} scrolling projects blocks.`);
+
         // this.prepareCanvas();
         this.blocks.forEach((block: HTMLElement, i: number) => {
             if (!block) return;
+
             this.precalculateColors(block);
 
             const blurb = block.querySelector(".project-blurb") as HTMLElement;
@@ -130,6 +133,12 @@ export default class ScrollingProjectsController extends BlockController {
                 while (!this.selectRandomProject(i));
             }, this.randomProjectRateMilliseconds);
         });
+
+        this.log(
+            `Accessory elements? ${
+                this.blurbs.length > 0 && this.projectImages.length > 0 && this.viewProjectButtons.length > 0
+            }`
+        );
 
         this.isInitialized = true;
     }
@@ -206,19 +215,22 @@ export default class ScrollingProjectsController extends BlockController {
         return true;
     }
 
-    onMouseMove(e: MouseEvent, block: HTMLElement) {
+    onMouseMove(e: MouseEvent, blockIndex: number) {
         // if mouse is intersecting with project blurb backing, move view button to those coordinates. do not run if mouse is not intersecting with project blurb backing
-        if (!this.block || !this.viewProjectButton) return;
+        const blockElements = this.getBlockElements(blockIndex);
+        if (!blockElements) return;
 
-        const blockRect = this.block.getBoundingClientRect();
+        const { block, blurb, projectImage, viewProjectButton } = blockElements;
+
+        const blockRect = block.getBoundingClientRect();
 
         const x = e.clientX;
         const y = e.clientY;
 
         if (x < blockRect.left || x > blockRect.right || y < blockRect.top || y > blockRect.bottom) return;
 
-        this.viewProjectButton.style.left = `${x - blockRect.left}px`;
-        this.viewProjectButton.style.top = `${y - blockRect.top}px`;
+        viewProjectButton.style.left = `${x - blockRect.left}px`;
+        viewProjectButton.style.top = `${y - blockRect.top}px`;
     }
 
     getBlockElements(blockIndex: number) {

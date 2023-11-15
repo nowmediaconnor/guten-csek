@@ -71,4 +71,6 @@ export default class CyclingStackController extends BlockController {
             // }, CyclingStackController.animationDurationMS);
         });
     }
+
+    onMouseMove(e: MouseEvent, blockIndex: number): void {}
 }

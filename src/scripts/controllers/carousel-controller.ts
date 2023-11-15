@@ -171,4 +171,6 @@ export default class CarouselController extends BlockController {
 
         this.carouselBlock.style.height = `${newHeight}px`;
     }
+
+    onMouseMove(e: MouseEvent, blockIndex: number): void {}
 }
