@@ -52,9 +52,6 @@ export const prepareBlockControllers = () => {
     // Cycling Stack Component
     const cyclingStackController = new CyclingStackController();
 
-    // Projects Marquee Controller
-    const projectsMarqueeController = new ProjectsMarqueeController();
-
     // DOM controller
     return new DOMController(
         curtainifyController,
@@ -67,8 +64,7 @@ export const prepareBlockControllers = () => {
         featuredVideoController,
         staffProfilesController,
         cyclingStackController,
-        teamController,
-        projectsMarqueeController
+        teamController
         // verticalImagesController
     );
 };

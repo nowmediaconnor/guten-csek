@@ -23,18 +23,14 @@ export default class ProjectsMarqueeController extends BlockController {
 
     projectNames: string[];
 
-    constructor(className?: string) {
+    constructor(block: HTMLElement) {
         super();
         this.name = "ProjectsMarqueeController";
 
-        if (className) {
-            this.blockClassName = className;
-        }
+        this.block = block;
     }
 
     setup(): void {
-        this.block = document.querySelector(this.blockClassName);
-
         if (this.invalid(this.block)) {
             this.err("Block not found");
             return;

@@ -7,10 +7,10 @@ import { shuffle } from "../array";
 import { BlockController, ControllerProperties } from "../dom";
 import { getImageColor, imageToBase64 } from "../files";
 import { randomInRange, randomIntInRange } from "../math";
+import ProjectsMarqueeController from "./projects-marquee-controller";
 
 export default class ScrollingProjectsController extends BlockController {
     name: string;
-
     debug: boolean = true;
 
     scrollingProjectsBlockClassName: string;
@@ -28,13 +28,13 @@ export default class ScrollingProjectsController extends BlockController {
     projectImage: HTMLImageElement | null = null;
     viewProjectButton: HTMLElement | null = null;
 
+    marqueeControllers: ProjectsMarqueeController[] = [];
     blurbs: HTMLElement[] = [];
     projectImages: HTMLImageElement[] = [];
     viewProjectButtons: HTMLElement[] = [];
+    highlightedProjectNames: string[] = [];
 
     highglightedProjectName: string;
-
-    highlightedProjectNames: string[] = [];
 
     canvas: HTMLCanvasElement | null = null;
 
@@ -128,6 +128,10 @@ export default class ScrollingProjectsController extends BlockController {
             this.blurbs[i] = blurb;
             this.projectImages[i] = projectImage;
             this.viewProjectButtons[i] = viewProjectButton;
+
+            const marqueeController = new ProjectsMarqueeController(block);
+            marqueeController.setup();
+            this.marqueeControllers[i] = marqueeController;
 
             this.randomProjectIntervalId = window.setInterval(() => {
                 while (!this.selectRandomProject(i));
