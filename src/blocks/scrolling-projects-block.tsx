@@ -147,13 +147,6 @@ export const ScrollingProjectsBlockSave = ({
         <section {...blockProps}>
             <div className="project-blurb">
                 <img className="project-image" src="/wp-content/plugins/guten-csek/src/img/project-template.png" />
-                <div className="view-button">
-                    <a href="#">
-                        View
-                        <br />
-                        Project
-                    </a>
-                </div>
             </div>
             <div className="projects">
                 <div className="project-ribbon">
@@ -167,6 +160,13 @@ export const ScrollingProjectsBlockSave = ({
                 <div className="project-ribbon">
                     <ul>{listItems}</ul>
                 </div>
+            </div>
+            <div className="view-button">
+                <a href="#">
+                    View
+                    <br />
+                    Project
+                </a>
             </div>
         </section>
     );

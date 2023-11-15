@@ -121,7 +121,7 @@ export default class ScrollingProjectsController extends BlockController {
             const viewProjectButton = block.querySelector(".view-button") as HTMLElement;
 
             if (!blurb || !projectImage || !viewProjectButton) {
-                this.log("No blurb, project image, or view project button found");
+                this.err("No blurb, project image, or view project button found");
                 return;
             }
 
@@ -167,17 +167,19 @@ export default class ScrollingProjectsController extends BlockController {
             this.log("No random project found");
             return false;
         }
-
-        const name = randomProject.querySelector("a")?.innerHTML;
-        if (!name) {
+        const randomProjectLink = randomProject.querySelector("a");
+        const randomProjectName = randomProjectLink?.innerHTML;
+        const randomProjectUrl = randomProjectLink?.href;
+        if (!randomProjectName) {
             this.log("No name found");
             return false;
-        } else if (name === this.highglightedProjectName) {
+        } else if (randomProjectName === this.highglightedProjectName) {
             this.log("Need to pick a different project.");
             return false;
         }
-        this.highlightedProjectNames[blockIndex] = name;
-        block.setAttribute("data-project", name);
+        this.highlightedProjectNames[blockIndex] = randomProjectName;
+        block.setAttribute("data-project", randomProjectName);
+        viewProjectButton.querySelector("a")?.setAttribute("href", randomProjectUrl || "#not-found");
 
         const link = randomProject.querySelector("a");
         if (!link) {
