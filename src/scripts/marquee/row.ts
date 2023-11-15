@@ -27,6 +27,14 @@ export class Strip {
         this.mq = mq;
         this.words = shuffle(words);
 
+        if (this.mq.separator) {
+            this.words = [];
+            for (const word of words) {
+                this.words.push(word);
+                this.words.push(this.mq.separator);
+            }
+        }
+
         const dimensions = this.calculateDimensions();
         this.width = dimensions.w;
         this.height = dimensions.h;

@@ -68,6 +68,7 @@ export default class ProjectsMarqueeController extends BlockController {
         Strip.wordSpacing = 128;
         this.marquee = new MarqueeCanvas(block, blockWidth, blockHeight, 3);
         this.marquee.placeCanvas(0, 0);
+        this.marquee.separator = "\u2014"; // em dash
         this.marquee.words = this.projectNames;
         this.marquee.setup();
     }

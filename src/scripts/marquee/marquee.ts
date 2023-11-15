@@ -3,7 +3,6 @@
  * Author: Connor Doman
  */
 
-import { randomElement } from "../array";
 import { Row } from "./row";
 
 export class MarqueeCanvas {
@@ -30,6 +29,7 @@ export class MarqueeCanvas {
     lineEnd: number;
 
     rows: Row[] = [];
+    separator?: string;
 
     activeWord: string = "";
 
