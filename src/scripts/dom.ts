@@ -397,7 +397,11 @@ export default class DOMController extends BlockController implements DOMControl
 
         prepareExpandingVideoBlocks();
 
-        this.addEventListeners();
+        try {
+            this.addEventListeners();
+        } catch (err: any) {
+            this.err("Error adding event listeners:", err);
+        }
 
         this.setFeaturedImageColors();
 
@@ -426,37 +430,35 @@ export default class DOMController extends BlockController implements DOMControl
     }
 
     addEventListeners() {
-        // prepare reload listeners
-        window.addEventListener("beforeunload", (e) => {
-            this.beforeReload();
+        // block controller listeners
+        for (const controller of this.blockControllers) {
+            // prepare reload listeners
+            window.addEventListener("beforeunload", (e) => {
+                this.beforeReload();
 
-            for (const controller of this.blockControllers) {
                 if (controller.beforeReload) {
                     controller.beforeReload();
                 }
-            }
-        });
-        // prepare scroll listeners
-        window.addEventListener("scroll", (e) => {
-            // this.scroll();
+            });
+            // prepare scroll listeners
+            window.addEventListener("scroll", (e) => {
+                // this.scroll();
 
-            const scrollY = window.scrollY;
+                const scrollY = window.scrollY;
 
-            for (const controller of this.blockControllers) {
                 if (controller.scroll) {
                     controller.scroll(scrollY);
                 }
-            }
-        });
-        // prepare mouse move listeners
-        for (const controller of this.blockControllers) {
-            for (const block of controller.blocks) {
-                if (controller.onMouseMove) {
+            });
+            // prepare mouse move listeners
+            if (controller.blocks)
+                controller.blocks.forEach((block) => {
                     block.addEventListener("mousemove", (e) => {
-                        if (controller.onMouseMove) controller.onMouseMove(e, block);
+                        if (controller.onMouseMove) {
+                            controller.onMouseMove(e, block);
+                        }
                     });
-                }
-            }
+                });
         }
 
         // header/footer listeners
@@ -471,7 +473,6 @@ export default class DOMController extends BlockController implements DOMControl
                 this.closeLetsTalk();
             });
         }
-
         // keyboard listeners
         window.addEventListener("keydown", (e) => {
             this.log("Key pressed:", e.key);
