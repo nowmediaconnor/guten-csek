@@ -58,6 +58,9 @@ module.exports = {
             perspective: {
                 2: "2rem",
             },
+            aspectRatio: {
+                blurb: "265 / 321",
+            },
         },
         screens: {
             xs: "480px",

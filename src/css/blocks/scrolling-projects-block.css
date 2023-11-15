@@ -57,16 +57,15 @@
 }
 
 .project-blurb:before {
-    @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transition-all ease-in-out duration-200 shadow-lg;
+    @apply absolute h-[20rem] md:h-[30rem] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transition-all ease-in-out duration-200 shadow-lg aspect-blurb;
     content: "";
     background-color: var(--project-blurb-color);
-    width: calc(var(--project-blurb-height) * var(--project-blurb-aspect));
-    height: var(--project-blurb-height);
+    /* width: calc(var(--project-blurb-height) * var(--project-blurb-aspect));
+    height: var(--project-blurb-height); */
 }
 
 .project-blurb img {
-    @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-auto transition-opacity duration-1000 ease-in-out drop-shadow-lg object-cover;
-    height: calc(var(--project-blurb-height) + 5rem);
+    @apply absolute h-[25rem] md:h-[35rem] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-auto transition-opacity duration-1000 ease-in-out drop-shadow-lg object-cover;
 }
 
 .highlight-link {
