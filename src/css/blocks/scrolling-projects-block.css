@@ -7,6 +7,10 @@
 
 .wp-block-guten-csek-scrolling-projects-block {
     @apply w-full h-[75vh] font-syne py-16 relative bg-white overflow-hidden box-border;
+
+    & .view-button {
+        @apply absolute -left-full -top-full flex justify-center items-center text-csek-light z-40 text-xs w-24 h-24 rounded-full bg-csek-dark/50 font-montserrat font-semibold text-center uppercase -translate-x-1/2 -translate-y-1/2 backdrop-blur-md;
+    }
 }
 .wp-block-guten-csek-scrolling-projects-block .projects {
     @apply overflow-hidden flex flex-col justify-center items-center;
@@ -63,10 +67,6 @@
 .project-blurb img {
     @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-auto transition-opacity duration-1000 ease-in-out drop-shadow-lg object-cover;
     height: calc(var(--project-blurb-height) + 5rem);
-}
-
-.project-blurb .view-button {
-    @apply absolute flex justify-center items-center text-csek-light z-40 text-xs w-24 h-24 rounded-full bg-csek-dark top-3/4 left-3/4 font-montserrat font-semibold text-center uppercase -translate-x-1/2 -translate-y-1/2;
 }
 
 .highlight-link {

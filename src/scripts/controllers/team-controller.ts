@@ -11,6 +11,7 @@ export default class TeamController extends BlockController {
 
     headshotOffsetPx = 256;
 
+    blocks: NodeListOf<HTMLElement>;
     blockClassName: string;
     block: HTMLElement | null;
     headshots: NodeListOf<HTMLDivElement>;
@@ -50,8 +51,8 @@ export default class TeamController extends BlockController {
             this.updateHeadshotOffset(headshot, this.headshotOffsetPx);
 
             // smaller elements should have a longer delay (because they're further away)
-            const delayMS = map(diameter, 0, 128, 100, 0);
-            headshot.style.setProperty("--delay", `${delayMS}ms`);
+            // const delayMS = map(diameter, 0, 128, 100, 0);
+            // headshot.style.setProperty("--delay", `${delayMS}ms`);
         });
     }
 
@@ -86,4 +87,6 @@ export default class TeamController extends BlockController {
 
         headshot.style.transform = `translateY(${posY * speed}px)`;
     }
+
+    onMouseMove(e: MouseEvent, blockIndex: number): void {}
 }
