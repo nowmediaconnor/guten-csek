@@ -24,19 +24,26 @@ export const getImageColor = async (url: string): Promise<string> => {
 
     const fileName = url.split("/").pop();
 
-    const res = await fetch("/wp-json/csek/v2/img-color", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ base64Data, fileName }),
-    });
-    const { color } = await res.json();
+    // let gotColor = false;
+    while (true) {
+        try {
+            const res = await fetch("/wp-json/csek/v2/img-color", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ base64Data, fileName }),
+            });
+            const { color } = await res.json();
 
-    if (!color) {
-        throw new Error(`Color is null. URL: ${url}`);
+            if (!color) {
+                throw new Error(`Color is null. URL: ${url}`);
+            }
+            return color;
+        } catch (err: any) {
+            console.log("Error:", err);
+        }
     }
-    return color;
 
     // const text = await res.text();
     // return text;
