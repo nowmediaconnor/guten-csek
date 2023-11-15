@@ -22,6 +22,7 @@ export default class CarouselController extends BlockController {
     blockHeight: number;
     scrollOffset: number;
 
+    blocks: NodeListOf<HTMLElement>;
     carouselBlock: HTMLElement | null;
     carousel: HTMLUListElement | null;
     progressNumerator: HTMLElement | null;

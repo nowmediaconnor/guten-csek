@@ -22,7 +22,8 @@ export default class ScrollingProjectsController extends BlockController {
 
     bufferImage: HTMLImageElement = new Image();
 
-    scrollingProjectsBlock: HTMLElement | null;
+    blocks: NodeListOf<HTMLElement>;
+    block: HTMLElement | null;
     blurb: HTMLElement | null = null;
     projectImage: HTMLImageElement | null = null;
     viewProjectButton: HTMLElement | null = null;
@@ -49,10 +50,9 @@ export default class ScrollingProjectsController extends BlockController {
     }
 
     async precalculateColors() {
-        if (!this.scrollingProjectsBlock) return;
+        if (!this.block) return;
 
-        const allImages: NodeListOf<HTMLImageElement> =
-            this.scrollingProjectsBlock.querySelectorAll(".project-ribbon ul li img");
+        const allImages: NodeListOf<HTMLImageElement> = this.block.querySelectorAll(".project-ribbon ul li img");
 
         if (!allImages) {
             this.log("No projects found");
@@ -94,11 +94,10 @@ export default class ScrollingProjectsController extends BlockController {
     }
 
     setup() {
-        this.scrollingProjectsBlock = document.querySelector(
-            `.${this.scrollingProjectsBlockClassName}`
-        ) as HTMLDivElement;
+        this.blocks = document.querySelectorAll("." + this.scrollingProjectsBlockClassName);
+        this.block = document.querySelector(`.${this.scrollingProjectsBlockClassName}`) as HTMLDivElement;
 
-        if (this.invalid(this.scrollingProjectsBlock)) {
+        if (this.invalid(this.blocks.length)) {
             this.log("No scrolling projects block found.");
             return;
         }
@@ -106,9 +105,9 @@ export default class ScrollingProjectsController extends BlockController {
         // this.prepareCanvas();
         this.precalculateColors();
 
-        this.blurb = this.scrollingProjectsBlock.querySelector(".project-blurb");
-        this.projectImage = this.scrollingProjectsBlock.querySelector(".project-image");
-        this.viewProjectButton = this.scrollingProjectsBlock.querySelector(".view-button");
+        this.blurb = this.block.querySelector(".project-blurb");
+        this.projectImage = this.block.querySelector(".project-image");
+        this.viewProjectButton = this.block.querySelector(".view-button");
         // this.prepareRibbons(this.scrollingProjectsBlock);
 
         this.randomProjectIntervalId = window.setInterval(() => {
@@ -192,8 +191,8 @@ export default class ScrollingProjectsController extends BlockController {
     }
 
     clearHighlightedLinks() {
-        if (!this.scrollingProjectsBlock) return;
-        const highlights = this.scrollingProjectsBlock.querySelectorAll(".highlight-link");
+        if (!this.block) return;
+        const highlights = this.block.querySelectorAll(".highlight-link");
         if (highlights.length > 0) {
             for (const link of highlights) {
                 link.classList.remove("highlight-link");
@@ -212,7 +211,7 @@ export default class ScrollingProjectsController extends BlockController {
         }
         this.projectImage.style.opacity = "0";
 
-        const allProjects = this.scrollingProjectsBlock?.querySelectorAll(".project-ribbon ul li");
+        const allProjects = this.block?.querySelectorAll(".project-ribbon ul li");
         if (!allProjects) {
             this.log("No projects found");
             return false;
@@ -233,7 +232,7 @@ export default class ScrollingProjectsController extends BlockController {
             return false;
         }
         this.highglightedProjectName = name;
-        this.scrollingProjectsBlock?.setAttribute("data-project", name);
+        this.block?.setAttribute("data-project", name);
 
         const link = randomProject.querySelector("a");
         if (!link) {
@@ -286,11 +285,11 @@ export default class ScrollingProjectsController extends BlockController {
         });
     }
 
-    onMouseMove(e: MouseEvent) {
+    onMouseMove(e: MouseEvent, block: HTMLElement) {
         // if mouse is intersecting with project blurb backing, move view button to those coordinates. do not run if mouse is not intersecting with project blurb backing
-        if (!this.scrollingProjectsBlock || !this.viewProjectButton) return;
+        if (!this.block || !this.viewProjectButton) return;
 
-        const blockRect = this.scrollingProjectsBlock.getBoundingClientRect();
+        const blockRect = this.block.getBoundingClientRect();
 
         const x = e.clientX;
         const y = e.clientY;

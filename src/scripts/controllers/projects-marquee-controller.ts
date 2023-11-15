@@ -12,6 +12,7 @@ export default class ProjectsMarqueeController extends BlockController {
 
     blockClassName: string = ".wp-block-guten-csek-scrolling-projects-block";
 
+    blocks: NodeListOf<HTMLElement>;
     block: HTMLElement | null;
 
     marquee: MarqueeCanvas;

@@ -11,6 +11,7 @@ import { BlockController } from "../dom";
 // needs to control dialog
 
 export default class VideoCarouselController extends BlockController {
+    blocks: NodeListOf<HTMLElement>;
     name: string;
     debug: boolean = false;
     videoCarouselClassName: string;

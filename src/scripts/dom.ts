@@ -250,16 +250,18 @@ export interface ControllerProperties {
     name: string;
     debug: boolean;
     isInitialized: boolean;
+    blocks: NodeListOf<HTMLElement>;
     setup(): void;
     beforeReload?(): void;
     scroll?(scrollY?: number): void;
-    onMouseMove?(e: MouseEvent): void;
+    onMouseMove?(e: MouseEvent, block: HTMLElement): void;
 }
 
 export abstract class BlockController implements ControllerProperties {
     name: string;
     debug: boolean;
     isInitialized: boolean;
+    abstract blocks: NodeListOf<HTMLElement>;
 
     static isMobile(): boolean {
         return window.innerWidth <= 768;
@@ -310,6 +312,7 @@ export default class DOMController extends BlockController implements DOMControl
     loadingInterval: number;
     debug: boolean;
     isInitialized: boolean;
+    blocks: NodeListOf<HTMLElement>;
 
     isStarted: boolean;
 
@@ -446,13 +449,15 @@ export default class DOMController extends BlockController implements DOMControl
             }
         });
         // prepare mouse move listeners
-        window.addEventListener("mousemove", (e) => {
-            for (const controller of this.blockControllers) {
+        for (const controller of this.blockControllers) {
+            for (const block of controller.blocks) {
                 if (controller.onMouseMove) {
-                    controller.onMouseMove(e);
+                    block.addEventListener("mousemove", (e) => {
+                        if (controller.onMouseMove) controller.onMouseMove(e, block);
+                    });
                 }
             }
-        });
+        }
 
         // header/footer listeners
         if (this.prepareLetsTalkScreen()) {

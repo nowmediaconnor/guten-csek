@@ -10,6 +10,8 @@ export default class CurtainifyController extends BlockController {
     name: string;
     debug: boolean;
     isInitialized: boolean;
+    block: HTMLElement;
+    blocks: NodeListOf<HTMLElement>;
 
     constructor() {
         super();

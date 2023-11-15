@@ -8,6 +8,7 @@ import { BlockController } from "../dom";
 export default class StaffProfilesController extends BlockController {
     blockClassName: string;
 
+    blocks: NodeListOf<HTMLElement>;
     block?: HTMLElement | null;
     staffSummaries?: NodeListOf<HTMLElement>;
 

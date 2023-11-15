@@ -13,6 +13,7 @@ export default class ExpandingVideoController extends BlockController {
     expandingVideos: NodeListOf<HTMLElement>;
     isInitialized: boolean;
     floatingImages: NodeListOf<HTMLElement>;
+    blocks: NodeListOf<HTMLElement>;
 
     static scrollThreshold: number = 150;
 
