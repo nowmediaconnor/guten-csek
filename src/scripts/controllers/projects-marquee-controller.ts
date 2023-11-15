@@ -23,6 +23,8 @@ export default class ProjectsMarqueeController extends BlockController {
 
     projectNames: string[];
 
+    intersectionObserver: IntersectionObserver;
+
     constructor(block: HTMLElement) {
         super();
         this.name = "ProjectsMarqueeController";
@@ -36,7 +38,8 @@ export default class ProjectsMarqueeController extends BlockController {
             return;
         } else if (this.block) {
             this.prepCanvas(this.block);
-            this.startMarquee();
+            this.prepObserver(this.block);
+            // this.startMarquee();
             this.isInitialized = true;
         }
     }
@@ -53,13 +56,6 @@ export default class ProjectsMarqueeController extends BlockController {
         const blockHeight = blockRect.height;
 
         this.getProjectsFromBlock();
-        // const companyNames = [
-        //     "Quantum Dynamics",
-        //     "Pinnacle Solutions",
-        //     "Nebula Innovations",
-        //     "Vertex Enterprises",
-        //     "Horizon Technologies",
-        // ];
 
         Strip.wordSpacing = 64;
         this.marquee = new MarqueeCanvas(block, blockWidth, blockHeight, 3);
@@ -67,6 +63,26 @@ export default class ProjectsMarqueeController extends BlockController {
         this.marquee.separator = "\u2014"; // em dash
         this.marquee.words = this.projectNames;
         this.marquee.setup();
+    }
+
+    prepObserver(block: HTMLElement) {
+        const observerOptions = {
+            root: null,
+            rootMargin: "0px",
+            threshold: 0,
+        };
+
+        this.intersectionObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    this.startMarquee();
+                } else {
+                    this.stopMarquee();
+                }
+            });
+        }, observerOptions);
+
+        this.intersectionObserver.observe(block);
     }
 
     getProjectsFromBlock() {
