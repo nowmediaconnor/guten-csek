@@ -181,7 +181,7 @@ export abstract class BlockController implements ControllerProperties {
     isInitialized: boolean;
     abstract blocks: NodeListOf<HTMLElement>;
 
-    static isMobile(): boolean {
+    static get isMobile(): boolean {
         return window.innerWidth <= 768;
     }
 

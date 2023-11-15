@@ -42,7 +42,7 @@ export default class TeamController extends BlockController {
     }
 
     setupHeadshots() {
-        if (TeamController.isMobile()) return;
+        if (TeamController.isMobile) return;
 
         this.headshots.forEach((headshot) => {
             const diameter = parseInt(getComputedStyle(headshot).width);
@@ -57,7 +57,7 @@ export default class TeamController extends BlockController {
     }
 
     scroll() {
-        if (TeamController.isMobile()) return;
+        if (TeamController.isMobile) return;
 
         // relative to the viewport
         const blockRect = this.block?.getBoundingClientRect();

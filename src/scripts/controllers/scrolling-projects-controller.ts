@@ -222,6 +222,8 @@ export default class ScrollingProjectsController extends BlockController {
     }
 
     onMouseMove(e: MouseEvent, blockIndex: number) {
+        if (ScrollingProjectsController.isMobile) return;
+
         // if mouse is intersecting with project blurb backing, move view button to those coordinates. do not run if mouse is not intersecting with project blurb backing
         const blockElements = this.getBlockElements(blockIndex);
         if (!blockElements) return;
