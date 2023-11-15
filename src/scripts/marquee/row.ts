@@ -29,7 +29,7 @@ export class Strip {
 
         if (this.mq.separator) {
             this.words = [];
-            for (const word of words) {
+            for (const word of shuffle(words)) {
                 this.words.push(word);
                 this.words.push(this.mq.separator);
             }

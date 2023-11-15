@@ -9,7 +9,7 @@
     @apply w-full font-syne md:px-16 py-8 md:py-16 relative;
 
     & blockquote {
-        @apply mx-auto text-left text-3xl md:text-4xl leading-[1.2] z-10;
+        @apply mx-auto text-left text-2xl md:text-4xl leading-[1.2] z-10;
     }
 
     & .quote-area {
