@@ -145,20 +145,23 @@ export const ScrollingProjectsBlockSave = ({
 
     return (
         <section {...blockProps}>
-            <div className="project-blurb">
-                <img className="project-image" src="/wp-content/plugins/guten-csek/src/img/project-template.png" />
-            </div>
-            <div className="projects">
-                <div className="project-ribbon">
-                    <ul>{listItems}</ul>
+            <h2 className="selected-project-name"></h2>
+            <div className="canvas-container">
+                <div className="project-blurb">
+                    <img className="project-image" src="/wp-content/plugins/guten-csek/src/img/project-template.png" />
                 </div>
-                <hr />
-                <div className="project-ribbon">
-                    <ul>{listItems}</ul>
-                </div>
-                <hr />
-                <div className="project-ribbon">
-                    <ul>{listItems}</ul>
+                <div className="projects">
+                    <div className="project-ribbon">
+                        <ul>{listItems}</ul>
+                    </div>
+                    <hr />
+                    <div className="project-ribbon">
+                        <ul>{listItems}</ul>
+                    </div>
+                    <hr />
+                    <div className="project-ribbon">
+                        <ul>{listItems}</ul>
+                    </div>
                 </div>
             </div>
             <div className="view-button">

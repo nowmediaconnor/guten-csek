@@ -243,6 +243,10 @@ export default class DOMController extends BlockController implements DOMControl
     letsTalkOpenButtons: NodeListOf<HTMLAnchorElement>;
     letsTalkCloseButton: HTMLAnchorElement;
 
+    url: URL;
+    basePath: string;
+    usingEditor: boolean = false;
+
     constructor(...blockControllers: ControllerProperties[]) {
         super();
         this.name = "DOMController";
@@ -251,6 +255,14 @@ export default class DOMController extends BlockController implements DOMControl
         this.isInitialized = false;
         this.isStarted = false;
         this.prepareLoadingPanel();
+
+        this.url = new URL(window.location.href);
+        this.basePath = this.url.pathname.split("/").slice(0, -1).join("/");
+        const searchParams = new URLSearchParams(this.url.search);
+
+        const isAdmin = this.basePath === "/wp-admin";
+        const isEdit = searchParams.get("action") === "edit";
+        this.usingEditor = isAdmin && isEdit;
     }
 
     addController(controller: BlockController) {
@@ -310,11 +322,6 @@ export default class DOMController extends BlockController implements DOMControl
     setup() {
         if (this.isStarted === false) this.isStarted = true;
 
-        // this.overrideAllDebug(true);
-        // this.overrideDebug(false, "ScrollDownController");
-
-        // this.prepareLoadingPanel();
-
         prepareExpandingVideoBlocks();
 
         this.setFeaturedImageColors();
@@ -331,14 +338,19 @@ export default class DOMController extends BlockController implements DOMControl
 
         this.addEventListeners();
 
-        // check if all controllers are loaded and show page
-        this.loadingInterval = window.setInterval(() => {
-            if (this.finished()) {
-                window.clearInterval(this.loadingInterval);
-                this.hideLoadingPanel();
-                this.log("Finished loading");
-            }
-        }, 1000);
+        if (this.usingEditor) {
+            this.log("Using editor, not showing loading panel.");
+            this.hideLoadingPanel();
+        } else if (!this.usingEditor) {
+            // check if all controllers are loaded and show page
+            this.loadingInterval = window.setInterval(() => {
+                if (this.finished()) {
+                    window.clearInterval(this.loadingInterval);
+                    this.hideLoadingPanel();
+                    this.log("Finished loading");
+                }
+            }, 1000);
+        }
 
         this.isInitialized = true;
     }
@@ -431,6 +443,7 @@ export default class DOMController extends BlockController implements DOMControl
     }
 
     beforeReload() {
+        if (this.usingEditor) return;
         this.loadingPanel.classList.remove("complete");
     }
 

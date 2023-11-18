@@ -12,7 +12,7 @@
         @apply flex flex-col justify-center relative mx-auto my-32 md:my-8 w-11/12 max-w-csek-max box-border h-max;
 
         & .tagline {
-            @apply text-7xl leading-none mb-8 mt-0 md:my-8;
+            @apply text-6xl leading-none mb-8 mt-0 md:my-8;
         }
 
         & .copy-text {

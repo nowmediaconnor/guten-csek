@@ -230,8 +230,7 @@ registerBlockType("guten-csek/chicago-fires-block", {
 registerAllBlocks();
 
 window.addEventListener("load", (e) => {
-    console.log("Window loaded.");
-    console.log({ windowWidth: window.innerWidth, windowHeight: window.innerHeight });
+    console.log("[Csek Creative] Window loaded.");
 
     /* Prepare Accumulator Elements */
     runAccumulators();

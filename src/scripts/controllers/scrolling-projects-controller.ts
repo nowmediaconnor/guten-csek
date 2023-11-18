@@ -29,6 +29,8 @@ export default class ScrollingProjectsController extends BlockController {
     viewProjectButton: HTMLElement | null = null;
 
     marqueeControllers: ProjectsMarqueeController[] = [];
+    canvasContainers: HTMLElement[] = [];
+    projectNameHeadings: HTMLHeadingElement[] = [];
     blurbs: HTMLElement[] = [];
     projectImages: HTMLImageElement[] = [];
     viewProjectButtons: HTMLElement[] = [];
@@ -116,20 +118,24 @@ export default class ScrollingProjectsController extends BlockController {
 
             this.precalculateColors(block);
 
+            const canvasContainer = block.querySelector(".canvas-container") as HTMLElement;
+            const selectedProjectHeading = block.querySelector(".selected-project-name") as HTMLHeadingElement;
             const blurb = block.querySelector(".project-blurb") as HTMLElement;
             const projectImage = block.querySelector(".project-image") as HTMLImageElement;
             const viewProjectButton = block.querySelector(".view-button") as HTMLElement;
 
-            if (!blurb || !projectImage || !viewProjectButton) {
+            if (!canvasContainer || !selectedProjectHeading || !blurb || !projectImage || !viewProjectButton) {
                 this.err("No blurb, project image, or view project button found");
                 return;
             }
 
+            this.canvasContainers[i] = canvasContainer;
+            this.projectNameHeadings[i] = selectedProjectHeading;
             this.blurbs[i] = blurb;
             this.projectImages[i] = projectImage;
             this.viewProjectButtons[i] = viewProjectButton;
 
-            const marqueeController = new ProjectsMarqueeController(block);
+            const marqueeController = new ProjectsMarqueeController(canvasContainer);
             marqueeController.setup();
             this.marqueeControllers[i] = marqueeController;
 
@@ -182,6 +188,7 @@ export default class ScrollingProjectsController extends BlockController {
             return false;
         }
         this.highlightedProjectNames[blockIndex] = randomProjectName;
+        this.projectNameHeadings[blockIndex].innerHTML = randomProjectName;
         block.setAttribute("data-project", randomProjectName);
         viewProjectButton.querySelector("a")?.setAttribute("href", randomProjectUrl || "#not-found");
 
