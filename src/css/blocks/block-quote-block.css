@@ -6,7 +6,7 @@
 /* Block Quote */
 
 .wp-block-guten-csek-block-quote-block {
-    @apply w-full font-syne md:px-16 py-8 md:py-16 relative;
+    @apply hidden md:block w-full font-syne md:px-16 py-8 md:py-16 relative;
 
     & blockquote {
         @apply mx-auto text-left text-2xl md:text-4xl leading-[1.2] z-10;
