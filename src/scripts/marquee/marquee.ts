@@ -81,7 +81,7 @@ export class MarqueeCanvas {
         const testStringDims = this.textDimensions(testString);
         const testH = testStringDims.h;
 
-        this.spacing = this.spacesAround(testH, this.height, this.rowCount);
+        this.spacing = this.spacesAround(testH, this.height, this.rowCount, testStringDims.acc);
     }
 
     update() {
@@ -100,7 +100,8 @@ export class MarqueeCanvas {
             row.draw(0, this.spacing[i]);
 
             if (i !== this.rowCount - 1) {
-                const y = this.spacing[i] + row.height * 0.9;
+                const topDiff = this.spacing[i + 1] - this.spacing[i];
+                const y = this.spacing[i] + (topDiff - row.acc) / 2 + row.dec / 2;
                 this.drawHorizontalLine(y);
             }
         }
@@ -130,6 +131,11 @@ export class MarqueeCanvas {
         this.ctx.fillRect(0, 0, this.width, this.height);
     }
 
+    rect(x: number, y: number, w: number, h: number, color: string) {
+        this.ctx.strokeStyle = color;
+        this.ctx.strokeRect(x, y, w, h);
+    }
+
     text(text: string, x: number, y: number, color?: string, font?: string) {
         if (color) this.ctx.fillStyle = color;
         else this.ctx.fillStyle = "black";
@@ -147,10 +153,12 @@ export class MarqueeCanvas {
         const measured = this.ctx.measureText(text);
         const w = Math.floor(measured.width);
         const h = Math.floor(measured.actualBoundingBoxAscent + measured.actualBoundingBoxDescent);
-        return { w, h };
+        const acc = Math.floor(measured.actualBoundingBoxAscent);
+        const dec = Math.floor(measured.actualBoundingBoxDescent);
+        return { w, h, acc, dec };
     }
 
-    spacesAround(elementHeight: number, parentHeight: number, numberOfElements: number) {
+    spacesAround(elementHeight: number, parentHeight: number, numberOfElements: number, offset: number = 0) {
         // Calculate the total height of all elements
         const totalElementHeight = elementHeight * numberOfElements;
 
@@ -163,28 +171,12 @@ export class MarqueeCanvas {
         // Calculate the space around each element
         const spaceAround = remainingSpace / (numberOfElements + 1);
 
-        // Initialize the top position of the first element, adjusted for center alignment
-        // const difference = remainingSpace / 2 - totalElementHeight / 2;
-        const difference = spaceAround;
-
-        // Ensure topPosition is not less than 0 or greater than parentHeight - totalElementHeight
-        const topPosition: number = difference + elementHeight;
-
-        // Initialize an array to hold the top positions
+        // Calculate the top positions of each element
         const topPositions: number[] = [];
-
-        let tempTopPosition = topPosition;
-
-        // Calculate the top position for each element
         for (let i = 0; i < numberOfElements; i++) {
-            // Add the top position to the array
-            topPositions.push(tempTopPosition);
-
-            // Update the top position for the next element
-            tempTopPosition += elementHeight + spaceAround;
+            const top = spaceAround * (i + 1) + elementHeight * i + offset;
+            topPositions.push(top);
         }
-
-        // console.log({ topPosition, topPositions });
 
         // Return the top positions
         return topPositions;

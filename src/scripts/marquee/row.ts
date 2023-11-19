@@ -16,6 +16,8 @@ export class Strip {
 
     width: number;
     height: number;
+    acc: number;
+    dec: number;
 
     fadeInAmt: number = 0;
     fadeOutAmt: number = 1;
@@ -38,18 +40,22 @@ export class Strip {
         const dimensions = this.calculateDimensions();
         this.width = dimensions.w;
         this.height = dimensions.h;
+        this.acc = dimensions.acc;
+        this.dec = dimensions.dec;
     }
 
-    calculateDimensions(): { w: number; h: number } {
+    calculateDimensions(): { w: number; h: number; acc: number; dec: number } {
         return this.words.reduce(
             (acc, word) => {
                 const dimensions = this.mq.textDimensions(word);
                 return {
                     w: acc.w + dimensions.w + Strip.wordSpacing,
                     h: Math.max(acc.h, dimensions.h),
+                    acc: Math.max(acc.acc, dimensions.acc),
+                    dec: Math.max(acc.dec, dimensions.dec),
                 };
             },
-            { w: 0, h: 0 }
+            { w: 0, h: 0, acc: 0, dec: 0 }
         );
     }
 
@@ -104,6 +110,8 @@ export class Ribbon {
 
     width: number;
     height: number;
+    acc: number;
+    dec: number;
 
     constructor(mq: MarqueeCanvas, words: string[]) {
         this.mq = mq;
@@ -121,6 +129,8 @@ export class Ribbon {
 
         this.width = this.calculateWidth();
         this.height = firstStrip.height;
+        this.acc = firstStrip.acc;
+        this.dec = firstStrip.dec;
     }
 
     calculateWidth(): number {
@@ -184,6 +194,14 @@ export class Row {
 
     get height(): number {
         return this.primaryRibbon.height;
+    }
+
+    get acc(): number {
+        return this.primaryRibbon.acc;
+    }
+
+    get dec(): number {
+        return this.primaryRibbon.dec;
     }
 
     update() {
