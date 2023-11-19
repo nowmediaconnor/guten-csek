@@ -3,10 +3,8 @@
  * Author: Connor Doman
  */
 
-import { shuffle } from "../array";
-import { BlockController, ControllerProperties } from "../dom";
-import { getImageColor, imageToBase64 } from "../files";
-import { randomInRange, randomIntInRange } from "../math";
+import { BlockController } from "../dom";
+import { getImageColor } from "../files";
 import ProjectsMarqueeController from "./projects-marquee-controller";
 
 interface SelectedProject {
@@ -79,11 +77,11 @@ export class ScrollingProjectsBlock {
         this.update();
         this.marqueeController.setup();
 
-        document.addEventListener("visibilitychange", () => {
-            if (document.visibilityState === "visible" && this.fadedOut) {
-                this.start();
-            }
-        });
+        // document.addEventListener("visibilitychange", () => {
+        //     if (document.visibilityState === "visible" && this.fadedOut) {
+        //         this.start();
+        //     }
+        // });
     }
 
     prepObserver() {
@@ -147,20 +145,13 @@ export class ScrollingProjectsBlock {
         }
 
         for (const project of this.projectData) {
-            const tempIntervalId = window.setInterval(async () => {
-                if (project.color !== ScrollingProjectsBlock.defaultColor) {
-                    window.clearInterval(tempIntervalId);
-                    return;
-                }
-
-                try {
-                    const imageColor: string = await getImageColor(project.imageUrl.href);
-                    this.log(`Found color for ${project.name}:`, imageColor);
-                    project.color = imageColor;
-                } catch (err: any) {
-                    console.error("Error:", err);
-                }
-            }, ScrollingProjectsBlock.retryColorDelayMs);
+            try {
+                const imageColor: string = await getImageColor(project.imageUrl.href);
+                this.log(`Found color for ${project.name}:`, imageColor);
+                project.color = imageColor;
+            } catch (err: any) {
+                console.error("Error:", err);
+            }
         }
 
         this.log({ projectData: this.projectData });
