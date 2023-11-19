@@ -9,6 +9,103 @@ import { getImageColor, imageToBase64 } from "../files";
 import { randomInRange, randomIntInRange } from "../math";
 import ProjectsMarqueeController from "./projects-marquee-controller";
 
+interface SelectedProject {
+    name: string;
+    url: URL;
+    color: string;
+}
+
+export class ScrollingProjectsBlock {
+    block: HTMLElement;
+    projectNameHeading: HTMLHeadingElement;
+    blurb: HTMLElement;
+    projectImage: HTMLImageElement;
+    viewProjectButton: HTMLElement;
+
+    projectData: SelectedProject[];
+    currentProject: SelectedProject;
+    randomProjectOrder: number[];
+
+    constructor(block: HTMLElement) {
+        this.block = block;
+
+        this.projectNameHeading = block.querySelector(".selected-project-name") as HTMLHeadingElement;
+        this.blurb = block.querySelector(".project-blurb") as HTMLElement;
+        this.projectImage = block.querySelector(".project-image") as HTMLImageElement;
+        this.viewProjectButton = block.querySelector(".view-button") as HTMLElement;
+
+        this.currentProject = {
+            name: "Our Projects",
+            url: new URL("#not-found", window.location.href),
+            color: "#131313",
+        };
+
+        this.gatherProjectData();
+        this.precalculateColors();
+        this.shuffleProjectOrder();
+    }
+
+    gatherProjectData() {
+        const allProjects = this.block.querySelectorAll(".project-ribbon ul li");
+        if (!allProjects) {
+            this.projectData = [];
+            return;
+        }
+
+        const seenProjects: string[] = [];
+        const projectData: SelectedProject[] = [];
+        for (let i = 0; i < allProjects.length; i++) {
+            const project = allProjects[i];
+            if (!project) continue;
+
+            const link = project.querySelector("a");
+            if (!link) continue;
+
+            const name = link.innerHTML;
+            if (seenProjects.includes(name)) continue;
+            seenProjects.push(name);
+
+            const url = new URL(link.href);
+
+            projectData.push({ name, url, color: "#131313" });
+        }
+
+        this.projectData = projectData;
+    }
+
+    async precalculateColors() {
+        if (!this.projectData) return;
+
+        for (const project of this.projectData) {
+            while (!project.color) {
+                try {
+                    const imageColor: string = await getImageColor(project.url.href);
+
+                    project.color = imageColor;
+                } catch (err: any) {
+                    console.log("Error:", err);
+                }
+            }
+        }
+    }
+
+    shuffleProjectOrder() {
+        const shuffled: number[] = [];
+        const used = new Set<number>();
+
+        while (shuffled.length < this.projectData.length) {
+            const index = Math.floor(Math.random() * this.projectData.length);
+
+            if (!used.has(index)) {
+                used.add(index);
+                shuffled.push(index);
+            }
+        }
+
+        this.randomProjectOrder = shuffled;
+    }
+}
+
 export default class ScrollingProjectsController extends BlockController {
     name: string;
     debug: boolean = true;
