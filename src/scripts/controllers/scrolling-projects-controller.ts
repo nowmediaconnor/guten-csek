@@ -12,23 +12,35 @@ import ProjectsMarqueeController from "./projects-marquee-controller";
 interface SelectedProject {
     name: string;
     url: URL;
+    imageUrl: URL;
     color: string;
 }
 
 export class ScrollingProjectsBlock {
+    static readonly nextProjectDelayMs: number = 10000;
+    static readonly retryColorDelayMs: number = 250;
+    static readonly defaultColor: string = "#e9ebea";
+
     block: HTMLElement;
+    canvasContainer: HTMLElement;
     projectNameHeading: HTMLHeadingElement;
     blurb: HTMLElement;
     projectImage: HTMLImageElement;
     viewProjectButton: HTMLElement;
 
+    marqueeController: ProjectsMarqueeController;
+
     projectData: SelectedProject[];
     currentProject: SelectedProject;
     randomProjectOrder: number[];
 
+    currentProjectIndex: number = 0;
+    updateProjectIntervalId: number = -1;
+
     constructor(block: HTMLElement) {
         this.block = block;
 
+        this.canvasContainer = block.querySelector(".canvas-container") as HTMLElement;
         this.projectNameHeading = block.querySelector(".selected-project-name") as HTMLHeadingElement;
         this.blurb = block.querySelector(".project-blurb") as HTMLElement;
         this.projectImage = block.querySelector(".project-image") as HTMLImageElement;
@@ -37,12 +49,17 @@ export class ScrollingProjectsBlock {
         this.currentProject = {
             name: "Our Projects",
             url: new URL("#not-found", window.location.href),
-            color: "#131313",
+            imageUrl: new URL("#not-found", window.location.href),
+            color: ScrollingProjectsBlock.defaultColor,
         };
+
+        this.marqueeController = new ProjectsMarqueeController(this.canvasContainer);
 
         this.gatherProjectData();
         this.precalculateColors();
         this.shuffleProjectOrder();
+        this.update();
+        this.marqueeController.setup();
     }
 
     gatherProjectData() {
@@ -61,32 +78,46 @@ export class ScrollingProjectsBlock {
             const link = project.querySelector("a");
             if (!link) continue;
 
+            const imageSrc = project.querySelector("img")?.src;
+            if (!imageSrc) continue;
+
             const name = link.innerHTML;
             if (seenProjects.includes(name)) continue;
             seenProjects.push(name);
 
             const url = new URL(link.href);
+            const imageUrl = new URL(imageSrc);
 
-            projectData.push({ name, url, color: "#131313" });
+            projectData.push({ name, url, imageUrl, color: ScrollingProjectsBlock.defaultColor });
         }
 
         this.projectData = projectData;
     }
 
     async precalculateColors() {
-        if (!this.projectData) return;
+        if (!this.projectData) {
+            this.log("Tried to find colors, no project data found");
+            return;
+        }
 
         for (const project of this.projectData) {
-            while (!project.color) {
-                try {
-                    const imageColor: string = await getImageColor(project.url.href);
+            const tempIntervalId = window.setInterval(async () => {
+                if (project.color !== ScrollingProjectsBlock.defaultColor) {
+                    window.clearInterval(tempIntervalId);
+                    return;
+                }
 
+                try {
+                    const imageColor: string = await getImageColor(project.imageUrl.href);
+                    this.log(`Found color for ${project.name}:`, imageColor);
                     project.color = imageColor;
                 } catch (err: any) {
-                    console.log("Error:", err);
+                    console.error("Error:", err);
                 }
-            }
+            }, ScrollingProjectsBlock.retryColorDelayMs);
         }
+
+        this.log({ projectData: this.projectData });
     }
 
     shuffleProjectOrder() {
@@ -103,6 +134,75 @@ export class ScrollingProjectsBlock {
         }
 
         this.randomProjectOrder = shuffled;
+    }
+
+    updateCurrentProject() {
+        if (!this.projectData) return;
+
+        const index = this.randomProjectOrder[this.currentProjectIndex];
+        const project = this.projectData[index];
+
+        this.currentProject = project;
+    }
+
+    nextProject() {
+        this.currentProjectIndex = (this.currentProjectIndex + 1) % this.projectData.length;
+        this.updateCurrentProject();
+    }
+
+    previousProject() {
+        this.currentProjectIndex = (this.currentProjectIndex - 1) % this.projectData.length;
+        this.updateCurrentProject();
+    }
+
+    update() {
+        this.updateCurrentProject();
+        this.fadeOut();
+        this.projectImage.addEventListener("transitionend", () => {
+            this.updateShowcasedElements();
+            this.fadeIn();
+        });
+    }
+
+    updateShowcasedElements() {
+        this.projectNameHeading.innerHTML = this.currentProject.name;
+        this.blurb.style.setProperty("--project-blurb-color", this.currentProject.color);
+        this.projectImage.src = this.currentProject.imageUrl.href;
+        this.viewProjectButton.querySelector("a")?.setAttribute("href", this.currentProject.url.href);
+    }
+
+    fadeOutProjectImage() {
+        this.projectImage.style.opacity = "0";
+    }
+
+    fadeInProjectImage() {
+        this.projectImage.style.opacity = "1";
+    }
+
+    fadeOut() {
+        this.fadeOutProjectImage();
+        this.projectNameHeading.style.opacity = "0";
+        this.blurb.style.setProperty("--project-blurb-color", ScrollingProjectsBlock.defaultColor);
+    }
+
+    fadeIn() {
+        this.fadeInProjectImage();
+        this.projectNameHeading.style.opacity = "1";
+    }
+
+    start() {
+        this.updateProjectIntervalId = window.setInterval(() => {
+            this.nextProject();
+            this.update();
+        }, ScrollingProjectsBlock.nextProjectDelayMs);
+    }
+
+    stop() {
+        window.clearInterval(this.updateProjectIntervalId);
+    }
+
+    log(...args: any[]) {
+        console.log(`[${this.constructor.name}]`, ...args);
     }
 }
 
@@ -140,6 +240,8 @@ export default class ScrollingProjectsController extends BlockController {
     colorCache: Map<string, string> = new Map<string, string>();
 
     isInitialized: boolean;
+
+    projectsBlocks: ScrollingProjectsBlock[] = [];
 
     constructor(scrollingProjectsBlockClassName: string) {
         super();
@@ -213,32 +315,38 @@ export default class ScrollingProjectsController extends BlockController {
         this.blocks.forEach((block: HTMLElement, i: number) => {
             if (!block) return;
 
-            this.precalculateColors(block);
+            const scrollingProjectsBlock = new ScrollingProjectsBlock(block);
 
-            const canvasContainer = block.querySelector(".canvas-container") as HTMLElement;
-            const selectedProjectHeading = block.querySelector(".selected-project-name") as HTMLHeadingElement;
-            const blurb = block.querySelector(".project-blurb") as HTMLElement;
-            const projectImage = block.querySelector(".project-image") as HTMLImageElement;
-            const viewProjectButton = block.querySelector(".view-button") as HTMLElement;
+            // this.precalculateColors(block);
 
-            if (!canvasContainer || !selectedProjectHeading || !blurb || !projectImage || !viewProjectButton) {
-                this.err("No blurb, project image, or view project button found");
-                return;
-            }
+            // const canvasContainer = block.querySelector(".canvas-container") as HTMLElement;
+            // const selectedProjectHeading = block.querySelector(".selected-project-name") as HTMLHeadingElement;
+            // const blurb = block.querySelector(".project-blurb") as HTMLElement;
+            // const projectImage = block.querySelector(".project-image") as HTMLImageElement;
+            // const viewProjectButton = block.querySelector(".view-button") as HTMLElement;
 
-            this.canvasContainers[i] = canvasContainer;
-            this.projectNameHeadings[i] = selectedProjectHeading;
-            this.blurbs[i] = blurb;
-            this.projectImages[i] = projectImage;
-            this.viewProjectButtons[i] = viewProjectButton;
+            // if (!canvasContainer || !selectedProjectHeading || !blurb || !projectImage || !viewProjectButton) {
+            //     this.err("No blurb, project image, or view project button found");
+            //     return;
+            // }
 
-            const marqueeController = new ProjectsMarqueeController(canvasContainer);
-            marqueeController.setup();
-            this.marqueeControllers[i] = marqueeController;
+            // this.canvasContainers[i] = canvasContainer;
+            // this.projectNameHeadings[i] = selectedProjectHeading;
+            // this.blurbs[i] = blurb;
+            // this.projectImages[i] = projectImage;
+            // this.viewProjectButtons[i] = viewProjectButton;
 
-            this.randomProjectIntervalId = window.setInterval(() => {
-                while (!this.selectRandomProject(i));
-            }, this.randomProjectRateMilliseconds);
+            // const marqueeController = new ProjectsMarqueeController(canvasContainer);
+            // marqueeController.setup();
+            // this.marqueeControllers[i] = marqueeController;
+
+            // this.randomProjectIntervalId = window.setInterval(() => {
+            //     while (!this.selectRandomProject(i));
+            // }, this.randomProjectRateMilliseconds);
+
+            this.projectsBlocks[i] = scrollingProjectsBlock;
+
+            this.projectsBlocks[i].start();
         });
 
         this.log(

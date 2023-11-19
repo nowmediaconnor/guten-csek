@@ -13,7 +13,7 @@
     }
 
     & .selected-project-name {
-        @apply md:hidden absolute left-1/2 top-16 z-40 w-11/12 -translate-x-1/2 text-csek-dark font-syne text-3xl font-bold text-center uppercase transition-all duration-200;
+        @apply md:hidden absolute left-1/2 top-16 z-40 w-11/12 -translate-x-1/2 text-csek-dark font-syne text-3xl font-bold text-center uppercase transition-opacity duration-1000;
     }
 
     & .canvas-container {
@@ -65,7 +65,7 @@
 }
 
 .project-blurb:before {
-    @apply absolute h-[20rem] md:h-[30rem] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transition-all ease-in-out duration-200 shadow-lg aspect-blurb;
+    @apply absolute h-[20rem] md:h-[30rem] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transition-all ease-in-out duration-1000 shadow-lg aspect-blurb;
     content: "";
     background-color: var(--project-blurb-color);
     /* width: calc(var(--project-blurb-height) * var(--project-blurb-aspect));
