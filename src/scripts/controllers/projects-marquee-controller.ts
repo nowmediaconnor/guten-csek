@@ -44,7 +44,7 @@ export default class ProjectsMarqueeController extends BlockController {
         }
     }
 
-    prepCanvas(block: HTMLElement) {
+    prepCanvas(block: HTMLElement, projectNames?: string[]) {
         const projectsArea = block.querySelector(".projects") as HTMLElement;
 
         if (projectsArea) {
@@ -55,7 +55,8 @@ export default class ProjectsMarqueeController extends BlockController {
         const blockWidth = blockRect.width;
         const blockHeight = blockRect.height;
 
-        this.getProjectsFromBlock();
+        if (!projectNames) this.getProjectsFromBlock();
+        else if (projectNames) this.projectNames = projectNames;
 
         Strip.wordSpacing = 64;
         this.marquee = new MarqueeCanvas(block, blockWidth, blockHeight, 3);

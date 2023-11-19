@@ -51,6 +51,7 @@ export class MarqueeCanvas {
     }
 
     set words(words: string[]) {
+        console.log("Setting words in marquee...");
         this._words = words;
     }
 

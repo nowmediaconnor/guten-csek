@@ -37,6 +37,10 @@ export class ScrollingProjectsBlock {
     currentProjectIndex: number = 0;
     updateProjectIntervalId: number = -1;
 
+    fadedOut: boolean = false;
+
+    observer: IntersectionObserver;
+
     constructor(block: HTMLElement) {
         this.block = block;
 
@@ -54,12 +58,6 @@ export class ScrollingProjectsBlock {
         };
 
         this.marqueeController = new ProjectsMarqueeController(this.canvasContainer);
-
-        this.gatherProjectData();
-        this.precalculateColors();
-        this.shuffleProjectOrder();
-        this.update();
-        this.marqueeController.setup();
     }
 
     get blockElements() {
@@ -71,6 +69,43 @@ export class ScrollingProjectsBlock {
             projectImage: this.projectImage,
             viewProjectButton: this.viewProjectButton,
         };
+    }
+
+    setup() {
+        this.prepObserver();
+        this.gatherProjectData();
+        this.precalculateColors();
+        this.shuffleProjectOrder();
+        this.update();
+        this.marqueeController.setup();
+
+        document.addEventListener("visibilitychange", () => {
+            if (document.visibilityState === "visible" && this.fadedOut) {
+                this.start();
+            }
+        });
+    }
+
+    prepObserver() {
+        const observerOptions = {
+            root: null,
+            rootMargin: "0px",
+            threshold: 0,
+        };
+
+        this.observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    this.log("Starting scrolling projects block");
+                    this.start();
+                } else {
+                    this.log("Stopping scrolling projects block");
+                    this.stop();
+                }
+            });
+        }, observerOptions);
+
+        this.observer.observe(this.block);
     }
 
     gatherProjectData() {
@@ -194,12 +229,13 @@ export class ScrollingProjectsBlock {
     fadeOut() {
         this.fadeOutProjectImage();
         this.projectNameHeading.style.opacity = "0";
-        // this.blurb.style.setProperty("--project-blurb-color", ScrollingProjectsBlock.defaultColor);
+        this.fadedOut = true;
     }
 
     fadeIn() {
         this.fadeInProjectImage();
         this.projectNameHeading.style.opacity = "1";
+        this.fadedOut = false;
     }
 
     start() {
@@ -255,8 +291,8 @@ export default class ScrollingProjectsController extends BlockController {
             if (!block) return;
 
             const scrollingProjectsBlock = new ScrollingProjectsBlock(block);
+            scrollingProjectsBlock.setup();
             this.projectsBlocks[i] = scrollingProjectsBlock;
-            this.projectsBlocks[i].start();
         });
 
         this.isInitialized = true;

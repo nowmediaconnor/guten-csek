@@ -181,6 +181,7 @@ export class Row {
         if (direction) this.direction = direction;
 
         this.primaryRibbon = new Ribbon(mq, words);
+        this.primaryRibbon.offset = Math.random() * this.primaryRibbon.width * this.direction;
         this.secondaryRibbon = this.primaryRibbon.clone();
 
         this.direction
