@@ -3,6 +3,7 @@
  * Author: Connor Doman
  */
 
+import { Curtains } from "../curtainify";
 import { getSiblings, ControllerProperties, BlockController } from "../dom";
 import { randomIntInRange } from "../math";
 
@@ -19,6 +20,8 @@ export default class ExpandingVideoController extends BlockController {
     scrollLockPos: number;
     videoExpanded: boolean;
 
+    curtains: Curtains;
+
     static scrollThreshold: number = 150;
 
     constructor(blockClassName: string) {
@@ -33,6 +36,11 @@ export default class ExpandingVideoController extends BlockController {
         if (this.invalid(block)) {
             this.log("No expanding video block found.");
             return;
+        }
+
+        if (block) {
+            this.curtains = new Curtains(block as HTMLElement);
+            this.curtains.setup();
         }
 
         this.expandingVideos = block?.querySelectorAll(".expanding-video-container") as NodeListOf<HTMLElement>;
@@ -79,27 +87,15 @@ export default class ExpandingVideoController extends BlockController {
     }
 
     onScroll(e: Event, pos: number) {
-        if (this.expandingVideos.length === 0) return;
+        this.curtains.onScroll(e, pos);
 
-        if (this.scrollLocked) {
-            e.preventDefault();
-            e.stopPropagation();
-            return;
-        }
+        if (this.expandingVideos.length === 0) return;
 
         this.expandingVideos.forEach((container: HTMLElement) => {
             const parent = container.parentElement;
             if (!parent) return;
 
             const rect = parent.getBoundingClientRect();
-            // this.log(JSON.stringify(rect, null, 4));
-
-            if (this.videoExpanded && Math.floor(rect.top) === 0) {
-                this.log("Scroll locked");
-                this.scrollLocked = true;
-                this.scrollLockPos = pos;
-                return;
-            }
 
             if (rect.top <= ExpandingVideoController.scrollThreshold) {
                 this.expandVideo(container);
@@ -110,4 +106,8 @@ export default class ExpandingVideoController extends BlockController {
     }
 
     onMouseMove(e: MouseEvent, blockIndex: number): void {}
+
+    beforeReload() {
+        window.scrollTo(0, 0);
+    }
 }

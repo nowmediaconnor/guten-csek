@@ -4,7 +4,7 @@
  */
 
 import { BlockController, ControllerProperties } from "../dom";
-import { prepareCurtainElements } from "../curtainify";
+import { Curtains, prepareCurtainElements } from "../curtainify";
 
 export default class CurtainifyController extends BlockController {
     name: string;
@@ -13,6 +13,8 @@ export default class CurtainifyController extends BlockController {
     block: HTMLElement;
     blocks: NodeListOf<HTMLElement>;
 
+    curtains: Curtains[];
+
     constructor() {
         super();
         this.name = "CurtainifyController";
@@ -20,11 +22,12 @@ export default class CurtainifyController extends BlockController {
 
     setup(): void {
         prepareCurtainElements();
+
         this.isInitialized = true;
     }
 
     beforeReload() {
-        window.scrollTo(0, 0);
+        // window.scrollTo(0, 0);
     }
 
     onMouseMove(e: MouseEvent, blockIndex: number): void {}

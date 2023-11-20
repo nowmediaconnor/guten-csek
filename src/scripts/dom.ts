@@ -180,7 +180,7 @@ export abstract class BlockController implements ControllerProperties {
     name: string;
     debug: boolean;
     isInitialized: boolean;
-    abstract blocks: NodeListOf<HTMLElement>;
+    blocks: NodeListOf<HTMLElement>;
 
     static get isMobile(): boolean {
         return window.innerWidth <= 768;
@@ -476,5 +476,14 @@ export default class DOMController extends BlockController implements DOMControl
 
     async setFeaturedImageColors() {
         await updateFeaturedImageColorDerivatives();
+    }
+
+    static insertAfter = (newNode: Node, referenceNode: Node) => {
+        if (!referenceNode.parentNode) return;
+        referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
+    };
+
+    static getImmediateSuccessors(node: HTMLElement): HTMLElement[] {
+        return Array.from(node.children) as HTMLElement[];
     }
 }

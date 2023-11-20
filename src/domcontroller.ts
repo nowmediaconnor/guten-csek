@@ -54,7 +54,7 @@ export const prepareBlockControllers = () => {
 
     // DOM controller
     return new DOMController(
-        curtainifyController,
+        // curtainifyController,
         scrollController,
         videoCarouselController,
         scrollingProjectsController,
