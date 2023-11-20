@@ -173,6 +173,7 @@ export interface ControllerProperties {
     beforeReload?(): void;
     scroll?(scrollY?: number): void;
     onMouseMove?(e: MouseEvent, blockIndex: number): void;
+    onScroll?(e: Event, pos: number): void;
 }
 
 export abstract class BlockController implements ControllerProperties {
@@ -192,6 +193,8 @@ export abstract class BlockController implements ControllerProperties {
     abstract setup(): void;
 
     abstract onMouseMove?(e: MouseEvent, blockIndex: number): void;
+
+    abstract onScroll?(e: Event, pos: number): void;
 
     invalid(truthy: any): boolean {
         if (truthy) {
@@ -370,6 +373,7 @@ export default class DOMController extends BlockController implements DOMControl
                 // prepare scroll listeners
                 window.addEventListener("scroll", (e) => {
                     // this.scroll();
+                    this.onScroll(e, window.scrollY);
 
                     const scrollY = window.scrollY;
 
@@ -463,6 +467,12 @@ export default class DOMController extends BlockController implements DOMControl
     }
 
     onMouseMove(e: MouseEvent, blockIndex: number): void {}
+
+    onScroll(e: Event, pos: number): void {
+        for (const controller of this.blockControllers) {
+            if (controller.onScroll) controller.onScroll(e, pos);
+        }
+    }
 
     async setFeaturedImageColors() {
         await updateFeaturedImageColorDerivatives();

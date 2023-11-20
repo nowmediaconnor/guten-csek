@@ -173,4 +173,6 @@ export default class CarouselController extends BlockController {
     }
 
     onMouseMove(e: MouseEvent, blockIndex: number): void {}
+
+    onScroll(e: Event, pos: number): void {}
 }

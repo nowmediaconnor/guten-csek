@@ -321,4 +321,6 @@ export default class ScrollingProjectsController extends BlockController {
         else if (newY > blockRect.height - buttonHalfHeight)
             viewProjectButton.style.top = `${blockRect.height - buttonHalfHeight}px`;
     }
+
+    onScroll(e: Event, pos: number): void {}
 }

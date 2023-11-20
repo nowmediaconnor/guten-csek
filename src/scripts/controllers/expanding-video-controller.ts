@@ -15,6 +15,10 @@ export default class ExpandingVideoController extends BlockController {
     floatingImages: NodeListOf<HTMLElement>;
     blocks: NodeListOf<HTMLElement>;
 
+    scrollLocked: boolean;
+    scrollLockPos: number;
+    videoExpanded: boolean;
+
     static scrollThreshold: number = 150;
 
     constructor(blockClassName: string) {
@@ -46,7 +50,7 @@ export default class ExpandingVideoController extends BlockController {
             image.style.animationDelay = `${randomIntInRange(100, 750)}ms`;
         });
 
-        this.addScrollEventListener();
+        this.addExpandEventListener();
         this.isInitialized = true;
     }
 
@@ -75,8 +79,10 @@ export default class ExpandingVideoController extends BlockController {
         otherElements.forEach((elmt: Node) => (elmt as HTMLElement).classList.remove("disappear"));
     }
 
-    onScroll(pos: number) {
+    onScroll(e: Event, pos: number) {
         if (this.expandingVideos.length === 0) return;
+
+        if (this.scrollLocked) window.scrollTo(0, this.scrollLockPos);
 
         this.expandingVideos.forEach((container: HTMLElement) => {
             const parent = container.parentElement;
@@ -84,6 +90,14 @@ export default class ExpandingVideoController extends BlockController {
 
             const rect = parent.getBoundingClientRect();
             // this.log(JSON.stringify(rect, null, 4));
+
+            if (this.videoExpanded && Math.floor(rect.top) === 0) {
+                this.log("Scroll locked");
+                this.scrollLocked = true;
+                this.scrollLockPos = pos;
+                return;
+            }
+
             if (rect.top <= ExpandingVideoController.scrollThreshold) {
                 this.expandVideo(container);
             } else {
@@ -92,10 +106,31 @@ export default class ExpandingVideoController extends BlockController {
         });
     }
 
-    addScrollEventListener() {
-        window.addEventListener("scroll", () => {
-            const pos = window.scrollY;
-            this.onScroll(pos);
+    addExpandEventListener() {
+        this.expandingVideos.forEach((container: HTMLElement) => {
+            const paragraph = container.querySelector(".message") as HTMLElement;
+
+            paragraph?.addEventListener("transitionend", (event) => {
+                if (event.propertyName !== "top") return;
+
+                this.log("Paragraph reached top");
+
+                const rect = container.parentElement?.getBoundingClientRect();
+                if (!rect) return;
+
+                if (rect.top === 0) {
+                    this.scrollLocked = false;
+                }
+            });
+
+            container.addEventListener("transitionend", (event) => {
+                if (event.propertyName !== "width") return;
+
+                const rect = container.parentElement?.getBoundingClientRect();
+                if (!rect) return;
+                this.log("Video expanded");
+                this.videoExpanded = true;
+            });
         });
     }
 

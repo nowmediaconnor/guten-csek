@@ -134,4 +134,6 @@ export default class ProjectsMarqueeController extends BlockController {
     }
 
     onMouseMove(e: MouseEvent, blockIndex: number): void {}
+
+    onScroll(e: Event, pos: number): void {}
 }

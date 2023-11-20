@@ -59,4 +59,6 @@ export default class ScrollDownController extends BlockController {
     }
 
     onMouseMove(e: MouseEvent, blockIndex: number): void {}
+
+    onScroll(e: Event, pos: number): void {}
 }
