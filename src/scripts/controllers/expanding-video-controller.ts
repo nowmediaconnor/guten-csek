@@ -50,7 +50,6 @@ export default class ExpandingVideoController extends BlockController {
             image.style.animationDelay = `${randomIntInRange(100, 750)}ms`;
         });
 
-        this.addExpandEventListener();
         this.isInitialized = true;
     }
 
@@ -82,7 +81,11 @@ export default class ExpandingVideoController extends BlockController {
     onScroll(e: Event, pos: number) {
         if (this.expandingVideos.length === 0) return;
 
-        if (this.scrollLocked) window.scrollTo(0, this.scrollLockPos);
+        if (this.scrollLocked) {
+            e.preventDefault();
+            e.stopPropagation();
+            return;
+        }
 
         this.expandingVideos.forEach((container: HTMLElement) => {
             const parent = container.parentElement;
@@ -103,34 +106,6 @@ export default class ExpandingVideoController extends BlockController {
             } else {
                 this.retractVideo(container);
             }
-        });
-    }
-
-    addExpandEventListener() {
-        this.expandingVideos.forEach((container: HTMLElement) => {
-            const paragraph = container.querySelector(".message") as HTMLElement;
-
-            paragraph?.addEventListener("transitionend", (event) => {
-                if (event.propertyName !== "top") return;
-
-                this.log("Paragraph reached top");
-
-                const rect = container.parentElement?.getBoundingClientRect();
-                if (!rect) return;
-
-                if (rect.top === 0) {
-                    this.scrollLocked = false;
-                }
-            });
-
-            container.addEventListener("transitionend", (event) => {
-                if (event.propertyName !== "width") return;
-
-                const rect = container.parentElement?.getBoundingClientRect();
-                if (!rect) return;
-                this.log("Video expanded");
-                this.videoExpanded = true;
-            });
         });
     }
 
