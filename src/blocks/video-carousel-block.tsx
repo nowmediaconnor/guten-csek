@@ -131,7 +131,7 @@ export const VideoCarouselBlockSave = ({ attributes }: VideoCarouselBlockProps) 
 
         return (
             <div className="video-block">
-                <video controls={false} onPlay={(e) => e.preventDefault()}>
+                <video controls={false} onPlay={(e) => e.preventDefault()} preload="none">
                     <source src={url} type="video/mp4" />
                 </video>
                 <div className="video-caption">
@@ -152,7 +152,7 @@ export const VideoCarouselBlockSave = ({ attributes }: VideoCarouselBlockProps) 
                 <a href="#closedialog" className="close-dialog">
                     <i className="fas fa-x"></i>
                 </a>
-                <video controls={false}>
+                <video controls={false} preload="none">
                     Videos aren't supported in your browser. Frankly we're impressed you got this far.
                 </video>
             </dialog>
