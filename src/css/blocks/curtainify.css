@@ -8,10 +8,6 @@
     perspective: 2rem;
 }
 
-.curtain-reel .right-curtain {
-    /* justify-content: flex-end; */
-}
-
 .content-block {
     @apply flex flex-col justify-start items-center h-screen w-screen absolute bg-transparent text-white;
 }

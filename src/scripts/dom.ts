@@ -370,17 +370,6 @@ export default class DOMController extends BlockController implements DOMControl
                         controller.beforeReload();
                     }
                 });
-                // prepare scroll listeners
-                window.addEventListener("scroll", (e) => {
-                    // this.scroll();
-                    this.onScroll(e, window.scrollY);
-
-                    const scrollY = window.scrollY;
-
-                    if (controller.scroll) {
-                        controller.scroll(scrollY);
-                    }
-                });
                 if (controller.blocks) {
                     // prepare mouse move listeners
                     controller.blocks.forEach((block, index) => {
@@ -421,6 +410,11 @@ export default class DOMController extends BlockController implements DOMControl
                 this.closeLetsTalk();
                 e.preventDefault();
             }
+        });
+
+        // scroll listeners
+        window.addEventListener("scroll", (e: Event) => {
+            this.onScroll(e, window.scrollY);
         });
     }
 
@@ -470,7 +464,8 @@ export default class DOMController extends BlockController implements DOMControl
 
     onScroll(e: Event, pos: number): void {
         for (const controller of this.blockControllers) {
-            if (controller.onScroll) controller.onScroll(e, pos);
+            if (controller.scroll) controller.scroll(pos);
+            else if (controller.onScroll) controller.onScroll(e, pos);
         }
     }
 
@@ -485,5 +480,18 @@ export default class DOMController extends BlockController implements DOMControl
 
     static getImmediateSuccessors(node: HTMLElement): HTMLElement[] {
         return Array.from(node.children) as HTMLElement[];
+    }
+
+    static throttle(func: Function, limitMs: number) {
+        let wait = false;
+        return function () {
+            if (!wait) {
+                func.call(null);
+                wait = true;
+                setTimeout(() => {
+                    wait = false;
+                }, limitMs);
+            }
+        };
     }
 }

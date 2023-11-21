@@ -18,9 +18,11 @@ export default class ExpandingVideoController extends BlockController {
 
     scrollLocked: boolean;
     scrollLockPos: number;
-    videoExpanded: boolean;
+    videoExpandLock: boolean;
 
     curtains: Curtains;
+
+    observer: IntersectionObserver;
 
     static scrollThreshold: number = 150;
 
@@ -41,6 +43,7 @@ export default class ExpandingVideoController extends BlockController {
         if (block) {
             this.curtains = new Curtains(block as HTMLElement);
             this.curtains.setup();
+            this.curtains.lockCurtains();
         }
 
         this.expandingVideos = block?.querySelectorAll(".expanding-video-container") as NodeListOf<HTMLElement>;
@@ -51,6 +54,10 @@ export default class ExpandingVideoController extends BlockController {
         } else {
             this.log(`Found ${this.expandingVideos.length} expanding videos`);
         }
+
+        this.expandingVideos.forEach((container: HTMLElement) => {
+            this.addParagraphReadyListener(container);
+        });
 
         this.floatingImages = block?.querySelectorAll(".floating-image") as NodeListOf<HTMLElement>;
 
@@ -91,6 +98,8 @@ export default class ExpandingVideoController extends BlockController {
 
         if (this.expandingVideos.length === 0) return;
 
+        if (this.videoExpandLock) return;
+
         this.expandingVideos.forEach((container: HTMLElement) => {
             const parent = container.parentElement;
             if (!parent) return;
@@ -101,6 +110,20 @@ export default class ExpandingVideoController extends BlockController {
                 this.expandVideo(container);
             } else {
                 this.retractVideo(container);
+                this.curtains.lockCurtains();
+            }
+        });
+    }
+
+    addParagraphReadyListener(block: HTMLElement) {
+        const paragraph = block.querySelector(".message") as HTMLDivElement;
+
+        if (!paragraph) return;
+
+        paragraph.addEventListener("transitionend", (event) => {
+            if (event.propertyName === "top") {
+                this.log("Paragraph transition ended");
+                this.curtains.unlockCurtains();
             }
         });
     }

@@ -235,6 +235,9 @@ export class Curtains extends BlockController {
     lastScroll: number;
     currentIndex: number;
 
+    locked: boolean;
+    offset: number;
+
     constructor(block: HTMLElement) {
         super();
         this.name = "Curtains";
@@ -260,7 +263,8 @@ export class Curtains extends BlockController {
         this.prepareShadowBlock();
         this.prepareScrollPosition();
 
-        const scrollInitial = this.splitCurtains(this.currentIndex, window.scrollY);
+        const scrollInitial = this.calculateSplit(this.currentIndex, window.scrollY);
+        this.splitCurtains(this.currentIndex, scrollInitial);
         this.adjustScroll(scrollInitial);
         this.initializeTranslations();
 
@@ -313,7 +317,7 @@ export class Curtains extends BlockController {
         this.contentReel.appendChild(this.shadowBlock);
     }
 
-    splitCurtains(index: number = 0, scrollPos: number): number {
+    calculateSplit(index: number, scrollPos: number): number {
         const positionFromTop = scrollPos - this.contentReelRect.top - window.innerHeight * index;
 
         const scrollPercentage = Math.floor(constrain(positionFromTop / window.innerHeight, 0, 1) * 100) / 100;
@@ -334,6 +338,11 @@ export class Curtains extends BlockController {
                 this.scrollMass.style.backgroundColor = color;
             }
         }
+        return scrollPercentage;
+    }
+
+    splitCurtains(index: number = 0, scrollPercentage: number): void {
+        // if (this.locked) return;
 
         // spread curtains
         const left = this.leftCurtains[index] as HTMLElement;
@@ -351,8 +360,6 @@ export class Curtains extends BlockController {
             0.5,
             0
         )}) 98%)`;
-
-        return scrollPercentage;
     }
 
     prepareScrollPosition(): void {
@@ -383,8 +390,9 @@ export class Curtains extends BlockController {
     }
 
     onScroll(e: Event, pos: number) {
-        const scrollPercentage = this.splitCurtains(this.currentIndex, pos);
+        const scrollPercentage = this.calculateSplit(this.currentIndex, pos);
         this.adjustScroll(scrollPercentage);
+        this.splitCurtains(this.currentIndex, scrollPercentage);
     }
 
     initializeTranslations(): void {
@@ -443,6 +451,16 @@ export class Curtains extends BlockController {
 
         leftCurtain.appendChild(leftCurtainContent);
         return leftCurtain;
+    }
+
+    lockCurtains() {
+        this.offset = 0;
+        this.scrollMass.style.marginTop = `${this.offset}px`;
+        this.locked = true;
+    }
+
+    unlockCurtains() {
+        this.locked = false;
     }
 
     onMouseMove(e: MouseEvent, blockIndex: number): void {}
