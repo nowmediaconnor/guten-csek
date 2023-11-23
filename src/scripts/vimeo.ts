@@ -3,7 +3,7 @@
  * Author: Connor Doman
  */
 
-import React from "react";
+import Player from "@vimeo/player";
 
 export interface VimeoResponse {
     type: string;
@@ -48,12 +48,16 @@ export default class VimeoVideo {
         this.fetchVideoData();
     }
 
-    get player() {
-        const player = document.createElement("div");
-        player.classList.add("player");
-        player.style.position = "relative";
-        player.style.padding = "56.25% 0 0 0";
-        player.innerHTML = this.apiResponseData?.html || "";
+    createPlayer(parentId: string) {
+        if (!this.apiResponseData) return null;
+
+        const options = {
+            id: this.apiResponseData.video_id,
+            width: this.width,
+            loop: false,
+        };
+
+        const player = new Player(parentId, options);
         return player;
     }
 

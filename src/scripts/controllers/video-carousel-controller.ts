@@ -6,6 +6,7 @@
 import { constrain } from "../math";
 import { pad } from "../strings";
 import { BlockController } from "../dom";
+import VimeoVideo from "../vimeo";
 
 // needs to control carousel
 // needs to control dialog
@@ -26,6 +27,8 @@ export default class VideoCarouselController extends BlockController {
     videoPlayButton: HTMLAnchorElement | null;
     videoCloseButton: HTMLAnchorElement | null;
     isInitialized: boolean;
+
+    vimeoVideos: VimeoVideo[];
 
     constructor(videoCarouselClassName: string) {
         super();
