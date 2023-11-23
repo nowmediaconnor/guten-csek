@@ -8,6 +8,7 @@ import { MediaUploadCheck, MediaUpload, RichText, useBlockProps } from "@wordpre
 import { Button } from "@wordpress/components";
 import { Heading } from "../components/heading";
 import { CsekBlockHeading } from "../components/heading";
+import { GutenCsekBlockEditProps, GutenCsekBlockSaveProps } from "../scripts/dom";
 
 interface Video {
     videoTitle: string;
@@ -15,14 +16,14 @@ interface Video {
     videoCaption: string;
 }
 
-interface VideoCarouselBlockProps {
-    attributes: {
-        videos: Video[];
-    };
-    setAttributes?: any;
+export interface VideoCarouselAttributes {
+    videos: Video[];
 }
 
-export const VideoCarouselBlockEdit = ({ attributes, setAttributes }: VideoCarouselBlockProps) => {
+export const VideoCarouselBlockEdit = ({
+    attributes,
+    setAttributes,
+}: GutenCsekBlockEditProps<VideoCarouselAttributes>) => {
     const blockProps = useBlockProps();
 
     const { videos } = attributes;
@@ -118,7 +119,7 @@ export const VideoCarouselBlockEdit = ({ attributes, setAttributes }: VideoCarou
     );
 };
 
-export const VideoCarouselBlockSave = ({ attributes }: VideoCarouselBlockProps) => {
+export const VideoCarouselBlockSave = ({ attributes }: GutenCsekBlockSaveProps<VideoCarouselAttributes>) => {
     const blockProps = useBlockProps.save();
     const { videos } = attributes;
 
