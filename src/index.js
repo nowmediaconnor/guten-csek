@@ -3,7 +3,7 @@
  * Author: Connor Doman
  */
 
-import { prepareBlockControllers } from "./domcontroller";
+import { createDOMController } from "./domcontroller";
 import { registerAllBlocks } from "./scripts/register-blocks";
 import { runAccumulators } from "./scripts/accumulators";
 
@@ -16,7 +16,7 @@ window.addEventListener("load", (e) => {
     runAccumulators();
 
     /* Prepare DOM Controller */
-    window.domController = prepareBlockControllers();
+    window.domController = createDOMController();
 
     window.requestAnimationFrame(() => {
         window.domController.setup();

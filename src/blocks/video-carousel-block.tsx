@@ -9,12 +9,62 @@ import { Button } from "@wordpress/components";
 import { Heading } from "../components/heading";
 import { CsekBlockHeading } from "../components/heading";
 import { GutenCsekBlockEditProps, GutenCsekBlockSaveProps } from "../scripts/dom";
+import Label, { Danger } from "../components/label";
+import CsekCard from "../components/card";
+import { RichTextContent, RichTextInput, TextInput } from "../components/input";
 
 interface Video {
     videoTitle: string;
     videoUrl: string;
     videoCaption: string;
+    isOnVimeo?: boolean;
 }
+
+interface VideoSelectorProps {
+    video: Video;
+    index: number;
+    onDelete: (index: number) => void;
+    onChange: (video: Video, index: number) => void;
+}
+
+const VideoSelector = ({ video, index, onDelete, onChange }: VideoSelectorProps) => {
+    return (
+        <CsekCard key={index} className="flex flex-col gap-2">
+            <div className="flex flex-row justify-between items-center">
+                <Heading level="2">Video {index + 1}</Heading>
+                <Button className="csek-video-remove" icon="trash" label="Remove Video" onClick={() => onDelete(index)}>
+                    Delete
+                </Button>
+            </div>
+            <TextInput
+                label="Title"
+                placeholder="A great title"
+                initialValue={video.videoTitle}
+                onChange={(videoTitle) => onChange({ ...video, videoTitle }, index)}
+            />
+            <RichTextInput
+                label="Caption"
+                initialValue={video.videoCaption}
+                onChange={(videoCaption) => onChange({ ...video, videoCaption }, index)}
+            />
+            <Heading level="4">URL</Heading>
+            <MediaUpload
+                onSelect={(media) =>
+                    onChange(
+                        { videoTitle: video.videoTitle, videoUrl: media.url, videoCaption: video.videoCaption },
+                        index
+                    )
+                }
+                allowedTypes={["video"]}
+                render={({ open }) => (
+                    <Button className="csek-video-upload" icon="video-alt3" label="Upload Video" onClick={open}>
+                        Choose Video
+                    </Button>
+                )}
+            />
+        </CsekCard>
+    );
+};
 
 export interface VideoCarouselAttributes {
     videos: Video[];
@@ -47,70 +97,15 @@ export const VideoCarouselBlockEdit = ({
     };
 
     const videoElements = videos.map((video: Video, index: number) => {
-        return (
-            <div key={index} className="video-carousel-data">
-                <div className="flex flex-row justify-between items-center">
-                    <Heading level="2">Video {index + 1}</Heading>
-                    <Button
-                        className="csek-video-remove"
-                        icon="trash"
-                        label="Remove Video"
-                        onClick={() => handleRemoveVideo(index)}>
-                        Delete
-                    </Button>
-                </div>
-                <Heading level="4">Title</Heading>
-                <input
-                    type="text"
-                    className="csek-input"
-                    placeholder="A great title"
-                    value={video.videoTitle}
-                    onChange={(e) =>
-                        handleVideoChange(
-                            { videoTitle: e.target.value, videoCaption: video.videoCaption, videoUrl: video.videoUrl },
-                            index
-                        )
-                    }
-                />
-                <Heading level="4">Caption</Heading>
-                <em className="em-label">Rich text</em>
-                <RichText
-                    tagName="div"
-                    className="csek-input"
-                    placeholder="A caption for a video."
-                    label="Video Caption"
-                    value={video.videoCaption}
-                    onChange={(videoCaption) =>
-                        handleVideoChange(
-                            { videoTitle: video.videoTitle, videoUrl: video.videoUrl, videoCaption },
-                            index
-                        )
-                    }
-                />
-                <Heading level="4">URL</Heading>
-                <MediaUploadCheck>
-                    <MediaUpload
-                        onSelect={(media) =>
-                            handleVideoChange(
-                                { videoTitle: video.videoTitle, videoUrl: media.url, videoCaption: video.videoCaption },
-                                index
-                            )
-                        }
-                        allowedTypes={["video"]}
-                        render={({ open }) => (
-                            <Button className="csek-video-upload" icon="video-alt3" label="Upload Video" onClick={open}>
-                                Choose Video
-                            </Button>
-                        )}
-                    />
-                </MediaUploadCheck>
-            </div>
-        );
+        return <VideoSelector video={video} index={index} onDelete={handleRemoveVideo} onChange={handleVideoChange} />;
     });
+
     return (
         <div {...blockProps}>
             <CsekBlockHeading>Csek Video Carousel Block</CsekBlockHeading>
-            {videoElements}
+            <MediaUploadCheck fallback={<Danger>{"You're not permitted to upload media."}</Danger>}>
+                <div className="flex flex-col justify-center items-center gap-2 my-2">{videoElements}</div>
+            </MediaUploadCheck>
             <Button onClick={handleAddVideo} icon="plus" className="csek-button">
                 Add Video
             </Button>
@@ -137,7 +132,7 @@ export const VideoCarouselBlockSave = ({ attributes }: GutenCsekBlockSaveProps<V
                 </video>
                 <div className="video-caption">
                     {title ? <h2>{title}</h2> : null}
-                    {caption ? <RichText.Content className="caption" tagName="div" value={caption} /> : null}
+                    {caption ? <RichTextContent className="caption" value={caption} /> : null}
                     <a className="video-playbutton" href="#opendialog">
                         <i className="fa fa-play"></i>
                         Watch the video

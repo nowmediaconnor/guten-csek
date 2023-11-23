@@ -17,7 +17,7 @@ import StaffProfilesController from "./scripts/controllers/staff-profiles-contro
 import CyclingStackController from "./scripts/controllers/cycling-stack-controller";
 import ProjectsMarqueeController from "./scripts/controllers/projects-marquee-controller";
 
-export const prepareBlockControllers = () => {
+export const createDOMController = () => {
     /* Prepare DOM Controller */
 
     // First, prepare curtain elements

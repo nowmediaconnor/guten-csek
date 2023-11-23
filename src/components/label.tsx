@@ -20,4 +20,8 @@ export const Label = ({ em = false, className, children }: LabelProps) => {
     }
 };
 
+export const Danger = ({ className, children }: LabelProps) => {
+    return <Label className={twMerge("text-red-500", className)}>{children}</Label>;
+};
+
 export default Label;
