@@ -19,6 +19,7 @@ export default class VideoCarouselController extends BlockController {
     activeIndex: number;
     numItems: number;
     videoCarousel: HTMLElement | null;
+    videoBlocks: NodeListOf<HTMLElement> | null;
     videoDialog: HTMLDialogElement | null;
     progressNumerator: HTMLElement | null;
     progressDenominator: HTMLElement | null;
@@ -41,6 +42,8 @@ export default class VideoCarouselController extends BlockController {
     }
 
     setup() {
+        this.debug = true;
+
         this.videoCarousel = document.querySelector(`.${this.videoCarouselClassName}`) as HTMLDivElement;
         if (this.invalid(this.videoCarousel)) {
             this.log("No video carousel found.");
@@ -64,7 +67,8 @@ export default class VideoCarouselController extends BlockController {
 
         if (!this.videoDialog || !this.progressNumerator || !this.progressDenominator || !this.barProgress) return;
 
-        this.numItems = this.videoCarousel.querySelectorAll(".video-block")?.length;
+        this.videoBlocks = this.videoCarousel.querySelectorAll(".video-block");
+        this.numItems = this.videoBlocks?.length;
 
         this.progressDenominator.innerText = pad(this.numItems, 2);
         this.update();
@@ -76,6 +80,8 @@ export default class VideoCarouselController extends BlockController {
         this.log("Found bar progress");
 
         this.addEventListeners();
+
+        this.prepareThumbnails();
 
         this.isInitialized = true;
     }
@@ -126,6 +132,27 @@ export default class VideoCarouselController extends BlockController {
         }
 
         this.update();
+    }
+
+    async prepareThumbnails() {
+        if (!this.videoBlocks) return;
+        this.log("Preparing thumbnails");
+
+        // this.videoBlocks.forEach((block) => {
+        for (const block of this.videoBlocks) {
+            this.log("Working on block: ", block);
+            const vimeoThumbnail = block.querySelector(".vimeo-thumbnail");
+
+            if (vimeoThumbnail) {
+                const url = vimeoThumbnail.getAttribute("data-vimeo-url") ?? "";
+
+                const video = new VimeoVideo(url, 1280, 720, false);
+                await video.updateVideoData();
+                const thumbnail = video.apiResponseData?.thumbnail_url ?? "";
+                alert("thumbnail: " + thumbnail);
+                vimeoThumbnail.setAttribute("src", thumbnail);
+            }
+        }
     }
 
     update() {

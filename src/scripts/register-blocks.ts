@@ -62,7 +62,7 @@ import {
     VideoCarouselBlockEdit,
     VideoCarouselBlockSave,
 } from "../blocks/video-carousel-block";
-import { DOMControllerBlockEdit } from "../blocks/dom-controller-block";
+// import { DOMControllerBlockEdit } from "../blocks/dom-controller-block";
 import { HorizontalCarouselBlockEdit, HorizontalCarouselBlockSave } from "../blocks/horizontal-carousel-block";
 import { ChicagoFiresBlockEdit, ChicagoFiresBlockSave } from "../blocks/misc/chicago-fires-block";
 import { FeaturedVideoBlockEdit, FeaturedVideoBlockSave } from "../blocks/misc/featured-video-block";
@@ -569,23 +569,23 @@ export const registerAllBlocks = () => {
     /* Misc Blocks */
 
     // DOM Controller Block
-    registerBlockType("guten-csek/dom-controller-block", {
-        title: "Csek Script Manager Block",
-        icon: "admin-settings",
-        category: "text",
-        attributes: {
-            controllerScripts: {
-                type: "array",
-                default: [],
-            },
-            enabledScripts: {
-                type: "array",
-                default: [],
-            },
-        },
-        edit: DOMControllerBlockEdit,
-        save: () => null,
-    });
+    // registerBlockType("guten-csek/dom-controller-block", {
+    //     title: "Csek Script Manager Block",
+    //     icon: "admin-settings",
+    //     category: "text",
+    //     attributes: {
+    //         controllerScripts: {
+    //             type: "array",
+    //             default: [],
+    //         },
+    //         enabledScripts: {
+    //             type: "array",
+    //             default: [],
+    //         },
+    //     },
+    //     edit: DOMControllerBlockEdit,
+    //     save: () => null,
+    // });
 
     // Image Collage Block
     registerBlockType("guten-csek/image-collage-block", {

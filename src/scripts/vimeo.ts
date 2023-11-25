@@ -45,7 +45,9 @@ export default class VimeoVideo {
 
         this.apiResponseData = null;
 
-        this.fetchVideoData();
+        // VimeoVideo.fetchVideoData(vimeoURL).then((data) => {
+        //     this.apiResponseData = data;
+        // });
     }
 
     createPlayer(parentId: string) {
@@ -70,23 +72,36 @@ export default class VimeoVideo {
         return thumbnail;
     }
 
-    async fetchVideoData() {
+    async updateVideoData(): Promise<VimeoResponse | null> {
+        // console.log("-VideoCarouselController- Updating video data");
+        if (this.apiResponseData) {
+            // console.log("-VideoCarouselController- Video data already fetched");
+            return this.apiResponseData;
+        }
+
+        this.apiResponseData = await VimeoVideo.fetchVideoData(this.vimeoURL, this.width, this.height);
+
+        // console.log("-VideoCarouselController- Video data fetched: ", this.apiResponseData);
+
+        return this.apiResponseData;
+    }
+
+    static async fetchVideoData(url: string, width: number = 640, height: number = 360): Promise<VimeoResponse | null> {
         try {
-            const response = await fetch(`https://vimeo.com/api/oembed.json?url=${this.vimeoURL}`);
+            const response = await fetch(
+                `https://vimeo.com/api/oembed.json?url=${encodeURI(url)}&width=${width}&height=${height}`
+            );
             const data = await response.json();
-            this.apiResponseData = data;
+            return data as VimeoResponse;
         } catch (err: any) {
             console.error(err);
-            this.apiResponseData = null;
+            return null;
         }
     }
 
     static async getThumbnailURL(vimeoURL: string, width: number = 640, height: number = 360): Promise<string | null> {
-        const video = new VimeoVideo(vimeoURL, width, height);
-        await video.fetchVideoData().then(() => {
-            return video.apiResponseData;
-        });
-        if (!video.apiResponseData) return null;
-        return video.apiResponseData.thumbnail_url;
+        const videoData = await VimeoVideo.fetchVideoData(vimeoURL);
+        if (!videoData) return null;
+        return videoData.thumbnail_url;
     }
 }

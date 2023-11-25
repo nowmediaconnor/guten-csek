@@ -14,6 +14,10 @@ import CsekCard from "../components/card";
 import { CheckboxInput, RichTextContent, RichTextInput, TextInput } from "../components/input";
 import VimeoVideo from "../scripts/vimeo";
 
+export interface VideoCarouselAttributes {
+    videos: Video[];
+}
+
 interface Video {
     title: string;
     url: string;
@@ -57,7 +61,7 @@ const VideoSelector = ({ video, index, onDelete, onChange }: VideoSelectorProps)
             />
             <Heading level="4" className="flex flex-row gap-4">
                 Choose Video
-                <CheckboxInput label="Use Vimeo" onChange={handleUseVimeo} />
+                <CheckboxInput label="Use Vimeo" onChange={handleUseVimeo} initialValue={video.isOnVimeo} />
             </Heading>
             {useVimeo ? (
                 <TextInput
@@ -82,10 +86,6 @@ const VideoSelector = ({ video, index, onDelete, onChange }: VideoSelectorProps)
         </CsekCard>
     );
 };
-
-export interface VideoCarouselAttributes {
-    videos: Video[];
-}
 
 export const VideoCarouselBlockEdit = ({
     attributes,
@@ -135,28 +135,51 @@ export const VideoCarouselBlockSave = ({ attributes }: GutenCsekBlockSaveProps<V
     const blockProps = useBlockProps.save();
     const { videos } = attributes;
 
+    const videoThumnails: React.ReactNode[] = videos.map((video: Video, index: number) => {
+        const usesVimeo = video.isOnVimeo || false;
+
+        if (!video.url) return null;
+
+        if (usesVimeo) {
+            return (
+                <div className="player" key={index}>
+                    <img className="vimeo-thumbnail" data-vimeo-url={video.url} />
+                </div>
+            );
+        }
+        return (
+            <div className="player" key={index}>
+                <video controls={false}>
+                    <source src={video.url} type="video/mp4" />
+                </video>
+            </div>
+        );
+    });
+
     const videoElements = videos.map((video: Video, index: number) => {
         const { title, caption, url, isOnVimeo } = video;
 
         if (!url) return null;
 
-        const videoPlayer = isOnVimeo ? (
-            <div className="player" style={{ position: "relative", padding: "56.25% 0 0 0" }}>
-                <iframe
-                    src={url}
-                    className="absolute top-0 left-0 w-full h-full"
-                    allow="autoplay; fullscreen; picture-in-picture"
-                    allowFullScreen={false}></iframe>
-            </div>
-        ) : (
-            <video controls={false} onPlay={(e) => e.preventDefault()} preload="none">
-                <source src={url} type="video/mp4" />
-            </video>
-        );
+        // const videoPlayer = isOnVimeo ? (
+        //     <div className="player" style={{ position: "relative", padding: "56.25% 0 0 0" }}>
+        //         <iframe
+        //             src={url}
+        //             className="absolute top-0 left-0 w-full h-full"
+        //             allow="autoplay; fullscreen; picture-in-picture"
+        //             allowFullScreen={false}></iframe>
+        //     </div>
+        // ) : (
+        //     <video controls={false} onPlay={(e) => e.preventDefault()} preload="none">
+        //         <source src={url} type="video/mp4" />
+        //     </video>
+        // );
+
+        const thumbnail = videoThumnails[index];
 
         return (
             <div className="video-block">
-                <div className="video-preview">{videoPlayer}</div>
+                <div className="video-preview">{thumbnail}</div>
                 <div className="video-caption">
                     {title ? <h2>{title}</h2> : null}
                     {caption ? <RichTextContent className="caption" value={caption} /> : null}
