@@ -8,28 +8,96 @@ import { MediaUploadCheck, MediaUpload, RichText, useBlockProps } from "@wordpre
 import { Button } from "@wordpress/components";
 import { Heading } from "../components/heading";
 import { CsekBlockHeading } from "../components/heading";
+import { GutenCsekBlockEditProps, GutenCsekBlockSaveProps } from "../scripts/dom";
+import Label, { Danger } from "../components/label";
+import CsekCard from "../components/card";
+import { CheckboxInput, RichTextContent, RichTextInput, TextInput } from "../components/input";
+import VimeoVideo from "../scripts/vimeo";
+
+export interface VideoCarouselAttributes {
+    videos: Video[];
+}
 
 interface Video {
-    videoTitle: string;
-    videoUrl: string;
-    videoCaption: string;
+    title: string;
+    url: string;
+    caption: string;
+    isOnVimeo?: boolean;
 }
 
-interface VideoCarouselBlockProps {
-    attributes: {
-        videos: Video[];
+interface VideoSelectorProps {
+    video: Video;
+    index: number;
+    onDelete: (index: number) => void;
+    onChange: (video: Video, index: number) => void;
+}
+
+const VideoSelector = ({ video, index, onDelete, onChange }: VideoSelectorProps) => {
+    const [useVimeo, setUseVimeo] = React.useState<boolean>(video.isOnVimeo || false);
+
+    const handleUseVimeo = (state: boolean) => {
+        setUseVimeo(state);
+        onChange({ ...video, isOnVimeo: state }, index);
     };
-    setAttributes?: any;
-}
 
-export const VideoCarouselBlockEdit = ({ attributes, setAttributes }: VideoCarouselBlockProps) => {
+    return (
+        <CsekCard key={index} className="flex flex-col gap-2">
+            <div className="flex flex-row justify-between items-center">
+                <Heading level="2">Video {index + 1}</Heading>
+                <Button className="csek-video-remove" icon="trash" label="Remove Video" onClick={() => onDelete(index)}>
+                    Delete
+                </Button>
+            </div>
+            <TextInput
+                label="Title"
+                placeholder="A great title"
+                initialValue={video.title}
+                onChange={(videoTitle) => onChange({ ...video, title: videoTitle }, index)}
+            />
+            <RichTextInput
+                label="Caption"
+                initialValue={video.caption}
+                onChange={(videoCaption) => onChange({ ...video, caption: videoCaption }, index)}
+            />
+            <Heading level="4" className="flex flex-row gap-4">
+                Choose Video
+                <CheckboxInput label="Use Vimeo" onChange={handleUseVimeo} initialValue={video.isOnVimeo} />
+            </Heading>
+            {useVimeo ? (
+                <TextInput
+                    label="Vimeo URL"
+                    placeholder="https://player.vimeo.com/video/123456789"
+                    initialValue={video.url}
+                    onChange={(videoUrl) => onChange({ ...video, url: videoUrl }, index)}
+                />
+            ) : (
+                <MediaUpload
+                    onSelect={(media) =>
+                        onChange({ title: video.title, url: media.url, caption: video.caption }, index)
+                    }
+                    allowedTypes={["video"]}
+                    render={({ open }) => (
+                        <Button className="csek-video-upload" icon="video-alt3" label="Upload Video" onClick={open}>
+                            Choose Video
+                        </Button>
+                    )}
+                />
+            )}
+        </CsekCard>
+    );
+};
+
+export const VideoCarouselBlockEdit = ({
+    attributes,
+    setAttributes,
+}: GutenCsekBlockEditProps<VideoCarouselAttributes>) => {
     const blockProps = useBlockProps();
 
     const { videos } = attributes;
 
     const handleAddVideo = () => {
         const newVideos = [...videos];
-        newVideos.push({ videoTitle: "", videoUrl: "", videoCaption: "" });
+        newVideos.push({ title: "", url: "", caption: "" });
         setAttributes({ videos: newVideos });
     };
 
@@ -46,70 +114,15 @@ export const VideoCarouselBlockEdit = ({ attributes, setAttributes }: VideoCarou
     };
 
     const videoElements = videos.map((video: Video, index: number) => {
-        return (
-            <div key={index} className="video-carousel-data">
-                <div className="flex flex-row justify-between items-center">
-                    <Heading level="2">Video {index + 1}</Heading>
-                    <Button
-                        className="csek-video-remove"
-                        icon="trash"
-                        label="Remove Video"
-                        onClick={() => handleRemoveVideo(index)}>
-                        Delete
-                    </Button>
-                </div>
-                <Heading level="4">Title</Heading>
-                <input
-                    type="text"
-                    className="csek-input"
-                    placeholder="A great title"
-                    value={video.videoTitle}
-                    onChange={(e) =>
-                        handleVideoChange(
-                            { videoTitle: e.target.value, videoCaption: video.videoCaption, videoUrl: video.videoUrl },
-                            index
-                        )
-                    }
-                />
-                <Heading level="4">Caption</Heading>
-                <em className="em-label">Rich text</em>
-                <RichText
-                    tagName="div"
-                    className="csek-input"
-                    placeholder="A caption for a video."
-                    label="Video Caption"
-                    value={video.videoCaption}
-                    onChange={(videoCaption) =>
-                        handleVideoChange(
-                            { videoTitle: video.videoTitle, videoUrl: video.videoUrl, videoCaption },
-                            index
-                        )
-                    }
-                />
-                <Heading level="4">URL</Heading>
-                <MediaUploadCheck>
-                    <MediaUpload
-                        onSelect={(media) =>
-                            handleVideoChange(
-                                { videoTitle: video.videoTitle, videoUrl: media.url, videoCaption: video.videoCaption },
-                                index
-                            )
-                        }
-                        allowedTypes={["video"]}
-                        render={({ open }) => (
-                            <Button className="csek-video-upload" icon="video-alt3" label="Upload Video" onClick={open}>
-                                Choose Video
-                            </Button>
-                        )}
-                    />
-                </MediaUploadCheck>
-            </div>
-        );
+        return <VideoSelector video={video} index={index} onDelete={handleRemoveVideo} onChange={handleVideoChange} />;
     });
+
     return (
         <div {...blockProps}>
             <CsekBlockHeading>Csek Video Carousel Block</CsekBlockHeading>
-            {videoElements}
+            <MediaUploadCheck fallback={<Danger>{"You're not permitted to upload media."}</Danger>}>
+                <div className="flex flex-col justify-center items-center gap-2 my-2">{videoElements}</div>
+            </MediaUploadCheck>
             <Button onClick={handleAddVideo} icon="plus" className="csek-button">
                 Add Video
             </Button>
@@ -118,25 +131,52 @@ export const VideoCarouselBlockEdit = ({ attributes, setAttributes }: VideoCarou
     );
 };
 
-export const VideoCarouselBlockSave = ({ attributes }: VideoCarouselBlockProps) => {
+export const VideoCarouselBlockSave = ({ attributes }: GutenCsekBlockSaveProps<VideoCarouselAttributes>) => {
     const blockProps = useBlockProps.save();
     const { videos } = attributes;
 
+    const videoThumnails: React.ReactNode[] = videos.map((video: Video, index: number) => {
+        const usesVimeo = video.isOnVimeo || false;
+
+        if (!video.url) return null;
+
+        if (usesVimeo) {
+            return <img className="vimeo-thumbnail" data-vimeo-url={video.url} key={index} />;
+        }
+        return (
+            <video controls={false} key={index}>
+                <source src={video.url} type="video/mp4" />
+            </video>
+        );
+    });
+
     const videoElements = videos.map((video: Video, index: number) => {
-        const title = video.videoTitle;
-        const caption = video.videoCaption;
-        const url = video.videoUrl;
+        const { title, caption, url, isOnVimeo } = video;
 
         if (!url) return null;
 
+        // const videoPlayer = isOnVimeo ? (
+        //     <div className="player" style={{ position: "relative", padding: "56.25% 0 0 0" }}>
+        //         <iframe
+        //             src={url}
+        //             className="absolute top-0 left-0 w-full h-full"
+        //             allow="autoplay; fullscreen; picture-in-picture"
+        //             allowFullScreen={false}></iframe>
+        //     </div>
+        // ) : (
+        //     <video controls={false} onPlay={(e) => e.preventDefault()} preload="none">
+        //         <source src={url} type="video/mp4" />
+        //     </video>
+        // );
+
+        const thumbnail = videoThumnails[index];
+
         return (
             <div className="video-block">
-                <video controls={false} onPlay={(e) => e.preventDefault()}>
-                    <source src={url} type="video/mp4" />
-                </video>
+                <div className="video-preview">{thumbnail}</div>
                 <div className="video-caption">
                     {title ? <h2>{title}</h2> : null}
-                    {caption ? <RichText.Content className="caption" tagName="div" value={caption} /> : null}
+                    {caption ? <RichTextContent className="caption" value={caption} /> : null}
                     <a className="video-playbutton" href="#opendialog">
                         <i className="fa fa-play"></i>
                         Watch the video
@@ -152,9 +192,11 @@ export const VideoCarouselBlockSave = ({ attributes }: VideoCarouselBlockProps) 
                 <a href="#closedialog" className="close-dialog">
                     <i className="fas fa-x"></i>
                 </a>
-                <video controls={false}>
-                    Videos aren't supported in your browser. Frankly we're impressed you got this far.
-                </video>
+                <div className="player">
+                    <video controls={false} preload="none">
+                        Videos aren't supported in your browser. Frankly we're impressed you got this far.
+                    </video>
+                </div>
             </dialog>
             <div className="video-strip">{videoElements}</div>
             <div className="carousel-slider-progress">

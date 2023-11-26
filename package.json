@@ -18,6 +18,7 @@
     "devDependencies": {
         "@jeffreyvr/tailwindcss-tailpress": "^2.0.0",
         "@playwright/test": "^1.39.0",
+        "@types/vimeo__player": "^2.18.3",
         "@types/wordpress__block-editor": "^11.5.1",
         "@types/wordpress__components": "^23.0.1",
         "@wordpress/block-editor": "^12.7.0",
@@ -38,6 +39,7 @@
         "typescript": "^5.2.2"
     },
     "dependencies": {
+        "@vimeo/player": "^2.20.1",
         "circletype": "^2.3.0",
         "tailwind-merge": "^1.14.0",
         "typescript-cubic-spline": "^1.0.1"

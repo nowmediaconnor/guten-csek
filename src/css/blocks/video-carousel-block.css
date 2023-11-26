@@ -9,7 +9,7 @@
     @apply w-full font-syne pt-8 relative overflow-hidden box-border bg-white;
 
     & .video-strip {
-        @apply flex flex-row justify-start items-center relative w-full h-auto transition-transform ease-in-out duration-750;
+        @apply flex flex-row justify-start items-center relative w-full h-[36rem] transition-transform ease-in-out duration-750;
 
         & > * {
             @apply basis-[100vw] min-w-[100vw];
@@ -17,11 +17,20 @@
     }
 
     & .video-block {
-        @apply flex flex-col justify-end max-w-full relative h-[40rem] bg-csek-dark;
+        @apply flex flex-col justify-end max-w-full relative h-full bg-csek-dark;
         width: calc(var(--max-width) + calc(100vw - calc(var(--max-width) / 2)));
 
-        & video {
+        & .video-preview {
+            @apply absolute top-0 left-0 w-full h-full;
+        }
+
+        & video,
+        .vimeo-thumbnail {
             @apply brightness-75 absolute top-0 left-0 w-full h-full object-cover z-[1];
+        }
+
+        & .vimeo-thumbnail {
+            @apply h-full;
         }
 
         & .video-caption {
@@ -56,16 +65,23 @@
             }
         }
     }
-
-    & .video-player {
-        @apply fixed bg-csek-light rounded-md shadow-lg opacity-0;
+    & dialog.video-player {
+        @apply fixed bg-csek-dark rounded-md shadow-lg opacity-0 w-11/12 aspect-video;
 
         &[open] {
             @apply opacity-100;
         }
 
+        & .player {
+            @apply w-full h-full overflow-hidden;
+
+            & iframe {
+                @apply w-full h-full;
+            }
+        }
+
         & .close-dialog {
-            @apply absolute top-2 right-4 text-base text-csek-dark z-20 cursor-pointer;
+            @apply absolute top-2 right-4 text-base text-white drop-shadow-lg z-20 cursor-pointer;
         }
     }
 }
