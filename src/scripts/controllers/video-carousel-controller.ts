@@ -7,6 +7,7 @@ import { constrain } from "../math";
 import { pad } from "../strings";
 import { BlockController } from "../dom";
 import VimeoVideo from "../vimeo";
+import Player from "@vimeo/player";
 
 // needs to control carousel
 // needs to control dialog
@@ -30,6 +31,8 @@ export default class VideoCarouselController extends BlockController {
     isInitialized: boolean;
 
     vimeoVideos: VimeoVideo[];
+
+    currentVimeoPlayer: Player | null;
 
     constructor(videoCarouselClassName: string) {
         super();
@@ -140,6 +143,7 @@ export default class VideoCarouselController extends BlockController {
         this.log("Preparing thumbnails");
 
         // this.videoBlocks.forEach((block) => {
+        let idx = 0;
         for (const block of this.videoBlocks) {
             const vimeoThumbnail = block.querySelector(".vimeo-thumbnail");
 
@@ -147,11 +151,12 @@ export default class VideoCarouselController extends BlockController {
                 const url = vimeoThumbnail.getAttribute("data-vimeo-url") ?? "";
 
                 const video = new VimeoVideo(url, 1920, 1080, false);
-                this.vimeoVideos.push(video);
+                this.vimeoVideos[idx] = video;
                 await video.updateVideoData();
                 const thumbnail = video.apiResponseData?.thumbnail_url ?? "";
                 vimeoThumbnail.setAttribute("src", thumbnail);
             }
+            idx++;
         }
     }
 
@@ -222,30 +227,37 @@ export default class VideoCarouselController extends BlockController {
 
     updateVideoPlayer() {
         if (this.videoDialog) {
-            const internalVideo = this.videoDialog.querySelector("video");
-            const currentSource = this.videoStrip
-                ?.querySelector(`.video-block:nth-child(${this.activeIndex + 1}) video source`)
-                ?.cloneNode(true);
+            const player = this.videoDialog.querySelector(".player") as HTMLElement;
 
-            if (internalVideo && currentSource) {
-                internalVideo.innerHTML = "";
-                internalVideo.appendChild(currentSource);
-                this.log("video updated");
+            if (!player) return;
+
+            player.innerHTML = "";
+
+            const vimeoVideo = this.vimeoVideos[this.activeIndex];
+            if (vimeoVideo) {
+                player.innerHTML = vimeoVideo.apiResponseData?.html ?? "";
+                this.currentVimeoPlayer = vimeoVideo.createPlayer(player);
+            } else if (!vimeoVideo) {
+                const internalVideo = document.createElement("video");
+                const currentSource = this.videoStrip
+                    ?.querySelector(`.video-block:nth-child(${this.activeIndex + 1}) video source`)
+                    ?.cloneNode(true);
+
+                if (internalVideo && currentSource) {
+                    internalVideo.appendChild(currentSource);
+                    player.appendChild(internalVideo);
+                    this.log("video updated");
+                }
             }
 
             this.videoDialog.addEventListener("close", () => {
-                if (internalVideo) {
-                    internalVideo.pause();
-                    internalVideo.currentTime = 0;
-                    this.log("video paused");
-                } else {
-                    this.log("no video found");
-                }
+                player.innerHTML = "";
             });
         }
     }
 
     openVideoPlayer() {
+        this.update();
         if (this.videoDialog) {
             this.videoDialog.showModal();
             document.body.style.filter = "brightness(0.5)";
@@ -256,20 +268,22 @@ export default class VideoCarouselController extends BlockController {
             if (internalVideo) {
                 internalVideo.play();
                 this.log("video playing");
+            } else if (this.currentVimeoPlayer) {
+                this.currentVimeoPlayer.play();
+                this.log("vimeo video playing");
             } else {
                 this.log("no video found");
             }
         }
-        this.update();
     }
 
     closeVideoPlayer() {
+        this.update();
         if (this.videoDialog) {
             this.videoDialog.close();
             document.body.style.filter = "none";
-            document.body.style.overflow = "scroll";
+            // document.body.style.overflow = "scroll";
         }
-        this.update();
     }
 
     onMouseMove(e: MouseEvent, blockIndex: number): void {}

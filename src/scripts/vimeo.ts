@@ -50,16 +50,17 @@ export default class VimeoVideo {
         // });
     }
 
-    createPlayer(parentId: string) {
+    createPlayer(parent: string | HTMLElement) {
         if (!this.apiResponseData) return null;
 
-        const options = {
+        const options: any = {
             id: this.apiResponseData.video_id,
             width: this.width,
             loop: false,
+            colors: [undefined, undefined, undefined, "#131313"],
         };
 
-        const player = new Player(parentId, options);
+        const player = new Player(parent, options);
         return player;
     }
 
@@ -89,7 +90,9 @@ export default class VimeoVideo {
     static async fetchVideoData(url: string, width: number = 640, height: number = 360): Promise<VimeoResponse | null> {
         try {
             const response = await fetch(
-                `https://vimeo.com/api/oembed.json?url=${encodeURI(url)}&width=${width}&height=${height}`
+                `https://vimeo.com/api/oembed.json?url=${encodeURI(
+                    url
+                )}&width=${width}&height=${height}&responive=true&playsinline=false`
             );
             const data = await response.json();
             return data as VimeoResponse;
