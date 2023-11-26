@@ -141,18 +141,12 @@ export const VideoCarouselBlockSave = ({ attributes }: GutenCsekBlockSaveProps<V
         if (!video.url) return null;
 
         if (usesVimeo) {
-            return (
-                <div className="player" key={index}>
-                    <img className="vimeo-thumbnail" data-vimeo-url={video.url} />
-                </div>
-            );
+            return <img className="vimeo-thumbnail" data-vimeo-url={video.url} key={index} />;
         }
         return (
-            <div className="player" key={index}>
-                <video controls={false}>
-                    <source src={video.url} type="video/mp4" />
-                </video>
-            </div>
+            <video controls={false} key={index}>
+                <source src={video.url} type="video/mp4" />
+            </video>
         );
     });
 

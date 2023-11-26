@@ -39,6 +39,7 @@ export default class VideoCarouselController extends BlockController {
 
         this.videoCarouselClassName = videoCarouselClassName;
         this.activeIndex = 0;
+        this.vimeoVideos = [];
     }
 
     setup() {
@@ -140,16 +141,15 @@ export default class VideoCarouselController extends BlockController {
 
         // this.videoBlocks.forEach((block) => {
         for (const block of this.videoBlocks) {
-            this.log("Working on block: ", block);
             const vimeoThumbnail = block.querySelector(".vimeo-thumbnail");
 
             if (vimeoThumbnail) {
                 const url = vimeoThumbnail.getAttribute("data-vimeo-url") ?? "";
 
-                const video = new VimeoVideo(url, 1280, 720, false);
+                const video = new VimeoVideo(url, 1920, 1080, false);
+                this.vimeoVideos.push(video);
                 await video.updateVideoData();
                 const thumbnail = video.apiResponseData?.thumbnail_url ?? "";
-                alert("thumbnail: " + thumbnail);
                 vimeoThumbnail.setAttribute("src", thumbnail);
             }
         }
