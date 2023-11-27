@@ -232,19 +232,19 @@ export default class DOMController extends BlockController implements DOMControl
     prepareLetsTalkScreen(): boolean {
         const letsTalk = document.getElementById("lets-talk") as HTMLDivElement;
         if (!letsTalk) {
-            this.log("Lets talk screen not found.");
+            this.err("Lets talk screen not found.");
             return false;
         }
 
         const letsTalkButtons: NodeListOf<HTMLAnchorElement> = document.querySelectorAll(".lets-talk-open");
         if (!letsTalkButtons || letsTalkButtons.length === 0) {
-            this.log("Lets talk buttons not found.");
+            this.err("Lets talk buttons not found.");
             return false;
         }
 
         const letsTalkCloseButton = document.getElementById("lets-talk-close") as HTMLAnchorElement;
         if (!letsTalkCloseButton) {
-            this.log("Lets talk close button not found.");
+            this.err("Lets talk close button not found.");
             return false;
         }
 

@@ -140,21 +140,21 @@ export class ScrollingProjectsBlock {
 
     async precalculateColors() {
         if (!this.projectData) {
-            this.log("Tried to find colors, no project data found");
+            // this.log("Tried to find colors, no project data found");
             return;
         }
 
         for (const project of this.projectData) {
             try {
                 const imageColor: string = await getImageColor(project.imageUrl.href);
-                this.log(`Found color for ${project.name}:`, imageColor);
+                // this.log(`Found color for ${project.name}:`, imageColor);
                 project.color = imageColor;
             } catch (err: any) {
                 console.error("Error:", err);
             }
         }
 
-        this.log({ projectData: this.projectData });
+        // this.log({ projectData: this.projectData });
     }
 
     shuffleProjectOrder() {

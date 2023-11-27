@@ -46,8 +46,6 @@ export default class VideoCarouselController extends BlockController {
     }
 
     setup() {
-        this.debug = true;
-
         this.videoCarousel = document.querySelector(`.${this.videoCarouselClassName}`) as HTMLDivElement;
         if (this.invalid(this.videoCarousel)) {
             this.log("No video carousel found.");
