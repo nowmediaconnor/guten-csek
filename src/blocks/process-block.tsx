@@ -27,12 +27,21 @@ export interface ProcessBlockAttributes {
 export default class ProcessBlockController extends BlockController {
     blocks: NodeListOf<HTMLElement>;
 
+    observers: IntersectionObserver[] = [];
+    stepObservers: IntersectionObserver[][] = [];
+
+    scrollTimeout: number | undefined;
+    scrollTargetTop: number | undefined;
+    lastIntersetingStep: Element | undefined;
+    isScrolling: boolean = false;
+
     constructor() {
         super();
         this.name = "ProcessBlock";
     }
 
     setup(): void {
+        this.debug = true;
         this.blocks = document.querySelectorAll(".wp-block-guten-csek-process-block");
 
         if (this.invalid(this.blocks)) {
@@ -40,10 +49,72 @@ export default class ProcessBlockController extends BlockController {
             return;
         }
 
+        const observerOptions = {
+            root: null,
+            rootMargin: "-50%",
+            threshold: 0,
+        };
+
+        this.blocks.forEach((block: HTMLElement) => {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        this.log("Process block is visible");
+                        document.body.classList.add("snap-scroll");
+                    } else {
+                        this.log("Process block is not visible");
+                        document.body.classList.remove("snap-scroll");
+                    }
+                });
+            }, observerOptions);
+
+            observer.observe(block);
+            this.observers.push(observer);
+
+            const stepElements = block.querySelectorAll(".step");
+            const stepObserverOptions = {
+                root: null,
+                rootMargin: "-50%",
+                threshold: 0,
+            };
+            const stepObservers: IntersectionObserver[] = [];
+            stepElements.forEach((step: Element, i: number) => {
+                const stepObserver = new IntersectionObserver((entries) => {
+                    entries.forEach((entry) => {
+                        const { target } = entry;
+                        if (entry.isIntersecting && target !== this.lastIntersetingStep) {
+                            this.log(`Step ${i + 1} is visible`);
+                            this.scrollTargetTop = target.getBoundingClientRect().top + window.scrollY;
+                            this.lastIntersetingStep = target;
+                        } else if (!entry.isIntersecting && target === this.lastIntersetingStep) {
+                            this.log(`Step ${i + 1} is not visible`);
+                            this.scrollTargetTop = undefined;
+                            this.lastIntersetingStep = undefined;
+                        }
+                    });
+                }, stepObserverOptions);
+                stepObserver.observe(step);
+                stepObservers.push(stepObserver);
+            });
+        });
+
         this.isInitialized = true;
     }
 
-    onScroll?(scrollY?: number | undefined): void {}
+    scroll(scrollY?: number | undefined): void {
+        if (this.scrollTimeout) {
+            window.clearTimeout(this.scrollTimeout);
+        }
+
+        this.scrollTimeout = window.setTimeout(() => {
+            this.log("Scroll timeout");
+            this.scrollTimeout = undefined;
+
+            if (this.scrollTargetTop) {
+                window.scrollTo({ top: this.scrollTargetTop, behavior: "smooth" });
+            }
+        }, 500);
+    }
     onMouseMove?(e: MouseEvent, blockIndex: number): void {}
 
     static editComponent({ attributes, setAttributes }: GutenCsekBlockEditProps<ProcessBlockAttributes>): JSX.Element {
@@ -127,15 +198,22 @@ export default class ProcessBlockController extends BlockController {
         const stepElements = steps.map((step: ProcessStep, i: number) => {
             const { title, description, imageUrl } = step;
             return (
-                <div className="flex flex-col gap-4 py-4 csek-card w-fit">
-                    <Heading level="3">Step {i + 1}</Heading>
-                    <Heading level="4">{title}</Heading>
+                <section className="step">
+                    <h2>{title}</h2>
                     <p>{description}</p>
-                    <img src={imageUrl} />
-                </div>
+                    <img src={imageUrl} className="hidden" />
+                </section>
             );
         });
 
-        return <section {...blockProps}>{stepElements}</section>;
+        return (
+            <section {...blockProps}>
+                <div className="block-content">
+                    <div className="process-image"></div>
+                    <h1 className="process-title"></h1>
+                    <div className="process-steps">{stepElements}</div>
+                </div>
+            </section>
+        );
     }
 }

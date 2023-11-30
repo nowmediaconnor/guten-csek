@@ -19,6 +19,10 @@ body {
     font-family: "Montserrat", sans-serif;
 }
 
+html {
+    height: 100vh;
+}
+
 /* Floating images at top of home page */
 
 @keyframes hover {
