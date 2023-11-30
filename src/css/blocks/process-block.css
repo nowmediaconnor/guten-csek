@@ -4,20 +4,33 @@
  */
 
 .wp-block-guten-csek-process-block {
-    @apply w-full bg-csek-dark text-white;
+    @apply w-full h-fit bg-csek-dark text-white font-syne py-32;
+
+    & .process-title {
+        @apply sticky -top-10 left-4 h-0 text-center z-10 text-[18rem] leading-none font-bold text-transparent;
+        -webkit-text-stroke: 4px var(--csek-white);
+    }
 
     & .block-content {
-        @apply w-11/12 max-w-csek-max mx-auto sticky top-0 py-32;
+        @apply flex flex-row w-11/12 h-max max-w-csek-max mx-auto relative top-0;
 
         & .process-image {
-            @apply w-32 sticky h-32 bg-csek-red top-32;
+            @apply w-1/2 sticky h-[75vh] bg-zinc-800 top-[12.5vh] right-1/2;
         }
 
         & .process-steps {
-            @apply w-1/2 left-1/2 relative flex flex-col gap-4;
+            @apply w-1/2 right-0 relative top-0 flex flex-col gap-4;
 
-            & section.step {
-                @apply relative flex flex-col items-center justify-center h-screen border border-solid border-csek-red;
+            & .step {
+                @apply relative flex flex-col items-start justify-end h-screen border border-solid border-csek-red px-16 py-[12.5vh];
+
+                & h2 {
+                    @apply text-5xl font-bold text-csek-red;
+                }
+
+                & p {
+                    @apply font-montserrat;
+                }
             }
         }
     }

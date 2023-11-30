@@ -208,9 +208,9 @@ export default class ProcessBlockController extends BlockController {
 
         return (
             <section {...blockProps}>
+                <h1 className="process-title">00</h1>
                 <div className="block-content">
                     <div className="process-image"></div>
-                    <h1 className="process-title"></h1>
                     <div className="process-steps">{stepElements}</div>
                 </div>
             </section>
