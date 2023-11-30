@@ -3,37 +3,6 @@
  * Author: Connor Doman
  */
 
-enum ImageSizes {
-    SMALL = "small",
-    MEDIUM = "medium",
-    LARGE = "large",
-    XLARGE = "xlarge",
-    XXLARGE = "xxlarge",
-}
-
-interface ImageDimensions {
-    w: number;
-    h: number;
-}
-
-const sizeMapping = {
-    [ImageSizes.SMALL]: { min: 0, max: 300 },
-    [ImageSizes.MEDIUM]: { min: 301, max: 768 },
-    [ImageSizes.LARGE]: { min: 769, max: 1024 },
-    [ImageSizes.XLARGE]: { min: 1025, max: 1536 },
-    [ImageSizes.XXLARGE]: { min: 1537, max: Infinity },
-};
-
-function getSizeFromUrl(url: string): ImageDimensions {
-    const regex = /(\d+)x(\d+)/;
-    const match = url.match(regex);
-    if (match) {
-        return { w: parseInt(match[1]), h: parseInt(match[2]) };
-    } else {
-        return { w: 0, h: 0 };
-    }
-}
-
 interface ImageSizeData {
     file: string;
     width: number;
@@ -57,6 +26,7 @@ export class CsekImage {
     async preload() {
         const response = await fetch(`/wp-json/wp/v2/media/${this.id}`);
         const data = await response.json();
+        this.alt = data.alt_text;
         this.sizes = data.media_details.sizes;
     }
 
@@ -80,5 +50,9 @@ export class CsekImage {
 
     get full(): string {
         return this.sizes.full.source_url;
+    }
+
+    get altText(): string {
+        return this.alt;
     }
 }

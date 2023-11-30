@@ -17,6 +17,7 @@ interface ProcessStep {
     title: string;
     description: string;
     imageUrl: string;
+    imageAlt: string;
 }
 
 export interface ProcessBlockAttributes {
@@ -58,7 +59,7 @@ export default class ProcessBlockController extends BlockController {
 
         const handleAddStep = () => {
             const newSteps = [...steps];
-            newSteps.push({ title: "", description: "", imageUrl: "" });
+            newSteps.push({ title: "", description: "", imageUrl: "", imageAlt: "" });
             setAttributes({ steps: newSteps });
         };
 
@@ -80,13 +81,12 @@ export default class ProcessBlockController extends BlockController {
             setAttributes({ steps: newSteps });
         };
 
-        const handleUpdateStepImageUrl = async (imageId: number, index: number) => {
+        const handleUpdateStepImage = async (imageUrl: string, imageAlt: string, index: number) => {
+            console.log("Updating image url:", imageUrl, "->", imageAlt);
+
             const newSteps = [...steps];
 
-            const csekImage = new CsekImage(imageId);
-            await csekImage.doubleCheckSizes();
-
-            newSteps[index].imageUrl = csekImage.medium;
+            newSteps[index].imageUrl = imageUrl;
             setAttributes({ steps: newSteps });
         };
 
@@ -104,7 +104,8 @@ export default class ProcessBlockController extends BlockController {
                     <CsekMediaUpload
                         label="Featured Image"
                         urlAttribute={imageUrl}
-                        onChange={(_v, id) => handleUpdateStepImageUrl(id, i)}
+                        onChange={(v, alt) => handleUpdateStepImage(v, alt, i)}
+                        size="medium"
                     />
                 </CsekCard>
             );
