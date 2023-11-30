@@ -133,6 +133,8 @@ export abstract class BlockController implements ControllerProperties {
 
     abstract onMouseMove?(e: MouseEvent, blockIndex: number): void;
 
+    onScroll?(scrollY?: number): void;
+
     invalid(truthy: any): boolean {
         if (truthy) {
             this.log("Block is valid.");

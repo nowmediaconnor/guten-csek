@@ -8,9 +8,10 @@ import React, { useState } from "@wordpress/element";
 import { Heading } from "./heading";
 import { capitalize } from "../scripts/strings";
 import { CsekAddButton } from "./button";
+import Label from "./label";
 
 interface CsekMediaUploadProps {
-    onChange: (v: string) => void;
+    onChange: (v: string, id: number) => void;
     urlAttribute?: string;
     type?: "image" | "video" | "audio";
     label?: string;
@@ -22,7 +23,7 @@ export const CsekMediaUpload = ({ onChange, urlAttribute = "", type = "image", l
 
     const handleChangeURL = (v: any) => {
         if (onChange) {
-            onChange(v.url);
+            onChange(v.url, v.id);
             setResourceURL(v.url);
             setResourceId(v.id);
         }
@@ -52,7 +53,7 @@ export const CsekMediaUpload = ({ onChange, urlAttribute = "", type = "image", l
     return (
         <div className="flex flex-col gap-4 py-4 csek-card w-fit">
             {label ? <Heading level="3">{label}</Heading> : null}
-            <MediaUploadCheck>
+            <MediaUploadCheck fallback={<Label>You are not permitted to upload media.</Label>}>
                 <MediaUpload
                     onSelect={handleChangeURL}
                     allowedTypes={[type]}

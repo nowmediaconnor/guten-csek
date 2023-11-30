@@ -70,6 +70,7 @@ import { ImageCollageBlockEdit, ImageCollageBlockSave } from "../blocks/misc/ima
 import { ScreenshotCollageBlockEdit, ScreenshotCollageBlockSave } from "../blocks/misc/screenshot-collage-block";
 import { ScrollingProjectsBlockEdit, ScrollingProjectsBlockSave } from "../blocks/scrolling-projects-block";
 import { TeamBlockEdit, TeamBlockSave } from "../blocks/team-block";
+import ProcessBlockController, { ProcessBlockAttributes } from "../blocks/process-block";
 
 export const registerAllBlocks = () => {
     console.log("Registering blocks...");
@@ -677,5 +678,20 @@ export const registerAllBlocks = () => {
         },
         edit: ChicagoFiresBlockEdit,
         save: ChicagoFiresBlockSave,
+    });
+
+    // New Process Block
+    registerBlockType<ProcessBlockAttributes>("guten-csek/process-block", {
+        title: "Csek Process Block",
+        icon: "text",
+        category: "text",
+        attributes: {
+            steps: {
+                type: "array",
+                default: [],
+            },
+        },
+        edit: ProcessBlockController.editComponent,
+        save: ProcessBlockController.saveComponent,
     });
 };
