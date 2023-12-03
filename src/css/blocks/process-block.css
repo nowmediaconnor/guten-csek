@@ -44,7 +44,7 @@
         @apply flex flex-row w-11/12 h-max max-w-csek-max mx-auto relative;
 
         & .process-image {
-            @apply w-1/2 sticky h-[75vh] bg-zinc-800 top-[12.5vh] right-1/2 flex flex-col items-center justify-center;
+            @apply w-1/2 sticky h-[75vh] top-[12.5vh] right-1/2 flex flex-col items-center justify-center;
 
             & img {
                 @apply absolute opacity-0 transition-opacity duration-500 ease-in-out object-contain h-full w-full;
@@ -59,10 +59,10 @@
             @apply w-1/2 right-0 relative top-0 flex flex-col gap-4;
 
             & .step {
-                @apply relative flex flex-col items-start justify-end h-screen border border-solid border-csek-red px-16 py-[12.5vh];
+                @apply relative flex flex-col items-start justify-end h-screen px-16 py-[12.5vh];
 
                 & h2 {
-                    @apply text-5xl font-bold text-csek-red;
+                    @apply text-5xl font-bold text-csek-red mb-4;
                 }
 
                 & p {

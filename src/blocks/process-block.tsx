@@ -269,8 +269,6 @@ export default class ProcessBlockController extends BlockController {
         };
 
         const handleUpdateStepImage = async (imageUrl: string, imageAlt: string, index: number) => {
-            console.log("Updating image url:", imageUrl, "->", imageAlt);
-
             const newSteps = [...steps];
 
             newSteps[index].imageUrl = imageUrl;
