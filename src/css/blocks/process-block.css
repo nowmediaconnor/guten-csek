@@ -44,7 +44,15 @@
         @apply flex flex-row w-11/12 h-max max-w-csek-max mx-auto relative;
 
         & .process-image {
-            @apply w-1/2 sticky h-[75vh] bg-zinc-800 top-[12.5vh] right-1/2;
+            @apply w-1/2 sticky h-[75vh] bg-zinc-800 top-[12.5vh] right-1/2 flex flex-col items-center justify-center;
+
+            & img {
+                @apply absolute opacity-0 transition-opacity duration-500 ease-in-out object-contain h-full w-full;
+
+                &.active {
+                    @apply opacity-100;
+                }
+            }
         }
 
         & .process-steps {

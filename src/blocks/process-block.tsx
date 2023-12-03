@@ -82,7 +82,7 @@ export default class ProcessBlockController extends BlockController {
     prepareProcessBlocks(): void {
         this.blocks.forEach((block: HTMLElement) => {
             const processSteps: ProcessStep[] = [];
-            const processImage = block.querySelector(".process-image img") as HTMLImageElement;
+            const processImage = block.querySelector(".process-image") as HTMLImageElement;
             const processTitle = block.querySelector(".process-title") as HTMLElement;
 
             const stepElements = block.querySelectorAll(".step");
@@ -99,8 +99,8 @@ export default class ProcessBlockController extends BlockController {
                 const stepData: ProcessStep = {
                     title: stepTitle.textContent || "",
                     description: stepDescription.textContent || "",
-                    imageUrl: stepImage.src,
-                    imageAlt: stepImage.alt,
+                    imageUrl: stepImage ? stepImage.src ?? "" : "",
+                    imageAlt: stepImage ? stepImage.alt ?? "" : "",
                 };
 
                 processSteps.push(stepData);
@@ -172,23 +172,18 @@ export default class ProcessBlockController extends BlockController {
         const { processImage } = processBlock;
         const { imageUrl, imageAlt } = processBlock.steps[step];
 
-        if (this.invalid(processImage)) {
-            this.err("Invalid process image");
-            return;
-        }
+        const images = processImage.querySelectorAll("img") as NodeListOf<HTMLImageElement>;
 
-        if (this.invalid(imageUrl)) {
-            this.err("Invalid image url");
-            return;
-        }
+        this.log("Found images", images.length, "for step", step, "with url", imageUrl, "and alt", imageAlt);
 
-        if (this.invalid(imageAlt)) {
-            this.err("Invalid image alt");
-            return;
-        }
-
-        processImage.src = imageUrl;
-        processImage.alt = imageAlt;
+        images.forEach((image: HTMLImageElement, index: number) => {
+            this.log("Updating image", index, imageUrl, imageAlt);
+            if (index === step) {
+                image.classList.add("active");
+            } else {
+                image.classList.remove("active");
+            }
+        });
     }
 
     onBlockEnterViewport(processBlock: ProcessBlock) {
@@ -210,6 +205,7 @@ export default class ProcessBlockController extends BlockController {
         this.scrollTargetTop = processStep.getBoundingClientRect().top + window.scrollY;
         this.lastIntersetingStep = processStep;
 
+        this.updateProcessImage(processBlock, step);
         this.updateProcessTitle(processBlock, step);
     }
 
@@ -321,8 +317,10 @@ export default class ProcessBlockController extends BlockController {
             </span>,
         ];
 
+        const stepImages: JSX.Element[] = [];
+
         const stepElements = steps.map((step: ProcessStep, i: number) => {
-            const { title, description, imageUrl } = step;
+            const { title, description, imageUrl, imageAlt } = step;
 
             stepNumbers.push(
                 <span className="right-digit" key={i + 1}>
@@ -330,11 +328,12 @@ export default class ProcessBlockController extends BlockController {
                 </span>
             );
 
+            stepImages.push(<img src={imageUrl} key={i} alt={imageAlt} />);
+
             return (
                 <section className="step">
                     <h2>{title}</h2>
                     <p>{description}</p>
-                    <img src={imageUrl} className="hidden" />
                 </section>
             );
         });
@@ -346,7 +345,7 @@ export default class ProcessBlockController extends BlockController {
                     <div className="right-digits">{stepNumbers}</div>
                 </h1>
                 <div className="block-content">
-                    <div className="process-image"></div>
+                    <div className="process-image">{stepImages}</div>
                     <div className="process-steps">{stepElements}</div>
                 </div>
             </section>
