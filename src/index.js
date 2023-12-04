@@ -22,8 +22,7 @@ window.addEventListener("load", (e) => {
         window.domController.setup();
         window.domController.overrideAllDebug(false);
         window.domController.debug = true;
-        window.domController.overrideDebug(true, "ProjectsMarqueeController");
-        window.domController.overrideDebug(true, "SrollingProjectsController");
+        window.domController.overrideDebug(true, "ProcessBlock");
     });
 
     setTimeout(() => {

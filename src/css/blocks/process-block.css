@@ -1,0 +1,74 @@
+/*
+ * Created on Wed Nov 29 2023
+ * Author: Connor Doman
+ */
+
+.wp-block-guten-csek-process-block {
+    @apply w-full h-fit bg-csek-dark text-white font-syne relative py-[12.5vh];
+
+    & .process-title {
+        @apply sticky top-20 opacity-0 left-0 h-0 text-center z-10 text-[18rem] leading-[0] font-bold text-transparent ease-in-out;
+
+        text-stroke: 4px var(--csek-white);
+        -webkit-text-stroke: 4px var(--csek-white);
+        transition:
+            top 3000ms,
+            opacity 1000ms;
+
+        &.appear {
+            @apply opacity-100;
+        }
+
+        & span {
+            @apply w-[200px] text-center;
+        }
+
+        & .left-digit {
+            @apply tracking-tighter absolute right-1/2;
+        }
+
+        & .right-digits {
+            @apply relative;
+
+            & .right-digit {
+                @apply absolute opacity-0 transition-opacity duration-500 ease-in-out;
+
+                &.active {
+                    @apply opacity-100;
+                }
+            }
+        }
+    }
+
+    & .block-content {
+        @apply flex flex-row w-11/12 h-max max-w-csek-max mx-auto relative;
+
+        & .process-image {
+            @apply w-1/2 sticky h-[75vh] top-[12.5vh] right-1/2 flex flex-col items-center justify-center;
+
+            & img {
+                @apply absolute opacity-0 transition-opacity duration-500 ease-in-out object-contain h-full w-full;
+
+                &.active {
+                    @apply opacity-100;
+                }
+            }
+        }
+
+        & .process-steps {
+            @apply w-1/2 right-0 relative top-0 flex flex-col gap-4;
+
+            & .step {
+                @apply relative flex flex-col items-start justify-end h-screen px-16 py-[12.5vh];
+
+                & h2 {
+                    @apply text-5xl font-bold text-csek-red mb-4;
+                }
+
+                & p {
+                    @apply font-montserrat;
+                }
+            }
+        }
+    }
+}

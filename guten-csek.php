@@ -81,6 +81,12 @@ function enqueue_custom_block_assets()
         ['wp-blocks', 'wp-element', 'wp-i18n', 'wp-editor'],
         filemtime(plugin_dir_path(__FILE__) . 'build/index.js')
     );
+    $apiSettings = [
+        'root' => esc_url_raw(rest_url()),
+        'nonce' => wp_create_nonce('wp_rest')
+    ];
+    wp_add_inline_script("guten-csek-blocks", "const CSEK_API_SETTINGS = " . json_encode($apiSettings), "before");
+
 
     // fonts
     // wp_enqueue_style('guten-csek-fonts', plugin_dir_url(__FILE__) . 'src/fonts/fonts.css');

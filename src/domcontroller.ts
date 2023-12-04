@@ -16,6 +16,7 @@ import FeaturedVideoController from "./scripts/controllers/featured-video-contro
 import StaffProfilesController from "./scripts/controllers/staff-profiles-controller";
 import CyclingStackController from "./scripts/controllers/cycling-stack-controller";
 import ProjectsMarqueeController from "./scripts/controllers/projects-marquee-controller";
+import ProcessBlockController from "./blocks/process-block";
 
 export const createDOMController = () => {
     /* Prepare DOM Controller */
@@ -52,6 +53,9 @@ export const createDOMController = () => {
     // Cycling Stack Component
     const cyclingStackController = new CyclingStackController();
 
+    // Process Block
+    const processBlockController = new ProcessBlockController();
+
     // DOM controller
     return new DOMController(
         curtainifyController,
@@ -64,7 +68,8 @@ export const createDOMController = () => {
         featuredVideoController,
         staffProfilesController,
         cyclingStackController,
-        teamController
+        teamController,
+        processBlockController
         // verticalImagesController
     );
 };
