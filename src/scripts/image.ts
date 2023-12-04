@@ -3,6 +3,8 @@
  * Author: Connor Doman
  */
 
+import apiFetch from "@wordpress/api-fetch";
+
 interface ImageSizeData {
     file: string;
     width: number;
@@ -24,10 +26,15 @@ export class CsekImage {
     }
 
     async preload() {
-        const response = await fetch(`/wp-json/wp/v2/media/${this.id}`);
-        const data = await response.json();
-        this.alt = data.alt_text;
-        this.sizes = data.media_details.sizes;
+        try {
+            const response = await fetch(`/wp-json/wp/v2/media/${this.id}?context=embed`);
+            console.log(await response.clone().json());
+            const data = await response.json();
+            this.alt = data.alt_text;
+            this.sizes = data.media_details.sizes;
+        } catch (err: any) {
+            console.log(`[CsekImage] Error: ${err}`);
+        }
     }
 
     async doubleCheckSizes() {
