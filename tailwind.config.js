@@ -3,7 +3,8 @@ const tailpress = require("@jeffreyvr/tailwindcss-tailpress");
 
 const customWidths = {
     "csek-max": "75rem",
-    "half-max": "37.5rem",
+    "csek-1/2": "37.5rem",
+    "csek-2/3": "50rem",
     serif: "12rem",
 };
 

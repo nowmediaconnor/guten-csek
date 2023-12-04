@@ -25,7 +25,7 @@
     @apply text-5xl md:text-8xl leading-none;
 }
 .wp-block-guten-csek-tagline-header-block .heading-text h2 {
-    @apply text-lg md:text-2xl leading-none max-w-half-max mx-auto font-syne w-2/3 md:w-full;
+    @apply text-lg md:text-2xl leading-none max-w-csek-1/2 mx-auto font-syne w-2/3 md:w-full;
 }
 
 .wp-block-guten-csek-tagline-header-block .serif {
