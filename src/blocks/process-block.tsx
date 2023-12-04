@@ -11,7 +11,7 @@ import CsekCard from "../components/card";
 import { TextArea, TextInput } from "../components/input";
 import { CsekImage } from "../scripts/image";
 import { CsekMediaUpload } from "../components/media-upload";
-import { CsekAddButton, CsekButton } from "../components/button";
+import { CsekAddButton, CsekButton, CsekDeleteButton } from "../components/button";
 import { pad } from "../scripts/strings";
 
 interface ProcessStep {
@@ -278,26 +278,38 @@ export default class ProcessBlockController extends BlockController {
         const cardEditors = steps.map((step: ProcessStep, i: number) => {
             const { title, description, imageUrl } = step;
             return (
-                <CsekCard>
-                    <Heading level="3">Step {i + 1}</Heading>
-                    <TextInput label="Step Title" initialValue={title} onChange={(v) => handleUpdateStepTitle(v, i)} />
-                    <TextArea
-                        label="Step Description"
-                        initialValue={description}
-                        onChange={(v) => handleUpdateStepDescription(v, i)}
-                    />
-                    <CsekMediaUpload
-                        label="Featured Image"
-                        urlAttribute={imageUrl}
-                        onChange={(v, alt) => handleUpdateStepImage(v, alt, i)}
-                        size="medium"
-                    />
+                <CsekCard className="flex flex-col gap-2">
+                    <Heading level="3" className="text-2xl flex flex-row justify-between">
+                        Step {i + 1}
+                        <CsekDeleteButton label="Remove Step" onDelete={() => handleRemoveStep(i)} />
+                    </Heading>
+                    <div className="flex flex-row gap-2">
+                        <CsekMediaUpload
+                            label="Featured Image"
+                            urlAttribute={imageUrl}
+                            onChange={(v, alt) => handleUpdateStepImage(v, alt, i)}
+                            size="large"
+                        />
+                        <CsekCard className="flex flex-col gap-2 basis-full">
+                            <TextInput
+                                label="Step Title"
+                                initialValue={title}
+                                onChange={(v) => handleUpdateStepTitle(v, i)}
+                            />
+                            <TextArea
+                                label="Step Description"
+                                initialValue={description}
+                                className="h-full"
+                                onChange={(v) => handleUpdateStepDescription(v, i)}
+                            />
+                        </CsekCard>
+                    </div>
                 </CsekCard>
             );
         });
 
         return (
-            <section {...blockProps}>
+            <section {...blockProps} className="csek-block">
                 <CsekBlockHeading>Csek Process Block</CsekBlockHeading>
                 {cardEditors}
                 <CsekAddButton label="Add Step" onAdd={handleAddStep} />

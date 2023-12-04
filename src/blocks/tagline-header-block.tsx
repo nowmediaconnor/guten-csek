@@ -46,7 +46,7 @@ export const TaglineHeaderEdit = ({ attributes, setAttributes }: GutenCsekBlockE
     return (
         <div className="csek-block">
             <InspectorControls>
-                <PanelBody title="Tagline Header Editor">
+                <PanelBody title="Csek Tagline Header Editor">
                     <CsekMediaUpload
                         label="Accent image"
                         urlAttribute={imageURL}
@@ -55,7 +55,7 @@ export const TaglineHeaderEdit = ({ attributes, setAttributes }: GutenCsekBlockE
                     />
                 </PanelBody>
             </InspectorControls>
-            <CsekBlockHeading>Tagline Header Block</CsekBlockHeading>
+            <CsekBlockHeading>Csek Tagline Header Block</CsekBlockHeading>
             <CsekCard className="flex flex-col gap-2">
                 <TextInput label="Pre-Tagline" initialValue={preTagline} onChange={preTaglineChange} />
                 <TextInput label="Tagline" initialValue={tagline} onChange={taglineChange} />

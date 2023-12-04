@@ -130,13 +130,16 @@ export const TextArea = ({ label, initialValue = "", placeholder, className, dis
     };
 
     return (
-        <div className={twMerge("w-full", className)}>
-            {label ? <Heading level="4">{label}</Heading> : null}
+        <div className={twMerge("w-full relative", className)}>
+            {label ? (
+                <Heading level="4" className="mb-2">
+                    {label}
+                </Heading>
+            ) : null}
             <textarea
                 className={twMerge(
-                    "w-full h-40 rounded border border-solid border-slate-700 px-2 py-1 text-lg",
-                    "csek-input",
-                    label ? "mt-2" : ""
+                    "w-full min-h-fit h-64 rounded border border-solid border-slate-700 px-2 py-1 text-lg",
+                    "csek-input"
                 )}
                 placeholder={placeholder}
                 onChange={handleChange}

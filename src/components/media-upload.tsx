@@ -47,7 +47,7 @@ export const CsekMediaUpload = ({
                     return resource.full;
             }
         };
-        alert("Resource info: " + JSON.stringify({ ...resource }, null, 4));
+        // alert("Resource info: " + JSON.stringify({ ...resource }, null, 4));
         onChange(resUrl(), resource.altText);
         setResourceURL(v.url);
         setResourceId(v.id);
