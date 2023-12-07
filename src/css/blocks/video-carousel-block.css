@@ -40,7 +40,7 @@
 
     & .video-caption {
         & h2 {
-            @apply text-3xl leading-none my-4 font-bold font-syne max-w-half-max;
+            @apply text-3xl leading-none my-4 font-bold font-syne max-w-csek-1/2;
         }
 
         & .video-playbutton {

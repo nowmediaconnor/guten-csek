@@ -6,7 +6,11 @@
 /* Expanding Video Block*/
 
 .wp-block-guten-csek-expanding-video-block .row {
-    @apply flex flex-row justify-center items-start gap-8;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 2rem;
 }
 
 .expanding-video-container {
@@ -65,7 +69,11 @@
 }
 
 .message {
-    @apply absolute h-full top-full left-1/2 transform -translate-x-1/2 w-full px-[10vw] text-center flex flex-col items-center justify-center gap-4 transition-all duration-3000 ease-out opacity-0 overflow-hidden font-montserrat max-w-csek-max;
+    @apply text-white h-screen bg-csek-dark w-screen text-center flex flex-col items-center justify-center gap-4 transition-all duration-3000 ease-out overflow-hidden font-montserrat mx-auto;
+
+    & > * {
+        @apply max-w-csek-2/3;
+    }
 }
 
 .message h2 {
