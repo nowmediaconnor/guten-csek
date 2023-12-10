@@ -25,6 +25,7 @@ import {
     FeaturedImageBlockAttributes,
     FeaturedImageBlockEdit,
     FeaturedImageBlockSave,
+    defaultFeaturedImagePadding,
 } from "../blocks/misc/featured-image-block";
 import { LeftRightBlockAttributes, LeftRightBlockEdit, LeftRightBlockSave } from "../blocks/misc/left-right-block";
 import {
@@ -216,7 +217,7 @@ export const registerAllBlocks = () => {
             },
             padding: {
                 type: "object",
-                default: defaultPadding,
+                default: defaultFeaturedImagePadding,
             },
         },
         edit: FeaturedImageBlockEdit,

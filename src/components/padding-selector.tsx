@@ -19,6 +19,8 @@ import {
     FlexItem,
 } from "@wordpress/components";
 
+type PaddingUnits = "px" | "rem" | "em" | "%";
+
 export interface Padding {
     unit: PaddingUnits;
     top: number;
@@ -35,14 +37,14 @@ export const defaultPadding: Padding = {
     right: 0,
 };
 
-type PaddingUnits = "px" | "rem" | "em" | "%";
-
-const unitOptions: { label: PaddingUnits; value: PaddingUnits }[] = [
-    { label: "px", value: "px" },
-    { label: "rem", value: "rem" },
-    { label: "em", value: "em" },
-    { label: "%", value: "%" },
-];
+export function styleFromPadding(padding: Padding): Partial<React.CSSProperties> {
+    return {
+        paddingTop: `${padding.top}${padding.unit}`,
+        paddingLeft: `${padding.left}${padding.unit}`,
+        paddingBottom: `${padding.bottom}${padding.unit}`,
+        paddingRight: `${padding.right}${padding.unit}`,
+    };
+}
 
 interface CsekPaddingSelectorProps {
     onChange: (padding: Padding) => void;
@@ -51,12 +53,12 @@ interface CsekPaddingSelectorProps {
 
 export const CsekPaddingSelector = ({ onChange, padding }: CsekPaddingSelectorProps) => {
     const [unit, setUnit] = React.useState<PaddingUnits>(padding.unit ?? "px");
-    const [matchHorizontal, setMatchHorizontal] = React.useState<boolean>(false);
-    const [matchVertical, setMatchVertical] = React.useState<boolean>(false);
     const [top, setTop] = React.useState<number>(padding.top ?? 0);
     const [left, setLeft] = React.useState<number>(padding.left ?? 0);
     const [bottom, setBottom] = React.useState<number>(padding.bottom ?? 0);
     const [right, setRight] = React.useState<number>(padding.right ?? 0);
+    const [matchHorizontal, setMatchHorizontal] = React.useState<boolean>(left === right);
+    const [matchVertical, setMatchVertical] = React.useState<boolean>(top === bottom);
 
     const convertNumber = (v: string | undefined) => {
         if (v) {
@@ -104,6 +106,13 @@ export const CsekPaddingSelector = ({ onChange, padding }: CsekPaddingSelectorPr
             right,
         });
     }, [unit, top, left, bottom, right]);
+
+    const unitOptions: { label: PaddingUnits; value: PaddingUnits }[] = [
+        { label: "px", value: "px" },
+        { label: "rem", value: "rem" },
+        { label: "em", value: "em" },
+        { label: "%", value: "%" },
+    ];
 
     return (
         <Card>

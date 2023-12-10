@@ -10,13 +10,22 @@ import { CsekBlockHeading } from "../../components/heading";
 
 import { CsekMediaUpload } from "../../components/media-upload";
 import { TextInput } from "../../components/input";
-import CsekPaddingSelector, { Padding, defaultPadding } from "../../components/padding-selector";
+import CsekPaddingSelector, { Padding, defaultPadding, styleFromPadding } from "../../components/padding-selector";
+import Label from "../../components/label";
 
 export interface FeaturedImageBlockAttributes {
     imageURL: string;
     imageAlt: string;
     padding: Padding;
 }
+
+export const defaultFeaturedImagePadding: Padding = {
+    unit: "rem",
+    top: 3,
+    left: 0,
+    bottom: 3,
+    right: 0,
+};
 
 export const FeaturedImageBlockEdit = ({
     attributes,
@@ -34,17 +43,20 @@ export const FeaturedImageBlockEdit = ({
         setAttributes({ imageAlt: value });
     };
 
-    const handlePaddingChange = (padding: Padding) => {
+    const handleChangePadding = (padding: Padding) => {
         setAttributes({ padding });
     };
 
     return (
         <section {...blockProps}>
             <InspectorControls>
-                <CsekPaddingSelector onChange={handlePaddingChange} padding={padding} />
+                <CsekPaddingSelector onChange={handleChangePadding} padding={padding} />
             </InspectorControls>
             <CsekBlockHeading>Csek Featured Image Block</CsekBlockHeading>
             <div className="csek-card flex flex-col gap-4">
+                <Label>
+                    Check the Inspector panel to edit padding <i className="fa fa-arrow-right"></i>
+                </Label>
                 <TextInput
                     initialValue={imageAlt}
                     onChange={onChangeImageAlt}
@@ -62,15 +74,10 @@ export const FeaturedImageBlockSave = ({ attributes }: GutenCsekBlockSaveProps<F
 
     const { imageURL, imageAlt, padding } = attributes;
 
-    const p = {
-        t: `${padding.top}${padding.unit}`,
-        l: `${padding.left}${padding.unit}`,
-        b: `${padding.bottom}${padding.unit}`,
-        r: `${padding.right}${padding.unit}`,
-    };
+    const p = styleFromPadding(padding ?? defaultPadding);
 
     return (
-        <section {...blockProps} style={{ paddingTop: p.t, paddingLeft: p.l, paddingBottom: p.b, paddingRight: p.r }}>
+        <section {...blockProps} style={p}>
             <img className="featured-image" src={imageURL} alt={imageAlt} />
         </section>
     );
