@@ -63,16 +63,19 @@ import {
     VideoCarouselBlockEdit,
     VideoCarouselBlockSave,
 } from "../blocks/video-carousel-block";
-// import { DOMControllerBlockEdit } from "../blocks/dom-controller-block";
 import { HorizontalCarouselBlockEdit, HorizontalCarouselBlockSave } from "../blocks/horizontal-carousel-block";
 import { ChicagoFiresBlockEdit, ChicagoFiresBlockSave } from "../blocks/misc/chicago-fires-block";
-import { FeaturedVideoBlockEdit, FeaturedVideoBlockSave } from "../blocks/misc/featured-video-block";
+import {
+    FeaturedVideoBlockAttributes,
+    FeaturedVideoBlockEdit,
+    FeaturedVideoBlockSave,
+    defaultFeaturedVideoPadding,
+} from "../blocks/misc/featured-video-block";
 import { ImageCollageBlockEdit, ImageCollageBlockSave } from "../blocks/misc/image-collage-block";
 import { ScreenshotCollageBlockEdit, ScreenshotCollageBlockSave } from "../blocks/misc/screenshot-collage-block";
 import { ScrollingProjectsBlockEdit, ScrollingProjectsBlockSave } from "../blocks/scrolling-projects-block";
 import { TeamBlockEdit, TeamBlockSave } from "../blocks/team-block";
 import ProcessBlockController, { ProcessBlockAttributes } from "../blocks/process-block";
-import { defaultPadding } from "../components/padding-selector";
 
 export const registerAllBlocks = () => {
     console.log("Registering blocks...");
@@ -645,7 +648,7 @@ export const registerAllBlocks = () => {
     });
 
     // Featured Video Block
-    registerBlockType("guten-csek/featured-video-block", {
+    registerBlockType<FeaturedVideoBlockAttributes>("guten-csek/featured-video-block", {
         title: "Csek Featured Video Block",
         icon: "format-video",
         category: "csek",
@@ -653,6 +656,10 @@ export const registerAllBlocks = () => {
             videoURL: {
                 type: "string",
                 default: "",
+            },
+            padding: {
+                type: "object",
+                default: defaultFeaturedVideoPadding,
             },
         },
         edit: FeaturedVideoBlockEdit,

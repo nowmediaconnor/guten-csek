@@ -5,29 +5,57 @@
 
 import React, { useState } from "react";
 import { Heading } from "../../components/heading";
-import { GutenbergBlockProps } from "../../scripts/dom";
-import { useBlockProps } from "@wordpress/block-editor";
+import { GutenCsekBlockEditProps, GutenCsekBlockSaveProps, GutenbergBlockProps } from "../../scripts/dom";
+import { InspectorControls, useBlockProps } from "@wordpress/block-editor";
 import { CsekMediaUpload } from "../../components/media-upload";
 import { CsekBlockHeading } from "../../components/heading";
+import CsekPaddingSelector, { Padding } from "../../components/padding-selector";
+import Label from "../../components/label";
 
-export const FeaturedVideoBlockEdit = ({ attributes, setAttributes }: GutenbergBlockProps) => {
+export interface FeaturedVideoBlockAttributes {
+    videoURL: string;
+    padding: Padding;
+}
+
+export const defaultFeaturedVideoPadding: Padding = {
+    unit: "rem",
+    top: 3,
+    left: 0,
+    bottom: 3,
+    right: 0,
+};
+
+export const FeaturedVideoBlockEdit = ({
+    attributes,
+    setAttributes,
+}: GutenCsekBlockEditProps<FeaturedVideoBlockAttributes>) => {
     const blockProps = useBlockProps();
 
-    const { videoURL } = attributes;
+    const { videoURL, padding } = attributes;
 
     const handleChangeVideoURL = (v: any) => {
         setAttributes({ videoURL: v.url });
     };
 
+    const handleChangePadding = (padding: Padding) => {
+        setAttributes({ padding });
+    };
+
     return (
         <div {...blockProps}>
+            <InspectorControls>
+                <CsekPaddingSelector onChange={handleChangePadding} padding={padding} />
+            </InspectorControls>
             <CsekBlockHeading>Csek Featured Video Block</CsekBlockHeading>
+            <Label>
+                Check the Inspector panel to edit padding <i className="fa fa-arrow-right"></i>
+            </Label>
             <CsekMediaUpload type="video" urlAttribute={videoURL} onChange={handleChangeVideoURL} />
         </div>
     );
 };
 
-export const FeaturedVideoBlockSave = ({ attributes }: GutenbergBlockProps) => {
+export const FeaturedVideoBlockSave = ({ attributes }: GutenCsekBlockSaveProps<FeaturedVideoBlockAttributes>) => {
     const blockProps = useBlockProps.save();
 
     const { videoURL } = attributes;
