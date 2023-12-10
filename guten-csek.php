@@ -133,3 +133,5 @@ function image_color_endpoint()
     ));
 }
 add_action('rest_api_init', 'image_color_endpoint', 999);
+
+// Custom Theme Category

@@ -60,10 +60,17 @@ export const FeaturedImageBlockEdit = ({
 export const FeaturedImageBlockSave = ({ attributes }: GutenCsekBlockSaveProps<FeaturedImageBlockAttributes>) => {
     const blockProps = useBlockProps.save();
 
-    const { imageURL, imageAlt } = attributes;
+    const { imageURL, imageAlt, padding } = attributes;
+
+    const p = {
+        t: `${padding.top}${padding.unit}`,
+        l: `${padding.left}${padding.unit}`,
+        b: `${padding.bottom}${padding.unit}`,
+        r: `${padding.right}${padding.unit}`,
+    };
 
     return (
-        <section {...blockProps}>
+        <section {...blockProps} style={{ paddingTop: p.t, paddingLeft: p.l, paddingBottom: p.b, paddingRight: p.r }}>
             <img className="featured-image" src={imageURL} alt={imageAlt} />
         </section>
     );

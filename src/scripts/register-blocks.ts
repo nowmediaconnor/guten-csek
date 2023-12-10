@@ -71,6 +71,7 @@ import { ScreenshotCollageBlockEdit, ScreenshotCollageBlockSave } from "../block
 import { ScrollingProjectsBlockEdit, ScrollingProjectsBlockSave } from "../blocks/scrolling-projects-block";
 import { TeamBlockEdit, TeamBlockSave } from "../blocks/team-block";
 import ProcessBlockController, { ProcessBlockAttributes } from "../blocks/process-block";
+import { defaultPadding } from "../components/padding-selector";
 
 export const registerAllBlocks = () => {
     console.log("Registering blocks...");
@@ -203,7 +204,7 @@ export const registerAllBlocks = () => {
     registerBlockType<FeaturedImageBlockAttributes>("guten-csek/featured-image-block", {
         title: "Csek Featured Image",
         icon: "format-image",
-        category: "media",
+        category: "csek",
         attributes: {
             imageURL: {
                 type: "string",
@@ -212,6 +213,10 @@ export const registerAllBlocks = () => {
             imageAlt: {
                 type: "string",
                 default: "",
+            },
+            padding: {
+                type: "object",
+                default: defaultPadding,
             },
         },
         edit: FeaturedImageBlockEdit,
