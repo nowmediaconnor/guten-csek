@@ -80,7 +80,7 @@ export const registerAllBlocks = () => {
     registerBlockType<SelfDescriptionBlockAttributes>("guten-csek/self-description-block", {
         title: "Csek Self Description",
         icon: "text-page",
-        category: "common",
+        category: "csek",
         attributes: {
             heading: {
                 type: "string",
@@ -115,7 +115,7 @@ export const registerAllBlocks = () => {
     registerBlockType<StaffProfilesBlockAttributes>("guten-csek/staff-profiles-block", {
         title: "Csek Staff Showcase",
         icon: "groups",
-        category: "common",
+        category: "csek",
         attributes: {
             heading: {
                 type: "string",
@@ -142,7 +142,7 @@ export const registerAllBlocks = () => {
     registerBlockType<LetsTalkBlockAttributes>("guten-csek/lets-talk-block", {
         title: "Csek Let's Talk (CTA)",
         icon: "megaphone",
-        category: "common",
+        category: "csek",
         attributes: {
             heading: {
                 type: "string",
@@ -165,7 +165,7 @@ export const registerAllBlocks = () => {
     registerBlockType<ProjectSummaryBlockAttributes>("guten-csek/project-summary-block", {
         title: "Csek Project Summary",
         icon: "text-page",
-        category: "common",
+        category: "csek",
         attributes: {
             backgroundColor: {
                 type: "string",
@@ -227,7 +227,7 @@ export const registerAllBlocks = () => {
     registerBlockType<FullscreenImageBlockAttributes>("guten-csek/fullscreen-image-block", {
         title: "Csek Fullscreen Image",
         icon: "format-image",
-        category: "media",
+        category: "csek",
         attributes: {
             imageURL: {
                 type: "string",
@@ -246,7 +246,7 @@ export const registerAllBlocks = () => {
     registerBlockType<LeftRightBlockAttributes>("guten-csek/left-right-block", {
         title: "Csek Left-Right",
         icon: "columns",
-        category: "text",
+        category: "csek",
         attributes: {
             text: {
                 type: "string",
@@ -273,7 +273,7 @@ export const registerAllBlocks = () => {
     registerBlockType<NextProjectBlockAttributes>("guten-csek/next-project-block", {
         title: "Csek Next Project",
         icon: "text",
-        category: "text",
+        category: "csek",
         attributes: {
             projectTitle: {
                 type: "string",
@@ -296,7 +296,7 @@ export const registerAllBlocks = () => {
     registerBlockType<ExpandingVideoBlockAttributes>("guten-csek/expanding-video-block", {
         title: "Csek Curtain Video",
         icon: "format-video",
-        category: "media",
+        category: "csek",
         attributes: {
             expandingMediaURL: {
                 type: "string",
@@ -327,7 +327,7 @@ export const registerAllBlocks = () => {
     registerBlockType<BlockquoteBlockAttributes>("guten-csek/block-quote-block", {
         title: "Csek Blockquote",
         icon: "format-quote",
-        category: "text",
+        category: "csek",
         attributes: {
             heading: {
                 type: "string",
@@ -354,7 +354,7 @@ export const registerAllBlocks = () => {
     registerBlockType<TaglineHeaderAttributes>("guten-csek/tagline-header-block", {
         title: "Csek Tagline Header",
         icon: "text",
-        category: "text",
+        category: "csek",
         attributes: {
             preTagline: {
                 type: "string",
@@ -381,7 +381,7 @@ export const registerAllBlocks = () => {
     registerBlockType<ParagraphBlockAttributes>("guten-csek/paragraph-block", {
         title: "Csek Paragraph",
         icon: "text",
-        category: "text",
+        category: "csek",
         attributes: {
             text: {
                 type: "string",
@@ -396,7 +396,7 @@ export const registerAllBlocks = () => {
     registerBlockType<MultiImageBlockAttributes>("guten-csek/multi-image-block", {
         title: "Csek Multi Image",
         icon: "format-image",
-        category: "media",
+        category: "csek",
         attributes: {
             images: {
                 type: "array",
@@ -419,7 +419,7 @@ export const registerAllBlocks = () => {
     registerBlockType<EmphasizedTextBlockAttributes>("guten-csek/emphasized-text-block", {
         title: "Csek Emphasized Text",
         icon: "text",
-        category: "text",
+        category: "csek",
         attributes: {
             text: {
                 type: "string",
@@ -442,7 +442,7 @@ export const registerAllBlocks = () => {
     registerBlockType<PageHeaderBlockAttributes>("guten-csek/page-header-block", {
         title: "Csek Page Header Block",
         icon: "text",
-        category: "text",
+        category: "csek",
         attributes: {
             heading: {
                 type: "string",
@@ -469,7 +469,7 @@ export const registerAllBlocks = () => {
     registerBlockType<CyclingStackBlockAttributes>("guten-csek/cycling-stack-block", {
         title: "Csek Cycling Stack",
         icon: "text",
-        category: "text",
+        category: "csek",
         attributes: {
             cyclingWords: {
                 type: "array",
@@ -488,7 +488,7 @@ export const registerAllBlocks = () => {
     registerBlockType<VideoCarouselAttributes>("guten-csek/video-carousel-block", {
         title: "Csek Video Carousel Block",
         icon: "format-video",
-        category: "media",
+        category: "csek",
         attributes: {
             videos: {
                 type: "array",
@@ -503,7 +503,7 @@ export const registerAllBlocks = () => {
     registerBlockType("guten-csek/scrolling-projects-block", {
         title: "Csek Scrolling Projects Block",
         icon: "format-video",
-        category: "media",
+        category: "csek",
         attributes: {
             projects: {
                 type: "array",
@@ -518,7 +518,7 @@ export const registerAllBlocks = () => {
     registerBlockType("guten-csek/team-block", {
         title: "Csek Team Block",
         icon: "admin-users",
-        category: "text",
+        category: "csek",
         attributes: {
             images: {
                 type: "array",
@@ -553,7 +553,7 @@ export const registerAllBlocks = () => {
     registerBlockType("guten-csek/horizontal-carousel-block", {
         title: "Csek Horizontal Carousel Block",
         icon: "columns",
-        category: "text",
+        category: "csek",
         attributes: {
             titles: {
                 type: "array",
@@ -578,7 +578,7 @@ export const registerAllBlocks = () => {
     // registerBlockType("guten-csek/dom-controller-block", {
     //     title: "Csek Script Manager Block",
     //     icon: "admin-settings",
-    //     category: "text",
+    //     category: "csek",
     //     attributes: {
     //         controllerScripts: {
     //             type: "array",
@@ -597,7 +597,7 @@ export const registerAllBlocks = () => {
     registerBlockType("guten-csek/image-collage-block", {
         title: "Csek Image Collage Block",
         icon: "format-image",
-        category: "media",
+        category: "csek",
         attributes: {
             images: {
                 type: "array",
@@ -620,7 +620,7 @@ export const registerAllBlocks = () => {
     registerBlockType("guten-csek/screenshot-collage-block", {
         title: "Csek Screenshot Collage Block",
         icon: "desktop",
-        category: "media",
+        category: "csek",
         attributes: {
             screenshots: {
                 type: "array",
@@ -647,7 +647,7 @@ export const registerAllBlocks = () => {
     registerBlockType("guten-csek/featured-video-block", {
         title: "Csek Featured Video Block",
         icon: "format-video",
-        category: "media",
+        category: "csek",
         attributes: {
             videoURL: {
                 type: "string",
@@ -662,7 +662,7 @@ export const registerAllBlocks = () => {
     registerBlockType("guten-csek/chicago-fires-block", {
         title: "Csek Chicago Fires Block",
         icon: "text",
-        category: "text",
+        category: "csek",
         attributes: {
             primaryHeading: {
                 type: "string",
@@ -689,7 +689,7 @@ export const registerAllBlocks = () => {
     registerBlockType<ProcessBlockAttributes>("guten-csek/process-block", {
         title: "Csek Process Block",
         icon: "text",
-        category: "text",
+        category: "csek",
         attributes: {
             steps: {
                 type: "array",
