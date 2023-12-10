@@ -139,10 +139,12 @@ add_action('rest_api_init', 'image_color_endpoint', 999);
 function register_layout_category($categories)
 {
 
-    $categories[] = array(
+    $newCategory = array(
         'slug'  => 'csek',
         'title' => 'Csek Creative'
     );
+
+    array_splice($categories, 0, 0, array($newCategory));
 
     return $categories;
 }
