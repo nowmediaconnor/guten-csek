@@ -5,15 +5,17 @@
 
 import React from "react";
 import { GutenCsekBlockEditProps, GutenCsekBlockSaveProps } from "../../scripts/dom";
-import { useBlockProps } from "@wordpress/block-editor";
+import { InspectorControls, useBlockProps } from "@wordpress/block-editor";
 import { CsekBlockHeading } from "../../components/heading";
 
 import { CsekMediaUpload } from "../../components/media-upload";
 import { TextInput } from "../../components/input";
+import CsekPaddingSelector, { Padding, defaultPadding } from "../../components/padding-selector";
 
 export interface FeaturedImageBlockAttributes {
     imageURL: string;
     imageAlt: string;
+    padding: Padding;
 }
 
 export const FeaturedImageBlockEdit = ({
@@ -22,7 +24,7 @@ export const FeaturedImageBlockEdit = ({
 }: GutenCsekBlockEditProps<FeaturedImageBlockAttributes>) => {
     const blockProps = useBlockProps();
 
-    const { imageURL, imageAlt } = attributes;
+    const { imageURL, imageAlt, padding } = attributes;
 
     const onChangeImageURL = (url: string) => {
         setAttributes({ imageURL: url });
@@ -32,8 +34,15 @@ export const FeaturedImageBlockEdit = ({
         setAttributes({ imageAlt: value });
     };
 
+    const handlePaddingChange = (padding: Padding) => {
+        setAttributes({ padding });
+    };
+
     return (
         <section {...blockProps}>
+            <InspectorControls>
+                <CsekPaddingSelector onChange={handlePaddingChange} padding={padding} />
+            </InspectorControls>
             <CsekBlockHeading>Csek Featured Image Block</CsekBlockHeading>
             <div className="csek-card flex flex-col gap-4">
                 <TextInput
