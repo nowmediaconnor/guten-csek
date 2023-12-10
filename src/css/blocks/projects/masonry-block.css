@@ -1,0 +1,20 @@
+/*
+ * Created on Sat Dec 09 2023
+ * Author: Connor Doman
+ */
+
+.wp-block-guten-csek-projects-masonry-block {
+    --brick-width: 160;
+    --brick-height: 160;
+    @apply py-16 relative h-screen;
+
+    & .masonry-kernel {
+        @apply absolute left-1/2 top-1/2 w-32 h-32 bg-csek-dark;
+    }
+
+    & .brick {
+        @apply absolute bg-csek-red;
+        width: calc(var(--brick-width) * 1px);
+        height: calc(var(--brick-height) * 1px);
+    }
+}
