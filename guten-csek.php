@@ -123,7 +123,8 @@ function image_color_endpoint()
 {
     function get_image($request)
     {
-        return get_image_color($request);
+        // return get_image_color($request);
+        return get_theme_color($request);
     }
 
     register_rest_route('csek/v2', '/img-color', array(

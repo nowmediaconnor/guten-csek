@@ -7,6 +7,39 @@
 require 'image-color.php';
 
 
+function get_theme_color($request)
+{
+
+    $json = $request->get_json_params();
+    $base64_image = $json['base64Data'];
+    $image_data = preg_replace('#^data:image/\w+;base64,#', '', $base64_image);
+    // error_log('Got image data: ' . $image_data);
+
+    $data = ["img" => $image_data];
+    $jsonData = json_encode($data);
+
+    $ch = curl_init('https://wwvviwiftfydmr3h62q6mzfei40rsfar.lambda-url.ca-central-1.on.aws/');
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonData);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt(
+        $ch,
+        CURLOPT_HTTPHEADER,
+        array(
+            'Content-Type: application/json',
+            'Content-Length: ' . strlen($jsonData)
+        )
+    );
+
+    $result = curl_exec($ch);
+    if (!$result) {
+        die('Error: "' . curl_error($ch) . '" - Code: ' . curl_errno($ch));
+    }
+    curl_close($ch);
+
+    return $result;
+}
+
 function get_image_color($request)
 {
     $json = $request->get_json_params();
