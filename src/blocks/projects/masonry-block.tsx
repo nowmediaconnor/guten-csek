@@ -86,9 +86,9 @@ export default class ProjectsMasonryBlock {
 
     calculateMasonry(): void {
         const numBricks = this.projectsData.length;
-        this.masonryGrid = new MasonryGrid(10, 3);
+        this.masonryGrid = new MasonryGrid(4, 3);
         this.masonryGrid.excludeCell(0, 0);
-        this.masonryGrid.excludeCell(0, 1);
+        // this.masonryGrid.excludeCell(0, 1);
         this.masonryGrid.excludeCell(0, 2);
         this.masonryGrid.placeBricks(numBricks);
         console.log(this.masonryGrid.toString());
@@ -96,6 +96,9 @@ export default class ProjectsMasonryBlock {
 
     createSurroundingDivs(): void {
         const gridCoords = this.masonryGrid.calculateCSSGridCoords();
+
+        this.gridArea.style.setProperty("--num-rows", this.masonryGrid.height.toString());
+        this.gridArea.style.setProperty("--num-cols", this.masonryGrid.width.toString());
 
         this.projectsData.forEach((project: CsekProject, index) => {
             const coords = gridCoords[index];
