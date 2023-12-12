@@ -7,6 +7,7 @@ import React from "react";
 import { BlockController, GutenCsekBlockEditProps, GutenCsekBlockSaveProps } from "../../scripts/dom";
 import { CsekBlockHeading } from "../../components/heading";
 import { useBlockProps } from "@wordpress/block-editor";
+import { MasonryGrid } from "../../scripts/masonry/masonry";
 
 export interface ProjectsMasonryBlockAttributes {
     category: string;
@@ -16,18 +17,25 @@ export interface ProjectsMasonryBlockAttributes {
 export default class ProjectsMasonryBlock {
     block: HTMLElement;
 
-    masonryKernel: HTMLElement;
+    gridArea: HTMLElement;
 
     projectsData: any[];
 
     brickWidth: number;
     brickHeight: number;
 
+    masonryGrid: MasonryGrid;
+
     constructor(block: HTMLElement) {
         this.block = block;
-        const kernel = block.querySelector(".masonry-kernel") as HTMLElement;
-        if (!kernel) throw new Error("No masonry kernel found");
-        this.masonryKernel = kernel;
+        const grid = block.querySelector(".projects-grid");
+        if (!grid) {
+            this.gridArea = document.createElement("div");
+            this.gridArea.classList.add("projects-grid");
+        } else {
+            this.gridArea = grid as HTMLElement;
+        }
+        this.projectsData = [];
     }
 
     setup(): void {
@@ -37,75 +45,32 @@ export default class ProjectsMasonryBlock {
                 this.projectsData = data;
                 console.info("Projects data fetched, creating bricks...");
                 console.log(this.projectsData);
+                this.calculateMasonry();
                 this.createSurroundingDivs();
             });
     }
 
-    checkOverlap(div1: HTMLElement, div2: HTMLElement): boolean {
-        const rect1 = {
-            left: parseInt(div1.style.left),
-            top: parseInt(div1.style.top),
-            right: parseInt(div1.style.left) + this.brickWidth,
-            bottom: parseInt(div1.style.top) + this.brickHeight,
-        };
-
-        const rect2 = {
-            left: parseInt(div2.style.left),
-            top: parseInt(div2.style.top),
-            right: parseInt(div2.style.left) + this.brickWidth,
-            bottom: parseInt(div2.style.top) + this.brickHeight,
-        };
-
-        console.info("Checking overlap for:", { w: this.brickWidth, h: this.brickHeight, rect1, rect2 });
-
-        const overlap = !(
-            rect1.right < rect2.left ||
-            rect1.left > rect2.right ||
-            rect1.bottom < rect2.top ||
-            rect1.top > rect2.bottom
-        );
-
-        return overlap;
+    calculateMasonry(): void {
+        const numBricks = this.projectsData.length;
+        this.masonryGrid = new MasonryGrid(10, 3);
+        this.masonryGrid.placeBricks(numBricks);
+        console.log(this.masonryGrid.toString());
     }
 
     createSurroundingDivs(): void {
-        const kernelTop = this.masonryKernel.offsetTop;
-        const kernelLeft = this.masonryKernel.offsetLeft;
+        const gridCoords = this.masonryGrid.calculateCSSGridCoords();
 
-        console.log("Brick width:", getComputedStyle(this.block).getPropertyValue("--brick-width"));
+        this.projectsData.forEach((project, index) => {
+            const coords = gridCoords[index];
+            const projectBrick = document.createElement("div");
+            projectBrick.classList.add("project-brick");
+            projectBrick.classList.add(coords.size);
+            projectBrick.style.gridColumnStart = coords.colStart.toString();
+            projectBrick.style.gridColumnEnd = coords.colEnd.toString();
+            projectBrick.style.gridRowStart = coords.rowStart.toString();
+            projectBrick.style.gridRowEnd = coords.rowEnd.toString();
 
-        this.brickWidth = parseFloat(getComputedStyle(this.block).getPropertyValue("--brick-width"));
-        this.brickHeight = parseFloat(getComputedStyle(this.block).getPropertyValue("--brick-width"));
-
-        const divs: HTMLElement[] = [];
-        this.projectsData.forEach((project: any) => {
-            const brick = document.createElement("div");
-            brick.classList.add("brick");
-            brick.style.width = this.brickWidth + "px";
-            brick.style.height = this.brickHeight + "px";
-
-            let tries = 0;
-
-            while (tries < 20) {
-                const angle = Math.random() * 2 * Math.PI;
-                const distance = Math.random() * this.brickWidth + this.brickWidth;
-
-                const x = kernelTop + Math.cos(angle) * distance;
-                const y = kernelLeft + Math.sin(angle) * distance;
-
-                brick.style.left = `${x}px`;
-                brick.style.top = `${y}px`;
-
-                if (!divs.some((div) => this.checkOverlap(div, brick))) {
-                    console.warn("New div not overlapping, adding it...");
-                    break;
-                }
-                console.warn("New div overlapping, trying again...");
-                tries++;
-            }
-
-            this.block.appendChild(brick);
-            divs.push(brick);
+            this.gridArea.appendChild(projectBrick);
         });
     }
 
@@ -123,7 +88,7 @@ export default class ProjectsMasonryBlock {
 
         return (
             <section {...blockProps}>
-                <div className="masonry-kernel">PROJECTS</div>
+                <div className="projects-grid"></div>
             </section>
         );
     };

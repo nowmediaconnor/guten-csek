@@ -5,6 +5,14 @@
 
 import { Brick, BrickCompatibility, Shape, compatibilityString } from "./brick";
 
+export interface CSSGridCoordinates {
+    size: "square" | "tall" | "wide";
+    rowStart: number;
+    rowEnd: number;
+    colStart: number;
+    colEnd: number;
+}
+
 export interface SurroundingBricks {
     center: Brick;
     up?: Brick;
@@ -65,6 +73,74 @@ export class MasonryGrid {
 
     public excludeCell(row: number, col: number): void {
         this.exclusions.add(`${row},${col}`);
+    }
+
+    public brickData() {
+        this.bricks.forEach((brick, index) => {
+            this.log(`${index}.`.padEnd(4, " ") + `(${brick.r}, ${brick.c}) ${brick.toString()}`);
+        });
+    }
+
+    public calculateCSSGridCoords(): CSSGridCoordinates[] {
+        const coords: CSSGridCoordinates[] = [];
+
+        this.bricks.forEach((brick) => {
+            const { r: row, c: col } = brick;
+            const { dir } = brick;
+
+            const gridRow = row + 1;
+            const gridCol = col + 1;
+
+            switch (dir) {
+                case Shape.SQUARE:
+                    coords.push({
+                        size: "square",
+                        rowStart: gridRow,
+                        rowEnd: gridRow + 1,
+                        colStart: gridCol,
+                        colEnd: gridCol + 1,
+                    });
+                    break;
+                case Shape.UP:
+                    coords.push({
+                        size: "tall",
+                        rowStart: gridRow - 1,
+                        rowEnd: gridRow + 1,
+                        colStart: gridCol,
+                        colEnd: gridCol + 1,
+                    });
+                    break;
+                case Shape.DOWN:
+                    coords.push({
+                        size: "tall",
+                        rowStart: gridRow,
+                        rowEnd: gridRow + 2,
+                        colStart: gridCol,
+                        colEnd: gridCol + 1,
+                    });
+                    break;
+                case Shape.LEFT:
+                    coords.push({
+                        size: "wide",
+                        rowStart: gridRow,
+                        rowEnd: gridRow + 1,
+                        colStart: gridCol - 1,
+                        colEnd: gridCol + 1,
+                    });
+                    break;
+                case Shape.RIGHT:
+                    coords.push({
+                        size: "wide",
+                        rowStart: gridRow,
+                        rowEnd: gridRow + 1,
+                        colStart: gridCol,
+                        colEnd: gridCol + 2,
+                    });
+                    break;
+            }
+        });
+
+        return coords;
     }
 
     private isExcluded(row: number, col: number): boolean {

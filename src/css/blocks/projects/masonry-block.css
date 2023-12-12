@@ -4,17 +4,17 @@
  */
 
 .wp-block-guten-csek-projects-masonry-block {
-    --brick-width: 160;
-    --brick-height: 160;
-    @apply py-16 relative h-screen;
+    --brick-height: 16rem;
+    @apply relative w-full h-fit;
 
-    & .masonry-kernel {
-        @apply absolute left-1/2 top-1/2 w-32 h-32 bg-csek-dark;
+    & .projects-grid {
+        @apply flex flex-col md:grid grid-cols-3 grid-rows-[10] w-11/12 max-w-csek-2/3 gap-4 mx-auto;
+        grid-template-rows: repeat(10, var(--brick-height));
     }
 
-    & .brick {
-        @apply absolute bg-csek-red;
-        width: calc(var(--brick-width) * 1px);
-        height: calc(var(--brick-height) * 1px);
+    & .project-brick {
+        @apply bg-csek-red;
+        height: 100%;
+        width: 100%;
     }
 }
