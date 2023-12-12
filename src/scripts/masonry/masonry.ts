@@ -201,7 +201,7 @@ export class MasonryGrid {
             currentCell.allowed = compatibility;
             spiral.push(currentCell);
 
-            if (currentCell.r === 0 && currentCell.c === 0) {
+            if (currentCell.r == 0 && currentCell.c == 0) {
                 break;
             }
         }

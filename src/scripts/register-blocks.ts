@@ -723,6 +723,14 @@ export const registerAllBlocks = () => {
                 type: "number",
                 default: 3,
             },
+            gridColumns: {
+                type: "number",
+                default: 3,
+            },
+            gridRows: {
+                type: "number",
+                default: 4,
+            },
         },
         edit: ProjectsMasonryBlock.editComponent,
         save: ProjectsMasonryBlock.saveComponent,

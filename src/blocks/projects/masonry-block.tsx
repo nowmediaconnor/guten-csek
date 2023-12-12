@@ -8,6 +8,7 @@ import { BlockController, GutenCsekBlockEditProps, GutenCsekBlockSaveProps } fro
 import { CsekBlockHeading } from "../../components/heading";
 import { useBlockProps } from "@wordpress/block-editor";
 import { MasonryGrid } from "../../scripts/masonry/masonry";
+import { CsekSelectDropdown, TextInput } from "../../components/input";
 
 interface WPPostData {
     id: number;
@@ -48,9 +49,12 @@ async function getAllProjects(): Promise<CsekProject[]> {
 export interface ProjectsMasonryBlockAttributes {
     category: string;
     amount: number;
+    gridColumns: number;
+    gridRows: number;
 }
 
 export default class ProjectsMasonryBlock {
+    debug: boolean = false;
     block: HTMLElement;
 
     gridArea: HTMLElement;
@@ -61,9 +65,12 @@ export default class ProjectsMasonryBlock {
     brickHeight: number;
 
     masonryGrid: MasonryGrid;
+    gridCols: number;
+    gridRows: number;
 
     constructor(block: HTMLElement) {
         this.block = block;
+
         const grid = block.querySelector(".projects-grid");
         if (!grid) {
             this.gridArea = document.createElement("div");
@@ -75,6 +82,10 @@ export default class ProjectsMasonryBlock {
     }
 
     setup(): void {
+        console.warn(this.gridArea.dataset);
+        this.gridRows = parseInt(this.gridArea.dataset.gridrows || "4");
+        this.gridCols = parseInt(this.gridArea.dataset.gridcols || "3");
+
         getAllProjects().then((data: CsekProject[]) => {
             this.projectsData = data;
             console.info("Projects data fetched, creating bricks...");
@@ -86,10 +97,11 @@ export default class ProjectsMasonryBlock {
 
     calculateMasonry(): void {
         const numBricks = this.projectsData.length;
-        this.masonryGrid = new MasonryGrid(4, 3);
-        this.masonryGrid.excludeCell(0, 0);
+        this.masonryGrid = new MasonryGrid(this.gridRows, this.gridCols);
+        this.masonryGrid.debug = this.debug;
+        // this.masonryGrid.excludeCell(0, 0);
         // this.masonryGrid.excludeCell(0, 1);
-        this.masonryGrid.excludeCell(0, 2);
+        // this.masonryGrid.excludeCell(0, 2);
         this.masonryGrid.placeBricks(numBricks);
         console.log(this.masonryGrid.toString());
     }
@@ -112,7 +124,7 @@ export default class ProjectsMasonryBlock {
 
             const projectLink = document.createElement("a");
             projectLink.href = project.link;
-            projectLink.style.animationDelay = `${index * 0.1}s`;
+            projectLink.style.animationDelay = `${index * 133}ms`;
 
             const projectTitle = document.createElement("span");
             projectTitle.innerHTML = project.title;
@@ -130,9 +142,36 @@ export default class ProjectsMasonryBlock {
 
     static editComponent = ({ attributes, setAttributes }: GutenCsekBlockEditProps<ProjectsMasonryBlockAttributes>) => {
         const blockProps = useBlockProps();
+
+        const { category, amount, gridColumns, gridRows } = attributes;
+
         return (
             <section {...blockProps}>
                 <CsekBlockHeading>Projects Masonry Block</CsekBlockHeading>
+                <div className="flex flex-row gap-2">
+                    <CsekSelectDropdown
+                        options={[
+                            { value: "1", label: "1" },
+                            { value: "3", label: "3" },
+                            { value: "5", label: "5" },
+                        ]}
+                        label="Grid Columns"
+                        initialValue={gridColumns.toString()}
+                        onChange={(value) => setAttributes({ gridColumns: parseInt(value) })}
+                    />
+                    <CsekSelectDropdown
+                        options={[
+                            { value: "1", label: "1" },
+                            { value: "2", label: "2" },
+                            { value: "3", label: "3" },
+                            { value: "4", label: "4" },
+                            { value: "5", label: "5" },
+                        ]}
+                        label="Grid Rows"
+                        initialValue={gridRows.toString()}
+                        onChange={(value) => setAttributes({ gridRows: parseInt(value) })}
+                    />
+                </div>
             </section>
         );
     };
@@ -140,9 +179,11 @@ export default class ProjectsMasonryBlock {
     static saveComponent = ({ attributes }: GutenCsekBlockSaveProps<ProjectsMasonryBlockAttributes>) => {
         const blockProps = useBlockProps.save();
 
+        const { category, amount, gridColumns, gridRows } = attributes;
+
         return (
             <section {...blockProps}>
-                <div className="projects-grid"></div>
+                <div className="projects-grid" data-gridcols={gridColumns} data-gridrows={gridRows}></div>
             </section>
         );
     };
@@ -170,6 +211,7 @@ export class ProjectsMasonryController extends BlockController {
 
         this.blocks.forEach((block) => {
             const masonryBlock = new ProjectsMasonryBlock(block);
+            masonryBlock.debug = this.debug;
             masonryBlock.setup();
             this.masonryBlocks.push(masonryBlock);
         });
