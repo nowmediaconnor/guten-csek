@@ -9,6 +9,42 @@ import { CsekBlockHeading } from "../../components/heading";
 import { useBlockProps } from "@wordpress/block-editor";
 import { MasonryGrid } from "../../scripts/masonry/masonry";
 
+interface WPPostData {
+    id: number;
+    link: string;
+    title: {
+        rendered: string;
+    };
+    _links: { [key: string]: [{ href: string; embeddable?: boolean; taxonomy?: string }] };
+}
+
+interface CsekProject {
+    id: number;
+    title: string;
+    link: string;
+    featuredImageUrl: string;
+}
+
+async function getAllProjects(): Promise<CsekProject[]> {
+    const projectsData: CsekProject[] = [];
+    const res = await fetch("/wp-json/wp/v2/posts/?filter[category_name]=project&_fields=id,link,title,_links");
+    const data: WPPostData[] = await res.json();
+    for (const project of data) {
+        if (project._links["wp:featuredmedia"]) {
+            const res = await fetch(project._links["wp:featuredmedia"][0].href);
+            const data = await res.json();
+            const projectData: CsekProject = {
+                id: project.id,
+                title: project.title.rendered,
+                link: project.link,
+                featuredImageUrl: data.source_url,
+            };
+            projectsData.push(projectData);
+        }
+    }
+    return projectsData;
+}
+
 export interface ProjectsMasonryBlockAttributes {
     category: string;
     amount: number;
@@ -19,7 +55,7 @@ export default class ProjectsMasonryBlock {
 
     gridArea: HTMLElement;
 
-    projectsData: any[];
+    projectsData: CsekProject[];
 
     brickWidth: number;
     brickHeight: number;
@@ -39,20 +75,21 @@ export default class ProjectsMasonryBlock {
     }
 
     setup(): void {
-        fetch("/wp-json/wp/v2/posts/?filter[category_name]=project")
-            .then((res) => res.json())
-            .then((data) => {
-                this.projectsData = data;
-                console.info("Projects data fetched, creating bricks...");
-                console.log(this.projectsData);
-                this.calculateMasonry();
-                this.createSurroundingDivs();
-            });
+        getAllProjects().then((data: CsekProject[]) => {
+            this.projectsData = data;
+            console.info("Projects data fetched, creating bricks...");
+            console.log(this.projectsData);
+            this.calculateMasonry();
+            this.createSurroundingDivs();
+        });
     }
 
     calculateMasonry(): void {
         const numBricks = this.projectsData.length;
         this.masonryGrid = new MasonryGrid(10, 3);
+        this.masonryGrid.excludeCell(0, 0);
+        this.masonryGrid.excludeCell(0, 1);
+        this.masonryGrid.excludeCell(0, 2);
         this.masonryGrid.placeBricks(numBricks);
         console.log(this.masonryGrid.toString());
     }
@@ -60,7 +97,7 @@ export default class ProjectsMasonryBlock {
     createSurroundingDivs(): void {
         const gridCoords = this.masonryGrid.calculateCSSGridCoords();
 
-        this.projectsData.forEach((project, index) => {
+        this.projectsData.forEach((project: CsekProject, index) => {
             const coords = gridCoords[index];
             const projectBrick = document.createElement("div");
             projectBrick.classList.add("project-brick");
@@ -70,6 +107,20 @@ export default class ProjectsMasonryBlock {
             projectBrick.style.gridRowStart = coords.rowStart.toString();
             projectBrick.style.gridRowEnd = coords.rowEnd.toString();
 
+            const projectLink = document.createElement("a");
+            projectLink.href = project.link;
+            projectLink.style.animationDelay = `${index * 0.1}s`;
+
+            const projectTitle = document.createElement("span");
+            projectTitle.innerHTML = project.title;
+
+            const projectImage = document.createElement("img");
+            projectImage.src = project.featuredImageUrl;
+            projectImage.alt = project.title;
+
+            projectLink.appendChild(projectImage);
+            projectLink.appendChild(projectTitle);
+            projectBrick.appendChild(projectLink);
             this.gridArea.appendChild(projectBrick);
         });
     }
