@@ -76,6 +76,7 @@ import { ScreenshotCollageBlockEdit, ScreenshotCollageBlockSave } from "../block
 import { ScrollingProjectsBlockEdit, ScrollingProjectsBlockSave } from "../blocks/scrolling-projects-block";
 import { TeamBlockEdit, TeamBlockSave } from "../blocks/team-block";
 import ProcessBlockController, { ProcessBlockAttributes } from "../blocks/process-block";
+import ProjectsMasonryBlock, { ProjectsMasonryBlockAttributes } from "../blocks/projects/masonry-block";
 
 export const registerAllBlocks = () => {
     console.log("Registering blocks...");
@@ -706,5 +707,32 @@ export const registerAllBlocks = () => {
         },
         edit: ProcessBlockController.editComponent,
         save: ProcessBlockController.saveComponent,
+    });
+
+    // Projects Masonry Block
+    registerBlockType<ProjectsMasonryBlockAttributes>("guten-csek/projects-masonry-block", {
+        title: "Csek Projects Masonry Block",
+        icon: "text",
+        category: "csek",
+        attributes: {
+            category: {
+                type: "string",
+                default: "",
+            },
+            amount: {
+                type: "number",
+                default: 3,
+            },
+            gridColumns: {
+                type: "number",
+                default: 3,
+            },
+            gridRows: {
+                type: "number",
+                default: 4,
+            },
+        },
+        edit: ProjectsMasonryBlock.editComponent,
+        save: ProjectsMasonryBlock.saveComponent,
     });
 };
