@@ -9,6 +9,7 @@ import { CsekBlockHeading } from "../../components/heading";
 import { InspectorControls, useBlockProps } from "@wordpress/block-editor";
 import { RichTextContent, RichTextInput } from "../../components/input";
 import CsekPaddingSelector, { Padding, defaultPadding, styleFromPadding } from "../../components/padding-selector";
+import Label from "../../components/label";
 
 export interface ParagraphBlockAttributes {
     text: string;
@@ -35,6 +36,9 @@ export const ParagraphBlockEdit = ({
                 <CsekPaddingSelector onChange={handleChangePadding} padding={padding} />
             </InspectorControls>
             <CsekBlockHeading>Csek Paragraph</CsekBlockHeading>
+            <Label>
+                You can edit this component&apos;s padding in the inspector <i className="fa fa-arrow-right"></i>
+            </Label>
             <RichTextInput label="Content" initialValue={text} onChange={onChange} />
         </div>
     );
