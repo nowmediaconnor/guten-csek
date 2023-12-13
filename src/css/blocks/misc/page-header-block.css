@@ -5,10 +5,10 @@
 
 .wp-block-guten-csek-page-header-block {
     --serif-width: 10rem;
-    @apply w-full relative py-8 min-h-max;
+    @apply w-full relative py-4 md:py-8 min-h-max;
 
     & .block-container {
-        @apply relative max-w-csek-max mx-auto pt-8 pb-12;
+        @apply w-11/12 relative max-w-csek-max mx-auto pt-8 pb-12;
 
         & img {
             @apply w-[var(--serif-width)] absolute -z-[1] top-8;
@@ -16,23 +16,23 @@
 
         & h1,
         h2 {
-            @apply font-syne font-bold mb-2 uppercase relative left-[calc(var(--serif-width)-1rem)] -top-4 leading-none;
+            @apply font-syne font-bold mb-2 uppercase relative md:left-[calc(var(--serif-width)-1rem)] -top-4 leading-none;
         }
 
         & h1 {
-            @apply text-6xl;
+            @apply mt-12 ml-4 md:m-0 text-6xl;
         }
 
         & h2 {
-            @apply left-[calc(var(--serif-width)+1rem)] text-3xl;
+            @apply ml-4 md:ml-0 md:left-[calc(var(--serif-width)+1rem)] text-3xl;
         }
 
         & .csek-richtext {
-            @apply font-syne text-left w-max mx-auto uppercase;
+            @apply font-syne text-left whitespace-break-spaces mx-auto uppercase;
         }
 
         & .subheader {
-            @apply w-max min-w-[50%] ml-[calc(var(--serif-width)+2rem)];
+            @apply mx-4 md:ml-[calc(var(--serif-width)+1rem)];
         }
     }
 }
