@@ -77,6 +77,7 @@ import { ScrollingProjectsBlockEdit, ScrollingProjectsBlockSave } from "../block
 import { TeamBlockEdit, TeamBlockSave } from "../blocks/team-block";
 import ProcessBlockController, { ProcessBlockAttributes } from "../blocks/process-block";
 import ProjectsMasonryBlock, { ProjectsMasonryBlockAttributes } from "../blocks/projects/masonry-block";
+import { defaultPadding } from "../components/padding-selector";
 
 export const registerAllBlocks = () => {
     console.log("Registering blocks...");
@@ -391,6 +392,10 @@ export const registerAllBlocks = () => {
             text: {
                 type: "string",
                 default: "",
+            },
+            padding: {
+                type: "object",
+                default: defaultPadding,
             },
         },
         edit: ParagraphBlockEdit,
