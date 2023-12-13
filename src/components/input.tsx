@@ -76,10 +76,18 @@ export const RichTextInput = ({ label, initialValue = "", placeholder, className
 interface RichTextContentProps {
     value: string;
     className?: string;
+    style?: React.CSSProperties;
 }
 
-export const RichTextContent = ({ value, className }: RichTextContentProps) => {
-    return <RichText.Content className={className ? className : "csek-richtext"} tagName="div" value={value} />;
+export const RichTextContent = ({ value, className, style }: RichTextContentProps) => {
+    return (
+        <RichText.Content
+            className={className ? className : "csek-richtext"}
+            tagName="div"
+            value={value}
+            style={style}
+        />
+    );
 };
 
 interface CheckboxInputProps {

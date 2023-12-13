@@ -52,9 +52,9 @@ export const ParagraphBlockSave = ({ attributes }: GutenCsekBlockSaveProps<Parag
     const p = styleFromPadding(padding ?? defaultPadding);
 
     return (
-        <section {...blockProps} style={p}>
+        <section {...blockProps}>
             <div className="block-content">
-                <RichTextContent value={text} />
+                <RichTextContent value={text} style={p} />
             </div>
         </section>
     );
