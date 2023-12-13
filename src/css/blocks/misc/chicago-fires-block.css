@@ -16,13 +16,13 @@
     }
 
     & .block-container {
-        @apply max-w-csek-max relative py-32 mx-auto flex flex-col justify-center items-center gap-8;
+        @apply w-11/12 max-w-csek-max relative pt-12 pb-24 md:py-32 mx-auto flex flex-col justify-center items-center gap-8;
 
         & .primary-text {
             @apply text-center max-w-full;
 
             & h2 {
-                @apply my-4;
+                @apply my-4 text-2xl;
             }
 
             & p {
@@ -31,17 +31,17 @@
         }
 
         & .fires {
-            @apply w-full flex justify-around items-start gap-8;
+            @apply w-full flex flex-col md:flex-row justify-around items-start gap-8;
 
             & .secondary-text {
                 @apply flex flex-col justify-start items-start basis-1/4 gap-4;
 
                 & h3 {
-                    @apply text-left;
+                    @apply w-2/3 md:w-full mx-auto text-center md:text-left text-lg;
                 }
 
                 & p {
-                    @apply text-left font-montserrat leading-[1.1] text-[0.9rem];
+                    @apply text-justify md:text-left font-montserrat leading-[1.1] text-lg;
                 }
             }
         }
