@@ -185,7 +185,7 @@ export const ChicagoFiresBlockSave = ({ attributes }: GutenCsekBlockSaveProps<Ch
             <div className="block-container">
                 <div className="primary-text">
                     <h2>{primaryHeading}</h2>
-                    <p>{primaryMessage}</p>
+                    {primaryMessage ? <p>{primaryMessage}</p> : null}
                 </div>
                 <div className="fires">{fires}</div>
             </div>
