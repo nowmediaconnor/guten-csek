@@ -10,7 +10,7 @@
     & .projects-grid {
         --num-rows: 10;
         --num-cols: 3;
-        @apply flex flex-col md:grid grid-cols-3 grid-rows-[10] w-max mx-auto;
+        @apply flex flex-col md:grid grid-cols-3 grid-rows-[10] w-11/12 max-w-max mx-auto;
         grid-template-rows: repeat(var(--num-rows), var(--brick-height));
         grid-template-columns: repeat(var(--num-cols), calc(var(--brick-height) * 1));
     }
@@ -23,7 +23,7 @@
         }
 
         & a {
-            @apply relative w-full h-full p-4 block border bg-csek-dark rounded-lg font-bold text-white text-2xl shadow-md overflow-hidden z-10;
+            @apply relative w-full h-full p-4 block bg-csek-dark rounded-lg font-bold text-white text-2xl shadow-md overflow-hidden z-10;
             backdrop-filter: brightness(50%);
             background-size: cover;
             background-repeat: no-repeat;
