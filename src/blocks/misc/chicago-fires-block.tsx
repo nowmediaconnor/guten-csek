@@ -4,15 +4,22 @@
  */
 
 import React from "@wordpress/element";
-import { GutenbergBlockProps } from "../../scripts/dom";
+import { GutenCsekBlockEditProps, GutenCsekBlockSaveProps, GutenbergBlockProps } from "../../scripts/dom";
 import { useBlockProps } from "@wordpress/block-editor";
 import { Heading } from "../../components/heading";
-import { TextInput } from "../../components/input";
+import { TextArea, TextInput } from "../../components/input";
 import { Button } from "@wordpress/components";
 import { CsekAddButton, CsekDeleteButton } from "../../components/button";
 import { CsekBlockHeading } from "../../components/heading";
 
 const NUMBER_OF_FIRES = 4;
+
+export interface ChicagoFiresBlockAttributes {
+    primaryHeading: string;
+    primaryMessage: string;
+    secondaryHeadings: string[];
+    secondaryMessages: string[];
+}
 
 interface ChicagoFireProps {
     heading: string;
@@ -44,7 +51,7 @@ const ChicagoFireEditor = ({
                 initialValue={heading}
                 onChange={onChangeHeading}
             />
-            <TextInput
+            <TextArea
                 label="Message"
                 placeholder="Enter a message."
                 initialValue={message}
@@ -55,7 +62,10 @@ const ChicagoFireEditor = ({
     );
 };
 
-export const ChicagoFiresBlockEdit = ({ attributes, setAttributes }: GutenbergBlockProps) => {
+export const ChicagoFiresBlockEdit = ({
+    attributes,
+    setAttributes,
+}: GutenCsekBlockEditProps<ChicagoFiresBlockAttributes>) => {
     const blockProps = useBlockProps();
 
     const { primaryHeading, primaryMessage, secondaryHeadings, secondaryMessages } = attributes;
@@ -116,7 +126,7 @@ export const ChicagoFiresBlockEdit = ({ attributes, setAttributes }: GutenbergBl
         }
     };
 
-    const fires: JSX.Element[] = secondaryHeadings.map((_: void, i: number) => {
+    const fires: JSX.Element[] = secondaryHeadings.map((_, i: number) => {
         return (
             <ChicagoFireEditor
                 heading={secondaryHeadings[i]}
@@ -156,12 +166,12 @@ export const ChicagoFiresBlockEdit = ({ attributes, setAttributes }: GutenbergBl
         </div>
     );
 };
-export const ChicagoFiresBlockSave = ({ attributes }: GutenbergBlockProps) => {
+export const ChicagoFiresBlockSave = ({ attributes }: GutenCsekBlockSaveProps<ChicagoFiresBlockAttributes>) => {
     const blockProps = useBlockProps.save();
 
     const { secondaryHeadings, secondaryMessages, primaryHeading, primaryMessage } = attributes;
 
-    const fires: JSX.Element[] = secondaryHeadings.map((_: void, i: number) => {
+    const fires: JSX.Element[] = secondaryHeadings.map((_, i: number) => {
         return (
             <div className="secondary-text">
                 <h3>{secondaryHeadings[i]}</h3>

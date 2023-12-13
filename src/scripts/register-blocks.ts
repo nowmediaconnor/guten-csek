@@ -64,7 +64,11 @@ import {
     VideoCarouselBlockSave,
 } from "../blocks/video-carousel-block";
 import { HorizontalCarouselBlockEdit, HorizontalCarouselBlockSave } from "../blocks/horizontal-carousel-block";
-import { ChicagoFiresBlockEdit, ChicagoFiresBlockSave } from "../blocks/misc/chicago-fires-block";
+import {
+    ChicagoFiresBlockAttributes,
+    ChicagoFiresBlockEdit,
+    ChicagoFiresBlockSave,
+} from "../blocks/misc/chicago-fires-block";
 import {
     FeaturedVideoBlockAttributes,
     FeaturedVideoBlockEdit,
@@ -673,7 +677,7 @@ export const registerAllBlocks = () => {
     });
 
     // Chicago Fires Block
-    registerBlockType("guten-csek/chicago-fires-block", {
+    registerBlockType<ChicagoFiresBlockAttributes>("guten-csek/chicago-fires-block", {
         title: "Csek Chicago Fires Block",
         icon: "text",
         category: "csek",
