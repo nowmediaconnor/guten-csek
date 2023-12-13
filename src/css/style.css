@@ -109,3 +109,17 @@ html {
 }
 
 /* Specific Elements */
+
+/* Wordpress Classes */
+
+.wp-block-embed {
+    @apply w-full mx-auto !important;
+
+    &__wrapper {
+        @apply mx-auto
+
+        & iframe {
+            @apply w-11/12 max-w-csek-2/3 h-full mx-auto aspect-video;
+        }
+    }
+}
