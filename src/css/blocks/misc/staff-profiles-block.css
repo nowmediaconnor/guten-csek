@@ -53,7 +53,7 @@
         }
 
         & footer {
-            @apply mt-4 font-syne font-bold uppercase text-base text-zinc-400;
+            @apply mt-4 font-syne font-bold uppercase text-base text-zinc-600;
 
             & .social-links {
                 @apply flex flex-row justify-start items-center gap-3 my-6;

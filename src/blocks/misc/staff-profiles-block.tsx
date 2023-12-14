@@ -250,7 +250,7 @@ const StaffProfileComponent = ({ name, position, description, socialMedia, image
                         <RichTextContent value={description} />
                     </main>
                     <footer>
-                        {socials.length > 0 ? (
+                        {socials.length > 0 && !socials.every((link) => link === null) ? (
                             <>
                                 <h3>Social</h3>
                                 <div className="social-links">{socials}</div>
