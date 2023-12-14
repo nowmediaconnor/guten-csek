@@ -4,7 +4,7 @@
  */
 
 import { createDOMController } from "./domcontroller";
-import { registerAllBlocks } from "./scripts/register-blocks";
+// import { registerAllBlocks } from "./scripts/register-blocks";
 import { runAccumulators } from "./scripts/accumulators";
 
 // registerAllBlocks();

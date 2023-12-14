@@ -3,6 +3,6 @@
  * Author: Connor Doman
  */
 
-import { registerAllBlocks } from "../build/index.js";
+import { registerAllBlocks } from "./scripts/register-blocks";
 
 registerAllBlocks();
