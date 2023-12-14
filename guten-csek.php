@@ -116,6 +116,21 @@ function enqueue_custom_block_assets()
 // Only enqueue these scripts if we're not in the admin panel
 add_action('init', 'enqueue_custom_block_assets');
 
+/* Enqueue Editor-Only Scripts */
+function enqueue_editor_scripts()
+{
+
+    $editor_script = plugins_url('js/editor.mjs', __FILE__);
+
+    // Enqueue the block index.js file
+    wp_enqueue_script(
+        'guten-csek-editor-script', // unique handle
+        $editor_script,
+        ['wp-blocks', 'wp-element', 'wp-i18n'], // required dependencies for blocks
+        filemtime(plugin_dir_path(__FILE__) . $editor_script)
+    );
+}
+add_action('enqueue_block_editor_assets', 'enqueue_editor_scripts');
 
 
 // API endpoints

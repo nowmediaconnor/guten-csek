@@ -226,6 +226,8 @@ type StaffProfileComponent = React.ComponentType<StaffProfile>;
 
 const StaffProfileComponent = ({ name, position, description, socialMedia, imageURL }: StaffProfile) => {
     const socials = Object.entries(socialMedia).map(([name, url]) => {
+        if (url === "") return null;
+
         return (
             <OutboundLink href={url} className="social-link">
                 <i className={SocialMediaIcons[name]}></i>

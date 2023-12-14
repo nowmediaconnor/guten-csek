@@ -50,17 +50,17 @@
 
     /* Alexa Anderson */
     & .headshot:nth-child(2) {
-        @apply top-[35%] md:top-[40%] right-4 md:right-[5%] w-20 h-20 md:w-24 md:h-24;
+        @apply hidden md:block top-[35%] md:top-[40%] right-4 md:right-[5%] w-20 h-20 md:w-24 md:h-24;
     }
 
     /* Cassie Clark */
     & .headshot:nth-child(3) {
-        @apply bottom-20 md:bottom-4 right-4 md:right-[15%] w-24 h-24 md:w-32 md:h-32;
+        @apply hidden md:block bottom-20 md:bottom-4 right-4 md:right-[15%] w-24 h-24 md:w-32 md:h-32;
     }
 
     /* Andrew Nash */
     & .headshot:nth-child(4) {
-        @apply top-10 md:top-[7.5%] left-10 md:left-1/3 w-16 md:w-24 h-16 md:h-24;
+        @apply hidden md:block top-10 md:top-[7.5%] left-10 md:left-1/3 w-16 md:w-24 h-16 md:h-24;
     }
 
     /* Jim Csek */
@@ -70,7 +70,7 @@
 
     /* Lauren Frost */
     & .headshot:nth-child(6) {
-        @apply bottom-6 md:bottom-[5%] left-1/2 md:left-1/4 w-16 h-16;
+        @apply hidden md:block bottom-6 md:bottom-[5%] left-1/2 md:left-1/4 w-16 h-16;
     }
 }
 

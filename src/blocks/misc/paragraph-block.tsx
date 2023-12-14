@@ -16,6 +16,14 @@ export interface ParagraphBlockAttributes {
     padding: Padding;
 }
 
+export const defaultParahraphBlockPadding: Padding = {
+    unit: "rem",
+    top: 3,
+    right: 0,
+    bottom: 3,
+    left: 0,
+};
+
 export const ParagraphBlockEdit = ({
     attributes,
     setAttributes,

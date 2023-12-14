@@ -7,7 +7,7 @@ import { createDOMController } from "./domcontroller";
 import { registerAllBlocks } from "./scripts/register-blocks";
 import { runAccumulators } from "./scripts/accumulators";
 
-registerAllBlocks();
+// registerAllBlocks();
 
 window.addEventListener("load", (e) => {
     console.log("[Csek Creative] Window loaded.");

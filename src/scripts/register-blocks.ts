@@ -45,7 +45,12 @@ import {
 } from "../blocks/expanding-video-block";
 import { BlockquoteBlockEdit, BlockquoteBlockSave, BlockquoteBlockAttributes } from "../blocks/blockquote-block";
 import { TaglineHeaderAttributes, TaglineHeaderEdit, TaglineHeaderSave } from "../blocks/tagline-header-block";
-import { ParagraphBlockAttributes, ParagraphBlockEdit, ParagraphBlockSave } from "../blocks/misc/paragraph-block";
+import {
+    ParagraphBlockAttributes,
+    ParagraphBlockEdit,
+    ParagraphBlockSave,
+    defaultParahraphBlockPadding,
+} from "../blocks/misc/paragraph-block";
 import { MultiImageBlockAttributes, MultiImageBlockEdit, MultiImageBlockSave } from "../blocks/misc/multi-image-block";
 import {
     EmphasizedTextBlockAttributes,
@@ -399,7 +404,7 @@ export const registerAllBlocks = () => {
             },
             padding: {
                 type: "object",
-                default: defaultPadding,
+                default: defaultParahraphBlockPadding,
             },
         },
         edit: ParagraphBlockEdit,
