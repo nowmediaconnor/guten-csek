@@ -78,7 +78,7 @@ function enqueue_custom_block_assets()
     wp_enqueue_script(
         'guten-csek-blocks',
         plugins_url('build/index.js', __FILE__),
-        ['wp-blocks', 'wp-element', 'wp-i18n', 'wp-editor'],
+        ['wp-element', 'wp-i18n'],
         filemtime(plugin_dir_path(__FILE__) . 'build/index.js')
     );
     $apiSettings = [
@@ -87,17 +87,8 @@ function enqueue_custom_block_assets()
     ];
     wp_add_inline_script("guten-csek-blocks", "const CSEK_API_SETTINGS = " . json_encode($apiSettings), "before");
 
-
     // fonts
     // wp_enqueue_style('guten-csek-fonts', plugin_dir_url(__FILE__) . 'src/fonts/fonts.css');
-
-    // editor-only css
-    wp_register_style(
-        'guten-csek-editor-style',
-        plugins_url('css/guten-csek-editor.css', __FILE__),
-        ['wp-edit-blocks'],
-        filemtime(plugin_dir_path(__FILE__) . 'css/guten-csek-editor.css')
-    );
 
     // misc front end css
     wp_register_style(
@@ -119,15 +110,28 @@ add_action('init', 'enqueue_custom_block_assets');
 /* Enqueue Editor-Only Scripts */
 function enqueue_editor_scripts()
 {
-
-    $editor_script = plugins_url('js/editor.mjs', __FILE__);
+    $script_asset_path = plugin_dir_path(__FILE__) . "/build/editor.asset.php";
+    if (!file_exists($script_asset_path)) {
+        throw new Error(
+            'You need to run `npm start` or `npm run build` to generate files for the Guten Csek plugin.'
+        );
+    }
+    $editor_script = 'build/editor.js';
 
     // Enqueue the block index.js file
     wp_enqueue_script(
         'guten-csek-editor-script', // unique handle
-        $editor_script,
-        ['wp-blocks', 'wp-element', 'wp-i18n'], // required dependencies for blocks
+        plugins_url($editor_script, __FILE__),
+        ['wp-blocks', 'wp-element', 'wp-i18n', 'wp-editor'], // required dependencies for blocks
         filemtime(plugin_dir_path(__FILE__) . $editor_script)
+    );
+
+    // editor-only css
+    wp_register_style(
+        'guten-csek-editor-style',
+        plugins_url('css/guten-csek-editor.css', __FILE__),
+        ['wp-edit-blocks'],
+        filemtime(plugin_dir_path(__FILE__) . 'css/guten-csek-editor.css')
     );
 }
 add_action('enqueue_block_editor_assets', 'enqueue_editor_scripts');
