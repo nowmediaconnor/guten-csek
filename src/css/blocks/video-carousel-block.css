@@ -55,7 +55,7 @@
     }
 
     & .video-carousel-slider-progress {
-        @apply w-11/12 absolute bottom-4 left-1/2 -translate-x-1/2 drop-shadow-lg shadow-black;
+        @apply w-11/12 max-w-csek-max absolute bottom-4 left-1/2 -translate-x-1/2 drop-shadow-lg shadow-black;
 
         & .bar {
             @apply relative w-full h-1 bg-csek-light rounded-full z-10;
