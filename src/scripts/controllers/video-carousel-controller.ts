@@ -171,15 +171,11 @@ export default class VideoCarouselController extends BlockController {
     }
 
     prev() {
-        if (this.activeIndex > 0) {
-            this.activeIndex--;
-        }
+        this.activeIndex = (this.activeIndex - 1 + this.numItems) % this.numItems;
     }
 
     next() {
-        if (this.activeIndex < this.numItems - 1) {
-            this.activeIndex++;
-        }
+        this.activeIndex = (this.activeIndex + 1) % this.numItems;
     }
 
     updateNumerator(val: string) {
