@@ -71,14 +71,14 @@
 }
 
 .wp-block-guten-csek-staff-profiles-block .block-header {
-    @apply flex flex-row justify-start items-start font-montserrat gap-24 mb-8 pt-16;
+    @apply flex flex-col md:flex-col justify-start items-start font-montserrat gap-8 md:gap-24 mb-8 pt-12 md:pt-16 w-11/12 max-w-csek-max mx-auto;
 
     & h2 {
         @apply font-syne text-4xl leading-[1.1] w-min font-bold;
     }
 
     & p {
-        @apply w-[45%] text-base;
+        @apply w-full md:w-[45%] text-base;
     }
 }
 
@@ -139,21 +139,21 @@
 /* 2x4 grid alternate layout */
 
 .wp-block-guten-csek-staff-profiles-block .profiles-area.alternate {
-    @apply grid grid-cols-4 grid-flow-row gap-4 w-full relative pb-20;
+    @apply flex flex-col md:grid grid-cols-4 grid-flow-row gap-6 md:gap-4 w-full relative pb-20;
 
     /* even numbered items that arent the 4th column */
     & .staff-summary:nth-child(4n - 2):not(:nth-child(4n)) {
-        @apply top-20;
+        @apply md:top-20;
     }
 
     /* column 3 but not multiples of 6 */
     & .staff-summary:nth-child(4n - 1) {
-        @apply top-4;
+        @apply md:top-4;
     }
 
     /* column 4 */
     & .staff-summary:nth-child(4n) {
-        @apply top-12;
+        @apply md:top-12;
     }
 
     & .staff-summary > .image {
@@ -166,10 +166,10 @@
 }
 
 .wp-block-guten-csek-staff-profiles-block .staff-summary {
-    @apply flex flex-col justify-start items-start max-w-[20rem] h-fit relative cursor-pointer;
+    @apply flex flex-col justify-start items-start w-11/12 mx-auto md:max-w-[20rem] h-fit relative cursor-pointer;
 
     &:hover > .image {
-        @apply shadow-xl transform scale-105;
+        @apply md:shadow-xl md:transform md:scale-105;
     }
 
     & .image {
@@ -180,7 +180,7 @@
         @apply flex flex-row justify-between w-full items-start font-syne font-bold text-csek-red text-sm leading-none my-1;
 
         & h1 {
-            @apply uppercase m-0 text-csek-dark whitespace-nowrap;
+            @apply text-base md:text-sm leading-none uppercase m-0 text-csek-dark whitespace-nowrap;
         }
 
         & h2 {
