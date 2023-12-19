@@ -9,10 +9,8 @@ import { CsekBlockHeading, Heading } from "../components/heading";
 import { useBlockProps } from "@wordpress/block-editor";
 import CsekCard from "../components/card";
 import { TextArea, TextInput } from "../components/input";
-import { CsekImage } from "../scripts/image";
 import { CsekMediaUpload } from "../components/media-upload";
-import { CsekAddButton, CsekButton, CsekDeleteButton } from "../components/button";
-import { pad } from "../scripts/strings";
+import { CsekAddButton, CsekDeleteButton } from "../components/button";
 
 interface ProcessStep {
     title: string;
