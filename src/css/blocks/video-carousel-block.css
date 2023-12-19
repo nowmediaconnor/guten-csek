@@ -57,19 +57,19 @@
     & .video-carousel-slider-progress {
         @apply w-11/12 absolute bottom-4 left-1/2 -translate-x-1/2 drop-shadow-lg shadow-black;
 
-        & .status {
-            @apply flex flex-row justify-between text-2xl md:text-base md:justify-start text-white gap-4;
-
-            & i {
-                @apply text-2xl md:text-base;
-            }
-        }
-
         & .bar {
             @apply relative w-full h-1 bg-csek-light rounded-full z-10;
 
             & .progress {
                 @apply relative block h-full bg-csek-red rounded-full z-20 transition-all duration-750 ease-in-out;
+            }
+        }
+
+        & .status {
+            @apply flex flex-row justify-between text-2xl md:text-base md:justify-start text-white gap-4 mt-2;
+
+            & i {
+                @apply text-2xl md:text-base;
             }
         }
     }

@@ -218,7 +218,7 @@ export default class VideoCarouselController extends BlockController {
 
     updateBarProgress() {
         if (this.barProgress) {
-            const proportion = (this.activeIndex + 1) / this.numItems;
+            const proportion = this.activeIndex / (this.numItems - 1);
             this.barProgress.style.width = `${constrain(proportion, 0, 1) * 100}%`;
         }
     }
