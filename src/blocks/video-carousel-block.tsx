@@ -12,7 +12,6 @@ import { GutenCsekBlockEditProps, GutenCsekBlockSaveProps } from "../scripts/dom
 import Label, { Danger } from "../components/label";
 import CsekCard from "../components/card";
 import { CheckboxInput, RichTextContent, RichTextInput, TextInput } from "../components/input";
-import VimeoVideo from "../scripts/vimeo";
 
 export interface VideoCarouselAttributes {
     videos: Video[];
@@ -194,26 +193,25 @@ export const VideoCarouselBlockSave = ({ attributes }: GutenCsekBlockSaveProps<V
                 </a>
                 <div className="player">
                     <video controls={false} preload="none">
-                        Videos aren't supported in your browser. Frankly we're impressed you got this far.
+                        Videos aren&apos;t supported in your browser. Frankly we&apos;re impressed you got this far.
                     </video>
                 </div>
             </dialog>
             <div className="video-strip">{videoElements}</div>
-            <div className="carousel-slider-progress">
+            <div className="video-carousel-slider-progress">
+                <div className="bar">
+                    <span className="progress"></span>
+                </div>
                 <div className="status">
                     <a href="#prev" className="prev">
                         <i className="fa fa-chevron-left"></i>
                     </a>
                     <p>
-                        Progress&nbsp;
                         <span className="start">01</span>&nbsp;/&nbsp;<span className="stop">04</span>
                     </p>
                     <a href="#next" className="next">
                         <i className="fa fa-chevron-right"></i>
                     </a>
-                </div>
-                <div className="bar">
-                    <span className="progress"></span>
                 </div>
             </div>
         </section>
