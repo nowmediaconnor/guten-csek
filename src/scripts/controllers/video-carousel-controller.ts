@@ -56,10 +56,10 @@ export default class VideoCarouselController extends BlockController {
 
         this.videoDialog = this.videoCarousel.querySelector(".video-player");
         this.videoStrip = this.videoCarousel.querySelector(".video-strip");
-        // ("#post-24 > div > section.wp-block-guten-csek-video-carousel-block > div.carousel-slider-progress > div.status > p > span.start");
-        this.progressNumerator = this.videoCarousel.querySelector(".carousel-slider-progress .start");
-        this.progressDenominator = this.videoCarousel.querySelector(".carousel-slider-progress .stop");
-        this.barProgress = this.videoCarousel.querySelector(".carousel-slider-progress .bar .progress");
+        // ("#post-24 > div > section.wp-block-guten-csek-video-carousel-block > div.video-carousel-slider-progress > div.status > p > span.start");
+        this.progressNumerator = this.videoCarousel.querySelector(".video-carousel-slider-progress .start");
+        this.progressDenominator = this.videoCarousel.querySelector(".video-carousel-slider-progress .stop");
+        this.barProgress = this.videoCarousel.querySelector(".video-carousel-slider-progress .bar .progress");
 
         if (!this.videoDialog) this.log("Could not find video dialog");
         if (!this.videoStrip) this.log("Could not find video strip");
@@ -91,8 +91,8 @@ export default class VideoCarouselController extends BlockController {
     addEventListeners() {
         if (!this.videoCarousel) return;
 
-        const prevButton = this.videoCarousel.querySelector(".carousel-slider-progress .prev");
-        const nextButton = this.videoCarousel.querySelector(".carousel-slider-progress .next");
+        const prevButton = this.videoCarousel.querySelector(".video-carousel-slider-progress .prev");
+        const nextButton = this.videoCarousel.querySelector(".video-carousel-slider-progress .next");
         this.videoPlayButton = this.videoCarousel.querySelector(
             `.video-block:nth-child(${this.activeIndex + 1}) .video-playbutton`
         );
@@ -143,7 +143,7 @@ export default class VideoCarouselController extends BlockController {
         // this.videoBlocks.forEach((block) => {
         let idx = 0;
         for (const block of this.videoBlocks) {
-            const vimeoThumbnail = block.querySelector(".vimeo-thumbnail");
+            const vimeoThumbnail = block.querySelector(".vimeo-thumbnail[data-vimeo-url]");
 
             if (vimeoThumbnail) {
                 const url = vimeoThumbnail.getAttribute("data-vimeo-url") ?? "";
@@ -171,15 +171,11 @@ export default class VideoCarouselController extends BlockController {
     }
 
     prev() {
-        if (this.activeIndex > 0) {
-            this.activeIndex--;
-        }
+        this.activeIndex = (this.activeIndex - 1 + this.numItems) % this.numItems;
     }
 
     next() {
-        if (this.activeIndex < this.numItems - 1) {
-            this.activeIndex++;
-        }
+        this.activeIndex = (this.activeIndex + 1) % this.numItems;
     }
 
     updateNumerator(val: string) {
@@ -218,7 +214,7 @@ export default class VideoCarouselController extends BlockController {
 
     updateBarProgress() {
         if (this.barProgress) {
-            const proportion = (this.activeIndex + 1) / this.numItems;
+            const proportion = this.activeIndex / (this.numItems - 1);
             this.barProgress.style.width = `${constrain(proportion, 0, 1) * 100}%`;
         }
     }

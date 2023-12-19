@@ -12,7 +12,7 @@ import { GutenCsekBlockEditProps, GutenCsekBlockSaveProps } from "../scripts/dom
 import Label, { Danger } from "../components/label";
 import CsekCard from "../components/card";
 import { CheckboxInput, RichTextContent, RichTextInput, TextInput } from "../components/input";
-import VimeoVideo from "../scripts/vimeo";
+import { CsekMediaUpload } from "../components/media-upload";
 
 export interface VideoCarouselAttributes {
     videos: Video[];
@@ -22,6 +22,7 @@ interface Video {
     title: string;
     url: string;
     caption: string;
+    customThumbnail?: string;
     isOnVimeo?: boolean;
 }
 
@@ -34,55 +35,87 @@ interface VideoSelectorProps {
 
 const VideoSelector = ({ video, index, onDelete, onChange }: VideoSelectorProps) => {
     const [useVimeo, setUseVimeo] = React.useState<boolean>(video.isOnVimeo || false);
+    const [hasCustomThumbnail, setHasCustomThumbnail] = React.useState<boolean>(!!video.customThumbnail);
 
     const handleUseVimeo = (state: boolean) => {
         setUseVimeo(state);
         onChange({ ...video, isOnVimeo: state }, index);
     };
 
+    React.useEffect(() => {
+        if (!hasCustomThumbnail) {
+            onChange({ ...video, customThumbnail: undefined }, index);
+        }
+    }, [hasCustomThumbnail]);
+
     return (
         <CsekCard key={index} className="flex flex-col gap-2">
-            <div className="flex flex-row justify-between items-center">
+            <header className="flex flex-row justify-between items-center">
                 <Heading level="2">Video {index + 1}</Heading>
                 <Button className="csek-video-remove" icon="trash" label="Remove Video" onClick={() => onDelete(index)}>
                     Delete
                 </Button>
-            </div>
-            <TextInput
-                label="Title"
-                placeholder="A great title"
-                initialValue={video.title}
-                onChange={(videoTitle) => onChange({ ...video, title: videoTitle }, index)}
-            />
-            <RichTextInput
-                label="Caption"
-                initialValue={video.caption}
-                onChange={(videoCaption) => onChange({ ...video, caption: videoCaption }, index)}
-            />
-            <Heading level="4" className="flex flex-row gap-4">
-                Choose Video
-                <CheckboxInput label="Use Vimeo" onChange={handleUseVimeo} initialValue={video.isOnVimeo} />
-            </Heading>
-            {useVimeo ? (
-                <TextInput
-                    label="Vimeo URL"
-                    placeholder="https://player.vimeo.com/video/123456789"
-                    initialValue={video.url}
-                    onChange={(videoUrl) => onChange({ ...video, url: videoUrl }, index)}
-                />
-            ) : (
-                <MediaUpload
-                    onSelect={(media) =>
-                        onChange({ title: video.title, url: media.url, caption: video.caption }, index)
-                    }
-                    allowedTypes={["video"]}
-                    render={({ open }) => (
-                        <Button className="csek-video-upload" icon="video-alt3" label="Upload Video" onClick={open}>
-                            Choose Video
-                        </Button>
+            </header>
+            <main className="flex flex-row gap-2 w-full">
+                <div className="flex flex-col gap-2 w-full">
+                    <TextInput
+                        label="Title"
+                        placeholder="A great title"
+                        initialValue={video.title}
+                        onChange={(videoTitle) => onChange({ ...video, title: videoTitle }, index)}
+                    />
+                    <RichTextInput
+                        label="Caption"
+                        initialValue={video.caption}
+                        onChange={(videoCaption) => onChange({ ...video, caption: videoCaption }, index)}
+                    />
+                    <Heading level="4" className="flex flex-row gap-4">
+                        Choose Video
+                        <CheckboxInput label="Use Vimeo" onChange={handleUseVimeo} initialValue={video.isOnVimeo} />
+                        <CheckboxInput
+                            label="Use Custom Thumbnail"
+                            onChange={setHasCustomThumbnail}
+                            initialValue={hasCustomThumbnail}
+                        />
+                    </Heading>
+                    {useVimeo ? (
+                        <TextInput
+                            label="Vimeo URL"
+                            placeholder="https://player.vimeo.com/video/123456789"
+                            initialValue={video.url}
+                            onChange={(videoUrl) => onChange({ ...video, url: videoUrl }, index)}
+                        />
+                    ) : (
+                        <MediaUpload
+                            onSelect={(media) =>
+                                onChange({ title: video.title, url: media.url, caption: video.caption }, index)
+                            }
+                            allowedTypes={["video"]}
+                            render={({ open }) => (
+                                <Button
+                                    className="csek-video-upload"
+                                    icon="video-alt3"
+                                    label="Upload Video"
+                                    onClick={open}>
+                                    Choose Video
+                                </Button>
+                            )}
+                        />
                     )}
-                />
-            )}
+                </div>
+                {hasCustomThumbnail ? (
+                    <div className="basis-1/2">
+                        <CsekMediaUpload
+                            className="h-full"
+                            label="Custom Thumbnail"
+                            type="image"
+                            size="large"
+                            urlAttribute={video.customThumbnail}
+                            onChange={(v: string, altText: string) => onChange({ ...video, customThumbnail: v }, index)}
+                        />
+                    </div>
+                ) : null}
+            </main>
         </CsekCard>
     );
 };
@@ -138,7 +171,13 @@ export const VideoCarouselBlockSave = ({ attributes }: GutenCsekBlockSaveProps<V
     const videoThumnails: React.ReactNode[] = videos.map((video: Video, index: number) => {
         const usesVimeo = video.isOnVimeo || false;
 
+        const customThumbnail = video.customThumbnail || undefined;
+
         if (!video.url) return null;
+
+        if (customThumbnail) {
+            return <img className="vimeo-thumbnail" src={customThumbnail} key={index} />;
+        }
 
         if (usesVimeo) {
             return <img className="vimeo-thumbnail" data-vimeo-url={video.url} key={index} />;
@@ -154,20 +193,6 @@ export const VideoCarouselBlockSave = ({ attributes }: GutenCsekBlockSaveProps<V
         const { title, caption, url, isOnVimeo } = video;
 
         if (!url) return null;
-
-        // const videoPlayer = isOnVimeo ? (
-        //     <div className="player" style={{ position: "relative", padding: "56.25% 0 0 0" }}>
-        //         <iframe
-        //             src={url}
-        //             className="absolute top-0 left-0 w-full h-full"
-        //             allow="autoplay; fullscreen; picture-in-picture"
-        //             allowFullScreen={false}></iframe>
-        //     </div>
-        // ) : (
-        //     <video controls={false} onPlay={(e) => e.preventDefault()} preload="none">
-        //         <source src={url} type="video/mp4" />
-        //     </video>
-        // );
 
         const thumbnail = videoThumnails[index];
 
@@ -194,26 +219,25 @@ export const VideoCarouselBlockSave = ({ attributes }: GutenCsekBlockSaveProps<V
                 </a>
                 <div className="player">
                     <video controls={false} preload="none">
-                        Videos aren't supported in your browser. Frankly we're impressed you got this far.
+                        Videos aren&apos;t supported in your browser. Frankly we&apos;re impressed you got this far.
                     </video>
                 </div>
             </dialog>
             <div className="video-strip">{videoElements}</div>
-            <div className="carousel-slider-progress">
+            <div className="video-carousel-slider-progress">
+                <div className="bar">
+                    <span className="progress"></span>
+                </div>
                 <div className="status">
                     <a href="#prev" className="prev">
                         <i className="fa fa-chevron-left"></i>
                     </a>
                     <p>
-                        Progress&nbsp;
                         <span className="start">01</span>&nbsp;/&nbsp;<span className="stop">04</span>
                     </p>
                     <a href="#next" className="next">
                         <i className="fa fa-chevron-right"></i>
                     </a>
-                </div>
-                <div className="bar">
-                    <span className="progress"></span>
                 </div>
             </div>
         </section>
