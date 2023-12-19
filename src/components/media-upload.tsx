@@ -10,6 +10,7 @@ import { capitalize } from "../scripts/strings";
 import { CsekAddButton } from "./button";
 import Label from "./label";
 import { CsekImage } from "../scripts/image";
+import { twMerge } from "tailwind-merge";
 
 interface CsekMediaUploadProps {
     onChange: (v: string, altText: string) => void;
@@ -17,6 +18,7 @@ interface CsekMediaUploadProps {
     type?: "image" | "video" | "audio";
     label?: string;
     size?: "thumbnail" | "medium" | "large" | "full";
+    className?: string;
 }
 
 export const CsekMediaUpload = ({
@@ -25,6 +27,7 @@ export const CsekMediaUpload = ({
     type = "image",
     label,
     size = "full",
+    className = "",
 }: CsekMediaUploadProps) => {
     const [resourceURL, setResourceURL] = useState(urlAttribute);
     const [resourceId, setResourceId] = useState(0);
@@ -75,7 +78,7 @@ export const CsekMediaUpload = ({
     };
 
     return (
-        <div className="flex flex-col gap-4 py-4 csek-card w-fit">
+        <div className={twMerge("flex flex-col gap-4 py-4 csek-card w-fit", className)}>
             {label ? <Heading level="3">{label}</Heading> : null}
             <MediaUploadCheck fallback={<Label>You are not permitted to upload media.</Label>}>
                 <MediaUpload
