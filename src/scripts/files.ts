@@ -33,16 +33,16 @@ export const getImageColor = async (url: string): Promise<string> => {
             },
             body: JSON.stringify({ base64Data, fileName }),
         });
-        const body = JSON.parse(await res.json());
+        const body = await res.json();
 
-        const { rgb } = body;
+        const { css_rgb } = JSON.parse(body);
 
-        console.log("rgb:", rgb);
+        console.log("rgb:", css_rgb);
 
-        if (!rgb) {
+        if (!css_rgb) {
             throw new Error(`Color is null. URL: ${url}`);
         }
-        return rgb;
+        return css_rgb;
     } catch (err: any) {
         console.log("Error:", err);
     }

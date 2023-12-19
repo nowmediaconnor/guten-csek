@@ -18,7 +18,7 @@ function get_theme_color($request)
     $data = ["img" => $image_data];
     $jsonData = json_encode($data);
 
-    $ch = curl_init('https://wwvviwiftfydmr3h62q6mzfei40rsfar.lambda-url.ca-central-1.on.aws/');
+    $ch = curl_init('https://color-theme-kbs8u.ondigitalocean.app/color');
     curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
     curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonData);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
