@@ -109,7 +109,7 @@ const VideoSelector = ({ video, index, onDelete, onChange }: VideoSelectorProps)
                             className="h-full"
                             label="Custom Thumbnail"
                             type="image"
-                            size="medium"
+                            size="large"
                             urlAttribute={video.customThumbnail}
                             onChange={(v: string, altText: string) => onChange({ ...video, customThumbnail: v }, index)}
                         />
@@ -171,7 +171,13 @@ export const VideoCarouselBlockSave = ({ attributes }: GutenCsekBlockSaveProps<V
     const videoThumnails: React.ReactNode[] = videos.map((video: Video, index: number) => {
         const usesVimeo = video.isOnVimeo || false;
 
+        const customThumbnail = video.customThumbnail || undefined;
+
         if (!video.url) return null;
+
+        if (customThumbnail) {
+            return <img className="vimeo-thumbnail" src={customThumbnail} key={index} />;
+        }
 
         if (usesVimeo) {
             return <img className="vimeo-thumbnail" data-vimeo-url={video.url} key={index} />;

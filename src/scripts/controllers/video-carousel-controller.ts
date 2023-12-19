@@ -143,7 +143,7 @@ export default class VideoCarouselController extends BlockController {
         // this.videoBlocks.forEach((block) => {
         let idx = 0;
         for (const block of this.videoBlocks) {
-            const vimeoThumbnail = block.querySelector(".vimeo-thumbnail");
+            const vimeoThumbnail = block.querySelector(".vimeo-thumbnail[data-vimeo-url]");
 
             if (vimeoThumbnail) {
                 const url = vimeoThumbnail.getAttribute("data-vimeo-url") ?? "";
