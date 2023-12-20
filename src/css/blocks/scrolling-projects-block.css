@@ -71,7 +71,7 @@
 }
 
 .project-blurb img {
-    @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-auto transition-opacity duration-1000 ease-in-out drop-shadow-lg object-cover;
+    @apply absolute h-[24rem] md:h-[32rem] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-auto transition-opacity duration-1000 ease-in-out drop-shadow-lg object-cover;
 }
 
 .highlight-link {
