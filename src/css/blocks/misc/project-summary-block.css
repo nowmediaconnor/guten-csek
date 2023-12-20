@@ -20,7 +20,7 @@
         }
 
         & .column {
-            @apply gap-4;
+            @apply gap-8;
         }
 
         & h3 {
@@ -32,7 +32,7 @@
         }
 
         & .tagged-services {
-            @apply flex flex-col justify-start gap-8;
+            @apply flex flex-col justify-start gap-4;
 
             & ul {
                 @apply flex flex-col gap-8;
@@ -40,6 +40,8 @@
         }
 
         & .website-link {
+            @apply flex flex-col gap-4;
+
             & h3 {
                 @apply inline-flex gap-8 text-nowrap items-center justify-between;
 
@@ -47,6 +49,10 @@
                     @apply text-xl relative bottom-[0.125rem];
                 }
             }
+        }
+
+        & .sector {
+            @apply flex flex-col gap-4;
         }
     }
 }
