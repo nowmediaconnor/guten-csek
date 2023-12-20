@@ -4,6 +4,7 @@
 
 @import "animations.css";
 @import "components/stack.css";
+@import "components/button.css";
 @import "style.css";
 @import "blocks/block-quote-block.css";
 @import "blocks/curtainify.css";
