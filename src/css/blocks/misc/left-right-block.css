@@ -4,28 +4,19 @@
  */
 
 .wp-block-guten-csek-left-right-block {
-    /* min-height: 100vh; */
-    font-family: "Montserrat", sans-serif;
-    padding: 3rem 3rem 0 3rem;
-    font-size: 1.25rem;
-}
+    @apply font-montserrat py-12 text-xl;
 
-.left-right {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    gap: 3rem;
-    max-width: var(--max-width);
-    margin: 0 auto;
-}
+    & .left-right {
+        @apply w-11/12 max-w-csek-max mx-auto;
 
-.left-right.reverse {
-    flex-direction: row-reverse;
-}
+        &.reversed {
+            & img {
+                @apply float-left;
+            }
+        }
 
-.left-right .column {
-    width: 50%;
-    display: flex;
-    flex-direction: column;
+        & img {
+            @apply w-1/2 h-full max-w-csek-1/3 float-right md:mb-12;
+        }
+    }
 }

@@ -80,12 +80,10 @@ export const LeftRightBlockSave = ({ attributes }: GutenCsekBlockSaveProps<LeftR
     return (
         <section {...blockProps}>
             <div className={`left-right ${leftToRight ? "" : "reverse"}`}>
-                <div className="column">
-                    <p>{text}</p>
-                </div>
-                <div className="column">
+                <p>
                     <img src={imageURL} alt={altText} />
-                </div>
+                    {text}
+                </p>
             </div>
         </section>
     );
