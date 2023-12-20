@@ -176,24 +176,27 @@ export const ExpandingVideoBlockSave = ({ attributes }: GutenCsekBlockSaveProps<
             <img src={expandingMediaURL} />
         );
 
+    const messageElement = message ? (
+        <div className="message curtain">
+            <h2>{messageHeading}</h2>
+            <RichTextContent value={message} />
+        </div>
+    ) : null;
+
     return (
         <>
-            <section {...blockProps} className={blockProps.className + " curtain-reel"}>
-                <div className="content-block curtain">
-                    <div className="row">
-                        <div className="image-container left">{leftImageColumns}</div>
-                        <div className="expanding-video-container">
-                            {expandingElement}
-                            <div className="message">
-                                <h2>{messageHeading}</h2>
-                                <RichTextContent value={message} />
-                            </div>
+            <section {...blockProps} className={blockProps.className + ""}>
+                <div className="curtain-reel">
+                    <div className="content-block curtain">
+                        <div className="row">
+                            <div className="image-container left">{leftImageColumns}</div>
+                            <div className="expanding-video-container">{expandingElement}</div>
+                            <div className="image-container right">{rightImageColumns}</div>
                         </div>
-                        <div className="image-container right">{rightImageColumns}</div>
                     </div>
+                    {messageElement}
                 </div>
             </section>
-            {children as React.ReactNode}
         </>
     );
 };

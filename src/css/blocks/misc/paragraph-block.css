@@ -4,6 +4,10 @@
  */
 
 .wp-block-guten-csek-paragraph-block {
-    padding: 6rem 0;
-    font-size: 1.25rem;
+    & .block-content {
+        @apply w-11/12 max-w-csek-max mx-auto;
+        & .csek-richtext {
+            @apply py-24 text-base;
+        }
+    }
 }

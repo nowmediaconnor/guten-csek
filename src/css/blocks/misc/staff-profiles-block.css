@@ -4,174 +4,91 @@
  */
 
 .wp-block-guten-csek-staff-profiles-block {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-}
-
-.wp-block-guten-csek-staff-profiles-block .profile-content {
-    width: 100%;
-    max-width: var(--max-width);
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-
-    & .image {
-        width: 50%;
-        height: auto;
-        object-fit: cover;
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-    }
+    @apply flex flex-col justify-center items-center relative;
 }
 
 .wp-block-guten-csek-staff-profiles-block .staff-profile {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    background-color: var(--csek-white);
-    z-index: 30;
-    cursor: initial;
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 500ms ease-in-out;
+    @apply fixed top-0 left-0 w-full h-screen flex flex-col md:flex-row justify-end md:justify-center items-center bg-white z-30 cursor-default pointer-events-none opacity-0 transition-opacity duration-500 ease-in-out;
 
     /* Subclasses */
     &.opened {
-        pointer-events: all;
-        opacity: 1;
+        @apply pointer-events-auto opacity-100;
     }
 
     /* Child elements */
 
-    & .bio {
-        width: 50%;
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        gap: 2rem;
-        margin-right: 2rem;
-        position: relative;
+    & .profile-content {
+        @apply w-11/12 max-h-screen max-w-csek-max flex flex-col-reverse md:flex-row justify-center items-center relative;
 
-        & header {
-            font-family: "Syne", sans-serif;
-            font-weight: bold;
-            text-transform: uppercase;
+        & .bio {
+            @apply w-full h-[80vh] md:h-[80vh] md:w-1/2 flex flex-col justify-center mx-auto md:mr-8 relative flex-grow;
 
-            & h1 {
-                font-size: 4rem;
-                line-height: 1;
+            & header {
+                @apply z-30 font-syne font-bold uppercase pb-4 shadow-lg shadow-white;
+
+                & h1 {
+                    @apply text-3xl md:text-6xl leading-none;
+                }
+
+                & h2 {
+                    @apply text-base text-csek-red my-1;
+                }
+
+                & .name {
+                    @apply flex flex-row justify-between items-start;
+
+                    & .close-button {
+                        @apply fixed top-4 right-4 md:relative md:-top-8;
+                    }
+                }
             }
 
-            & h2 {
-                font-size: 1rem;
-                color: var(--csek-red);
-                margin: 0.25rem 0;
+            & main {
+                @apply z-10 flex-grow font-montserrat text-base overflow-y-auto py-4;
+
+                & .csek-richtext {
+                    @apply w-full;
+                }
             }
 
-            & .name {
-                display: flex;
-                flex-direction: row;
-                justify-content: space-between;
-                align-items: flex-start;
+            & footer {
+                @apply z-30 pt-4 font-syne font-bold uppercase text-base text-zinc-600 shadow-up-md shadow-white;
 
-                & .close-button {
-                    position: relative;
-                    top: -2rem;
+                & .social-links {
+                    @apply flex flex-row justify-start items-center gap-3 my-6;
                 }
             }
         }
-
-        & main {
-            font-family: "Montserrat", sans-serif;
-            font-size: 1rem;
-            width: 80%;
-        }
-
-        & footer {
-            margin-top: 1rem;
-            font-family: "Syne", sans-serif;
-            font-weight: bold;
-            text-transform: uppercase;
-            font-size: 1rem;
-            color: #888;
-
-            & .social-links {
-                display: flex;
-                flex-direction: row;
-                justify-content: flex-start;
-                align-items: center;
-                gap: 0.75rem;
-                margin: 1.5rem 0;
-            }
+        & .image {
+            @apply hidden w-1/2 h-auto object-cover md:flex flex-row justify-center;
         }
     }
 
     & .social-link {
-        width: 2rem;
-        height: 2rem;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border: 1px solid var(--csek-dark);
-        color: var(--csek-dark);
-        border-radius: 50%;
-        cursor: pointer;
-        transition: all 0.2s ease-in-out;
-        opacity: 0.5;
+        @apply w-8 h-8 flex flex-row justify-center items-center border border-csek-dark rounded-full cursor-pointer transition-all duration-200 ease-in-out opacity-50;
     }
 
     & .social-link:hover {
-        background-color: var(--csek-dark);
-        color: var(--csek-light);
-        opacity: 1;
+        @apply bg-csek-dark text-csek-light opacity-100;
     }
 }
 
 .wp-block-guten-csek-staff-profiles-block .block-header {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: flex-start;
-    font-family: "Montserrat", sans-serif;
-    gap: 6rem;
-    margin-bottom: 2rem;
-    padding-top: 4rem;
+    @apply flex flex-col md:flex-row justify-start items-start font-montserrat gap-8 md:gap-24 mb-8 pt-12 md:pt-16 w-11/12 max-w-csek-max mx-auto;
 
     & h2 {
-        font-family: "Syne", sans-serif;
-        font-size: 2.5rem;
-        line-height: 1.1;
-        width: min-content;
-        font-weight: bold;
+        @apply font-syne text-4xl leading-[1.1] w-min font-bold;
     }
 
     & p {
-        width: 45%;
-        font-size: 0.9rem;
+        @apply w-full md:w-[45%] text-base;
     }
 }
 
 /* 3x3 organic grid*/
 
 .wp-block-guten-csek-staff-profiles-block .profiles-area:not(.alternate) {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: auto;
-    grid-gap: 1rem;
-    width: 100%;
+    @apply grid grid-cols-3 gap-4 w-full;
 
     /* Jim Csek */
     & .staff-summary:nth-child(1) {
@@ -225,84 +142,56 @@
 /* 2x4 grid alternate layout */
 
 .wp-block-guten-csek-staff-profiles-block .profiles-area.alternate {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: auto;
-    grid-auto-flow: row;
-    grid-gap: 1rem;
-    width: 100%;
-    position: relative;
-    padding-bottom: 5rem;
+    @apply flex flex-col md:grid grid-cols-4 grid-flow-row gap-6 md:gap-4 w-full relative pb-20;
 
     /* even numbered items that arent the 4th column */
-    & .staff-summary:nth-child(2n):not(:nth-child(4n)) {
-        top: 5rem;
+    & .staff-summary:nth-child(4n - 2):not(:nth-child(4n)) {
+        @apply md:top-20;
     }
 
     /* column 3 but not multiples of 6 */
-    & .staff-summary:nth-child(3n):not(:nth-child(2n)) {
-        top: 1rem;
+    & .staff-summary:nth-child(4n - 1) {
+        @apply md:top-4;
     }
 
     /* column 4 */
     & .staff-summary:nth-child(4n) {
-        top: 3rem;
+        @apply md:top-12;
     }
 
     & .staff-summary > .image {
-        width: 100%;
-        overflow: hidden;
-        aspect-ratio: 1 / 1;
+        @apply w-full overflow-hidden aspect-square;
 
         & img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: top center;
+            @apply w-full h-full object-cover object-top;
         }
     }
 }
 
 .wp-block-guten-csek-staff-profiles-block .staff-summary {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-    max-width: 20rem;
-    height: fit-content;
-    position: relative;
-    justify-self: center;
-    cursor: pointer;
+    @apply flex flex-col justify-start items-start w-11/12 mx-auto md:max-w-[20rem] h-fit relative cursor-pointer;
 
     &:hover > .image {
-        box-shadow: 0 0 1rem -0.25rem var(--csek-dark);
+        @apply md:shadow-xl md:transform md:scale-105;
     }
 
     & .image {
-        transition: all 0.2s ease-in-out;
+        @apply transition-all duration-200 ease-in-out;
     }
 
     & .info {
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-start;
-        align-items: center;
-        font-family: "Syne", sans-serif;
-        font-weight: bold;
-        color: var(--csek-red);
-        font-size: 0.9rem;
+        @apply flex flex-row justify-between w-full items-start font-syne font-bold text-csek-red text-sm leading-none my-1;
 
         & h1 {
-            text-transform: uppercase;
-            margin: 0;
-            color: var(--csek-dark);
+            @apply text-base md:text-sm leading-none uppercase m-0 text-csek-dark whitespace-nowrap;
+        }
+
+        & h2 {
+            @apply text-right;
         }
 
         & .separator {
-            font-family: sans-serif;
-            font-size: 2rem;
-            margin: 0 0.125rem;
-            color: var(--csek-red);
+            @apply hidden font-sans text-3xl mx-[0.125rem] text-csek-red leading-[0.5] align-text-top;
         }
     }
 }

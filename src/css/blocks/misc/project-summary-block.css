@@ -3,76 +3,56 @@
  * Author: Connor Doman
  */
 
-.wp-blocks-guten-cesk-project-summary-block {
-    width: 100%;
-    position: relative;
-}
+.wp-block-guten-csek-project-summary-block {
+    @apply w-full relative text-white;
 
-.project-summary-block > * {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    padding: 5rem 1rem;
-    color: white;
-    font-family: "Montserrat", sans-serif;
-    gap: 3rem;
-}
+    & .project-summary-block {
+        & > * {
+            @apply flex flex-col justify-between items-center w-full py-12 md:py-20 px-4 font-montserrat gap-12;
+        }
 
-.project-summary-block .row {
-    gap: 5rem;
-    justify-content: space-between;
-}
+        & .row {
+            @apply flex-col md:flex-row gap-10 md:gap-20 justify-between;
 
-.project-summary-block .row * {
-    flex-basis: 1fr;
-}
+            & * {
+                @apply basis-[1fr];
+            }
+        }
 
-.project-summary-block .column {
-    gap: 2rem;
-}
+        & .column {
+            @apply gap-8;
+        }
 
-.project-summary-block h3 {
-    font-size: 1.5rem;
-    font-family: "Syne", sans-serif;
-    font-weight: bold;
-    text-transform: uppercase;
-    line-height: 1;
-}
+        & h3 {
+            @apply text-2xl font-syne font-bold uppercase leading-none;
+        }
 
-.project-tagline {
-    font-family: "Syne", sans-serif;
-    font-weight: bold;
-    font-size: 2.5rem;
-    line-height: 1.25;
-}
+        & .project-tagline {
+            @apply font-syne font-bold text-3xl md:text-4xl leading-[1.25] text-pretty;
+        }
 
-.project-summary {
-}
+        & .tagged-services {
+            @apply flex flex-col justify-start gap-4;
 
-.tagged-services {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    gap: 2rem;
-}
+            & ul {
+                @apply flex flex-col gap-8;
+            }
+        }
 
-.tagged-services ul {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-}
+        & .website-link {
+            @apply flex flex-col gap-4;
 
-.website-link h3 {
-    display: inline-flex;
-    gap: 2rem;
-    text-wrap: nowrap;
-    align-items: center;
-    justify-content: space-between;
-}
+            & h3 {
+                @apply inline-flex gap-x-8 gap-y-2 flex-wrap items-center justify-between;
 
-.website-link h3 i {
-    position: relative;
-    bottom: 0.125rem;
+                & i {
+                    @apply text-xl relative bottom-[0.125rem];
+                }
+            }
+        }
+
+        & .sector {
+            @apply flex flex-col gap-4;
+        }
+    }
 }

@@ -8,6 +8,7 @@ import { BlockController } from "../dom";
 export default class FeaturedVideoController extends BlockController {
     blockClassName: string;
 
+    blocks: NodeListOf<HTMLElement>;
     block: HTMLElement | null;
     videoShade: HTMLElement;
     videoPlayer: HTMLVideoElement;
@@ -92,4 +93,6 @@ export default class FeaturedVideoController extends BlockController {
     showPlayButton() {
         this.playButton.style.display = "flex";
     }
+
+    onMouseMove(e: MouseEvent, blockIndex: number): void {}
 }

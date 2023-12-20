@@ -10,13 +10,15 @@
         "start": "wp-scripts start",
         "build": "wp-scripts build",
         "count": "python count_lines.py src -i img,fonts",
-        "watch:css-app": "cross-env NODE_ENV=development tailwindcss -i ./src/css/app.css -o ./css/guten-csek.css --postcss --watch",
-        "watch:css-editor": "cross-env NODE_ENV=development tailwindcss -i ./src/css/app-editor.css -o ./css/guten-csek-editor.css --postcss --watch",
-        "watch": "cross-env NODE_ENV=development concurrently \"yarn watch:css-app\" \"yarn watch:css-editor\" \"yarn start\""
+        "watch:css-app": "cross-env NODE_ENV=development yarn tailwindcss -i ./src/css/app.css -o ./css/guten-csek.css --postcss --watch",
+        "watch:css-editor": "cross-env NODE_ENV=development yarn tailwindcss -i ./src/css/app-editor.css -o ./css/guten-csek-editor.css --postcss --watch",
+        "watch": "cross-env NODE_ENV=development concurrently \"yarn watch:css-app\" \"yarn watch:css-editor\" \"yarn start\"",
+        "ci": "yarn install --frozen-lockfile"
     },
     "devDependencies": {
         "@jeffreyvr/tailwindcss-tailpress": "^2.0.0",
         "@playwright/test": "^1.39.0",
+        "@types/vimeo__player": "^2.18.3",
         "@types/wordpress__block-editor": "^11.5.1",
         "@types/wordpress__components": "^23.0.1",
         "@wordpress/block-editor": "^12.7.0",
@@ -28,15 +30,17 @@
         "esbuild": "^0.19.4",
         "eslint": "^8.53.0",
         "eslint-plugin-react-hooks": "^4.6.0",
-        "postcss": "^8.4.31",
+        "postcss": "^8.4.32",
         "postcss-import": "^15.1.0",
         "postcss-nested-ancestors": "^3.0.0",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
-        "tailwindcss": "^3.3.3",
-        "typescript": "^5.2.2"
+        "tailwindcss": "^3.4.0",
+        "typescript": "^5.2.2",
+        "webpack-merge": "^5.10.0"
     },
     "dependencies": {
+        "@vimeo/player": "^2.20.1",
         "circletype": "^2.3.0",
         "tailwind-merge": "^1.14.0",
         "typescript-cubic-spline": "^1.0.1"

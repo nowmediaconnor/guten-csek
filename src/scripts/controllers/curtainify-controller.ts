@@ -10,6 +10,8 @@ export default class CurtainifyController extends BlockController {
     name: string;
     debug: boolean;
     isInitialized: boolean;
+    block: HTMLElement;
+    blocks: NodeListOf<HTMLElement>;
 
     constructor() {
         super();
@@ -24,4 +26,6 @@ export default class CurtainifyController extends BlockController {
     beforeReload() {
         window.scrollTo(0, 0);
     }
+
+    onMouseMove(e: MouseEvent, blockIndex: number): void {}
 }

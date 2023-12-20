@@ -8,24 +8,52 @@ import React, { useState } from "@wordpress/element";
 import { Heading } from "./heading";
 import { capitalize } from "../scripts/strings";
 import { CsekAddButton } from "./button";
+import Label from "./label";
+import { CsekImage } from "../scripts/image";
+import { twMerge } from "tailwind-merge";
 
 interface CsekMediaUploadProps {
-    onChange: (v: string) => void;
+    onChange: (v: string, altText: string) => void;
     urlAttribute?: string;
     type?: "image" | "video" | "audio";
     label?: string;
+    size?: "thumbnail" | "medium" | "large" | "full";
+    className?: string;
 }
 
-export const CsekMediaUpload = ({ onChange, urlAttribute = "", type = "image", label }: CsekMediaUploadProps) => {
+export const CsekMediaUpload = ({
+    onChange,
+    urlAttribute = "",
+    type = "image",
+    label,
+    size = "full",
+    className = "",
+}: CsekMediaUploadProps) => {
     const [resourceURL, setResourceURL] = useState(urlAttribute);
     const [resourceId, setResourceId] = useState(0);
 
-    const handleChangeURL = (v: any) => {
-        if (onChange) {
-            onChange(v.url);
-            setResourceURL(v.url);
-            setResourceId(v.id);
-        }
+    const handleChangeURL = async (v: any) => {
+        const resource = new CsekImage(v.id);
+        await resource.doubleCheckSizes();
+
+        const resUrl = () => {
+            switch (size) {
+                case "thumbnail":
+                    return resource.thumbnail;
+                case "medium":
+                    return resource.medium;
+                case "large":
+                    return resource.large;
+                case "full":
+                    return resource.full;
+                default:
+                    return resource.full;
+            }
+        };
+        // alert("Resource info: " + JSON.stringify({ ...resource }, null, 4));
+        onChange(resUrl(), resource.altText);
+        setResourceURL(v.url);
+        setResourceId(v.id);
     };
 
     const mediaPreview = (): JSX.Element => {
@@ -50,9 +78,9 @@ export const CsekMediaUpload = ({ onChange, urlAttribute = "", type = "image", l
     };
 
     return (
-        <div className="flex flex-col gap-4 py-4 csek-card w-fit">
+        <div className={twMerge("flex flex-col gap-4 py-4 csek-card w-fit", className)}>
             {label ? <Heading level="3">{label}</Heading> : null}
-            <MediaUploadCheck>
+            <MediaUploadCheck fallback={<Label>You are not permitted to upload media.</Label>}>
                 <MediaUpload
                     onSelect={handleChangeURL}
                     allowedTypes={[type]}

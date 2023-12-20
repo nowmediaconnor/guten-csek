@@ -6,60 +6,32 @@
 /* Block Quote */
 
 .wp-block-guten-csek-block-quote-block {
-    width: 100%;
-    font-family: Syne, sans-serif;
-    padding: 4rem 0;
-    position: relative;
-    background: white;
-}
-.wp-block-guten-csek-block-quote-block .quotation-mark {
-}
-.wp-block-guten-csek-block-quote-block blockquote {
-    margin: 0 auto;
-    text-align: left;
-    font-size: 2.5rem;
-    line-height: 1.2;
-    z-index: 10;
-}
-.wp-block-guten-csek-block-quote-block .quote-area {
-    position: relative;
-    margin: 2rem auto;
-    max-width: 75rem;
-    box-sizing: border-box;
-    padding: 0 2rem;
-}
-.wp-block-guten-csek-block-quote-block .quote::before {
-    content: "\201C";
-    color: var(--csek-red);
-    font-size: 6rem;
-    position: absolute;
-    left: 3rem;
-    top: 4rem;
-}
-.wp-block-guten-csek-block-quote-block .quote {
-    margin-left: 6rem;
-    margin-top: 4rem;
-    margin-bottom: 2rem;
-    display: flex;
-    flex-direction: column;
-}
-.wp-block-guten-csek-block-quote-block .quote .byline {
-    margin-top: 2rem;
-    font-weight: bold;
-    font-family: Montserrat, sans-serif;
-    line-height: 1.2;
-    text-transform: uppercase;
-}
-.wp-block-guten-csek-block-quote-block .quote .byline .author {
-    color: var(--csek-red);
-}
+    @apply hidden md:block w-full font-syne md:px-16 py-8 md:py-16 relative;
 
-.wp-block-guten-csek-block-quote-block .quote .byline .author-role {
-}
+    & blockquote {
+        @apply mx-auto text-left text-2xl md:text-4xl leading-[1.2] z-10;
+    }
 
-.wp-block-guten-csek-block-quote-block .serif {
-    /* filter: hue-rotate(150deg) saturate(1%) brightness(195.8%); */
-    position: absolute;
-    right: 4rem;
-    top: 2rem;
+    & .quote-area {
+        @apply relative mx-auto w-11/12 max-w-csek-max box-border py-8;
+    }
+    & .quote-area::before {
+        @apply text-csek-red text-8xl absolute left-4 md:left-12 top-16 md:top-20;
+        content: "\201C";
+    }
+    & .quote {
+        @apply ml-10 md:ml-24 mr-4 mt-10 md:mt-8 mb-4 flex flex-col;
+
+        & .byline {
+            @apply mt-4 font-bold font-montserrat leading-[1.2] uppercase;
+
+            & .author {
+                @apply text-csek-red;
+            }
+        }
+    }
+
+    & .serif {
+        @apply absolute top-0 md:top-8 right-0;
+    }
 }

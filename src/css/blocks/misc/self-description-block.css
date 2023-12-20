@@ -4,97 +4,57 @@
  */
 
 .wp-block-guten-csek-self-description-block {
-    background-color: var(--csek-blue);
-    color: var(--csek-dark);
-    width: 100%;
-    padding: 6rem 0;
-    font-family: "Montserrat", sans-serif;
+    @apply bg-csek-blue text-csek-dark w-full pt-4 pb-8 md:py-24 font-montserrat;
 
     & .block-container {
-        max-width: var(--max-width);
-        margin: 0 auto;
+        @apply max-w-csek-max w-11/12 mx-auto;
     }
 
     & .left-right-area {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-around;
-        align-items: flex-start;
+        @apply flex flex-col md:flex-row justify-around items-start;
 
         & .left-content {
-            width: 50%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
+            @apply w-full md:w-1/2 flex flex-col justify-center;
         }
 
         & .right-content {
-            width: 50%;
-            padding: 4rem;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
+            @apply w-full md:w-1/2 md:p-16 flex flex-col justify-center;
 
             & p {
-                font-size: 0.9rem;
-                margin: 2rem 0;
+                @apply text-base my-4;
             }
 
             & .secondary-image {
-                max-width: 75%;
-                height: auto;
+                @apply md:max-w-[75%] h-auto my-12;
             }
         }
 
         & .desc-masthead {
-            position: relative;
-            height: max-content;
-            margin-top: 12rem;
+            @apply relative h-max md:mt-48;
 
             & h2 {
-                position: relative;
-                font-size: 2.5rem;
-                font-weight: 600;
-                margin: 1.5rem 0 2rem 0;
-                font-family: "Syne", sans-serif;
-                line-height: 1.1;
-                z-index: 1;
+                @apply relative text-4xl font-semibold mt-6 mb-8 font-syne leading-[1.1] z-[1];
             }
 
             & .serif {
-                position: absolute;
-                top: 0;
-                right: 0;
+                @apply absolute top-0 right-0 w-60 z-0;
                 filter: grayscale(100%) brightness(0) invert(100%);
-                width: 15rem;
-                z-index: 0;
             }
         }
     }
     & .fact-entry {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        margin-top: 2rem;
-        font-family: "Syne", sans-serif;
+        @apply flex flex-col md:flex-row gap-8 justify-between items-center mt-8;
 
         & h2 {
-            font-size: 3rem;
-            font-weight: bold;
-            flex-basis: 50%;
+            @apply font-syne text-5xl font-bold basis-1/2;
         }
 
         & p {
-            font-size: 1rem;
-            flex-basis: 50%;
-            padding: 0 4rem;
-            font-weight: 600;
+            @apply text-base md:basis-1/2 md:px-16 font-montserrat;
         }
     }
 
     & .fact-entry + .fact-entry {
-        border-top: 1px solid white;
-        padding-top: 2rem;
+        @apply border-t border-solid border-white pt-8;
     }
 }

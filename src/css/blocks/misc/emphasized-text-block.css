@@ -4,8 +4,9 @@
  */
 
 .wp-block-guten-csek-emphasized-text-block {
-    padding: 7rem;
-    font-family: "Syne", sans-serif;
-    font-size: 2.5rem;
-    font-weight: bold;
+    @apply py-8 md:p-28 font-syne text-4xl font-bold;
+
+    & .csek-richtext {
+        @apply w-10/12 max-w-csek-max mx-auto;
+    }
 }

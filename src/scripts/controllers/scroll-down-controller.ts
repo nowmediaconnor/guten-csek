@@ -7,6 +7,7 @@ import { BlockController, ControllerProperties } from "../dom";
 import CircleType from "circletype";
 
 export default class ScrollDownController extends BlockController {
+    blocks: NodeListOf<HTMLElement>;
     name: string;
     scrollDownId: string;
     parentScrollTargetSelector: string;
@@ -37,10 +38,9 @@ export default class ScrollDownController extends BlockController {
     }
 
     addEventListeners() {
-        window.addEventListener("scroll", () => {
-        });
+        window.addEventListener("scroll", () => {});
     }
-    
+
     scroll(scrollY?: number) {
         this.update();
     }
@@ -57,4 +57,6 @@ export default class ScrollDownController extends BlockController {
         }
         this.scrollDownElement.style.opacity = "1";
     }
+
+    onMouseMove(e: MouseEvent, blockIndex: number): void {}
 }

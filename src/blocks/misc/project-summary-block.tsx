@@ -18,6 +18,7 @@ export interface ProjectSummaryBlockAttributes {
     projectSummary: string;
     taggedServices: string[];
     websiteLink: string;
+    displayLink: string;
     companySector: string;
     usesCustomBackgroundColor: boolean;
 }
@@ -34,6 +35,7 @@ export const ProjectSummaryBlockEdit = ({
         projectSummary,
         taggedServices,
         websiteLink,
+        displayLink,
         companySector,
         usesCustomBackgroundColor,
     } = attributes;
@@ -58,6 +60,10 @@ export const ProjectSummaryBlockEdit = ({
 
     const setWebsiteLink = (value: string) => {
         setAttributes({ websiteLink: value });
+    };
+
+    const setDisplayLink = (value: string) => {
+        setAttributes({ displayLink: value });
     };
 
     const setUsesCustomBackgroundColor = (value: boolean) => {
@@ -90,12 +96,22 @@ export const ProjectSummaryBlockEdit = ({
                     onChange={setTaggedServices}
                     placeholder="Tagged services (comma-separated)"
                 />
-                <TextInput
-                    label="Website link"
-                    initialValue={websiteLink}
-                    onChange={setWebsiteLink}
-                    placeholder="Website link"
-                />
+                <div className="flex flex-row gap-2">
+                    <TextInput
+                        label="Website link"
+                        initialValue={websiteLink}
+                        onChange={setWebsiteLink}
+                        placeholder="https://www.wordpress.com"
+                        hint="Where the link goes."
+                    />
+                    <TextInput
+                        label="Display link"
+                        initialValue={displayLink}
+                        onChange={setDisplayLink}
+                        placeholder="wordpress.com"
+                        hint="How the link looks."
+                    />
+                </div>
                 <TextInput
                     label="Company sector"
                     initialValue={companySector}
@@ -132,6 +148,7 @@ export const ProjectSummaryBlockSave = ({ attributes }: GutenCsekBlockSaveProps<
         projectSummary,
         taggedServices,
         websiteLink,
+        displayLink,
         companySector,
         usesCustomBackgroundColor,
     } = attributes;
@@ -163,16 +180,20 @@ export const ProjectSummaryBlockSave = ({ attributes }: GutenCsekBlockSaveProps<
                             <h4>Our services:</h4>
                             <ul>{listOfServices}</ul>
                         </div>
-                        <div className="column website-link">
-                            <h4>Check out our partner</h4>
-                            <h3>
-                                <OutboundLink href={websiteLink}>
-                                    {urlExtractSecondLevelDomain(websiteLink)}
-                                </OutboundLink>
-                                <i className="fa-solid fa-arrow-up-right-from-square"></i>
-                            </h3>
-                            <h4>Sector</h4>
-                            <h3>{companySector}</h3>
+                        <div className="column">
+                            <div className="sector">
+                                <h4>Sector</h4>
+                                <h3>{companySector}</h3>
+                            </div>
+                            <div className="website-link">
+                                <h4>Check out our partner</h4>
+                                <h3>
+                                    <OutboundLink href={websiteLink}>
+                                        {displayLink ? displayLink : urlExtractSecondLevelDomain(websiteLink)}
+                                    </OutboundLink>
+                                    <i className="fa-solid fa-arrow-up-right-from-square"></i>
+                                </h3>
+                            </div>
                         </div>
                     </div>
                 </div>

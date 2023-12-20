@@ -4,18 +4,9 @@
  */
 
 .wp-block-guten-csek-featured-image-block {
-    min-height: 100vh;
-    width: 100vw;
-    padding: 3rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
+    @apply w-11/12 max-w-csek-max flex flex-col justify-center items-center mx-auto;
 
-.wp-block-guten-csek-featured-image-block .featured-image {
-    width: auto;
-    height: auto;
-    max-width: 75rem;
-    /* box-shadow: 0 0 1rem 0.25rem rgba(0, 0, 0, 0.25); */
+    & .featured-image {
+        @apply w-full h-auto max-w-csek-max;
+    }
 }

@@ -4,72 +4,44 @@
  */
 
 .wp-block-guten-csek-chicago-fires-block {
-    background-color: var(--csek-dark);
-    width: 100%;
-    font-family: "Syne", sans-serif;
+    @apply bg-csek-dark w-full font-syne;
 
     & h2,
     & h3 {
-        color: var(--csek-red);
-        font-size: 1rem;
-        font-weight: bold;
-        text-transform: uppercase;
+        @apply text-csek-red text-base font-bold uppercase;
     }
 
     & p {
-        color: #fff;
+        @apply text-white;
     }
 
     & .block-container {
-        max-width: var(--max-width);
-        position: relative;
-        padding: 8rem 0;
-        margin: 0 auto;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        gap: 9rem;
+        @apply w-11/12 max-w-csek-max relative pt-12 pb-24 md:py-32 mx-auto flex flex-col justify-center items-center gap-8;
 
         & .primary-text {
-            text-align: center;
-            max-width: 100%;
+            @apply text-center max-w-full;
 
             & h2 {
-                margin: 1rem 0;
+                @apply my-4 text-2xl;
             }
 
             & p {
-                font-size: 2rem;
-                font-weight: bold;
-                line-height: 1.1;
+                @apply text-3xl font-bold leading-[1.1] mb-20;
             }
         }
 
         & .fires {
-            width: 100%;
-            display: flex;
-            justify-content: space-around;
-            align-items: flex-start;
-            gap: 2rem;
+            @apply w-full flex flex-col md:flex-row justify-around items-start gap-8;
 
             & .secondary-text {
-                display: flex;
-                flex-direction: column;
-                justify-content: flex-start;
-                align-items: flex-start;
-                flex-basis: 25%;
-                gap: 1rem;
+                @apply flex flex-col justify-start items-start basis-1/4 gap-4;
 
                 & h3 {
-                    text-align: left;
+                    @apply w-2/3 md:w-full mx-auto text-center text-base text-pretty;
                 }
 
                 & p {
-                    text-align: left;
-                    font-family: "Montserrat", sans-serif;
-                    line-height: 1.1;
-                    font-size: 0.9rem;
+                    @apply text-left font-montserrat leading-[1.1] text-base text-pretty;
                 }
             }
         }

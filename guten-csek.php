@@ -59,12 +59,11 @@ function enqueue_css_folder()
     $css_directory = plugin_dir_path(__FILE__) . 'src/css';
     // echo "Enqueuing styles from directory: " . $css_directory . "<br/>";
 
-    $files = get_all_files_from_dir($css_directory, true, ['app.css', 'app-editor.css', 'style.css', 'editor.css']);
+    $files = get_all_files_from_dir($css_directory, true, ['app.css', 'app-editor.css', 'style.css', 'editor.css', 'blocks']);
 
     foreach ($files as $file) {
         // error_log('Enqueuing style: ' . $file);
         $handle = pathinfo($file, PATHINFO_FILENAME);
-        // echo "Enqueuing style: " . $handle . "<br/>";
         $src = convert_path_to_url($file);
         $deps = [];
         $ver = filemtime($file);
@@ -79,20 +78,17 @@ function enqueue_custom_block_assets()
     wp_enqueue_script(
         'guten-csek-blocks',
         plugins_url('build/index.js', __FILE__),
-        ['wp-blocks', 'wp-element', 'wp-i18n', 'wp-editor'],
+        ['wp-element', 'wp-i18n'],
         filemtime(plugin_dir_path(__FILE__) . 'build/index.js')
     );
+    $apiSettings = [
+        'root' => esc_url_raw(rest_url()),
+        'nonce' => wp_create_nonce('wp_rest')
+    ];
+    wp_add_inline_script("guten-csek-blocks", "const CSEK_API_SETTINGS = " . json_encode($apiSettings), "before");
 
     // fonts
     // wp_enqueue_style('guten-csek-fonts', plugin_dir_url(__FILE__) . 'src/fonts/fonts.css');
-
-    // editor-only css
-    wp_register_style(
-        'guten-csek-editor-style',
-        plugins_url('css/guten-csek-editor.css', __FILE__),
-        ['wp-edit-blocks'],
-        filemtime(plugin_dir_path(__FILE__) . 'css/guten-csek-editor.css')
-    );
 
     // misc front end css
     wp_register_style(
@@ -103,7 +99,7 @@ function enqueue_custom_block_assets()
     );
 
     // every other stylesheet
-    enqueue_css_folder();
+    // enqueue_css_folder();
 
     // enqueue block registration
     enqueue_blocks_iteratively();
@@ -111,6 +107,34 @@ function enqueue_custom_block_assets()
 // Only enqueue these scripts if we're not in the admin panel
 add_action('init', 'enqueue_custom_block_assets');
 
+/* Enqueue Editor-Only Scripts */
+function enqueue_editor_scripts()
+{
+    $script_asset_path = plugin_dir_path(__FILE__) . "/build/editor.asset.php";
+    if (!file_exists($script_asset_path)) {
+        throw new Error(
+            'You need to run `npm start` or `npm run build` to generate files for the Guten Csek plugin.'
+        );
+    }
+    $editor_script = 'build/editor.js';
+
+    // Enqueue the block index.js file
+    wp_enqueue_script(
+        'guten-csek-editor-script', // unique handle
+        plugins_url($editor_script, __FILE__),
+        ['wp-blocks', 'wp-element', 'wp-i18n', 'wp-editor'], // required dependencies for blocks
+        filemtime(plugin_dir_path(__FILE__) . $editor_script)
+    );
+
+    // editor-only css
+    wp_register_style(
+        'guten-csek-editor-style',
+        plugins_url('css/guten-csek-editor.css', __FILE__),
+        ['wp-edit-blocks'],
+        filemtime(plugin_dir_path(__FILE__) . 'css/guten-csek-editor.css')
+    );
+}
+add_action('enqueue_block_editor_assets', 'enqueue_editor_scripts');
 
 
 // API endpoints
@@ -118,7 +142,8 @@ function image_color_endpoint()
 {
     function get_image($request)
     {
-        return get_image_color($request);
+        // return get_image_color($request);
+        return get_theme_color($request);
     }
 
     register_rest_route('csek/v2', '/img-color', array(
@@ -128,3 +153,24 @@ function image_color_endpoint()
     ));
 }
 add_action('rest_api_init', 'image_color_endpoint', 999);
+
+// Custom Theme Category
+
+function register_layout_category($categories)
+{
+
+    $newCategory = array(
+        'slug'  => 'csek',
+        'title' => 'Csek Creative'
+    );
+
+    array_splice($categories, 0, 0, array($newCategory));
+
+    return $categories;
+}
+
+if (version_compare(get_bloginfo('version'), '5.8', '>=')) {
+    add_filter('block_categories_all', 'register_layout_category');
+} else {
+    add_filter('block_categories', 'register_layout_category');
+}

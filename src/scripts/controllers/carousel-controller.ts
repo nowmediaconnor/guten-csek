@@ -22,6 +22,7 @@ export default class CarouselController extends BlockController {
     blockHeight: number;
     scrollOffset: number;
 
+    blocks: NodeListOf<HTMLElement>;
     carouselBlock: HTMLElement | null;
     carousel: HTMLUListElement | null;
     progressNumerator: HTMLElement | null;
@@ -170,4 +171,6 @@ export default class CarouselController extends BlockController {
 
         this.carouselBlock.style.height = `${newHeight}px`;
     }
+
+    onMouseMove(e: MouseEvent, blockIndex: number): void {}
 }

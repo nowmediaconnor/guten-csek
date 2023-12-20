@@ -7,7 +7,8 @@
 export const imageToBase64 = async (url: string): Promise<string> => {
     const response = await fetch(url);
     const blob = await response.blob();
-    if (!blob) {
+    const okMimes = ["image/jpeg", "image/png", "image/gif"];
+    if (!blob || !okMimes.includes(blob.type)) {
         throw new Error("Blob is null");
     }
 
@@ -20,24 +21,31 @@ export const imageToBase64 = async (url: string): Promise<string> => {
 };
 
 export const getImageColor = async (url: string): Promise<string> => {
-    const base64Data = await imageToBase64(url);
+    try {
+        const base64Data = await imageToBase64(url);
 
-    const fileName = url.split("/").pop();
+        const fileName = url.split("/").pop();
 
-    const res = await fetch("/wp-json/csek/v2/img-color", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ base64Data, fileName }),
-    });
-    const { color } = await res.json();
+        const res = await fetch("/wp-json/csek/v2/img-color", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ base64Data, fileName }),
+        });
+        const body = await res.json();
 
-    if (!color) {
-        throw new Error(`Color is null. URL: ${url}`);
+        const { css_rgb } = JSON.parse(body);
+
+        console.log("rgb:", css_rgb);
+
+        if (!css_rgb) {
+            throw new Error(`Color is null. URL: ${url}`);
+        }
+        return css_rgb;
+    } catch (err: any) {
+        console.log("Error:", err);
     }
-    return color;
 
-    // const text = await res.text();
-    // return text;
+    return "rgb(19,19,19)";
 };

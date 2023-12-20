@@ -67,4 +67,6 @@ export default class NextProjectController extends BlockController {
             imageBacking.style.backgroundColor = color;
         });
     }
+
+    onMouseMove(e: MouseEvent, blockIndex: number): void {}
 }

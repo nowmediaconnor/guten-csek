@@ -19,6 +19,10 @@ body {
     font-family: "Montserrat", sans-serif;
 }
 
+html {
+    height: 100vh;
+}
+
 /* Floating images at top of home page */
 
 @keyframes hover {
@@ -72,11 +76,7 @@ body {
 }
 
 .block-title {
-    font-size: 1.5rem;
-    font-weight: 700;
-    margin-bottom: 1rem;
-    color: var(--csek-red);
-    text-transform: uppercase;
+    @apply text-xl md:text-2xl font-bold mb-4 text-csek-red uppercase;
 }
 
 .max-width {
@@ -110,19 +110,16 @@ body {
 
 /* Specific Elements */
 
-#loading {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 100;
-    background-color: white;
-    width: 100vw;
-    height: 100vh;
-    /* transition: opacity 0s; */
-    transition: opacity 1s ease;
-}
+/* Wordpress Classes */
 
-#loading.complete {
-    opacity: 0;
-    pointer-events: none;
+.wp-block-embed {
+    @apply w-full mx-auto !important;
+
+    &__wrapper {
+        @apply mx-auto;
+
+        & iframe {
+            @apply w-11/12 max-w-csek-2/3 h-full mx-auto aspect-video;
+        }
+    }
 }

@@ -1,0 +1,42 @@
+/*
+ * Created on Sat Dec 09 2023
+ * Author: Connor Doman
+ */
+
+.wp-block-guten-csek-projects-masonry-block {
+    --brick-height: 16rem;
+    @apply relative w-full h-fit -top-16;
+
+    & .projects-grid {
+        --num-rows: 10;
+        --num-cols: 3;
+        @apply flex flex-col md:grid grid-cols-3 grid-rows-[10] w-11/12 max-w-max mx-auto;
+        grid-template-rows: repeat(var(--num-rows), var(--brick-height));
+        grid-template-columns: repeat(var(--num-cols), calc(var(--brick-height) * 1));
+    }
+
+    & .project-brick {
+        @apply w-full h-full p-2 transition-all duration-500;
+
+        &:hover {
+            @apply transform scale-105;
+        }
+
+        & a {
+            @apply relative w-full h-full p-4 block bg-csek-dark rounded-lg font-bold text-white text-2xl shadow-md overflow-hidden z-10;
+            backdrop-filter: brightness(50%);
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            animation: hover 2s ease-in-out infinite alternate;
+
+            & span {
+                @apply z-10 relative font-syne;
+            }
+
+            & img {
+                @apply absolute top-0 left-0 object-cover w-full h-full z-0 brightness-50;
+            }
+        }
+    }
+}

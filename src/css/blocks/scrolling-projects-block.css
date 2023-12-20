@@ -6,142 +6,76 @@
 /* Scrolling Projects Block */
 
 .wp-block-guten-csek-scrolling-projects-block {
-    width: 100%;
-    height: 75vh;
-    font-family: Syne, sans-serif;
-    padding: 4rem 0;
-    position: relative;
-    background: white;
-    overflow: hidden;
-    box-sizing: border-box;
+    @apply w-full h-[36rem] md:h-[75vh] md:flex md:flex-col md:justify-center font-syne md:py-8 relative bg-white overflow-hidden box-border;
+
+    & .view-button {
+        @apply absolute left-3/4 bottom-0 md:-left-full md:-top-full flex justify-center items-center text-csek-light z-40 text-xs w-24 h-24 rounded-full bg-csek-dark/50 font-montserrat font-semibold text-center uppercase -translate-x-1/2 -translate-y-1/2 backdrop-blur-md;
+    }
+
+    & .selected-project-name {
+        @apply md:hidden absolute left-1/2 top-16 z-40 w-11/12 -translate-x-1/2 text-csek-dark font-syne text-3xl font-bold text-center uppercase transition-opacity duration-1000;
+    }
+
+    & .canvas-container {
+        @apply absolute md:relative bottom-0 md:top-0 left-0 w-full h-3/4;
+    }
 }
 .wp-block-guten-csek-scrolling-projects-block .projects {
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    @apply overflow-hidden flex flex-col justify-center items-center;
 }
 
 .projects hr {
-    width: calc(100% - 8rem);
+    @apply w-11/12;
 }
 
 .project-ribbon {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0 auto;
-    width: 100%;
-    background-color: white;
-    height: 10rem;
-    overflow: hidden;
-    position: relative;
-    transition: all ease 0.2s;
+    @apply flex justify-center items-center mx-auto w-full bg-white h-40 overflow-hidden relative transition-all ease-in-out duration-200;
 }
 
 .project-ribbon ul {
-    list-style: none;
-    display: flex;
-    align-items: center;
-    margin: 0;
-    padding: 0;
-    position: absolute;
-    width: 100%;
+    @apply list-none flex items-center m-0 p-0 absolute w-full;
 }
 
 .project-ribbon ul li {
-    flex-grow: 0;
-    flex-shrink: 0;
-    text-align: center;
-    width: max-content;
-    font-size: 5rem;
-    z-index: 10;
-    position: relative;
+    @apply grow-0 shrink-0 text-center w-max text-7xl z-10 relative;
 }
 
 .project-ribbon li {
-    color: var(--csek-light);
-    position: relative;
-    z-index: 10;
+    @apply text-csek-light relative z-10;
 }
 
 .project-ribbon li {
-    /* transition: color ease 0.2s; */
-    animation-duration: 0.2s;
+    @apply duration-200 ease-in-out;
     animation-fill-mode: forwards;
-    animation-timing-function: ease-in-out;
 }
 
 .project-ribbon.reverse li {
-    position: relative;
-    z-index: 10;
+    @apply relative z-10;
 }
 
 .reverse ul {
-    flex-direction: row-reverse;
-    right: 0;
+    @apply flex-row-reverse right-0;
 }
 
 .project-blurb {
     --project-blurb-color: var(--csek-blue);
     --project-blurb-aspect: calc(265 / 321);
-    --project-blurb-height: 50vh;
-    position: absolute;
-    width: 75vh;
-    height: 75vh;
-    top: 50%;
-    left: 50%;
-    transform: translateX(-50%) translateY(-50%);
-    z-index: 30;
+    --project-blurb-height: 20rem;
+    @apply absolute w-[75vh] h-[75vh] top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-30;
 }
 
 .project-blurb:before {
+    @apply absolute h-[20rem] md:h-[30rem] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transition-all ease-in-out duration-1000 shadow-lg aspect-blurb;
     content: "";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translateX(-50%) translateY(-50%);
     background-color: var(--project-blurb-color);
-    transition: all ease 0.2s;
-    width: calc(var(--project-blurb-height) * var(--project-blurb-aspect));
-    height: var(--project-blurb-height);
-    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);
+    /* width: calc(var(--project-blurb-height) * var(--project-blurb-aspect));
+    height: var(--project-blurb-height); */
 }
 
 .project-blurb img {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: auto;
-    height: calc(var(--project-blurb-height) + 5rem);
-    transition: opacity 1s ease-in-out;
-    filter: drop-shadow(0 0 1rem rgba(0, 0, 0, 0.2));
-    object-fit: cover;
-}
-
-.project-blurb .view-button {
-    position: absolute;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: var(--csek-light);
-    z-index: 40;
-    font-size: 0.75rem;
-    width: 8em;
-    height: 8em;
-    border-radius: 100%;
-    background-color: var(--csek-dark);
-    top: 75%;
-    left: 75%;
-    font-family: Montserrat, sans-serif;
-    text-transform: uppercase;
-    font-weight: 600;
-    text-align: center;
-    transform: translate(-50%, -50%);
+    @apply absolute h-[25rem] md:h-[35rem] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-auto transition-opacity duration-1000 ease-in-out drop-shadow-lg object-cover;
 }
 
 .highlight-link {
-    color: var(--csek-dark);
+    @apply text-csek-dark;
 }

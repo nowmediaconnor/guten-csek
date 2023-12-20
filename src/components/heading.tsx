@@ -45,7 +45,7 @@ export const CsekBlockHeading = ({ text, className, children }: CsekBlockHeading
             level="2"
             children={children}
             text={text}
-            className={twMerge("border-b border-solid border-black pb-px my-2", className)}
+            className={twMerge("border-b border-solid border-black pb-px my-2 text-4xl", className)}
         />
     );
 };

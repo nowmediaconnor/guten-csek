@@ -7,17 +7,27 @@ import React, { useState } from "react";
 import { Heading } from "./heading";
 import { RichText } from "@wordpress/block-editor";
 import { twMerge } from "tailwind-merge";
+import Label from "./label";
 
 interface InputProps {
     label?: string;
     initialValue?: string;
     placeholder?: string;
+    hint?: string;
     className?: string;
     disabled?: boolean;
     onChange?: (v: string) => void;
 }
 
-export const TextInput = ({ label, initialValue = "", placeholder, className, disabled, onChange }: InputProps) => {
+export const TextInput = ({
+    label,
+    initialValue = "",
+    placeholder,
+    hint,
+    className,
+    disabled,
+    onChange,
+}: InputProps) => {
     const [text, setText] = useState<string>(initialValue);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -31,6 +41,7 @@ export const TextInput = ({ label, initialValue = "", placeholder, className, di
     return (
         <div className={twMerge("w-full", className)}>
             {label ? <Heading level="4">{label}</Heading> : null}
+            {hint ? <Label>{hint}</Label> : null}
             <input
                 type="text"
                 className={twMerge(
@@ -76,10 +87,18 @@ export const RichTextInput = ({ label, initialValue = "", placeholder, className
 interface RichTextContentProps {
     value: string;
     className?: string;
+    style?: React.CSSProperties;
 }
 
-export const RichTextContent = ({ value, className }: RichTextContentProps) => {
-    return <RichText.Content className={className ? className : "csek-richtext"} tagName="div" value={value} />;
+export const RichTextContent = ({ value, className, style }: RichTextContentProps) => {
+    return (
+        <RichText.Content
+            className={className ? className : "csek-richtext"}
+            tagName="div"
+            value={value}
+            style={style}
+        />
+    );
 };
 
 interface CheckboxInputProps {
@@ -102,7 +121,9 @@ export const CheckboxInput = ({ label, initialValue = false, onChange }: Checkbo
     return (
         <label className="flex flex-row justify-start items-center">
             <input type="checkbox" checked={checked} onChange={handleChange} />
-            <Heading level="4">{label}</Heading>
+            <Heading level="4" className="whitespace-nowrap">
+                {label}
+            </Heading>
         </label>
     );
 };
@@ -128,13 +149,16 @@ export const TextArea = ({ label, initialValue = "", placeholder, className, dis
     };
 
     return (
-        <div className={twMerge("w-full", className)}>
-            {label ? <Heading level="4">{label}</Heading> : null}
+        <div className={twMerge("w-full relative", className)}>
+            {label ? (
+                <Heading level="4" className="mb-2">
+                    {label}
+                </Heading>
+            ) : null}
             <textarea
                 className={twMerge(
-                    "w-full h-40 rounded border border-solid border-slate-700 px-2 py-1 text-lg",
-                    "csek-input",
-                    label ? "mt-2" : ""
+                    "w-full min-h-fit h-64 rounded border border-solid border-slate-700 px-2 py-1 text-lg",
+                    "csek-input"
                 )}
                 placeholder={placeholder}
                 onChange={handleChange}

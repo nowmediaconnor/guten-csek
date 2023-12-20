@@ -15,8 +15,11 @@ import NextProjectController from "./scripts/controllers/next-project-controller
 import FeaturedVideoController from "./scripts/controllers/featured-video-controller";
 import StaffProfilesController from "./scripts/controllers/staff-profiles-controller";
 import CyclingStackController from "./scripts/controllers/cycling-stack-controller";
+import ProjectsMarqueeController from "./scripts/controllers/projects-marquee-controller";
+import ProcessBlockController from "./blocks/process-block";
+import { ProjectsMasonryController } from "./blocks/projects/masonry-block";
 
-export const prepareBlockControllers = () => {
+export const createDOMController = () => {
     /* Prepare DOM Controller */
 
     // First, prepare curtain elements
@@ -37,7 +40,7 @@ export const prepareBlockControllers = () => {
     const expandingVideoController = new ExpandingVideoController(".wp-block-guten-csek-expanding-video-block");
 
     // Team Block Controller
-    const teamController = new TeamController(".wp-block-guten-csek-team-block");
+    const teamController = new TeamController();
 
     // Next Project Controller
     const nextProjectController = new NextProjectController(".wp-block-guten-csek-next-project-block");
@@ -51,6 +54,12 @@ export const prepareBlockControllers = () => {
     // Cycling Stack Component
     const cyclingStackController = new CyclingStackController();
 
+    // Process Block
+    const processBlockController = new ProcessBlockController();
+
+    // Projects Masonry Block
+    const projectsMasonryBlock = new ProjectsMasonryController();
+
     // DOM controller
     return new DOMController(
         curtainifyController,
@@ -62,8 +71,9 @@ export const prepareBlockControllers = () => {
         nextProjectController,
         featuredVideoController,
         staffProfilesController,
-        cyclingStackController
-        // verticalImagesController
-        // teamController
+        cyclingStackController,
+        teamController,
+        processBlockController,
+        projectsMasonryBlock
     );
 };

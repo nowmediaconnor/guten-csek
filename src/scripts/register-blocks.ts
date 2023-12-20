@@ -25,6 +25,7 @@ import {
     FeaturedImageBlockAttributes,
     FeaturedImageBlockEdit,
     FeaturedImageBlockSave,
+    defaultFeaturedImagePadding,
 } from "../blocks/misc/featured-image-block";
 import { LeftRightBlockAttributes, LeftRightBlockEdit, LeftRightBlockSave } from "../blocks/misc/left-right-block";
 import {
@@ -44,7 +45,12 @@ import {
 } from "../blocks/expanding-video-block";
 import { BlockquoteBlockEdit, BlockquoteBlockSave, BlockquoteBlockAttributes } from "../blocks/blockquote-block";
 import { TaglineHeaderAttributes, TaglineHeaderEdit, TaglineHeaderSave } from "../blocks/tagline-header-block";
-import { ParagraphBlockAttributes, ParagraphBlockEdit, ParagraphBlockSave } from "../blocks/misc/paragraph-block";
+import {
+    ParagraphBlockAttributes,
+    ParagraphBlockEdit,
+    ParagraphBlockSave,
+    defaultParahraphBlockPadding,
+} from "../blocks/misc/paragraph-block";
 import { MultiImageBlockAttributes, MultiImageBlockEdit, MultiImageBlockSave } from "../blocks/misc/multi-image-block";
 import {
     EmphasizedTextBlockAttributes,
@@ -57,6 +63,30 @@ import {
     CyclingStackBlockSave,
 } from "../blocks/misc/cycling-stack-block";
 import { PageHeaderBlockAttributes, PageHeaderBlockEdit, PageHeaderBlockSave } from "../blocks/misc/page-header-block";
+import {
+    VideoCarouselAttributes,
+    VideoCarouselBlockEdit,
+    VideoCarouselBlockSave,
+} from "../blocks/video-carousel-block";
+import { HorizontalCarouselBlockEdit, HorizontalCarouselBlockSave } from "../blocks/horizontal-carousel-block";
+import {
+    ChicagoFiresBlockAttributes,
+    ChicagoFiresBlockEdit,
+    ChicagoFiresBlockSave,
+} from "../blocks/misc/chicago-fires-block";
+import {
+    FeaturedVideoBlockAttributes,
+    FeaturedVideoBlockEdit,
+    FeaturedVideoBlockSave,
+    defaultFeaturedVideoPadding,
+} from "../blocks/misc/featured-video-block";
+import { ImageCollageBlockEdit, ImageCollageBlockSave } from "../blocks/misc/image-collage-block";
+import { ScreenshotCollageBlockEdit, ScreenshotCollageBlockSave } from "../blocks/misc/screenshot-collage-block";
+import { ScrollingProjectsBlockEdit, ScrollingProjectsBlockSave } from "../blocks/scrolling-projects-block";
+import { TeamBlockEdit, TeamBlockSave } from "../blocks/team-block";
+import ProcessBlockController, { ProcessBlockAttributes } from "../blocks/process-block";
+import ProjectsMasonryBlock, { ProjectsMasonryBlockAttributes } from "../blocks/projects/masonry-block";
+import { defaultPadding } from "../components/padding-selector";
 
 export const registerAllBlocks = () => {
     console.log("Registering blocks...");
@@ -65,7 +95,7 @@ export const registerAllBlocks = () => {
     registerBlockType<SelfDescriptionBlockAttributes>("guten-csek/self-description-block", {
         title: "Csek Self Description",
         icon: "text-page",
-        category: "common",
+        category: "csek",
         attributes: {
             heading: {
                 type: "string",
@@ -100,7 +130,7 @@ export const registerAllBlocks = () => {
     registerBlockType<StaffProfilesBlockAttributes>("guten-csek/staff-profiles-block", {
         title: "Csek Staff Showcase",
         icon: "groups",
-        category: "common",
+        category: "csek",
         attributes: {
             heading: {
                 type: "string",
@@ -127,7 +157,7 @@ export const registerAllBlocks = () => {
     registerBlockType<LetsTalkBlockAttributes>("guten-csek/lets-talk-block", {
         title: "Csek Let's Talk (CTA)",
         icon: "megaphone",
-        category: "common",
+        category: "csek",
         attributes: {
             heading: {
                 type: "string",
@@ -150,7 +180,7 @@ export const registerAllBlocks = () => {
     registerBlockType<ProjectSummaryBlockAttributes>("guten-csek/project-summary-block", {
         title: "Csek Project Summary",
         icon: "text-page",
-        category: "common",
+        category: "csek",
         attributes: {
             backgroundColor: {
                 type: "string",
@@ -172,6 +202,10 @@ export const registerAllBlocks = () => {
                 type: "string",
                 default: "",
             },
+            displayLink: {
+                type: "string",
+                default: "",
+            },
             usesCustomBackgroundColor: {
                 type: "boolean",
                 default: false,
@@ -189,7 +223,7 @@ export const registerAllBlocks = () => {
     registerBlockType<FeaturedImageBlockAttributes>("guten-csek/featured-image-block", {
         title: "Csek Featured Image",
         icon: "format-image",
-        category: "media",
+        category: "csek",
         attributes: {
             imageURL: {
                 type: "string",
@@ -198,6 +232,10 @@ export const registerAllBlocks = () => {
             imageAlt: {
                 type: "string",
                 default: "",
+            },
+            padding: {
+                type: "object",
+                default: defaultFeaturedImagePadding,
             },
         },
         edit: FeaturedImageBlockEdit,
@@ -208,7 +246,7 @@ export const registerAllBlocks = () => {
     registerBlockType<FullscreenImageBlockAttributes>("guten-csek/fullscreen-image-block", {
         title: "Csek Fullscreen Image",
         icon: "format-image",
-        category: "media",
+        category: "csek",
         attributes: {
             imageURL: {
                 type: "string",
@@ -227,7 +265,7 @@ export const registerAllBlocks = () => {
     registerBlockType<LeftRightBlockAttributes>("guten-csek/left-right-block", {
         title: "Csek Left-Right",
         icon: "columns",
-        category: "text",
+        category: "csek",
         attributes: {
             text: {
                 type: "string",
@@ -254,7 +292,7 @@ export const registerAllBlocks = () => {
     registerBlockType<NextProjectBlockAttributes>("guten-csek/next-project-block", {
         title: "Csek Next Project",
         icon: "text",
-        category: "text",
+        category: "csek",
         attributes: {
             projectTitle: {
                 type: "string",
@@ -277,7 +315,7 @@ export const registerAllBlocks = () => {
     registerBlockType<ExpandingVideoBlockAttributes>("guten-csek/expanding-video-block", {
         title: "Csek Curtain Video",
         icon: "format-video",
-        category: "media",
+        category: "csek",
         attributes: {
             expandingMediaURL: {
                 type: "string",
@@ -308,7 +346,7 @@ export const registerAllBlocks = () => {
     registerBlockType<BlockquoteBlockAttributes>("guten-csek/block-quote-block", {
         title: "Csek Blockquote",
         icon: "format-quote",
-        category: "text",
+        category: "csek",
         attributes: {
             heading: {
                 type: "string",
@@ -335,7 +373,7 @@ export const registerAllBlocks = () => {
     registerBlockType<TaglineHeaderAttributes>("guten-csek/tagline-header-block", {
         title: "Csek Tagline Header",
         icon: "text",
-        category: "text",
+        category: "csek",
         attributes: {
             preTagline: {
                 type: "string",
@@ -362,11 +400,15 @@ export const registerAllBlocks = () => {
     registerBlockType<ParagraphBlockAttributes>("guten-csek/paragraph-block", {
         title: "Csek Paragraph",
         icon: "text",
-        category: "text",
+        category: "csek",
         attributes: {
             text: {
                 type: "string",
                 default: "",
+            },
+            padding: {
+                type: "object",
+                default: defaultParahraphBlockPadding,
             },
         },
         edit: ParagraphBlockEdit,
@@ -377,7 +419,7 @@ export const registerAllBlocks = () => {
     registerBlockType<MultiImageBlockAttributes>("guten-csek/multi-image-block", {
         title: "Csek Multi Image",
         icon: "format-image",
-        category: "media",
+        category: "csek",
         attributes: {
             images: {
                 type: "array",
@@ -400,7 +442,7 @@ export const registerAllBlocks = () => {
     registerBlockType<EmphasizedTextBlockAttributes>("guten-csek/emphasized-text-block", {
         title: "Csek Emphasized Text",
         icon: "text",
-        category: "text",
+        category: "csek",
         attributes: {
             text: {
                 type: "string",
@@ -423,7 +465,7 @@ export const registerAllBlocks = () => {
     registerBlockType<PageHeaderBlockAttributes>("guten-csek/page-header-block", {
         title: "Csek Page Header Block",
         icon: "text",
-        category: "text",
+        category: "csek",
         attributes: {
             heading: {
                 type: "string",
@@ -450,7 +492,7 @@ export const registerAllBlocks = () => {
     registerBlockType<CyclingStackBlockAttributes>("guten-csek/cycling-stack-block", {
         title: "Csek Cycling Stack",
         icon: "text",
-        category: "text",
+        category: "csek",
         attributes: {
             cyclingWords: {
                 type: "array",
@@ -463,5 +505,252 @@ export const registerAllBlocks = () => {
         },
         edit: CyclingStackBlockEdit,
         save: CyclingStackBlockSave,
+    });
+
+    // Video Carousel Block
+    registerBlockType<VideoCarouselAttributes>("guten-csek/video-carousel-block", {
+        title: "Csek Video Carousel Block",
+        icon: "format-video",
+        category: "csek",
+        attributes: {
+            videos: {
+                type: "array",
+                default: [],
+            },
+        },
+        edit: VideoCarouselBlockEdit,
+        save: VideoCarouselBlockSave,
+    });
+
+    // Scrolling Projects Block
+    registerBlockType("guten-csek/scrolling-projects-block", {
+        title: "Csek Scrolling Projects Block",
+        icon: "format-video",
+        category: "csek",
+        attributes: {
+            projects: {
+                type: "array",
+                default: [],
+            },
+        },
+        edit: ScrollingProjectsBlockEdit,
+        save: ScrollingProjectsBlockSave,
+    });
+
+    // Team Block
+    registerBlockType("guten-csek/team-block", {
+        title: "Csek Team Block",
+        icon: "admin-users",
+        category: "csek",
+        attributes: {
+            images: {
+                type: "array",
+                default: [],
+            },
+            title: {
+                type: "string",
+                default: "",
+            },
+            tagline: {
+                type: "string",
+                default: "",
+            },
+            copyText: {
+                type: "string",
+                default: "",
+            },
+            cta: {
+                type: "string",
+                default: "",
+            },
+            ctaLink: {
+                type: "string",
+                default: "",
+            },
+        },
+        edit: TeamBlockEdit,
+        save: TeamBlockSave,
+    });
+
+    // Horizontal Carousel Block
+    registerBlockType("guten-csek/horizontal-carousel-block", {
+        title: "Csek Horizontal Carousel Block",
+        icon: "columns",
+        category: "csek",
+        attributes: {
+            titles: {
+                type: "array",
+                default: [],
+            },
+            statements: {
+                type: "array",
+                default: [],
+            },
+            numItems: {
+                type: "number",
+                default: 1,
+            },
+        },
+        edit: HorizontalCarouselBlockEdit,
+        save: HorizontalCarouselBlockSave,
+    });
+
+    /* Misc Blocks */
+
+    // DOM Controller Block
+    // registerBlockType("guten-csek/dom-controller-block", {
+    //     title: "Csek Script Manager Block",
+    //     icon: "admin-settings",
+    //     category: "csek",
+    //     attributes: {
+    //         controllerScripts: {
+    //             type: "array",
+    //             default: [],
+    //         },
+    //         enabledScripts: {
+    //             type: "array",
+    //             default: [],
+    //         },
+    //     },
+    //     edit: DOMControllerBlockEdit,
+    //     save: () => null,
+    // });
+
+    // Image Collage Block
+    registerBlockType("guten-csek/image-collage-block", {
+        title: "Csek Image Collage Block",
+        icon: "format-image",
+        category: "csek",
+        attributes: {
+            images: {
+                type: "array",
+                default: [],
+            },
+            imageAlts: {
+                type: "array",
+                default: [],
+            },
+            backgroundColor: {
+                type: "string",
+                default: "#000000",
+            },
+        },
+        edit: ImageCollageBlockEdit,
+        save: ImageCollageBlockSave,
+    });
+
+    // Screenshot Collage Block
+    registerBlockType("guten-csek/screenshot-collage-block", {
+        title: "Csek Screenshot Collage Block",
+        icon: "desktop",
+        category: "csek",
+        attributes: {
+            screenshots: {
+                type: "array",
+                default: [],
+            },
+            screenshotAlts: {
+                type: "array",
+                default: [],
+            },
+            backgroundColor: {
+                type: "string",
+                default: "#000000",
+            },
+            angleDegrees: {
+                type: "number",
+                default: 0,
+            },
+        },
+        edit: ScreenshotCollageBlockEdit,
+        save: ScreenshotCollageBlockSave,
+    });
+
+    // Featured Video Block
+    registerBlockType<FeaturedVideoBlockAttributes>("guten-csek/featured-video-block", {
+        title: "Csek Featured Video Block",
+        icon: "format-video",
+        category: "csek",
+        attributes: {
+            videoURL: {
+                type: "string",
+                default: "",
+            },
+            padding: {
+                type: "object",
+                default: defaultFeaturedVideoPadding,
+            },
+        },
+        edit: FeaturedVideoBlockEdit,
+        save: FeaturedVideoBlockSave,
+    });
+
+    // Chicago Fires Block
+    registerBlockType<ChicagoFiresBlockAttributes>("guten-csek/chicago-fires-block", {
+        title: "Csek Chicago Fires Block",
+        icon: "text",
+        category: "csek",
+        attributes: {
+            primaryHeading: {
+                type: "string",
+                default: "",
+            },
+            secondaryHeadings: {
+                type: "array",
+                default: [],
+            },
+            primaryMessage: {
+                type: "string",
+                default: "",
+            },
+            secondaryMessages: {
+                type: "array",
+                default: [],
+            },
+        },
+        edit: ChicagoFiresBlockEdit,
+        save: ChicagoFiresBlockSave,
+    });
+
+    // New Process Block
+    registerBlockType<ProcessBlockAttributes>("guten-csek/process-block", {
+        title: "Csek Process Block",
+        icon: "text",
+        category: "csek",
+        attributes: {
+            steps: {
+                type: "array",
+                default: [],
+            },
+        },
+        edit: ProcessBlockController.editComponent,
+        save: ProcessBlockController.saveComponent,
+    });
+
+    // Projects Masonry Block
+    registerBlockType<ProjectsMasonryBlockAttributes>("guten-csek/projects-masonry-block", {
+        title: "Csek Projects Masonry Block",
+        icon: "text",
+        category: "csek",
+        attributes: {
+            category: {
+                type: "string",
+                default: "",
+            },
+            amount: {
+                type: "number",
+                default: 3,
+            },
+            gridColumns: {
+                type: "number",
+                default: 3,
+            },
+            gridRows: {
+                type: "number",
+                default: 4,
+            },
+        },
+        edit: ProjectsMasonryBlock.editComponent,
+        save: ProjectsMasonryBlock.saveComponent,
     });
 };
