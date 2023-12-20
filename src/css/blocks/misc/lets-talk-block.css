@@ -4,54 +4,25 @@
  */
 
 .wp-block-guten-csek-lets-talk-block {
-    width: 100%;
-    padding: 2rem 0;
+    @apply w-full py-8;
 
     & .block-content {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        position: relative;
-        gap: 4rem;
+        @apply flex flex-col items-center justify-center relative;
 
         & .cta-heading {
-            font-size: 4rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            text-align: center;
-            font-family: "Syne", sans-serif;
-            line-height: 1;
-            width: 60%;
+            @apply text-6xl font-semibold uppercase text-center font-syne leading-none w-2/3;
         }
 
         & .lets-talk-open {
-            width: 8rem;
-            height: 8rem;
-            border-radius: 8rem;
-            background-color: var(--csek-red);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: var(--csek-white);
-            text-transform: uppercase;
-            font-weight: 800;
-            font-size: 0.9rem;
-            line-height: 1rem;
-            font-family: "Montserrat", sans-serif;
-            position: absolute;
-            top: 35%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            @apply w-32 h-32 -mb-20 rounded-full bg-csek-red flex items-center justify-center text-white uppercase font-extrabold text-xs leading-none font-montserrat relative;
 
             & span {
-                position: absolute;
-                transform: rotate(-30deg);
+                @apply absolute transform -rotate-30;
             }
         }
 
         & .cta-image {
-            max-width: calc(var(--max-width) / 2);
+            @apply w-11/12 max-w-csek-1/3;
         }
     }
 }

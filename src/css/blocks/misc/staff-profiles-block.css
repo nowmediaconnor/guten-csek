@@ -74,7 +74,7 @@
 }
 
 .wp-block-guten-csek-staff-profiles-block .block-header {
-    @apply flex flex-col md:flex-col justify-start items-start font-montserrat gap-8 md:gap-24 mb-8 pt-12 md:pt-16 w-11/12 max-w-csek-max mx-auto;
+    @apply flex flex-col md:flex-row justify-start items-start font-montserrat gap-8 md:gap-24 mb-8 pt-12 md:pt-16 w-11/12 max-w-csek-max mx-auto;
 
     & h2 {
         @apply font-syne text-4xl leading-[1.1] w-min font-bold;

@@ -4,6 +4,7 @@ const tailpress = require("@jeffreyvr/tailwindcss-tailpress");
 const customWidths = {
     "csek-max": "75rem",
     "csek-1/2": "37.5rem",
+    "csek-1/3": "25rem",
     "csek-2/3": "50rem",
     serif: "12rem",
 };
@@ -18,6 +19,11 @@ const customTimings = {
 // this is shadow-md: `box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), ;`
 const upShadows = {
     "up-md": "0 -10px 15px -3px var(--tw-shadow), 0 -4px 6px -4px var(--tw-shadow)",
+};
+
+const rotations = {
+    30: "30deg",
+    "-30": "-30deg",
 };
 
 /** @type {import('tailwindcss').Config} */
@@ -69,6 +75,9 @@ module.exports = {
             },
             boxShadow: {
                 ...upShadows,
+            },
+            rotate: {
+                ...rotations,
             },
         },
         screens: {
