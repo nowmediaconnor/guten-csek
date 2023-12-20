@@ -42,7 +42,7 @@ export const FullscreenImageBlockEdit = ({
                     placeholder="Image alt text"
                     label="Image Alt Text"
                 />
-                <CsekMediaUpload onChange={onChangeImageURL} urlAttribute={imageURL} type="image" />
+                <CsekMediaUpload onChange={onChangeImageURL} urlAttribute={imageURL} type="image" size="full" />
             </div>
         </section>
     );

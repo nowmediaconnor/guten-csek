@@ -6,7 +6,7 @@
 /* Scrolling Projects Block */
 
 .wp-block-guten-csek-scrolling-projects-block {
-    @apply w-full h-[36rem] md:h-[75vh] md:flex md:flex-col md:justify-center font-syne md:py-8 relative bg-white overflow-hidden box-border;
+    @apply w-full h-[36rem] md:h-[80vh] md:flex md:flex-col md:justify-center font-syne md:py-8 relative bg-white overflow-hidden box-border;
 
     & .view-button {
         @apply absolute left-3/4 bottom-0 md:-left-full md:-top-full flex justify-center items-center text-csek-light z-40 text-xs w-24 h-24 rounded-full bg-csek-dark/50 font-montserrat font-semibold text-center uppercase -translate-x-1/2 -translate-y-1/2 backdrop-blur-md;
@@ -61,19 +61,17 @@
     --project-blurb-color: var(--csek-blue);
     --project-blurb-aspect: calc(265 / 321);
     --project-blurb-height: 20rem;
-    @apply absolute w-[75vh] h-[75vh] top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-30;
+    @apply absolute w-[70vh] h-[70vh] top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-30;
 }
 
 .project-blurb:before {
-    @apply absolute h-[20rem] md:h-[30rem] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transition-all ease-in-out duration-1000 shadow-lg aspect-blurb;
+    @apply absolute h-[19rem] md:h-[28rem] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transition-all ease-in-out duration-1000 shadow-lg aspect-blurb;
     content: "";
     background-color: var(--project-blurb-color);
-    /* width: calc(var(--project-blurb-height) * var(--project-blurb-aspect));
-    height: var(--project-blurb-height); */
 }
 
 .project-blurb img {
-    @apply absolute h-[25rem] md:h-[35rem] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-auto transition-opacity duration-1000 ease-in-out drop-shadow-lg object-cover;
+    @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-auto transition-opacity duration-1000 ease-in-out drop-shadow-lg object-cover;
 }
 
 .highlight-link {
