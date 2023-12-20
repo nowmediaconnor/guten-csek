@@ -26,7 +26,7 @@
             }
 
             & p {
-                @apply text-3xl font-bold leading-[1.1] mb-24;
+                @apply text-3xl font-bold leading-[1.1] mb-20;
             }
         }
 
@@ -37,11 +37,11 @@
                 @apply flex flex-col justify-start items-start basis-1/4 gap-4;
 
                 & h3 {
-                    @apply w-2/3 md:w-full mx-auto text-center md:text-left text-lg;
+                    @apply w-2/3 md:w-full mx-auto text-center text-lg text-pretty;
                 }
 
                 & p {
-                    @apply text-justify md:text-left font-montserrat leading-[1.1] text-lg;
+                    @apply text-left font-montserrat leading-[1.1] text-lg text-pretty;
                 }
             }
         }

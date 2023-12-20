@@ -148,6 +148,7 @@ export const ProjectSummaryBlockSave = ({ attributes }: GutenCsekBlockSaveProps<
         projectSummary,
         taggedServices,
         websiteLink,
+        displayLink,
         companySector,
         usesCustomBackgroundColor,
     } = attributes;
@@ -188,7 +189,7 @@ export const ProjectSummaryBlockSave = ({ attributes }: GutenCsekBlockSaveProps<
                                 <h4>Check out our partner</h4>
                                 <h3>
                                     <OutboundLink href={websiteLink}>
-                                        {urlExtractSecondLevelDomain(websiteLink)}
+                                        {displayLink ? displayLink : urlExtractSecondLevelDomain(websiteLink)}
                                     </OutboundLink>
                                     <i className="fa-solid fa-arrow-up-right-from-square"></i>
                                 </h3>
