@@ -37,11 +37,11 @@
                 @apply flex flex-col justify-start items-start basis-1/4 gap-4;
 
                 & h3 {
-                    @apply w-2/3 md:w-full mx-auto text-center text-lg text-pretty;
+                    @apply w-2/3 md:w-full mx-auto text-center text-base text-pretty;
                 }
 
                 & p {
-                    @apply text-left font-montserrat leading-[1.1] text-lg text-pretty;
+                    @apply text-left font-montserrat leading-[1.1] text-base text-pretty;
                 }
             }
         }

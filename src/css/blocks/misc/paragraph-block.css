@@ -7,7 +7,7 @@
     & .block-content {
         @apply w-11/12 max-w-csek-max mx-auto;
         & .csek-richtext {
-            @apply py-24 text-lg;
+            @apply py-24 text-base;
         }
     }
 }

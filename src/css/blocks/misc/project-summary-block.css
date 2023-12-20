@@ -43,7 +43,7 @@
             @apply flex flex-col gap-4;
 
             & h3 {
-                @apply inline-flex gap-8 text-nowrap items-center justify-between;
+                @apply inline-flex gap-x-8 gap-y-2 flex-wrap items-center justify-between;
 
                 & i {
                     @apply text-xl relative bottom-[0.125rem];

@@ -4,19 +4,23 @@
  */
 
 .wp-block-guten-csek-left-right-block {
-    @apply font-montserrat py-12 text-xl;
+    @apply font-montserrat py-12 text-base;
 
     & .left-right {
         @apply w-11/12 max-w-csek-max mx-auto;
 
+        & p {
+            @apply text-pretty;
+        }
+
         &.reversed {
             & img {
-                @apply float-left;
+                @apply float-left mr-4;
             }
         }
 
         & img {
-            @apply w-1/2 h-full max-w-csek-1/3 float-right md:mb-12;
+            @apply w-1/2 h-full max-w-csek-1/3 float-right md:mb-12 ml-4;
         }
     }
 }
