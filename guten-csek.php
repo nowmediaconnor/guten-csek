@@ -99,7 +99,7 @@ function enqueue_custom_block_assets()
     );
 
     // every other stylesheet
-    enqueue_css_folder();
+    // enqueue_css_folder();
 
     // enqueue block registration
     enqueue_blocks_iteratively();

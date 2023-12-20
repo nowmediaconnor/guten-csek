@@ -7,17 +7,27 @@ import React, { useState } from "react";
 import { Heading } from "./heading";
 import { RichText } from "@wordpress/block-editor";
 import { twMerge } from "tailwind-merge";
+import Label from "./label";
 
 interface InputProps {
     label?: string;
     initialValue?: string;
     placeholder?: string;
+    hint?: string;
     className?: string;
     disabled?: boolean;
     onChange?: (v: string) => void;
 }
 
-export const TextInput = ({ label, initialValue = "", placeholder, className, disabled, onChange }: InputProps) => {
+export const TextInput = ({
+    label,
+    initialValue = "",
+    placeholder,
+    hint,
+    className,
+    disabled,
+    onChange,
+}: InputProps) => {
     const [text, setText] = useState<string>(initialValue);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -31,6 +41,7 @@ export const TextInput = ({ label, initialValue = "", placeholder, className, di
     return (
         <div className={twMerge("w-full", className)}>
             {label ? <Heading level="4">{label}</Heading> : null}
+            {hint ? <Label>{hint}</Label> : null}
             <input
                 type="text"
                 className={twMerge(

@@ -202,6 +202,10 @@ export const registerAllBlocks = () => {
                 type: "string",
                 default: "",
             },
+            displayLink: {
+                type: "string",
+                default: "",
+            },
             usesCustomBackgroundColor: {
                 type: "boolean",
                 default: false,
