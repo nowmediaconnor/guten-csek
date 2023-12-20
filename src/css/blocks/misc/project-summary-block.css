@@ -28,7 +28,7 @@
         }
 
         & .project-tagline {
-            @apply font-syne font-bold text-4xl leading-[1.25];
+            @apply font-syne font-bold text-3xl md:text-4xl leading-[1.25] text-pretty;
         }
 
         & .tagged-services {
