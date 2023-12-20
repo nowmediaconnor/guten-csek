@@ -4,104 +4,52 @@
  */
 
 .wp-block-guten-csek-next-project-block {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    z-index: 50;
+    @apply flex flex-col items-center justify-center z-50;
 }
 
 .next-project-wrapper {
-    max-width: 75rem;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    gap: 2rem;
-    padding: 2rem 0;
+    @apply max-w-csek-max w-11/12 flex flex-row items-center justify-center gap-8 py-8;
 
     & .next-project-image {
-        max-width: 50rem;
-        max-height: 50rem;
-        width: 30vw;
-        height: 30vw;
-        position: relative;
-        /* border: 1px solid green; */
+        @apply max-w-csek-2/3 max-h-csek-2/3 w-[30vw] h-[30vw] relative;
 
         & .image-backing {
-            --image-backing-width: 90%;
-            position: relative;
-            width: var(--image-backing-width);
-            height: calc(3 / 4 * var(--image-backing-width)); /* 4:3 aspect ratio */
-            background-color: var(--csek-dark);
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            /* box-shadow: 0 0 1rem rgba(0, 0, 0, 0.5); */
+            @apply relative bg-csek-dark top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-10/12 aspect-4/3 transition-colors duration-200 ease-in-out;
         }
 
         & img {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            max-height: auto;
-            height: 100%;
-            object-fit: cover;
+            @apply absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 object-cover;
             animation: csek-hover 2s ease-in-out infinite;
         }
     }
 
     & .next-project-info {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        justify-content: center;
-        gap: 1rem;
-        font-family: "Syne", sans-serif;
+        @apply flex flex-col items-start justify-center md:gap-4 font-syne;
 
         & a {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: flex-start;
-            text-decoration: none;
-            color: var(--csek-dark);
-            cursor: pointer;
+            @apply flex flex-row items-center justify-start no-underline text-csek-dark cursor-pointer;
 
             & h1 {
-                font-size: 3rem;
-                font-weight: 700;
-                margin: 0;
-                padding: 0;
-                border-bottom: 1px solid transparent;
-                transition: all 0.2s ease-in-out;
-                line-height: 0.75;
+                @apply text-2xl md:text-5xl font-semibold m-0 p-0 border-b border-solid border-transparent transition-all duration-200 ease-in-out leading-[0.75];
             }
 
             & i {
-                opacity: 0%;
-                margin-left: 1rem;
-                font-size: 2rem;
-                color: var(--csek-dark);
-                transition: all 0.2s ease-in-out;
+                @apply md:opacity-0 ml-4 text-xl md:text-3xl text-csek-dark transition-all duration-200 ease-in-out;
             }
 
             &:hover {
                 & h1 {
-                    border-bottom: 1px solid var(--csek-dark);
+                    @apply border-csek-dark;
                 }
 
                 & i {
-                    opacity: 100%;
+                    @apply opacity-100;
                 }
             }
         }
 
         & h2 {
-            color: var(--csek-red);
-            font-weight: bold;
-            text-transform: uppercase;
+            @apply text-csek-red font-bold uppercase;
         }
     }
 }

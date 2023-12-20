@@ -61,10 +61,7 @@ module.exports = {
             transitionDelay: {
                 ...customTimings,
             },
-            width: {
-                ...customWidths,
-            },
-            maxWidth: {
+            spacing: {
                 ...customWidths,
             },
             perspective: {
@@ -72,6 +69,7 @@ module.exports = {
             },
             aspectRatio: {
                 blurb: "265 / 321",
+                "4/3": "4 / 3",
             },
             boxShadow: {
                 ...upShadows,

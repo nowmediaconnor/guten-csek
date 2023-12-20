@@ -2,6 +2,7 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
+@import "animations.css";
 @import "style.css";
 @import "blocks/block-quote-block.css";
 @import "blocks/curtainify.css";
