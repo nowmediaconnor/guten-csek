@@ -4,7 +4,7 @@
  */
 
 .wp-block-guten-csek-featured-image-block {
-    @apply min-h-screen w-11/12 max-w-csek-max flex flex-col justify-center items-center mx-auto;
+    @apply w-11/12 max-w-csek-max flex flex-col justify-center items-center mx-auto;
 
     & .featured-image {
         @apply w-full h-auto max-w-csek-max;

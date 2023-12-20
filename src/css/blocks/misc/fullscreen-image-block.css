@@ -4,12 +4,9 @@
  */
 
 .wp-block-guten-csek-fullscreen-image-block {
-    min-height: 100vh;
-    font-family: "Montserrat", sans-serif;
+    @apply font-montserrat;
 }
 
 .fullscreen-image {
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
+    @apply object-cover w-full h-full;
 }
