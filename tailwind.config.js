@@ -15,6 +15,11 @@ const customTimings = {
     3000: "3000ms",
 };
 
+// this is shadow-md: `box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), ;`
+const upShadows = {
+    "up-md": "0 -10px 15px -3px var(--tw-shadow), 0 -4px 6px -4px var(--tw-shadow)",
+};
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
     // important: true,
@@ -61,6 +66,9 @@ module.exports = {
             },
             aspectRatio: {
                 blurb: "265 / 321",
+            },
+            boxShadow: {
+                ...upShadows,
             },
         },
         screens: {

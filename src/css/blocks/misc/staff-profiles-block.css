@@ -7,16 +7,8 @@
     @apply flex flex-col justify-center items-center relative;
 }
 
-.wp-block-guten-csek-staff-profiles-block .profile-content {
-    @apply w-full max-w-csek-max flex flex-row justify-center items-center relative;
-
-    & .image {
-        @apply w-1/2 h-auto object-cover flex flex-row justify-center;
-    }
-}
-
 .wp-block-guten-csek-staff-profiles-block .staff-profile {
-    @apply fixed top-0 left-0 w-full h-screen flex flex-row justify-center items-center bg-white z-30 cursor-default pointer-events-none opacity-0 transition-opacity duration-500 ease-in-out;
+    @apply fixed top-0 left-0 w-full h-screen flex flex-col md:flex-row justify-end md:justify-center items-center bg-white z-30 cursor-default pointer-events-none opacity-0 transition-opacity duration-500 ease-in-out;
 
     /* Subclasses */
     &.opened {
@@ -25,39 +17,50 @@
 
     /* Child elements */
 
-    & .bio {
-        @apply w-1/2 h-full flex flex-col justify-center gap-8 mr-8 relative;
+    & .profile-content {
+        @apply w-11/12 max-h-screen max-w-csek-max flex flex-col-reverse md:flex-row justify-center items-center relative;
 
-        & header {
-            @apply font-syne font-bold uppercase;
+        & .bio {
+            @apply w-full h-[80vh] md:h-[80vh] md:w-1/2 flex flex-col justify-center mx-auto md:mr-8 relative flex-grow;
 
-            & h1 {
-                @apply text-6xl leading-none;
+            & header {
+                @apply z-30 font-syne font-bold uppercase pb-4 shadow-lg shadow-white;
+
+                & h1 {
+                    @apply text-3xl md:text-6xl leading-none;
+                }
+
+                & h2 {
+                    @apply text-base text-csek-red my-1;
+                }
+
+                & .name {
+                    @apply flex flex-row justify-between items-start;
+
+                    & .close-button {
+                        @apply fixed top-4 right-4 md:relative md:-top-8;
+                    }
+                }
             }
 
-            & h2 {
-                @apply text-base text-csek-red my-1;
+            & main {
+                @apply z-10 flex-grow font-montserrat text-base overflow-y-auto py-4;
+
+                & .csek-richtext {
+                    @apply w-full;
+                }
             }
 
-            & .name {
-                @apply flex flex-row justify-between items-start;
+            & footer {
+                @apply z-30 pt-4 font-syne font-bold uppercase text-base text-zinc-600 shadow-up-md shadow-white;
 
-                & .close-button {
-                    @apply relative -top-8;
+                & .social-links {
+                    @apply flex flex-row justify-start items-center gap-3 my-6;
                 }
             }
         }
-
-        & main {
-            @apply font-montserrat text-base w-4/5;
-        }
-
-        & footer {
-            @apply mt-4 font-syne font-bold uppercase text-base text-zinc-600;
-
-            & .social-links {
-                @apply flex flex-row justify-start items-center gap-3 my-6;
-            }
+        & .image {
+            @apply hidden w-1/2 h-auto object-cover md:flex flex-row justify-center;
         }
     }
 
