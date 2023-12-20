@@ -20,7 +20,7 @@
         }
 
         & h1 {
-            @apply mt-12 pl-4 md:m-0 md:p-0 text-4xl md:text-6xl;
+            @apply mt-12 pl-4 md:m-0 md:p-0 text-4xl md:text-6xl whitespace-normal;
         }
 
         & h2 {

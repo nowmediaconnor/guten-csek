@@ -83,7 +83,7 @@ export default class ProjectsMasonryBlock {
 
     setup(): void {
         console.warn(this.gridArea.dataset);
-        this.gridRows = parseInt(this.gridArea.dataset.gridrows || "4");
+        this.gridRows = parseInt(this.gridArea.dataset.gridrows || "10");
         this.gridCols = parseInt(this.gridArea.dataset.gridcols || "3");
 
         getAllProjects().then((data: CsekProject[]) => {
@@ -109,7 +109,7 @@ export default class ProjectsMasonryBlock {
     createSurroundingDivs(): void {
         const gridCoords = this.masonryGrid.calculateCSSGridCoords();
 
-        this.gridArea.style.setProperty("--num-rows", this.masonryGrid.height.toString());
+        this.gridArea.style.setProperty("--num-rows", this.masonryGrid.numRowsNeeded().toString());
         this.gridArea.style.setProperty("--num-cols", this.masonryGrid.width.toString());
 
         this.projectsData.forEach((project: CsekProject, index) => {
@@ -159,7 +159,7 @@ export default class ProjectsMasonryBlock {
                         initialValue={gridColumns.toString()}
                         onChange={(value) => setAttributes({ gridColumns: parseInt(value) })}
                     />
-                    <CsekSelectDropdown
+                    {/* <CsekSelectDropdown
                         options={[
                             { value: "1", label: "1" },
                             { value: "2", label: "2" },
@@ -170,7 +170,7 @@ export default class ProjectsMasonryBlock {
                         label="Grid Rows"
                         initialValue={gridRows.toString()}
                         onChange={(value) => setAttributes({ gridRows: parseInt(value) })}
-                    />
+                    /> */}
                 </div>
             </section>
         );

@@ -51,7 +51,8 @@ export class MasonryGrid {
             }
         }
 
-        this.gridSpiral = this.getGridSprial();
+        // this.gridSpiral = this.getGridSprial();
+        this.gridSpiral = this.getGridSnake();
     }
 
     public placeBricks(numBricks: number): void {
@@ -143,8 +144,34 @@ export class MasonryGrid {
         return coords;
     }
 
+    public numRowsNeeded = (): number => {
+        return this.bricks.reduce((max, brick) => {
+            return Math.max(max, brick.r + 1);
+        }, 0);
+    };
+
     private isExcluded(row: number, col: number): boolean {
         return this.exclusions.has(`${row},${col}`);
+    }
+
+    private getGridSnake(): MasonryCell[] {
+        const snake: MasonryCell[] = [];
+
+        for (let row = 0; row < this.rows; row++) {
+            if (row % 2 === 0) {
+                for (let col = 0; col < this.cols; col++) {
+                    const cell = { r: row, c: col };
+                    snake.push(cell);
+                }
+            } else if (row % 2 !== 0) {
+                for (let col = this.cols - 1; col >= 0; col--) {
+                    const cell = { r: row, c: col };
+                    snake.push(cell);
+                }
+            }
+        }
+
+        return snake;
     }
 
     private getGridSprial(): MasonryCell[] {
