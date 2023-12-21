@@ -6,7 +6,7 @@
 /* Scrolling Projects Block */
 
 .wp-block-guten-csek-scrolling-projects-block {
-    @apply w-full h-[36rem] md:h-[80vh] md:flex md:flex-col md:justify-center font-syne md:py-8 relative bg-white overflow-hidden box-border;
+    @apply w-full h-[36rem] md:h-[75vh] md:flex md:flex-col md:justify-center font-syne md:py-8 relative bg-white overflow-hidden box-border;
 
     & .view-button {
         @apply absolute left-3/4 bottom-0 md:-left-full md:-top-full flex justify-center items-center text-csek-light z-40 text-xs w-24 h-24 rounded-full bg-csek-dark/50 font-montserrat font-semibold text-center uppercase -translate-x-1/2 -translate-y-1/2 backdrop-blur-md;
@@ -71,7 +71,7 @@
 }
 
 .project-blurb img {
-    @apply absolute h-[24rem] md:h-[32rem] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-auto transition-opacity duration-1000 ease-in-out drop-shadow-lg object-cover;
+    @apply absolute h-[22rem] md:h-[32rem] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-auto transition-opacity duration-1000 ease-in-out drop-shadow-lg object-cover;
 }
 
 .highlight-link {
