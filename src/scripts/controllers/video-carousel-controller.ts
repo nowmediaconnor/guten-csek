@@ -46,6 +46,8 @@ export default class VideoCarouselController extends BlockController {
     }
 
     setup() {
+        this.debug = true;
+
         this.videoCarousel = document.querySelector(`.${this.videoCarouselClassName}`) as HTMLDivElement;
         if (this.invalid(this.videoCarousel)) {
             this.log("No video carousel found.");
@@ -54,7 +56,9 @@ export default class VideoCarouselController extends BlockController {
 
         this.log("Found video carousel");
 
-        this.videoDialog = this.videoCarousel.querySelector(".video-player");
+        // this.videoDialog = this.videoCarousel.querySelector(".video-player");
+        this.videoDialog = document.getElementById("video-player") as HTMLDialogElement;
+
         this.videoStrip = this.videoCarousel.querySelector(".video-strip");
         // ("#post-24 > div > section.wp-block-guten-csek-video-carousel-block > div.video-carousel-slider-progress > div.status > p > span.start");
         this.progressNumerator = this.videoCarousel.querySelector(".video-carousel-slider-progress .start");
@@ -73,7 +77,9 @@ export default class VideoCarouselController extends BlockController {
         this.numItems = this.videoBlocks?.length;
 
         this.progressDenominator.innerText = pad(this.numItems, 2);
-        this.update();
+        // this.update();
+
+        this.prepareThumbnails();
 
         this.log("Found video dialog");
         this.log("Found video strip");
@@ -83,7 +89,7 @@ export default class VideoCarouselController extends BlockController {
 
         this.addEventListeners();
 
-        this.prepareThumbnails();
+        this.log("Setup complete");
 
         this.isInitialized = true;
     }
@@ -96,7 +102,8 @@ export default class VideoCarouselController extends BlockController {
         this.videoPlayButton = this.videoCarousel.querySelector(
             `.video-block:nth-child(${this.activeIndex + 1}) .video-playbutton`
         );
-        this.videoCloseButton = this.videoCarousel.querySelector(".video-player .close-dialog");
+
+        this.videoCloseButton = document.body.querySelector(".close-dialog");
 
         if (prevButton) {
             this.log("prev button found");
@@ -138,9 +145,9 @@ export default class VideoCarouselController extends BlockController {
 
     async prepareThumbnails() {
         if (!this.videoBlocks) return;
-        this.log("Preparing thumbnails");
 
-        // this.videoBlocks.forEach((block) => {
+        this.log("Preparing thumbnails...");
+
         let idx = 0;
         for (const block of this.videoBlocks) {
             const vimeoThumbnail = block.querySelector(".vimeo-thumbnail[data-vimeo-url]");
@@ -151,8 +158,13 @@ export default class VideoCarouselController extends BlockController {
                 const video = new VimeoVideo(url, 1920, 1080, false);
                 this.vimeoVideos[idx] = video;
                 await video.updateVideoData();
-                const thumbnail = video.apiResponseData?.thumbnail_url ?? "";
-                vimeoThumbnail.setAttribute("src", thumbnail);
+                this.log("video data updated:", { ...video.apiResponseData });
+                if (vimeoThumbnail.getAttribute("src") === "") {
+                    const thumbnail = video.apiResponseData?.thumbnail_url ?? "";
+                    vimeoThumbnail.setAttribute("src", thumbnail);
+                }
+            } else {
+                this.log("vimeo data not found");
             }
             idx++;
         }
@@ -192,10 +204,10 @@ export default class VideoCarouselController extends BlockController {
 
     updatePlayButton() {
         if (this.videoPlayButton && this.videoCarousel) {
-            this.log("updating play button");
-            this.videoPlayButton = this.videoCarousel.querySelector(
-                `.video-block:nth-child(${this.activeIndex + 1}) .video-playbutton`
-            );
+            this.log("updating current play button...");
+            const buttonSelector = `.video-block:nth-child(${this.activeIndex + 1}) .video-playbutton`;
+            this.log("button selector:", buttonSelector);
+            this.videoPlayButton = this.videoCarousel.querySelector(buttonSelector);
 
             if (this.videoPlayButton) {
                 this.log("video play button found");
@@ -253,9 +265,7 @@ export default class VideoCarouselController extends BlockController {
     openVideoPlayer() {
         this.update();
         if (this.videoDialog) {
-            this.videoDialog.showModal();
-            document.body.style.filter = "brightness(0.5)";
-            document.body.style.overflow = "hidden";
+            this.videoDialog.classList.add("open");
 
             const internalVideo = this.videoDialog.querySelector("video");
 
@@ -274,9 +284,7 @@ export default class VideoCarouselController extends BlockController {
     closeVideoPlayer() {
         this.update();
         if (this.videoDialog) {
-            this.videoDialog.close();
-            document.body.style.filter = "none";
-            // document.body.style.overflow = "scroll";
+            this.videoDialog.classList.remove("open");
         }
     }
 
