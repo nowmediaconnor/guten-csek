@@ -4,6 +4,7 @@
  */
 
 import React from "react";
+import ReactDOM from "react-dom";
 import { MediaUploadCheck, MediaUpload, RichText, useBlockProps } from "@wordpress/block-editor";
 import { Button } from "@wordpress/components";
 import { Heading } from "../components/heading";
@@ -175,12 +176,16 @@ export const VideoCarouselBlockSave = ({ attributes }: GutenCsekBlockSaveProps<V
 
         if (!video.url) return null;
 
-        if (customThumbnail) {
-            return <img className="vimeo-thumbnail" src={customThumbnail} key={index} />;
-        }
-
         if (usesVimeo) {
-            return <img className="vimeo-thumbnail" data-vimeo-url={video.url} key={index} />;
+            return (
+                <img
+                    className="vimeo-thumbnail"
+                    src={customThumbnail}
+                    key={index}
+                    data-vimeo-url={video.url}
+                    data-use-vimeo-thumbnail={false}
+                />
+            );
         }
         return (
             <video controls={false} key={index}>
@@ -213,16 +218,6 @@ export const VideoCarouselBlockSave = ({ attributes }: GutenCsekBlockSaveProps<V
 
     return (
         <section {...blockProps}>
-            <dialog className="video-player">
-                <a href="#closedialog" className="close-dialog">
-                    <i className="fas fa-x"></i>
-                </a>
-                <div className="player">
-                    <video controls={false} preload="none">
-                        Videos aren&apos;t supported in your browser. Frankly we&apos;re impressed you got this far.
-                    </video>
-                </div>
-            </dialog>
             <div className="video-strip">{videoElements}</div>
             <div className="video-carousel-slider-progress">
                 <div className="bar">
