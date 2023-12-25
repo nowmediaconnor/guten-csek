@@ -9,7 +9,7 @@ import { GutenCsekBlockEditProps, GutenCsekBlockSaveProps, GutenbergBlockProps }
 import { InspectorControls, useBlockProps } from "@wordpress/block-editor";
 import { CsekMediaUpload } from "../../components/media-upload";
 import { CsekBlockHeading } from "../../components/heading";
-import CsekPaddingSelector, { Padding } from "../../components/padding-selector";
+import CsekPaddingSelector, { Padding, defaultPadding, styleFromPadding } from "../../components/padding-selector";
 import Label from "../../components/label";
 
 export interface FeaturedVideoBlockAttributes {
@@ -33,8 +33,9 @@ export const FeaturedVideoBlockEdit = ({
 
     const { videoURL, padding } = attributes;
 
-    const handleChangeVideoURL = (v: any) => {
-        setAttributes({ videoURL: v.url });
+    const handleChangeVideoURL = (url: string) => {
+        console.log("video url: ", url);
+        setAttributes({ videoURL: url });
     };
 
     const handleChangePadding = (padding: Padding) => {
@@ -50,7 +51,7 @@ export const FeaturedVideoBlockEdit = ({
             <Label>
                 Check the Inspector panel to edit padding <i className="fa fa-arrow-right"></i>
             </Label>
-            <CsekMediaUpload type="video" urlAttribute={videoURL} onChange={handleChangeVideoURL} />
+            <CsekMediaUpload type="video" urlAttribute={videoURL} onChange={(url, alt) => handleChangeVideoURL(url)} />
         </div>
     );
 };
@@ -58,10 +59,12 @@ export const FeaturedVideoBlockEdit = ({
 export const FeaturedVideoBlockSave = ({ attributes }: GutenCsekBlockSaveProps<FeaturedVideoBlockAttributes>) => {
     const blockProps = useBlockProps.save();
 
-    const { videoURL } = attributes;
+    const { videoURL, padding } = attributes;
+
+    const p = styleFromPadding(padding ?? defaultPadding);
 
     return (
-        <section {...blockProps}>
+        <section {...blockProps} style={p}>
             <div className="block-container">
                 <div className="video-container">
                     <div className="video-shade"></div>

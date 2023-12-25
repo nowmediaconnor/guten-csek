@@ -3,8 +3,6 @@
  * Author: Connor Doman
  */
 
-import apiFetch from "@wordpress/api-fetch";
-
 interface ImageSizeData {
     file: string;
     width: number;
@@ -19,8 +17,13 @@ export class CsekImage {
     private alt: string;
     private sizes: { [key: string]: ImageSizeData };
 
-    constructor(id: number) {
+    private type: "image" | "video";
+
+    private _url: string;
+
+    constructor(id: number, type: "image" | "video" = "image") {
         this.id = id;
+        this.type = type;
 
         this.preload();
     }
@@ -32,6 +35,10 @@ export class CsekImage {
             const data = await response.json();
             this.alt = data.alt_text;
             this.sizes = data.media_details.sizes;
+
+            if (this.type === "video") {
+                this._url = data.source_url;
+            }
         } catch (err: any) {
             console.log(`[CsekImage] Error: ${err}`);
         }
@@ -40,6 +47,15 @@ export class CsekImage {
     async doubleCheckSizes() {
         if (!this.sizes) {
             await this.preload();
+        }
+    }
+
+    get url(): string {
+        switch (this.type) {
+            case "image":
+                return this.full;
+            case "video":
+                return this._url;
         }
     }
 
