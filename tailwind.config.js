@@ -1,5 +1,6 @@
 const theme = require("./theme.json");
 const tailpress = require("@jeffreyvr/tailwindcss-tailpress");
+const plugin = require("tailwindcss/plugin");
 
 const customWidths = {
     "csek-max": "75rem",
@@ -88,4 +89,14 @@ module.exports = {
         },
     },
     // plugins: [tailpress.tailwind],
+    plugins: [
+        plugin(function ({ addUtilities }) {
+            const newUtilities = {
+                ".translate-center": {
+                    transform: "translate(-50%, -50%)",
+                },
+            };
+            addUtilities(newUtilities);
+        }),
+    ],
 };

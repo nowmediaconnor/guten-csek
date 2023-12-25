@@ -4,61 +4,28 @@
  */
 
 .wp-block-guten-csek-featured-video-block {
-    width: 100%;
-    position: relative;
-    padding: 3rem 0;
+    @apply w-full relative;
 
     & .block-container {
-        max-width: var(--max-width);
-        margin: 0 auto;
-        position: relative;
+        @apply relative mx-auto w-11/12 max-w-csek-max;
 
         & .video-container {
-            position: relative;
-            padding-bottom: 56.25%;
-            height: 0;
-            overflow: hidden;
-            border-radius: 0.5rem;
-            width: 100%;
+            @apply relative pb-[56.25%] h-0 overflow-hidden rounded-lg;
 
             & > * {
-                transition: all ease 0.2s;
+                @apply transition-all ease-in-out duration-200;
             }
 
             & .video-shade {
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background: linear-gradient(black, transparent);
-                z-index: 2;
-                pointer-events: none;
+                @apply absolute top-0 left-0 w-full h-full bg-gradient-to-b from-black to-transparent z-[2] pointer-events-none;
             }
 
             & video {
-                z-index: 1;
+                @apply z-[1];
             }
 
             & .playbutton {
-                font-family: "Syne", sans-serif;
-                font-weight: bold;
-                text-transform: uppercase;
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                width: 7rem;
-                height: 7rem;
-                border-radius: 50%;
-                background: var(--csek-blue);
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                gap: 0.5rem;
-                cursor: pointer;
-                z-index: 3;
+                @apply font-syne font-bold uppercase absolute top-1/2 left-1/2 translate-center w-28 h-28 rounded-full bg-csek-blue flex flex-col justify-center items-center gap-2 cursor-pointer z-[3];
             }
         }
     }
