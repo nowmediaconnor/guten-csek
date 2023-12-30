@@ -765,7 +765,7 @@ export const registerAllBlocks = () => {
         icon: "text",
         category: "csek",
         attributes: {
-            chosenTag: {
+            chosenCategory: {
                 type: "string",
                 default: "blog",
             },

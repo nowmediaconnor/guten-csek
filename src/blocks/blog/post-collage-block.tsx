@@ -9,16 +9,18 @@ import { GutenCsekBlockEditProps, GutenCsekBlockSaveProps } from "../../scripts/
 import { CsekBlockHeading } from "../../components/heading";
 import {
     PostCategory,
+    PostTag,
     findCategoryId,
     getAllCategories,
     getAllPosts,
-    getAllTags,
     getTagsByCategory,
 } from "../../scripts/wp";
 import { CsekSelectDropdown } from "../../components/input";
+import CsekCard from "../../components/card";
+import { useBlockProps } from "@wordpress/block-editor";
 
 export interface PostCollageBlockAttributes {
-    chosenTag: string;
+    chosenCategory: string;
     postCount: number;
     foundTags: string[];
     featuredPost: number;
@@ -28,23 +30,18 @@ export const PostCollageBlockEdit = ({
     attributes,
     setAttributes,
 }: GutenCsekBlockEditProps<PostCollageBlockAttributes>) => {
-    const [tags, setTags] = useState<any>({});
+    const { chosenCategory, postCount, foundTags, featuredPost } = attributes;
+
+    const [tags, setTags] = useState<PostTag[]>([]);
     const [allTags, setAllTags] = useState<any>({});
     const [parentCategories, setParentCategories] = useState<PostCategory[]>([]);
     const [posts, setPosts] = useState<any>({});
-    const [currentCategory, setCurrentCategory] = useState<string>("");
+    const [currentCategory, setCurrentCategory] = useState<string>(chosenCategory);
 
     useEffect(() => {
-        getAllTags().then((tags) => {
-            setAllTags(tags);
-        });
-
         getAllCategories().then((categories) => {
             setParentCategories(categories);
-        });
-
-        getAllPosts().then((posts) => {
-            setPosts(posts);
+            if (!chosenCategory) setCurrentCategory(categories[0].slug);
         });
     }, []);
 
@@ -60,29 +57,52 @@ export const PostCollageBlockEdit = ({
             getTagsByCategory(cId).then((tags) => {
                 setTags(tags);
             });
+
+            setAttributes({ chosenCategory: currentCategory });
         }
     }, [currentCategory, parentCategories]);
 
+    useEffect(() => {
+        if (tags) {
+            setAttributes({ foundTags: tags.map((t) => t.name) });
+        }
+    }, [tags]);
+
     return (
-        <div>
+        <section>
             <CsekBlockHeading text="Post Collage Block" />
-            <CsekSelectDropdown
-                options={parentCategories.map((c) => {
-                    return { label: c.name, value: c.slug };
-                })}
-                onChange={(value: string) => {
-                    setCurrentCategory(value);
-                }}
-            />
-            <pre>{JSON.stringify(parentCategories, null, 2)}</pre>
-        </div>
+            <CsekCard>
+                <CsekSelectDropdown
+                    label="Category"
+                    options={parentCategories.map((c) => {
+                        return { label: c.name, value: c.slug };
+                    })}
+                    onChange={(value: string) => {
+                        setCurrentCategory(value);
+                    }}
+                    initialValue={currentCategory}
+                />
+                <pre>{JSON.stringify(parentCategories, null, 2)}</pre>
+            </CsekCard>
+        </section>
     );
 };
 
 export const PostCollageBlockSave = ({ attributes }: GutenCsekBlockSaveProps<PostCollageBlockAttributes>) => {
+    const blockProps = useBlockProps.save();
+    const { chosenCategory, postCount, foundTags, featuredPost } = attributes;
+
     return (
-        <div>
-            <p>Post Collage Block</p>
-        </div>
+        <section {...blockProps}>
+            <div className="block-content">
+                <nav className="tag-nav">
+                    <ul>
+                        {foundTags.map((tag) => (
+                            <li key={tag}>{tag}</li>
+                        ))}
+                    </ul>
+                </nav>
+            </div>
+        </section>
     );
 };

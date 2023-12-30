@@ -1,0 +1,18 @@
+/*
+ * Created on Sat Dec 30 2023
+ * Author: Connor Doman
+ */
+
+.wp-block-guten-csek-post-collage-block {
+    & .block-content {
+        @apply max-w-csek-max mx-auto;
+
+        & nav ul {
+            @apply flex flex-wrap justify-start;
+
+            & li {
+                @apply px-2 py-1 border-b-2 border-transparent hover:border-csek-red transition-all duration-200 cursor-pointer;
+            }
+        }
+    }
+}
