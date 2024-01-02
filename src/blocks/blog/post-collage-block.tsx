@@ -10,6 +10,7 @@ import { CsekBlockHeading } from "../../components/heading";
 import {
     PostCategory,
     PostTag,
+    WPPost,
     findCategoryId,
     getAllCategories,
     getAllPosts,
@@ -20,41 +21,38 @@ import CsekCard from "../../components/card";
 import { useBlockProps } from "@wordpress/block-editor";
 
 export interface PostCollageBlockAttributes {
-    chosenCategory: string;
+    chosenCategory: number;
     postCount: number;
-    foundTags: string[];
-    featuredPost: number;
+    foundTags: PostTag[];
 }
 
 export const PostCollageBlockEdit = ({
     attributes,
     setAttributes,
 }: GutenCsekBlockEditProps<PostCollageBlockAttributes>) => {
-    const { chosenCategory, postCount, foundTags, featuredPost } = attributes;
+    const { chosenCategory, postCount, foundTags } = attributes;
 
     const [tags, setTags] = useState<PostTag[]>([]);
     const [allTags, setAllTags] = useState<any>({});
     const [parentCategories, setParentCategories] = useState<PostCategory[]>([]);
     const [posts, setPosts] = useState<any>({});
-    const [currentCategory, setCurrentCategory] = useState<string>(chosenCategory);
+    const [currentCategory, setCurrentCategory] = useState<number>(chosenCategory);
+    const [categorySlug, setCategorySlug] = useState<string>("");
 
     useEffect(() => {
         getAllCategories().then((categories) => {
             setParentCategories(categories);
-            if (!chosenCategory) setCurrentCategory(categories[0].slug);
+            if (!chosenCategory) setCurrentCategory(categories[0].id);
         });
     }, []);
 
     useEffect(() => {
         if (currentCategory) {
-            const cId = findCategoryId(parentCategories, currentCategory);
-            if (!cId) return;
-
-            getAllPosts(undefined, [cId]).then((posts) => {
+            getAllPosts(undefined, [currentCategory]).then((posts) => {
                 setPosts(posts);
             });
 
-            getTagsByCategory(cId).then((tags) => {
+            getTagsByCategory(currentCategory).then((tags) => {
                 setTags(tags);
             });
 
@@ -64,7 +62,7 @@ export const PostCollageBlockEdit = ({
 
     useEffect(() => {
         if (tags) {
-            setAttributes({ foundTags: tags.map((t) => t.name) });
+            setAttributes({ foundTags: tags });
         }
     }, [tags]);
 
@@ -78,9 +76,11 @@ export const PostCollageBlockEdit = ({
                         return { label: c.name, value: c.slug };
                     })}
                     onChange={(value: string) => {
-                        setCurrentCategory(value);
+                        const category = findCategoryId(parentCategories, value);
+                        setCurrentCategory(category ?? -1);
+                        setCategorySlug(value);
                     }}
-                    initialValue={currentCategory}
+                    initialValue={categorySlug}
                 />
                 <pre>{JSON.stringify(parentCategories, null, 2)}</pre>
             </CsekCard>
@@ -88,20 +88,87 @@ export const PostCollageBlockEdit = ({
     );
 };
 
-export const PostCollageBlockSave = ({ attributes }: GutenCsekBlockSaveProps<PostCollageBlockAttributes>) => {
-    const blockProps = useBlockProps.save();
-    const { chosenCategory, postCount, foundTags, featuredPost } = attributes;
+interface RelatedPostProps {
+    post: WPPost;
+    tags: PostTag[];
+}
+
+const RelatedPost = ({ post, tags }: RelatedPostProps) => {
+    const { url, title, featuredImage, readTime } = post;
+
+    const tagLimit = 2;
+
+    const tagLinks: JSX.Element[] = tags
+        .filter((_, index: number) => {
+            return index < tagLimit;
+        })
+        .map((tag: PostTag) => {
+            return (
+                <a href={tag.url} key={tag.slug} className="chip">
+                    {tag.name}
+                </a>
+            );
+        });
+
+    if (tags.length > tagLimit) {
+        const remainingTags = tags
+            .slice(tagLimit)
+            .map((tag: PostTag) => {
+                return tag.name;
+            })
+            .join(", ");
+
+        tagLinks.push(
+            <a href="#" key="more" className="chip" title={remainingTags}>
+                +{tags.length - tagLimit}
+            </a>
+        );
+    }
 
     return (
-        <section {...blockProps}>
+        <div className="related-post">
+            <div className="featured-image">
+                <img src={featuredImage.medium} />
+            </div>
+            <div className="text-content">
+                <h2 className="title">
+                    <a href={url}>{title}</a>
+                </h2>
+                <div className="read-time">
+                    <span>{readTime}</span> MIN READ
+                </div>
+                <div className="tags">{tagLinks}</div>
+            </div>
+        </div>
+    );
+};
+
+export const PostCollageBlockSave = ({ attributes }: GutenCsekBlockSaveProps<PostCollageBlockAttributes>) => {
+    const blockProps = useBlockProps.save();
+    const { chosenCategory, postCount, foundTags } = attributes;
+
+    return (
+        <section
+            {...blockProps}
+            data-post-count={postCount}
+            data-chosen-category={chosenCategory}
+            data-found-tags={JSON.stringify(foundTags)}>
             <div className="block-content">
                 <nav className="tag-nav">
                     <ul>
+                        <li>
+                            <a href="#">All</a>
+                        </li>
                         {foundTags.map((tag) => (
-                            <li key={tag}>{tag}</li>
+                            <li key={tag.slug}>
+                                <a href={`#${tag.url}`} data-tag-id={tag.id}>
+                                    {tag.name}
+                                </a>
+                            </li>
                         ))}
                     </ul>
                 </nav>
+                <div className="collage-related-posts"></div>
             </div>
         </section>
     );

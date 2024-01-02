@@ -766,8 +766,8 @@ export const registerAllBlocks = () => {
         category: "csek",
         attributes: {
             chosenCategory: {
-                type: "string",
-                default: "blog",
+                type: "number",
+                default: -1,
             },
             postCount: {
                 type: "number",
@@ -776,10 +776,6 @@ export const registerAllBlocks = () => {
             foundTags: {
                 type: "array",
                 default: [],
-            },
-            featuredPost: {
-                type: "number",
-                default: -1,
             },
         },
         edit: PostCollageBlockEdit,

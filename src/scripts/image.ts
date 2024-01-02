@@ -31,7 +31,7 @@ export class CsekImage {
     async preload() {
         try {
             const response = await fetch(`/wp-json/wp/v2/media/${this.id}?context=embed`);
-            console.log(await response.clone().json());
+
             const data = await response.json();
             this.alt = data.alt_text;
             this.sizes = data.media_details.sizes;
@@ -60,18 +60,22 @@ export class CsekImage {
     }
 
     get thumbnail(): string {
+        if (!this.sizes) return "";
         return this.sizes.thumbnail.source_url;
     }
 
     get medium(): string {
+        if (!this.sizes) return "";
         return this.sizes.medium.source_url;
     }
 
     get large(): string {
+        if (!this.sizes) return "";
         return this.sizes.large.source_url;
     }
 
     get full(): string {
+        if (!this.sizes) return "";
         return this.sizes.full.source_url;
     }
 

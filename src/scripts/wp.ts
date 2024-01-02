@@ -3,6 +3,9 @@
  * Author: Connor Doman
  */
 
+import { CsekImage } from "./image";
+import { removeHTMLTags } from "./strings";
+
 export interface WPPost {
     id: number;
     url: string;
@@ -10,7 +13,8 @@ export interface WPPost {
     title: string;
     categories: number[];
     tags: number[];
-    featuredImage: number;
+    featuredImage: CsekImage;
+    readTime: number;
 }
 
 export interface PostTag {
@@ -39,7 +43,10 @@ export async function getAllPosts(tags?: number[], categories?: number[]) {
 
         const posts: WPPost[] = [];
 
-        postsData.forEach((post: any) => {
+        for (const post of postsData) {
+            const img = new CsekImage(post.featured_media);
+            await img.preload();
+
             posts.push({
                 id: post.id,
                 url: post.link,
@@ -47,9 +54,10 @@ export async function getAllPosts(tags?: number[], categories?: number[]) {
                 title: post.title.rendered,
                 categories: post.categories,
                 tags: post.tags,
-                featuredImage: post.featured_media,
+                featuredImage: img,
+                readTime: calculateReadTime(post.content.rendered),
             });
-        });
+        }
 
         return posts;
     } catch (error: any) {
@@ -160,4 +168,101 @@ export async function getTagsByCategory(...categories: number[]): Promise<PostTa
 export function findCategoryId(categories: PostCategory[], slug: string): number | undefined {
     const category = categories.find((category) => category.slug === slug);
     return category?.id;
+}
+
+export function getCategoryBySlug(slug: string): Promise<PostCategory | undefined> {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const categories = await getAllCategories();
+            const category = categories.find((category) => category.slug === slug);
+
+            if (!category) {
+                reject(`Could not find category with slug ${slug}`);
+                return;
+            }
+
+            resolve(category);
+        } catch (error) {
+            reject(error);
+        }
+    });
+}
+
+export function calculateReadTime(content: string): number {
+    const words = removeHTMLTags(content).split(" ");
+    const readTime = Math.ceil(words.length / 225);
+    return readTime;
+}
+
+export async function makeTagList(post: WPPost): Promise<HTMLElement[]> {
+    const allTags = await getAllTags();
+    const postTags = allTags.filter((tag: PostTag) => {
+        return post.tags.includes(tag.id);
+    });
+
+    const tagLimit = 2;
+
+    const tagLinks: HTMLElement[] = postTags
+        .filter((_, index: number) => {
+            return index < tagLimit;
+        })
+        .map((tag: PostTag) => {
+            const tagLink = document.createElement("a");
+            tagLink.href = tag.url;
+            tagLink.classList.add("chip");
+            tagLink.innerHTML = tag.name;
+            return tagLink;
+        });
+
+    if (postTags.length > tagLimit) {
+        const remainingTags = allTags
+            .slice(tagLimit)
+            .map((tag: PostTag) => {
+                return tag.name;
+            })
+            .join(", ");
+        const moreTagLink = document.createElement("a");
+        moreTagLink.href = "#";
+        moreTagLink.classList.add("chip");
+        moreTagLink.title = remainingTags;
+        moreTagLink.innerHTML = `+${postTags.length - tagLimit}`;
+
+        tagLinks.push(moreTagLink);
+    }
+
+    return tagLinks;
+}
+
+export async function generateRelatedPostDOM(post: WPPost): Promise<HTMLElement> {
+    const postDOM = document.createElement("div");
+    postDOM.classList.add("related-post");
+
+    const featuredImage = document.createElement("img");
+    featuredImage.classList.add("featured-image");
+    featuredImage.src = post.featuredImage.large;
+    featuredImage.alt = post.featuredImage.altText;
+
+    const textContent = document.createElement("div");
+    textContent.classList.add("text-content");
+
+    const title = document.createElement("h2");
+    title.classList.add("title");
+    const titleLink = document.createElement("a");
+    titleLink.href = post.url;
+    titleLink.innerHTML = post.title;
+    title.appendChild(titleLink);
+
+    const readTime = document.createElement("div");
+    readTime.classList.add("read-time");
+    readTime.innerHTML = `${post.readTime} min read`;
+
+    const tags = document.createElement("div");
+    tags.classList.add("tags");
+    tags.append(...(await makeTagList(post)));
+
+    textContent.append(title, readTime, tags);
+
+    postDOM.append(featuredImage, textContent);
+
+    return postDOM;
 }

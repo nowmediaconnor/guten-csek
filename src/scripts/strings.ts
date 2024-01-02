@@ -40,3 +40,13 @@ export const urlExtractSecondLevelDomain = (url: string): string => {
 export const capitalize = (str: string): string => {
     return str.charAt(0).toUpperCase() + str.slice(1);
 };
+
+export const removeHTMLTags = (str: string): string => {
+    const cleanText = str.replace(/<\/?[^>]+(>|$)/g, "");
+    return cleanText;
+};
+
+export const decodeHtmlEntities = (str: string): string => {
+    const doc = new DOMParser().parseFromString(str, "text/html");
+    return doc.documentElement.textContent || "";
+};
