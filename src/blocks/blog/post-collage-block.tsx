@@ -84,6 +84,7 @@ export const PostCollageBlockEdit = ({
                 />
                 <TextInput
                     label="Number of Posts to Display"
+                    hint="This is the number of of posts to display in the first part of the collage. If there are more posts than this number, a featured post is added and the remaining posts are shown below."
                     onChange={(value: string) => {
                         setAttributes({ postCount: parseInt(value) });
                     }}
