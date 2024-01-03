@@ -4,6 +4,7 @@
  */
 
 import { BlockController } from "../../dom";
+import { decodeHtmlEntities } from "../../strings";
 import {
     PostTag,
     WPPost,
@@ -68,18 +69,20 @@ class PostCollageBlock {
         this.tagLinks = this.block.querySelectorAll(".tag-nav ul li a");
         this.relatedPostsArea = this.block.querySelector(".collage-related-posts") as HTMLElement;
 
-        // this.relatedPosts.forEach((related) => {
-        //     this.relatedPostsArea.appendChild(related.dom);
-        // });
         const gridElements = await this.buildPostsGrid(this.relatedPosts);
         this.relatedPostsArea.append(...gridElements);
 
         this.relatedPostsArea.addEventListener("transitionend", (e) => {
             const target = e.target as HTMLElement;
-            if (!target || e.propertyName !== "opacity" || target.style.opacity !== "1") return;
-            else console.error("transition not allowed..");
+            if (
+                !target ||
+                target.classList.contains(".collage-related-posts") ||
+                e.propertyName !== "opacity" ||
+                target.style.opacity !== "0"
+            ) {
+                return;
+            }
 
-            console.log("transition ended..");
             this.relatedPostsArea.innerHTML = "";
 
             for (const post of this.relatedPosts) {
@@ -113,6 +116,9 @@ class PostCollageBlock {
     }
 
     async update() {
+        console.log("updating...");
+        this.relatedPostsArea.style.opacity = "0";
+
         this.tagLinks.forEach((link) => {
             const id = parseInt(link.dataset.tagId ?? "-1");
             if (id === this.currentTag) {
@@ -149,7 +155,7 @@ class PostCollageBlock {
 
         const featuredInner = document.createElement("div");
         featuredInner.classList.add("inner");
-        featuredInner.style.backgroundImage = `url(${post.featuredImage.full})`;
+        featuredInner.style.backgroundImage = `url(${decodeHtmlEntities(post.featuredImage.full)})`;
 
         if (this.posts.length > this.postCount) {
             featuredInner.classList.add("visible");
@@ -160,8 +166,12 @@ class PostCollageBlock {
         const featuredContent = document.createElement("div");
         featuredContent.classList.add("featured-content");
 
+        const titleLink = document.createElement("a");
+        titleLink.href = post.url;
         const featuredTitle = document.createElement("h2");
-        featuredTitle.classList.add("featured-title");
+        featuredTitle.classList.add("title");
+        featuredTitle.innerHTML = post.title;
+        titleLink.appendChild(featuredTitle);
 
         const readTime = document.createElement("div");
         readTime.classList.add("read-time");
@@ -171,7 +181,7 @@ class PostCollageBlock {
         tags.classList.add("tags");
         tags.append(...(await makeTagList(post)));
 
-        featuredContent.append(featuredTitle, readTime, tags);
+        featuredContent.append(titleLink, readTime, tags);
         featuredInner.appendChild(featuredContent);
         featuredPost.appendChild(featuredInner);
         return featuredPost;
