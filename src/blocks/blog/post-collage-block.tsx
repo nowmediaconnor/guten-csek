@@ -121,9 +121,6 @@ export const PostCollageBlockSave = ({ attributes }: GutenCsekBlockSaveProps<Pos
                     </ul>
                 </nav>
                 <div className="collage-related-posts"></div>
-                <div className="featured-post">
-                    <div className="inner"></div>
-                </div>
             </div>
         </section>
     );

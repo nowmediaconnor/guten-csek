@@ -22,43 +22,47 @@
         }
 
         & .collage-related-posts {
-            @apply relative flex sm:grid sm:grid-cols-2 md:grid-cols-3 flex-col sm:flex-row items-start justify-around gap-4 w-11/12 max-w-csek-max mx-auto py-8 flex-wrap transition-all duration-750;
+            @apply relative flex flex-col justify-start items-center w-full;
 
-            & .related-post {
-                @apply relative flex-grow flex flex-col box-border;
+            & .related-posts-grid {
+                @apply relative flex sm:grid sm:grid-cols-2 md:grid-cols-3 flex-col sm:flex-row items-start justify-around gap-4 w-11/12 max-w-csek-max mx-auto py-8 flex-wrap transition-all duration-750;
 
-                &:hover .title::after {
-                    content: "More";
-                    @apply opacity-100;
-                }
+                & .related-post {
+                    @apply relative flex-grow flex flex-col box-border;
 
-                & .text-content {
-                    @apply flex flex-col gap-4 py-2;
-                }
-
-                & .title {
-                    @apply relative text-csek-dark font-bold font-syne text-xl md:text-2xl my-4;
-
-                    &::after {
+                    &:hover .title::after {
                         content: "More";
-                        @apply opacity-0 transition-opacity duration-200 pointer-events-none absolute -top-20 left-1/2 transform -translate-x-1/2 w-20 h-20 rounded-full inline-flex flex-col items-center justify-center bg-csek-dark z-[1000] text-sm uppercase text-white font-montserrat font-medium;
+                        @apply opacity-100;
                     }
-                }
 
-                & .featured-image {
-                    @apply relative rounded-md overflow-hidden;
-
-                    & img {
-                        @apply w-full h-full object-cover object-top;
+                    & .text-content {
+                        @apply flex flex-col gap-4 py-2;
                     }
-                }
 
-                & .read-time {
-                    @apply text-sm font-medium uppercase;
-                }
+                    & .title {
+                        @apply relative text-csek-dark font-bold font-syne text-xl md:text-2xl my-2;
 
-                & .tags {
-                    @apply flex flex-row gap-2 items-center justify-start flex-wrap;
+                        &::after {
+                            content: "More";
+                            @apply opacity-0 transition-opacity duration-200 pointer-events-none absolute -top-[5.25rem] left-1/2 transform -translate-x-1/2 w-20 h-20 rounded-full inline-flex flex-col items-center justify-center bg-csek-dark z-[1000] text-sm uppercase text-white font-montserrat font-medium;
+                        }
+                    }
+
+                    & .featured-image {
+                        @apply relative rounded-md overflow-hidden;
+
+                        & img {
+                            @apply w-full h-full object-cover object-top;
+                        }
+                    }
+
+                    & .read-time {
+                        @apply text-sm font-medium uppercase;
+                    }
+
+                    & .tags {
+                        @apply flex flex-row gap-2 items-center justify-start flex-wrap;
+                    }
                 }
             }
         }

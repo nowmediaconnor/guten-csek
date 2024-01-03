@@ -17,6 +17,7 @@ import {
 interface RelatedPostDOM {
     tags: number[];
     dom: HTMLElement;
+    post: WPPost;
 }
 
 class PostCollageBlock {
@@ -58,6 +59,7 @@ class PostCollageBlock {
             const related = {
                 tags: p.tags,
                 dom,
+                post: p,
             };
 
             this.relatedPosts.push(related);
@@ -66,11 +68,20 @@ class PostCollageBlock {
         this.tagLinks = this.block.querySelectorAll(".tag-nav ul li a");
         this.relatedPostsArea = this.block.querySelector(".collage-related-posts") as HTMLElement;
 
-        this.relatedPosts.forEach((related) => {
-            this.relatedPostsArea.appendChild(related.dom);
-        });
+        // this.relatedPosts.forEach((related) => {
+        //     this.relatedPostsArea.appendChild(related.dom);
+        // });
+        const gridElements = await this.buildPostsGrid(this.relatedPosts);
+        this.relatedPostsArea.append(...gridElements);
 
-        this.relatedPostsArea.addEventListener("transitionend", () => {
+        this.relatedPostsArea.addEventListener("transitionend", (e) => {
+            const target = e.target as HTMLElement;
+            if (!target || e.propertyName !== "opacity" || target.style.opacity !== "1") return;
+            else console.error("transition not allowed..");
+
+            console.log("transition ended..");
+            this.relatedPostsArea.innerHTML = "";
+
             for (const post of this.relatedPosts) {
                 if (this.currentTag === -1 || post.tags.includes(this.currentTag)) {
                     post.dom.style.display = "block";
@@ -78,7 +89,13 @@ class PostCollageBlock {
                     post.dom.style.display = "none";
                 }
             }
-            this.relatedPostsArea.style.opacity = "1";
+
+            const visiblePosts = this.relatedPosts.filter((post) => post.dom.style.display === "block");
+
+            this.buildPostsGrid(visiblePosts).then((elmts) => {
+                target.append(...elmts);
+                target.style.opacity = "1";
+            });
         });
 
         this.tagLinks.forEach((link) => {
@@ -96,8 +113,6 @@ class PostCollageBlock {
     }
 
     async update() {
-        this.relatedPostsArea.style.opacity = "0";
-
         this.tagLinks.forEach((link) => {
             const id = parseInt(link.dataset.tagId ?? "-1");
             if (id === this.currentTag) {
@@ -108,11 +123,19 @@ class PostCollageBlock {
         });
     }
 
-    async createRelatedPostGrid(posts: WPPost[]) {
+    async createRelatedPostGrid(posts: WPPost[] | RelatedPostDOM[]): Promise<HTMLElement> {
+        function isRelatedPostDOM(post: any): post is RelatedPostDOM {
+            return post.hasOwnProperty("dom");
+        }
+
         const grid = document.createElement("div");
         grid.classList.add("related-posts-grid");
 
         for (const post of posts) {
+            if (isRelatedPostDOM(post)) {
+                grid.appendChild(post.dom);
+                continue;
+            }
             const postDOM = await generateRelatedPostDOM(post);
             grid.appendChild(postDOM);
         }
@@ -120,15 +143,14 @@ class PostCollageBlock {
         return grid;
     }
 
-    async createFeaturedPost(post: WPPost) {
+    async createFeaturedPost(post: WPPost): Promise<HTMLElement> {
         const featuredPost = document.createElement("div");
         featuredPost.classList.add("featured-post");
 
         const featuredInner = document.createElement("div");
         featuredInner.classList.add("inner");
-        featuredInner.style.backgroundImage = `url(${
-            this.posts[(Math.random() * this.posts.length) | 0].featuredImage.full
-        })`;
+        featuredInner.style.backgroundImage = `url(${post.featuredImage.full})`;
+
         if (this.posts.length > this.postCount) {
             featuredInner.classList.add("visible");
         } else {
@@ -152,6 +174,27 @@ class PostCollageBlock {
         featuredContent.append(featuredTitle, readTime, tags);
         featuredInner.appendChild(featuredContent);
         featuredPost.appendChild(featuredInner);
+        return featuredPost;
+    }
+
+    async buildPostsGrid(posts: RelatedPostDOM[]): Promise<HTMLElement[]> {
+        console.log("building posts grid...");
+
+        const elements: HTMLElement[] = [];
+        if (posts.length > this.postCount) {
+            const firstGrid = await this.createRelatedPostGrid(posts.slice(0, this.postCount));
+            elements.push(firstGrid);
+
+            const featuredPost = await this.createFeaturedPost(posts[Math.floor(Math.random() * posts.length)].post);
+            elements.push(featuredPost);
+
+            const secondGrid = await this.createRelatedPostGrid(posts.slice(this.postCount));
+            elements.push(secondGrid);
+        } else {
+            const onlyGrid = await this.createRelatedPostGrid(posts);
+            elements.push(onlyGrid);
+        }
+        return elements;
     }
 }
 
