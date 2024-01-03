@@ -4,7 +4,15 @@
  */
 
 import { BlockController } from "../../dom";
-import { PostTag, WPPost, generateRelatedPostDOM, getAllPosts, getCategoryBySlug, getTagsByCategory } from "../../wp";
+import {
+    PostTag,
+    WPPost,
+    generateRelatedPostDOM,
+    getAllPosts,
+    getCategoryBySlug,
+    getTagsByCategory,
+    makeTagList,
+} from "../../wp";
 
 interface RelatedPostDOM {
     tags: number[];
@@ -73,16 +81,6 @@ class PostCollageBlock {
             this.relatedPostsArea.style.opacity = "1";
         });
 
-        this.featuredPostArea = this.block.querySelector(".featured-post .inner") as HTMLElement;
-        this.featuredPostArea.style.backgroundImage = `url(${
-            this.posts[(Math.random() * this.posts.length) | 0].featuredImage.full
-        })`;
-        if (this.posts.length > this.postCount) {
-            this.featuredPostArea.classList.add("visible");
-        } else {
-            this.featuredPostArea.classList.remove("visible");
-        }
-
         this.tagLinks.forEach((link) => {
             link.addEventListener("click", async (e) => {
                 e.preventDefault();
@@ -108,6 +106,52 @@ class PostCollageBlock {
                 link.classList.remove("chosen");
             }
         });
+    }
+
+    async createRelatedPostGrid(posts: WPPost[]) {
+        const grid = document.createElement("div");
+        grid.classList.add("related-posts-grid");
+
+        for (const post of posts) {
+            const postDOM = await generateRelatedPostDOM(post);
+            grid.appendChild(postDOM);
+        }
+
+        return grid;
+    }
+
+    async createFeaturedPost(post: WPPost) {
+        const featuredPost = document.createElement("div");
+        featuredPost.classList.add("featured-post");
+
+        const featuredInner = document.createElement("div");
+        featuredInner.classList.add("inner");
+        featuredInner.style.backgroundImage = `url(${
+            this.posts[(Math.random() * this.posts.length) | 0].featuredImage.full
+        })`;
+        if (this.posts.length > this.postCount) {
+            featuredInner.classList.add("visible");
+        } else {
+            featuredInner.classList.remove("visible");
+        }
+
+        const featuredContent = document.createElement("div");
+        featuredContent.classList.add("featured-content");
+
+        const featuredTitle = document.createElement("h2");
+        featuredTitle.classList.add("featured-title");
+
+        const readTime = document.createElement("div");
+        readTime.classList.add("read-time");
+        readTime.innerHTML = `${post.readTime} min read`;
+
+        const tags = document.createElement("div");
+        tags.classList.add("tags");
+        tags.append(...(await makeTagList(post)));
+
+        featuredContent.append(featuredTitle, readTime, tags);
+        featuredInner.appendChild(featuredContent);
+        featuredPost.appendChild(featuredInner);
     }
 }
 

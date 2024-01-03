@@ -16,6 +16,7 @@ interface InputProps {
     hint?: string;
     className?: string;
     disabled?: boolean;
+    type?: "text" | "number";
     onChange?: (v: string) => void;
 }
 
@@ -26,12 +27,16 @@ export const TextInput = ({
     hint,
     className,
     disabled,
+    type = "text",
     onChange,
 }: InputProps) => {
     const [text, setText] = useState<string>(initialValue);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const newValue = e.target.value as string;
+        if (type === "number" && isNaN(Number(newValue))) {
+            return;
+        }
         setText(newValue);
         if (onChange) {
             onChange(newValue);

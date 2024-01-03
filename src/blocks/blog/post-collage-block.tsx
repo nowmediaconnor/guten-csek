@@ -16,7 +16,7 @@ import {
     getAllPosts,
     getTagsByCategory,
 } from "../../scripts/wp";
-import { CsekSelectDropdown } from "../../components/input";
+import { CsekSelectDropdown, TextInput } from "../../components/input";
 import CsekCard from "../../components/card";
 import { useBlockProps } from "@wordpress/block-editor";
 
@@ -69,7 +69,7 @@ export const PostCollageBlockEdit = ({
     return (
         <section>
             <CsekBlockHeading text="Post Collage Block" />
-            <CsekCard>
+            <CsekCard className="flex flex-col gap-4">
                 <CsekSelectDropdown
                     label="Category"
                     options={parentCategories.map((c) => {
@@ -82,64 +82,16 @@ export const PostCollageBlockEdit = ({
                     }}
                     initialValue={categorySlug}
                 />
-                <pre>{JSON.stringify(parentCategories, null, 2)}</pre>
+                <TextInput
+                    label="Number of Posts to Display"
+                    onChange={(value: string) => {
+                        setAttributes({ postCount: parseInt(value) });
+                    }}
+                    initialValue={postCount.toString()}
+                    type="number"
+                />
             </CsekCard>
         </section>
-    );
-};
-
-interface RelatedPostProps {
-    post: WPPost;
-    tags: PostTag[];
-}
-
-const RelatedPost = ({ post, tags }: RelatedPostProps) => {
-    const { url, title, featuredImage, readTime } = post;
-
-    const tagLimit = 2;
-
-    const tagLinks: JSX.Element[] = tags
-        .filter((_, index: number) => {
-            return index < tagLimit;
-        })
-        .map((tag: PostTag) => {
-            return (
-                <a href={tag.url} key={tag.slug} className="chip">
-                    {tag.name}
-                </a>
-            );
-        });
-
-    if (tags.length > tagLimit) {
-        const remainingTags = tags
-            .slice(tagLimit)
-            .map((tag: PostTag) => {
-                return tag.name;
-            })
-            .join(", ");
-
-        tagLinks.push(
-            <a href="#" key="more" className="chip" title={remainingTags}>
-                +{tags.length - tagLimit}
-            </a>
-        );
-    }
-
-    return (
-        <div className="related-post">
-            <div className="featured-image">
-                <img src={featuredImage.medium} />
-            </div>
-            <div className="text-content">
-                <h2 className="title">
-                    <a href={url}>{title}</a>
-                </h2>
-                <div className="read-time">
-                    <span>{readTime}</span> MIN READ
-                </div>
-                <div className="tags">{tagLinks}</div>
-            </div>
-        </div>
     );
 };
 
