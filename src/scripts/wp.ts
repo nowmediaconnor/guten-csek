@@ -4,7 +4,7 @@
  */
 
 import { CsekImage } from "./image";
-import { removeHTMLTags } from "./strings";
+import { decodeHtmlEntities, removeHTMLTags } from "./strings";
 
 export interface WPPost {
     id: number;
@@ -215,10 +215,10 @@ export async function makeTagList(post: WPPost): Promise<HTMLElement[]> {
         });
 
     if (postTags.length > tagLimit) {
-        const remainingTags = allTags
+        const remainingTags = postTags
             .slice(tagLimit)
             .map((tag: PostTag) => {
-                return tag.name;
+                return decodeHtmlEntities(tag.name);
             })
             .join(", ");
         const moreTagLink = document.createElement("a");
@@ -237,6 +237,10 @@ export async function generateRelatedPostDOM(post: WPPost): Promise<HTMLElement>
     const postDOM = document.createElement("div");
     postDOM.classList.add("related-post");
 
+    const postLink = document.createElement("a");
+    postLink.href = post.url;
+    postLink.classList.add("post-link");
+
     const featuredImage = document.createElement("img");
     featuredImage.classList.add("featured-image");
     featuredImage.src = post.featuredImage.large;
@@ -247,10 +251,7 @@ export async function generateRelatedPostDOM(post: WPPost): Promise<HTMLElement>
 
     const title = document.createElement("h2");
     title.classList.add("title");
-    const titleLink = document.createElement("a");
-    titleLink.href = post.url;
-    titleLink.innerHTML = post.title;
-    title.appendChild(titleLink);
+    title.innerHTML = post.title;
 
     const readTime = document.createElement("div");
     readTime.classList.add("read-time");
@@ -260,9 +261,11 @@ export async function generateRelatedPostDOM(post: WPPost): Promise<HTMLElement>
     tags.classList.add("tags");
     tags.append(...(await makeTagList(post)));
 
-    textContent.append(title, readTime, tags);
+    textContent.append(title, readTime);
 
-    postDOM.append(featuredImage, textContent);
+    postLink.append(featuredImage, textContent);
+
+    postDOM.append(postLink, tags);
 
     return postDOM;
 }

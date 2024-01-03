@@ -153,7 +153,7 @@ export const PostCollageBlockSave = ({ attributes }: GutenCsekBlockSaveProps<Pos
             data-post-count={postCount}
             data-chosen-category={chosenCategory}
             data-found-tags={JSON.stringify(foundTags)}>
-            <div className="block-content">
+            <div className="inner-container">
                 <nav className="tag-nav">
                     <ul>
                         <li>
@@ -169,6 +169,9 @@ export const PostCollageBlockSave = ({ attributes }: GutenCsekBlockSaveProps<Pos
                     </ul>
                 </nav>
                 <div className="collage-related-posts"></div>
+                <div className="featured-post">
+                    <div className="inner"></div>
+                </div>
             </div>
         </section>
     );
