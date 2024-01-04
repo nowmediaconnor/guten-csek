@@ -107,3 +107,35 @@ h4 {
     gap: 0.5rem;
     padding: 1rem;
 }
+
+.wp-block-paragraph {
+    @apply my-4;
+}
+
+.wp-block-heading {
+    @apply font-bold my-2 font-syne;
+}
+
+h1.wp-block-heading {
+    @apply text-4xl;
+}
+
+h2.wp-block-heading {
+    @apply text-3xl;
+}
+
+h3.wp-block-heading {
+    @apply text-2xl;
+}
+
+h4.wp-block-heading {
+    @apply text-xl;
+}
+
+h5.wp-block-heading {
+    @apply text-lg;
+}
+
+h6.wp-block-heading {
+    @apply text-base;
+}
