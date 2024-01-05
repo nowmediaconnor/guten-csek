@@ -370,6 +370,18 @@ export default class DOMController extends BlockController implements DOMControl
                 this.closeLetsTalk();
                 e.preventDefault();
             }
+
+            if (e.ctrlKey) {
+                console.info("[CsekCreative] (Press Ctrl + D to toggle debug mode)");
+            }
+
+            // debug mode
+            if (e.ctrlKey && e.key === "d") {
+                const newMode = !this.debug;
+                this.debugMode = newMode;
+                console.info("[CsekCreative] Debug mode:", this.debug ? "ON" : "OFF");
+                e.preventDefault();
+            }
         });
     }
 
@@ -412,6 +424,11 @@ export default class DOMController extends BlockController implements DOMControl
     }
 
     onMouseMove(e: MouseEvent, blockIndex: number): void {}
+
+    set debugMode(state: boolean) {
+        DOMController.siteDebug = state;
+        this.debug = state;
+    }
 
     async setFeaturedImageColors() {
         await updateFeaturedImageColorDerivatives();

@@ -135,22 +135,22 @@ export const prepareCurtainElements = () => {
 
         const scrollPercentage = Math.floor(constrain(scrollPositionFromTop / window.innerHeight, 0, 1) * 100) / 100;
 
-        log(
-            JSON.stringify(
-                {
-                    contentReelHeight,
-                    scrollPosition,
-                    scrollPositionFromTop,
-                    scrollPercentage,
-                    contentReelTop,
-                    contentReelBottom,
-                    vh: window.innerHeight,
-                    index,
-                },
-                null,
-                4
-            )
-        );
+        // log(
+        //     JSON.stringify(
+        //         {
+        //             contentReelHeight,
+        //             scrollPosition,
+        //             scrollPositionFromTop,
+        //             scrollPercentage,
+        //             contentReelTop,
+        //             contentReelBottom,
+        //             vh: window.innerHeight,
+        //             index,
+        //         },
+        //         null,
+        //         4
+        //     )
+        // );
 
         // effects for underlying card
         if (index < leftCurtains.length - 1) {
@@ -168,7 +168,7 @@ export const prepareCurtainElements = () => {
                 const scrollMass = document.getElementById("curtain-reel-scroll-mass");
                 if (scrollMass) {
                     scrollMass.style.backgroundColor = color;
-                    log({ color });
+                    // log({ color });
                 }
             }
         }
@@ -201,7 +201,7 @@ export const prepareCurtainElements = () => {
     const adjustBasedOnScroll = (scroll: number) => {
         const scrollDirection = Math.floor(constrain(window.scrollY - lastScroll, -1, 1));
         lastScroll = window.scrollY;
-        log("scroll position:", window.scrollY, "scroll direction:", scrollDirection);
+        // log("scroll position:", window.scrollY, "scroll direction:", scrollDirection);
 
         if (scroll === 1 && scrollDirection === 1) {
             currentIndex++;
