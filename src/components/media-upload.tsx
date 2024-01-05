@@ -18,6 +18,7 @@ interface CsekMediaUploadProps {
     type?: "image" | "video" | "audio";
     label?: string;
     size?: "thumbnail" | "medium" | "large" | "full";
+    altText?: string;
     className?: string;
 }
 
@@ -27,6 +28,7 @@ export const CsekMediaUpload = ({
     type = "image",
     label,
     size = "full",
+    altText = "",
     className = "",
 }: CsekMediaUploadProps) => {
     const [resourceURL, setResourceURL] = useState(urlAttribute);
@@ -57,7 +59,7 @@ export const CsekMediaUpload = ({
             }
         };
 
-        const resource = new CsekImage(v.id);
+        const resource = new CsekImage(v.id, "image", altText || undefined);
         await resource.doubleCheckSizes();
         // alert("Resource info: " + JSON.stringify({ ...resource }, null, 4));
         onChange(resUrl(resource), resource.altText);

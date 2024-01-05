@@ -69,8 +69,8 @@ class PostCollageBlock {
         this.tagLinks = this.block.querySelectorAll(".tag-nav ul li a");
         this.relatedPostsArea = this.block.querySelector(".collage-related-posts") as HTMLElement;
 
-        const gridElements = await this.buildPostsGrid(this.relatedPosts);
-        this.relatedPostsArea.append(...gridElements);
+        // const gridElements = await this.buildPostsGrid(this.relatedPosts);
+        // this.relatedPostsArea.append(...gridElements);
 
         this.relatedPostsArea.addEventListener("transitionend", (e) => {
             const target = e.target as HTMLElement;
@@ -101,7 +101,11 @@ class PostCollageBlock {
             });
         });
 
-        this.tagLinks.forEach((link) => {
+        this.tagLinks.forEach((link, index) => {
+            if (index === 0) {
+                link.classList.add("chosen");
+            }
+
             link.addEventListener("click", async (e) => {
                 e.preventDefault();
 

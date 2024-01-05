@@ -4,13 +4,17 @@
  */
 
 .wp-block-guten-csek-post-collage-block {
-    @apply relative py-16;
+    @apply relative md:py-8;
 
     & .inner-container {
         @apply flex flex-col justify-start items-center w-full;
 
+        & .tag-nav {
+            @apply w-full;
+        }
+
         & nav ul {
-            @apply w-11/12 max-w-csek-max mx-auto flex flex-wrap justify-center md:justify-start gap-y-2;
+            @apply w-11/12 max-w-csek-max mx-auto flex flex-wrap justify-center sm:justify-start gap-y-2;
 
             & li a {
                 @apply px-2 py-1 border-b-2 border-transparent hover:border-csek-red transition-all duration-200 cursor-pointer font-syne text-sm;
@@ -22,7 +26,7 @@
         }
 
         & .collage-related-posts {
-            @apply relative flex flex-col justify-start items-center transition-opacity duration-750 min-h-[75vh];
+            @apply relative flex flex-col justify-start items-center transition-opacity duration-750 min-h-[75vh] my-8;
 
             &.hide {
                 @apply opacity-0 pointer-events-none;
@@ -44,7 +48,7 @@
                     }
 
                     & .title {
-                        @apply relative text-csek-dark font-bold font-syne text-xl md:text-2xl my-2;
+                        @apply relative text-csek-dark font-bold font-syne text-xl md:text-2xl my-2 text-pretty;
 
                         &::after {
                             content: "More";

@@ -69,7 +69,6 @@ export async function getAllPosts(tags?: number[], categories?: number[]) {
 export async function getAllTags(): Promise<PostTag[]> {
     try {
         const res = await fetch(`/wp-json/wp/v2/tags?context=view`);
-        console.log("found tags");
         const tagData = await res.json();
 
         const tags: PostTag[] = [];
@@ -94,10 +93,7 @@ export async function getAllTags(): Promise<PostTag[]> {
 export async function getAllCategories(): Promise<PostCategory[]> {
     try {
         const res = await fetch(`/wp-json/wp/v2/categories?context=view`);
-        console.log("found categories");
         const categoryData = await res.json();
-
-        console.table(categoryData);
 
         const categories: PostCategory[] = [];
 
@@ -114,8 +110,6 @@ export async function getAllCategories(): Promise<PostCategory[]> {
                 });
             }
         });
-
-        console.info(parentCategories);
 
         categoryData.forEach((category: any) => {
             if (category.parent !== 0) {
@@ -242,16 +236,21 @@ export async function generateRelatedPostDOM(post: WPPost): Promise<HTMLElement>
     postLink.classList.add("post-link");
 
     const featuredImage = document.createElement("img");
-    featuredImage.classList.add("featured-image");
-    featuredImage.src = post.featuredImage.large;
-    featuredImage.alt = post.featuredImage.altText;
+    if (post.featuredImage) {
+        featuredImage.classList.add("featured-image");
+        featuredImage.src = post.featuredImage.getSize("large", "full");
+        featuredImage.alt = post.featuredImage.altText;
+        postLink.append(featuredImage);
+    }
 
     const textContent = document.createElement("div");
     textContent.classList.add("text-content");
 
     const title = document.createElement("h2");
     title.classList.add("title");
-    title.innerHTML = post.title;
+    const splitTitle = decodeHtmlEntities(post.title).split("|");
+    const mainTitle = splitTitle[0].trim();
+    title.innerText = mainTitle;
 
     const readTime = document.createElement("div");
     readTime.classList.add("read-time");
@@ -263,7 +262,7 @@ export async function generateRelatedPostDOM(post: WPPost): Promise<HTMLElement>
 
     textContent.append(title, readTime);
 
-    postLink.append(featuredImage, textContent);
+    postLink.append(textContent);
 
     postDOM.append(postLink, tags);
 

@@ -3,6 +3,8 @@
  * Author: Connor Doman
  */
 
+type CsekImageSize = "thumbnail" | "medium" | "large" | "full";
+
 interface ImageSizeData {
     file: string;
     width: number;
@@ -13,6 +15,8 @@ interface ImageSizeData {
 }
 
 export class CsekImage {
+    private static readonly SIZE_ORDER: CsekImageSize[] = ["large", "medium", "thumbnail", "full"];
+
     private id: number;
     private alt: string;
     private sizes: { [key: string]: ImageSizeData };
@@ -21,9 +25,13 @@ export class CsekImage {
 
     private _url: string;
 
-    constructor(id: number, type: "image" | "video" = "image") {
+    constructor(id: number, type: "image" | "video" = "image", alt?: string) {
         this.id = id;
         this.type = type;
+
+        if (alt) {
+            this.alt = alt;
+        }
 
         this.preload();
     }
@@ -33,7 +41,7 @@ export class CsekImage {
             const response = await fetch(`/wp-json/wp/v2/media/${this.id}?context=embed`);
 
             const data = await response.json();
-            this.alt = data.alt_text;
+            if (!this.alt) this.alt = data.alt_text;
             this.sizes = data.media_details.sizes;
 
             if (this.type === "video") {
@@ -47,6 +55,26 @@ export class CsekImage {
     async doubleCheckSizes() {
         if (!this.sizes) {
             await this.preload();
+        }
+    }
+
+    getSize(size: CsekImageSize, fallbackSize?: CsekImageSize): string {
+        // If the size exists, return it
+        if (this.sizes && this.sizes[size]) {
+            return this.sizes[size].source_url;
+        }
+
+        // If the fallback size exists, return it
+        if (fallbackSize && this.sizes && this.sizes[fallbackSize]) {
+            return this.sizes[fallbackSize].source_url;
+        }
+
+        // If the size doesn't exist, return the next largest size
+        const index = CsekImage.SIZE_ORDER.indexOf(size);
+        if (index < 0 || index === CsekImage.SIZE_ORDER.length - 1) {
+            return this.sizes ? this.sizes.full.source_url : "";
+        } else {
+            return this.getSize(CsekImage.SIZE_ORDER[index + 1]);
         }
     }
 

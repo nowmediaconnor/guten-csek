@@ -70,20 +70,24 @@ export const PostCollageBlockEdit = ({
         <section>
             <CsekBlockHeading text="Post Collage Block" />
             <CsekCard className="flex flex-col gap-4">
-                <CsekSelectDropdown
-                    label="Category"
-                    options={parentCategories.map((c) => {
-                        return { label: c.name, value: c.slug };
-                    })}
-                    onChange={(value: string) => {
-                        const category = findCategoryId(parentCategories, value);
-                        setCurrentCategory(category ?? -1);
-                        setCategorySlug(value);
-                    }}
-                    initialValue={categorySlug}
-                />
+                {parentCategories.length === 0 ? (
+                    <p>Loading categories...</p>
+                ) : (
+                    <CsekSelectDropdown
+                        label="Category"
+                        options={parentCategories.map((c) => {
+                            return { label: c.name, value: c.slug };
+                        })}
+                        onChange={(value: string) => {
+                            const category = findCategoryId(parentCategories, value);
+                            setCurrentCategory(category ?? -1);
+                            setCategorySlug(value);
+                        }}
+                        initialValue={categorySlug}
+                    />
+                )}
                 <TextInput
-                    label="Number of Posts to Display"
+                    label="Number of Posts in First Section"
                     hint="This is the number of of posts to display in the first part of the collage. If there are more posts than this number, a featured post is added and the remaining posts are shown below."
                     onChange={(value: string) => {
                         setAttributes({ postCount: parseInt(value) });
