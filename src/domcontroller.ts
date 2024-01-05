@@ -18,6 +18,7 @@ import CyclingStackController from "./scripts/controllers/cycling-stack-controll
 import ProjectsMarqueeController from "./scripts/controllers/projects-marquee-controller";
 import ProcessBlockController from "./blocks/process-block";
 import { ProjectsMasonryController } from "./blocks/projects/masonry-block";
+import PostCollageController from "./scripts/controllers/blog/post-collage-controller";
 
 export const createDOMController = () => {
     /* Prepare DOM Controller */
@@ -60,6 +61,9 @@ export const createDOMController = () => {
     // Projects Masonry Block
     const projectsMasonryBlock = new ProjectsMasonryController();
 
+    // Post Collage Block
+    const postCollageController = new PostCollageController();
+
     // DOM controller
     return new DOMController(
         curtainifyController,
@@ -74,6 +78,7 @@ export const createDOMController = () => {
         cyclingStackController,
         teamController,
         processBlockController,
-        projectsMasonryBlock
+        projectsMasonryBlock,
+        postCollageController
     );
 };

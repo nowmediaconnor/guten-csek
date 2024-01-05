@@ -13,11 +13,12 @@ import { CsekImage } from "../scripts/image";
 import { twMerge } from "tailwind-merge";
 
 interface CsekMediaUploadProps {
-    onChange: (v: string, altText: string) => void;
+    onChange: (v: string, altText?: string) => void;
     urlAttribute?: string;
     type?: "image" | "video" | "audio";
     label?: string;
     size?: "thumbnail" | "medium" | "large" | "full";
+    altText?: string;
     className?: string;
 }
 
@@ -27,16 +28,23 @@ export const CsekMediaUpload = ({
     type = "image",
     label,
     size = "full",
+    altText = "",
     className = "",
 }: CsekMediaUploadProps) => {
     const [resourceURL, setResourceURL] = useState(urlAttribute);
     const [resourceId, setResourceId] = useState(0);
 
     const handleChangeURL = async (v: any) => {
-        const resource = new CsekImage(v.id);
-        await resource.doubleCheckSizes();
+        if (type === "audio") return;
+        else if (type === "video") {
+            console.log("video url: ", v.url);
+            onChange(v.url);
+            setResourceURL(v.url);
+            setResourceId(v.id);
+            return;
+        }
 
-        const resUrl = () => {
+        const resUrl = (resource: CsekImage) => {
             switch (size) {
                 case "thumbnail":
                     return resource.thumbnail;
@@ -50,8 +58,11 @@ export const CsekMediaUpload = ({
                     return resource.full;
             }
         };
+
+        const resource = new CsekImage(v.id, "image", altText || undefined);
+        await resource.doubleCheckSizes();
         // alert("Resource info: " + JSON.stringify({ ...resource }, null, 4));
-        onChange(resUrl(), resource.altText);
+        onChange(resUrl(resource), resource.altText);
         setResourceURL(v.url);
         setResourceId(v.id);
     };

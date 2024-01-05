@@ -87,6 +87,11 @@ import { TeamBlockEdit, TeamBlockSave } from "../blocks/team-block";
 import ProcessBlockController, { ProcessBlockAttributes } from "../blocks/process-block";
 import ProjectsMasonryBlock, { ProjectsMasonryBlockAttributes } from "../blocks/projects/masonry-block";
 import { defaultPadding } from "../components/padding-selector";
+import {
+    PostCollageBlockAttributes,
+    PostCollageBlockEdit,
+    PostCollageBlockSave,
+} from "../blocks/blog/post-collage-block";
 
 export const registerAllBlocks = () => {
     console.log("Registering blocks...");
@@ -752,5 +757,28 @@ export const registerAllBlocks = () => {
         },
         edit: ProjectsMasonryBlock.editComponent,
         save: ProjectsMasonryBlock.saveComponent,
+    });
+
+    // Post Collage Block
+    registerBlockType<PostCollageBlockAttributes>("guten-csek/post-collage-block", {
+        title: "Csek Post Collage Block",
+        icon: "text",
+        category: "csek",
+        attributes: {
+            chosenCategory: {
+                type: "number",
+                default: -1,
+            },
+            postCount: {
+                type: "number",
+                default: 6,
+            },
+            foundTags: {
+                type: "array",
+                default: [],
+            },
+        },
+        edit: PostCollageBlockEdit,
+        save: PostCollageBlockSave,
     });
 };

@@ -3,9 +3,12 @@
 @import "tailwindcss/utilities";
 
 @import "animations.css";
+
 @import "components/stack.css";
 @import "components/button.css";
+
 @import "style.css";
+
 @import "blocks/block-quote-block.css";
 @import "blocks/curtainify.css";
 @import "blocks/expanding-video-block.css";
@@ -31,4 +34,7 @@
 @import "blocks/team-block.css";
 @import "blocks/video-carousel-block.css";
 @import "blocks/process-block.css";
+
 @import "blocks/projects/masonry-block.css";
+
+@import "blocks/blog/post-collage-block.css";

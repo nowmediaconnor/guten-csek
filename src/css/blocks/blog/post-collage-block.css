@@ -1,0 +1,118 @@
+/*
+ * Created on Sat Dec 30 2023
+ * Author: Connor Doman
+ */
+
+.wp-block-guten-csek-post-collage-block {
+    @apply relative md:py-8;
+
+    & .inner-container {
+        @apply flex flex-col justify-start items-center w-full;
+
+        & .tag-nav {
+            @apply w-full;
+        }
+
+        & nav ul {
+            @apply w-11/12 max-w-csek-max mx-auto flex flex-wrap justify-center sm:justify-start gap-y-2;
+
+            & li a {
+                @apply px-2 py-1 border-b-2 border-transparent hover:border-csek-red transition-all duration-200 cursor-pointer font-syne text-sm;
+
+                &.chosen {
+                    @apply border-csek-red text-csek-red;
+                }
+            }
+        }
+
+        & .collage-related-posts {
+            @apply relative flex flex-col justify-start items-center transition-opacity duration-750 min-h-[75vh] my-8;
+
+            &.hide {
+                @apply opacity-0 pointer-events-none;
+            }
+
+            & .related-posts-grid {
+                @apply relative flex sm:grid sm:grid-cols-2 md:grid-cols-3 flex-col sm:flex-row items-start justify-around gap-x-4 gap-y-8 w-11/12 max-w-csek-max mx-auto py-8 flex-wrap transition-all duration-750;
+
+                & .related-post {
+                    @apply relative flex-grow flex flex-col box-border;
+
+                    &:hover .title::after {
+                        content: "More";
+                        @apply opacity-100;
+                    }
+
+                    & .text-content {
+                        @apply flex flex-col gap-4 py-2;
+                    }
+
+                    & .title {
+                        @apply relative text-csek-dark font-bold font-syne text-xl md:text-2xl my-2 text-pretty;
+
+                        &::after {
+                            content: "More";
+                            @apply opacity-0 transition-opacity duration-200 pointer-events-none absolute -top-[5.25rem] left-1/2 transform -translate-x-1/2 w-20 h-20 rounded-full inline-flex flex-col items-center justify-center bg-csek-dark z-[1000] text-sm uppercase text-white font-montserrat font-medium;
+                        }
+                    }
+
+                    & .featured-image {
+                        @apply relative rounded-md overflow-hidden;
+
+                        & img {
+                            @apply w-full h-full object-cover object-top;
+                        }
+                    }
+
+                    & .read-time {
+                        @apply text-sm font-medium uppercase;
+                    }
+
+                    & .tags {
+                        @apply flex flex-row gap-2 items-center justify-start flex-wrap;
+                    }
+                }
+            }
+
+            & .featured-post {
+                @apply relative bg-csek-dark flex-grow flex-col box-border h-80 min-h-[50vh] w-screen;
+
+                &.visible {
+                    @apply flex;
+                }
+
+                & .inner {
+                    @apply relative w-full h-full max-w-csek-max mx-auto flex flex-col justify-center items-start py-8 bg-cover;
+
+                    &::after {
+                        @apply max-w-csek-max;
+                        content: "";
+                        position: absolute;
+                        top: 0;
+                        left: 50%;
+                        width: 100%;
+                        height: 100%;
+                        background: radial-gradient(circle, rgba(255, 255, 255, 0) 0%, #131313 95%);
+                        transform: translateX(-50%);
+                    }
+
+                    & .featured-content {
+                        @apply w-11/12 h-full max-w-csek-max mx-auto flex flex-col justify-end items-start z-10 gap-4;
+
+                        & .title {
+                            @apply relative text-white font-bold font-syne text-xl md:text-2xl my-2 drop-shadow-lg;
+                        }
+
+                        & .read-time {
+                            @apply text-sm font-medium uppercase text-white;
+                        }
+
+                        & .tags {
+                            @apply flex flex-row gap-2 items-center justify-start flex-wrap;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

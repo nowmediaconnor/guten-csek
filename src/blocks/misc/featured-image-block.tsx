@@ -63,7 +63,13 @@ export const FeaturedImageBlockEdit = ({
                     placeholder="Image alt text"
                     label="Image Alt Text"
                 />
-                <CsekMediaUpload onChange={onChangeImageURL} urlAttribute={imageURL} type="image" size="large" />
+                <CsekMediaUpload
+                    onChange={onChangeImageURL}
+                    urlAttribute={imageURL}
+                    type="image"
+                    size="large"
+                    altText={imageAlt}
+                />
             </div>
         </section>
     );
