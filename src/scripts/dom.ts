@@ -229,6 +229,15 @@ export default class DOMController extends BlockController implements DOMControl
         });
     }
 
+    checkIfLetsTalkRequested(): boolean {
+        const hash = window.location.hash;
+        if (hash === "#contact") {
+            this.openLetsTalk();
+            return true;
+        }
+        return false;
+    }
+
     prepareLetsTalkScreen(): boolean {
         const letsTalk = document.getElementById("lets-talk") as HTMLDivElement;
         if (!letsTalk) {
@@ -251,6 +260,8 @@ export default class DOMController extends BlockController implements DOMControl
         this.letsTalkScreen = letsTalk;
         this.letsTalkOpenButtons = letsTalkButtons;
         this.letsTalkCloseButton = letsTalkCloseButton;
+
+        this.checkIfLetsTalkRequested();
 
         return true;
     }
