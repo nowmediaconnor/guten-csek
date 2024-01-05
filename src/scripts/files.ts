@@ -3,6 +3,8 @@
  * Author: Connor Doman
  */
 
+import { error, log } from "./global";
+
 // https://stackoverflow.com/questions/6150289/how-can-i-convert-an-image-into-base64-string-using-javascript
 export const imageToBase64 = async (url: string): Promise<string> => {
     const response = await fetch(url);
@@ -37,14 +39,14 @@ export const getImageColor = async (url: string): Promise<string> => {
 
         const { css_rgb } = JSON.parse(body);
 
-        console.log("rgb:", css_rgb);
+        log("Fetched rgb:", css_rgb);
 
         if (!css_rgb) {
             throw new Error(`Color is null. URL: ${url}`);
         }
         return css_rgb;
     } catch (err: any) {
-        console.log("Error:", err);
+        error("[getImageColor]", err);
     }
 
     return "rgb(19,19,19)";

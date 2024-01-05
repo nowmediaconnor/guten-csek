@@ -92,9 +92,10 @@ import {
     PostCollageBlockEdit,
     PostCollageBlockSave,
 } from "../blocks/blog/post-collage-block";
+import { log } from "./global";
 
 export const registerAllBlocks = () => {
-    console.log("Registering blocks...");
+    log("Registering blocks...");
 
     // Self description block
     registerBlockType<SelfDescriptionBlockAttributes>("guten-csek/self-description-block", {

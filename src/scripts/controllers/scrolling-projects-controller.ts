@@ -5,6 +5,7 @@
 
 import { BlockController } from "../dom";
 import { getImageColor } from "../files";
+import { log } from "../global";
 import ProjectsMarqueeController from "./projects-marquee-controller";
 
 interface SelectedProject {
@@ -241,7 +242,7 @@ export class ScrollingProjectsBlock {
     }
 
     log(...args: any[]) {
-        console.log(`[${this.constructor.name}]`, ...args);
+        log(`[${this.constructor.name}]`, ...args);
     }
 }
 

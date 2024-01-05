@@ -3,6 +3,7 @@
  * Author: Connor Doman
  */
 
+import { log } from "../global";
 import { Brick, BrickCompatibility, Shape, compatibilityString } from "./brick";
 
 export interface CSSGridCoordinates {
@@ -393,7 +394,7 @@ export class MasonryGrid {
 
     private log(...args: any[]): void {
         if (this.debug) {
-            console.log(...args);
+            log("[MasonryGrid]", ...args);
         }
     }
 

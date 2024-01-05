@@ -4,6 +4,7 @@
  */
 
 import { BlockController } from "../../dom";
+import { log } from "../../global";
 import { decodeHtmlEntities } from "../../strings";
 import {
     PostTag,
@@ -35,16 +36,13 @@ class PostCollageBlock {
 
     relatedPosts: RelatedPostDOM[];
 
-    log: (...args: any[]) => void;
-
-    constructor(block: HTMLElement, log = console.log) {
+    constructor(block: HTMLElement) {
         this.block = block;
         this.category = -1;
         this.currentTag = -1;
         this.posts = [];
         this.tags = [];
         this.relatedPosts = [];
-        this.log = log;
     }
 
     async setup() {
@@ -120,7 +118,7 @@ class PostCollageBlock {
     }
 
     async update() {
-        console.log("updating...");
+        this.log("updating...");
         this.relatedPostsArea.style.opacity = "0";
 
         this.tagLinks.forEach((link) => {
@@ -192,7 +190,7 @@ class PostCollageBlock {
     }
 
     async buildPostsGrid(posts: RelatedPostDOM[]): Promise<HTMLElement[]> {
-        console.log("building posts grid...");
+        this.log("building posts grid...");
 
         const elements: HTMLElement[] = [];
         if (posts.length > this.postCount) {
@@ -209,6 +207,10 @@ class PostCollageBlock {
             elements.push(onlyGrid);
         }
         return elements;
+    }
+
+    log(...args: any[]) {
+        log("[PostCollageBlock]", ...args);
     }
 }
 
@@ -234,7 +236,7 @@ export default class PostCollageController extends BlockController {
         }
 
         this.blocks.forEach((block) => {
-            const collageBlock = new PostCollageBlock(block, (...args: any[]) => this.log(...args));
+            const collageBlock = new PostCollageBlock(block);
             this.collageBlocks.push(collageBlock);
         });
 

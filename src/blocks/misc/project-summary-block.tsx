@@ -4,13 +4,14 @@
  */
 
 import React from "react";
-import { GutenCsekBlockEditProps, GutenCsekBlockSaveProps } from "../../scripts/dom";
+import DOMController, { GutenCsekBlockEditProps, GutenCsekBlockSaveProps } from "../../scripts/dom";
 import { useBlockProps } from "@wordpress/block-editor";
 import { urlExtractSecondLevelDomain } from "../../scripts/strings";
 import { CsekBlockHeading } from "../../components/heading";
 import { CheckboxInput, TextArea, TextInput } from "../../components/input";
 import CsekColorPicker from "../../components/color-picker";
 import { OutboundLink } from "../../components/links";
+import { log } from "../../scripts/global";
 
 export interface ProjectSummaryBlockAttributes {
     backgroundColor: string;
@@ -41,7 +42,7 @@ export const ProjectSummaryBlockEdit = ({
     } = attributes;
 
     const setBackgroundColor = (hexColor: string) => {
-        console.log(JSON.stringify(hexColor, null, 4));
+        log(JSON.stringify(hexColor, null, 4));
         setAttributes({ backgroundColor: hexColor });
     };
 

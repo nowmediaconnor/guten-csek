@@ -6,11 +6,12 @@
 import { createDOMController } from "./domcontroller";
 // import { registerAllBlocks } from "./scripts/register-blocks";
 import { runAccumulators } from "./scripts/accumulators";
+import { log } from "./scripts/global";
 
 // registerAllBlocks();
 
 window.addEventListener("load", (e) => {
-    console.log("[Csek Creative] Window loaded.");
+    log("[Csek Creative] Window loaded.");
 
     /* Prepare Accumulator Elements */
     runAccumulators();

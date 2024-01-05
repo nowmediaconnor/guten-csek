@@ -3,6 +3,7 @@
  * Author: Connor Doman
  */
 
+import { log } from "../global";
 import { Row } from "./row";
 
 export class MarqueeCanvas {
@@ -51,7 +52,7 @@ export class MarqueeCanvas {
     }
 
     set words(words: string[]) {
-        console.log("Setting words in marquee...");
+        this.log("Setting words in marquee...");
         this._words = words;
     }
 
@@ -229,5 +230,9 @@ export class MarqueeCanvas {
         can.style.height = h + "px";
         can.getContext("2d")?.setTransform(ratio, 0, 0, ratio, 0, 0);
         return can;
+    }
+
+    log(...args: any[]) {
+        log("[MarqueeCanvas]", ...args);
     }
 }

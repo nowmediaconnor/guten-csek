@@ -3,6 +3,8 @@
  * Author: Connor Doman
  */
 
+import { error } from "./global";
+
 type CsekImageSize = "thumbnail" | "medium" | "large" | "full";
 
 interface ImageSizeData {
@@ -48,7 +50,7 @@ export class CsekImage {
                 this._url = data.source_url;
             }
         } catch (err: any) {
-            console.log(`[CsekImage] Error: ${err}`);
+            error(`[CsekImage] Error: ${err}`);
         }
     }
 

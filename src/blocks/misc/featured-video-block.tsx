@@ -34,7 +34,6 @@ export const FeaturedVideoBlockEdit = ({
     const { videoURL, padding } = attributes;
 
     const handleChangeVideoURL = (url: string) => {
-        console.log("video url: ", url);
         setAttributes({ videoURL: url });
     };
 

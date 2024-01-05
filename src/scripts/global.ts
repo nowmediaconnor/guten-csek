@@ -3,6 +3,7 @@
  * Author: Connor Doman
  */
 
+import DOMController from "./dom";
 import { getImageColor } from "./files";
 
 export async function updateFeaturedImageColorDerivatives(): Promise<boolean> {
@@ -30,3 +31,15 @@ export async function updateFeaturedImageColorDerivatives(): Promise<boolean> {
 
     return true;
 }
+
+export const log = (...args: any[]) => {
+    if (DOMController.siteDebug) {
+        console.log("[CsekCreative]", ...args);
+    }
+};
+
+export const error = (...args: any[]) => {
+    if (DOMController.siteDebug) {
+        console.error("[CsekCreative]", ...args);
+    }
+};

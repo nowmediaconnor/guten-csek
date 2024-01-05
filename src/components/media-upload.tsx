@@ -11,6 +11,7 @@ import { CsekAddButton } from "./button";
 import Label from "./label";
 import { CsekImage } from "../scripts/image";
 import { twMerge } from "tailwind-merge";
+import { log } from "../scripts/global";
 
 interface CsekMediaUploadProps {
     onChange: (v: string, altText?: string) => void;
@@ -37,7 +38,7 @@ export const CsekMediaUpload = ({
     const handleChangeURL = async (v: any) => {
         if (type === "audio") return;
         else if (type === "video") {
-            console.log("video url: ", v.url);
+            log("video url: ", v.url);
             onChange(v.url);
             setResourceURL(v.url);
             setResourceId(v.id);

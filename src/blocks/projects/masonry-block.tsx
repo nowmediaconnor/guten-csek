@@ -9,6 +9,7 @@ import { CsekBlockHeading } from "../../components/heading";
 import { useBlockProps } from "@wordpress/block-editor";
 import { MasonryGrid } from "../../scripts/masonry/masonry";
 import { CsekSelectDropdown, TextInput } from "../../components/input";
+import { log } from "../../scripts/global";
 
 interface WPPostData {
     id: number;
@@ -88,8 +89,8 @@ export default class ProjectsMasonryBlock {
 
         getAllProjects().then((data: CsekProject[]) => {
             this.projectsData = data;
-            console.info("Projects data fetched, creating bricks...");
-            console.log(this.projectsData);
+            // console.info("Projects data fetched, creating bricks...");
+            log(this.projectsData);
             this.calculateMasonry();
             this.createSurroundingDivs();
         });
@@ -103,7 +104,7 @@ export default class ProjectsMasonryBlock {
         // this.masonryGrid.excludeCell(0, 1);
         // this.masonryGrid.excludeCell(0, 2);
         this.masonryGrid.placeBricks(numBricks);
-        console.log(this.masonryGrid.toString());
+        log(this.masonryGrid.toString());
     }
 
     createSurroundingDivs(): void {

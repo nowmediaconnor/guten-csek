@@ -4,6 +4,7 @@
  */
 
 import { constrain, map } from "./math";
+import { log } from "./global";
 
 /**
  * curtainify.js
@@ -12,15 +13,7 @@ import { constrain, map } from "./math";
  * Each element to apply the effect to must have the classname "curtain" but can be placed anywhere inside the curtain-reel element.
  */
 
-console.log("Curtainify.js");
-
-const DEBUG = false;
-
-const log = (...msg: any[]) => {
-    if (DEBUG) {
-        console.log("[Curtainify.js]", ...msg);
-    }
-};
+log("Curtainify.js");
 
 const insertAfter = (newNode: Node, referenceNode: Node) => {
     if (!referenceNode.parentNode) return;
