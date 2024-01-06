@@ -211,9 +211,9 @@ export const CsekSelectDropdown = ({
     };
 
     return (
-        <div className={twMerge("w-full", className)}>
+        <div className={twMerge("w-full flex flex-col", className)}>
             {label ? <Heading level="4">{label}</Heading> : null}
-            {hint ? <em className="em-label">{hint}</em> : null}
+            {hint ? <Label>{hint}</Label> : null}
             <select
                 className={twMerge(
                     "w-full rounded border border-solid border-slate-700 px-2 py-1 text-lg",

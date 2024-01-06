@@ -75,6 +75,7 @@ export const PostCollageBlockEdit = ({
                 ) : (
                     <CsekSelectDropdown
                         label="Category"
+                        hint="This is the parent category for the posts to be displayed. The categories shown to the user will be subcategories of this category."
                         options={parentCategories.map((c) => {
                             return { label: c.name, value: c.slug };
                         })}
