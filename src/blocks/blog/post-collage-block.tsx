@@ -116,13 +116,6 @@ export const PostCollageBlockSave = ({ attributes }: GutenCsekBlockSaveProps<Pos
                         <li>
                             <a href="#">All</a>
                         </li>
-                        {foundTags.map((tag) => (
-                            <li key={tag.slug}>
-                                <a href={`#${tag.url}`} data-tag-id={tag.id}>
-                                    {tag.name}
-                                </a>
-                            </li>
-                        ))}
                     </ul>
                 </nav>
                 <div className="collage-related-posts"></div>

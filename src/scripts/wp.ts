@@ -182,6 +182,32 @@ export function getCategoryBySlug(slug: string): Promise<PostCategory | undefine
     });
 }
 
+export async function getCategoriesFromParent(parentId: number): Promise<PostCategory[] | undefined> {
+    try {
+        const parentCategory = parentId > -1 ? `&parent=${parentId}` : "";
+
+        const res = await fetch(`/wp-json/wp/v2/categories?context=view${parentCategory}`);
+        const categoryData = await res.json();
+
+        const categories: PostCategory[] = [];
+
+        categoryData.forEach((category: any) => {
+            categories.push({
+                id: category.id,
+                name: category.name,
+                slug: category.slug,
+                description: category.description,
+                url: category.link,
+            });
+        });
+
+        return categories;
+    } catch (err) {
+        console.error(err);
+    }
+    return undefined;
+}
+
 export function calculateReadTime(content: string): number {
     const words = removeHTMLTags(content).split(" ");
     const readTime = Math.ceil(words.length / 225);
