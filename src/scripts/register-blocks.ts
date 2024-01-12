@@ -757,7 +757,7 @@ export const registerAllBlocks = () => {
             },
             gridRows: {
                 type: "number",
-                default: 4,
+                default: -1,
             },
         },
         edit: ProjectsMasonryBlock.editComponent,

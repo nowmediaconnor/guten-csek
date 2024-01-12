@@ -419,4 +419,9 @@ export class MasonryGrid {
         }
         return str;
     }
+
+    public static calculateGridHeight(columnCount: number, brickCount: number): number {
+        log({ columnCount, brickCount }, `ceil(log2(${brickCount} / ${columnCount} * ${brickCount} * 2) + 1)`);
+        return Math.ceil(Math.log2((brickCount / columnCount) * brickCount * 2) + 1);
+    }
 }

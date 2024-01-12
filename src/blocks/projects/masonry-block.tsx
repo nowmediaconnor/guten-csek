@@ -95,13 +95,23 @@ export default class ProjectsMasonryBlock {
 
     setup(): void {
         console.warn(this.gridArea.dataset);
-        this.gridRows = parseInt(this.gridArea.dataset.gridrows || "10");
-        this.gridCols = parseInt(this.gridArea.dataset.gridcols || "3");
         this.category = parseInt(this.gridArea.dataset.category || "-1");
 
         getAllProjects(this.category).then((data: CsekProject[]) => {
             this.projectsData = data;
-            // console.info("Projects data fetched, creating bricks...");
+
+            const rowString = this.gridArea.dataset.gridrows || "-1";
+            const colString = this.gridArea.dataset.gridcols || "3";
+
+            const cols = parseInt(colString);
+
+            if (rowString === "-1") {
+                console.warn("No grid rows specified, using:", MasonryGrid.calculateGridHeight(cols, data.length));
+            }
+            this.gridRows =
+                rowString !== "-1" ? parseInt(rowString) : MasonryGrid.calculateGridHeight(cols, data.length);
+            this.gridCols = cols;
+
             log(this.projectsData);
             this.calculateMasonry();
             this.createSurroundingDivs();
