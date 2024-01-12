@@ -98,6 +98,7 @@ export const prepareCurtainElements = () => {
     // add scrollable mass of content to below content reel
     const contentReelScrollMass = document.createElement("div");
     contentReelScrollMass.setAttribute("id", "curtain-reel-scroll-mass");
+    contentReelScrollMass.classList.add("guten-csek-block");
     contentReelScrollMass.style.zIndex = "-1";
     contentReelScrollMass.style.height = `${contentReelHeight}px`;
     contentReelScrollMass.style.backgroundColor = "#131313";

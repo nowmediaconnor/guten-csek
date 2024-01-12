@@ -29,7 +29,7 @@ interface CsekProject {
 
 async function getAllProjects(): Promise<CsekProject[]> {
     const projectsData: CsekProject[] = [];
-    const res = await fetch("/wp-json/wp/v2/posts/?filter[category_name]=project&_fields=id,link,title,_links");
+    const res = await fetch("/wp-json/wp/v2/posts/?filter[category_name]=projects&_fields=id,link,title,_links");
     const data: WPPostData[] = await res.json();
     for (const project of data) {
         if (project._links["wp:featuredmedia"]) {

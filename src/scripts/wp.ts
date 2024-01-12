@@ -36,8 +36,15 @@ export interface PostCategory {
 
 export async function getAllPosts(tags?: number[], categories?: number[]) {
     try {
-        const tagQuery = tags ? "&tags=" + tags.join(",") : "";
-        const categoryQuery = categories ? "&categories=" + categories.join(",") : "";
+        // check if parameters provided, filter out -1 values ("all")
+        const filteredTags = tags && tags.length > 0 ? tags.filter((t) => t > -1) : [];
+        const filteredCategories = categories && categories.length > 0 ? categories.filter((c) => c > -1) : [];
+
+        // build query string if tags or categories still remaining
+        const tagQuery = filteredTags.length > 0 ? "&tags=" + filteredTags.join(",") : "";
+        const categoryQuery = filteredCategories.length > 0 ? "&categories=" + filteredCategories.join(",") : "";
+
+        // fetch posts
         const res = await fetch(`/wp-json/wp/v2/posts?context=view${tagQuery}${categoryQuery}`);
         const postsData = await res.json();
 

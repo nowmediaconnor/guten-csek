@@ -53,17 +53,6 @@ class PostCollageBlock {
         this.relatedPosts = [];
     }
 
-    async fetchCategories(): Promise<PostCategory[]> {
-        const cats = await getCategoriesFromParent(this.category);
-
-        if (cats) {
-            log("Post categories", cats);
-            return cats;
-        }
-
-        return [];
-    }
-
     async setup() {
         this.category = parseInt(this.block.dataset.chosenCategory ?? "-1");
         this.tags = JSON.parse(this.block.dataset.foundTags || "[]") as PostTag[];
@@ -153,6 +142,17 @@ class PostCollageBlock {
                 link.classList.remove("chosen");
             }
         });
+    }
+
+    async fetchCategories(): Promise<PostCategory[]> {
+        const cats = await getCategoriesFromParent(this.category);
+
+        if (cats) {
+            log("Post categories", cats);
+            return cats;
+        }
+
+        return [];
     }
 
     async createRelatedPostGrid(posts: WPPost[] | RelatedPostDOM[]): Promise<HTMLElement> {

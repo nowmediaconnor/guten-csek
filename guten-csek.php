@@ -174,3 +174,28 @@ if (version_compare(get_bloginfo('version'), '5.8', '>=')) {
 } else {
     add_filter('block_categories', 'register_layout_category');
 }
+
+/* Add Guten-Csek classname */
+
+function add_custom_class_to_blocks($content)
+{
+    // Define your custom class name to be added
+    $additionalClass = 'guten-csek-block';
+
+    // Regular expression to match any HTML tag with the existing class name
+    // This pattern now captures all parts of the tag, including other attributes
+    $pattern = '/<([a-zA-Z][a-zA-Z0-9]*)\s+(.*?)\bclass="([^"]*?wp-block-guten-csek-[^"]*?)"(.*?)>/';
+
+    $content = preg_replace_callback($pattern, function ($matches) use ($additionalClass) {
+        $tag = $matches[1]; // Tag name
+        $preAttrs = $matches[2]; // Attributes before the class attribute
+        $classes = $matches[3]; // Existing classes
+        $postAttrs = $matches[4]; // Attributes after the class attribute
+        $updatedClasses = $classes . ' ' . $additionalClass; // Add the new class
+        return "<$tag $preAttrs class=\"$updatedClasses\"$postAttrs>";
+    }, $content);
+
+    return $content;
+}
+
+add_filter('render_block', 'add_custom_class_to_blocks');
