@@ -42,6 +42,7 @@ function enqueue_blocks_iteratively()
             'editor_script' => $block_name,
             'editor_style' => 'guten-csek-editor-style',
             'style' => 'guten-csek-frontend-style',
+
         ]);
     }
 }

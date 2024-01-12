@@ -105,7 +105,6 @@ h4 {
     justify-content: flex-start;
     align-items: flex-start;
     gap: 0.5rem;
-    padding: 1rem;
 }
 
 .wp-block-paragraph {
@@ -138,4 +137,8 @@ h5.wp-block-heading {
 
 h6.wp-block-heading {
     @apply text-base;
+}
+
+.edit-post-visual-editor {
+    @apply w-11/12 max-w-csek-max mx-auto;
 }

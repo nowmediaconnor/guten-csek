@@ -735,13 +735,17 @@ export const registerAllBlocks = () => {
 
     // Projects Masonry Block
     registerBlockType<ProjectsMasonryBlockAttributes>("guten-csek/projects-masonry-block", {
-        title: "Csek Projects Masonry Block",
+        title: "Csek Posts Masonry Block",
         icon: "text",
         category: "csek",
         attributes: {
+            categoryId: {
+                type: "number",
+                default: -1,
+            },
             category: {
                 type: "string",
-                default: "",
+                default: "projects",
             },
             amount: {
                 type: "number",
