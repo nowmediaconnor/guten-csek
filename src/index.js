@@ -7,6 +7,7 @@ import { createDOMController } from "./domcontroller";
 // import { registerAllBlocks } from "./scripts/register-blocks";
 import { runAccumulators } from "./scripts/accumulators";
 import { log } from "./scripts/global";
+import { getAllMedia } from "./scripts/wp";
 
 // registerAllBlocks();
 

@@ -10,6 +10,28 @@ require 'api.php';
 require 'files.php';
 // require 'kmeans.php';
 
+function guten_csek_plugin_file_path(string $relative_path)
+{
+    // Remove leading slash if present
+    $relative_path = ltrim($relative_path, '/');
+
+    return plugin_dir_path(__FILE__) . $relative_path;
+}
+
+function guten_csek_file_version(string $filepath)
+{
+    return filemtime(guten_csek_plugin_file_path($filepath));
+}
+
+function guten_csek_asset($path)
+{
+    if (wp_get_environment_type() === 'production') {
+        return plugin_dir_url(__FILE__) . '/' . $path;
+    }
+
+    return add_query_arg('time', time(),  plugin_dir_url(__FILE__) . '/' . $path);
+}
+
 function enqueue_blocks_iteratively()
 {
     $block_names = [
@@ -78,15 +100,17 @@ function enqueue_custom_block_assets()
     // bundled script
     wp_enqueue_script(
         'guten-csek-blocks',
-        plugins_url('build/index.js', __FILE__),
-        ['wp-element', 'wp-i18n'],
-        filemtime(plugin_dir_path(__FILE__) . 'build/index.js')
+        guten_csek_asset('build/index.js'),
+        [
+            'wp-element', 'wp-i18n', 'wp-api-fetch'
+        ],
+        guten_csek_file_version('build/index.js')
     );
-    $apiSettings = [
-        'root' => esc_url_raw(rest_url()),
-        'nonce' => wp_create_nonce('wp_rest')
-    ];
-    wp_add_inline_script("guten-csek-blocks", "const CSEK_API_SETTINGS = " . json_encode($apiSettings), "before");
+    // $apiSettings = [
+    //     'root' => esc_url_raw(rest_url()),
+    //     'nonce' => wp_create_nonce('wp_rest')
+    // ];
+    // wp_add_inline_script("guten-csek-blocks", "const CSEK_API_SETTINGS = " . json_encode($apiSettings), "before");
 
     // fonts
     // wp_enqueue_style('guten-csek-fonts', plugin_dir_url(__FILE__) . 'src/fonts/fonts.css');
@@ -122,9 +146,9 @@ function enqueue_editor_scripts()
     // Enqueue the block index.js file
     wp_enqueue_script(
         'guten-csek-editor-script', // unique handle
-        plugins_url($editor_script, __FILE__),
+        guten_csek_asset($editor_script),
         ['wp-blocks', 'wp-element', 'wp-i18n', 'wp-editor'], // required dependencies for blocks
-        filemtime(plugin_dir_path(__FILE__) . $editor_script)
+        guten_csek_file_version($editor_script)
     );
 
     // editor-only css

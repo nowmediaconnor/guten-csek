@@ -3,8 +3,12 @@
  * Author: Connor Doman
  */
 
+import { log } from "./global";
 import { CsekImage } from "./image";
 import { decodeHtmlEntities, removeHTMLTags } from "./strings";
+import apiFetch from "@wordpress/api-fetch";
+import { addQueryArgs } from "@wordpress/url";
+import { WP_Query, WP_REST_API_Attachment, WP_REST_API_Attachments } from "wp-types";
 
 export interface WPPost {
     id: number;
@@ -32,6 +36,16 @@ export interface PostCategory {
     description: string;
     url: string;
     children?: PostCategory[];
+}
+
+export async function getAllMedia(): Promise<WP_REST_API_Attachments> {
+    const media: WP_REST_API_Attachments = await apiFetch({ path: "/wp/v2/media", method: "GET" });
+    return media;
+}
+
+export async function getMediaById(id: number): Promise<WP_REST_API_Attachment> {
+    const media: WP_REST_API_Attachment = await apiFetch({ path: `/wp/v2/media/${id}`, method: "GET" });
+    return media;
 }
 
 export async function getAllPosts(tags?: number[], categories?: number[]) {

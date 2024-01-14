@@ -12,6 +12,7 @@ import Label from "./label";
 import { CsekImage } from "../scripts/image";
 import { twMerge } from "tailwind-merge";
 import { log } from "../scripts/global";
+import { getMediaById } from "../scripts/wp";
 
 interface CsekMediaUploadProps {
     onChange: (v: string, altText?: string) => void;
@@ -60,6 +61,7 @@ export const CsekMediaUpload = ({
             }
         };
 
+        await getMediaById(v.id);
         const resource = new CsekImage(v.id, "image", altText || undefined);
         await resource.doubleCheckSizes();
         // alert("Resource info: " + JSON.stringify({ ...resource }, null, 4));

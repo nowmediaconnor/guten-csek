@@ -4,6 +4,7 @@
  */
 
 import { error } from "./global";
+import { getMediaById } from "./wp";
 
 type CsekImageSize = "thumbnail" | "medium" | "large" | "full";
 
@@ -40,11 +41,13 @@ export class CsekImage {
 
     async preload() {
         try {
-            const response = await fetch(`/wp-json/wp/v2/media/${this.id}?context=embed`);
+            // const response = await fetch(`/wp-json/wp/v2/media/${this.id}?context=embed`);
+            // const data = await response.json();
 
-            const data = await response.json();
+            const data = await getMediaById(this.id);
+
             if (!this.alt) this.alt = data.alt_text;
-            this.sizes = data.media_details.sizes;
+            this.sizes = data.media_details.sizes as { [key: string]: ImageSizeData };
 
             if (this.type === "video") {
                 this._url = data.source_url;

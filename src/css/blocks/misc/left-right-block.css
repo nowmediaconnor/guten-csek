@@ -24,3 +24,11 @@
         }
     }
 }
+
+.blog-content .wp-block-guten-csek-left-right-block {
+    @apply w-11/12 max-w-csek-2/3 mx-auto py-0;
+
+    & .left-right {
+        @apply w-full;
+    }
+}
