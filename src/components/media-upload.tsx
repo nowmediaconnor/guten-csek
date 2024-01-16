@@ -13,6 +13,7 @@ import { CsekImage } from "../scripts/image";
 import { twMerge } from "tailwind-merge";
 import { log } from "../scripts/global";
 import { getMediaById } from "../scripts/wp";
+import CsekCard from "./card";
 
 interface CsekMediaUploadProps {
     onChange: (v: string, altText?: string) => void;
@@ -92,7 +93,7 @@ export const CsekMediaUpload = ({
     };
 
     return (
-        <div className={twMerge("flex flex-col gap-4 py-4 csek-card w-fit", className)}>
+        <CsekCard className={twMerge("flex flex-col gap-4 py-4 flex-grow", className)}>
             {label ? <Heading level="3">{label}</Heading> : null}
             <MediaUploadCheck fallback={<Label>You are not permitted to upload media.</Label>}>
                 <MediaUpload
@@ -107,6 +108,6 @@ export const CsekMediaUpload = ({
             </MediaUploadCheck>
             <Heading level="4">{capitalize(type)} preview</Heading>
             {mediaPreview()}
-        </div>
+        </CsekCard>
     );
 };

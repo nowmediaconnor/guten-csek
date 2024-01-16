@@ -13,6 +13,7 @@ import { GutenCsekBlockEditProps, GutenCsekBlockSaveProps } from "../scripts/dom
 import Label from "../components/label";
 import { TextInput } from "../components/input";
 import { CsekAddButton, CsekDeleteButton } from "../components/button";
+import CsekCard from "../components/card";
 
 interface TeamBlockProps {
     attributes: any;
@@ -92,7 +93,7 @@ export const TeamBlockEdit = ({ attributes, setAttributes }: GutenCsekBlockEditP
             </InspectorControls>
             <CsekBlockHeading>Csek Team Block</CsekBlockHeading>
             <Label>Check the inspector to update team photos.</Label>
-            <div className="csek-card flex flex-col gap-4">
+            <CsekCard className="flex flex-col gap-4">
                 <p>{images.length} images selected.</p>
                 <TextInput placeholder="Title" label="Title" initialValue={title} onChange={onSetBlockTitle} />
                 <TextInput placeholder="Tagline" label="Tagline" initialValue={tagline} onChange={onSetTagline} />
@@ -104,7 +105,7 @@ export const TeamBlockEdit = ({ attributes, setAttributes }: GutenCsekBlockEditP
                     initialValue={ctaLink}
                     onChange={onSetCTALink}
                 />
-            </div>
+            </CsekCard>
         </div>
     );
 };

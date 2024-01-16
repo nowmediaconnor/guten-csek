@@ -13,6 +13,7 @@ import { GutenCsekBlockEditProps, GutenCsekBlockSaveProps } from "../scripts/dom
 import { TextInput } from "../components/input";
 import { CsekMediaUpload } from "../components/media-upload";
 import { CsekAddButton, CsekDeleteButton } from "../components/button";
+import CsekCard from "../components/card";
 
 interface ScrollingProjectsProps {
     attributes: {
@@ -77,7 +78,7 @@ export const ScrollingProjectsBlockEdit = ({
 
     const videoElements = projects.map((project: Project, index: number) => {
         return (
-            <div key={index} className="csek-card flex flex-col gap-4">
+            <CsekCard key={index} className="flex flex-col gap-4">
                 <div className="flex flex-row justify-between items-center">
                     <Heading level="2">Project {index + 1}</Heading>
                     <CsekDeleteButton
@@ -87,7 +88,7 @@ export const ScrollingProjectsBlockEdit = ({
                     />
                 </div>
                 <div className="flex flex-row justify-between items-start gap-4">
-                    <div className="csek-card flex flex-col gap-2">
+                    <CsekCard className="flex flex-col gap-2">
                         <TextInput
                             label="Title"
                             placeholder="Title"
@@ -100,7 +101,7 @@ export const ScrollingProjectsBlockEdit = ({
                             initialValue={project.link}
                             onChange={(v) => handleChangeProjectLink(v, index)}
                         />
-                    </div>
+                    </CsekCard>
                     <CsekMediaUpload
                         label="Image"
                         type="image"
@@ -108,7 +109,7 @@ export const ScrollingProjectsBlockEdit = ({
                         onChange={(v) => handleChangeProjectImage(v, index)}
                     />
                 </div>
-            </div>
+            </CsekCard>
         );
     });
     return (

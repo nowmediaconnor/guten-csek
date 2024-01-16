@@ -9,6 +9,7 @@ import { MediaUpload, useBlockProps } from "@wordpress/block-editor";
 import { Button, ColorPicker, RangeControl } from "@wordpress/components";
 import { Heading } from "../../components/heading";
 import { CsekBlockHeading } from "../../components/heading";
+import CsekCard from "../../components/card";
 
 export const ScreenshotCollageBlockEdit = ({ attributes, setAttributes }: GutenbergBlockProps) => {
     const blockProps = useBlockProps();
@@ -51,7 +52,7 @@ export const ScreenshotCollageBlockEdit = ({ attributes, setAttributes }: Gutenb
 
     const imagePreviewElements = screenshots.map((screenshot: any, index: number) => {
         return (
-            <div className="csek-card">
+            <CsekCard>
                 <Heading level="4">Image Preview</Heading>
                 <div className="flex flex-col gap-2">
                     <img className="preview-image" src={screenshot} alt={screenshotAlts[index]} />
@@ -79,7 +80,7 @@ export const ScreenshotCollageBlockEdit = ({ attributes, setAttributes }: Gutenb
                 <Button onClick={() => deleteImageAt(index)} icon="trash">
                     Delete
                 </Button>
-            </div>
+            </CsekCard>
         );
     });
 
@@ -94,11 +95,11 @@ export const ScreenshotCollageBlockEdit = ({ attributes, setAttributes }: Gutenb
                     </Button>
                 </div>
                 <div className="flex flex-col h-max">
-                    <div className="csek-card">
+                    <CsekCard>
                         <Heading level="4">Background Color</Heading>
                         <ColorPicker color={backgroundColor} onChangeComplete={setBackgroundColor} copyFormat="hex" />
-                    </div>
-                    <div className="csek-card">
+                    </CsekCard>
+                    <CsekCard>
                         <Heading level="4">Row Tilt</Heading>
                         <RangeControl
                             value={angleDegrees}
@@ -106,7 +107,7 @@ export const ScreenshotCollageBlockEdit = ({ attributes, setAttributes }: Gutenb
                             min={0}
                             max={360}
                         />
-                    </div>
+                    </CsekCard>
                 </div>
             </div>
         </section>

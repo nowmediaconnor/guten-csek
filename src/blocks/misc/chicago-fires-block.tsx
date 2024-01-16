@@ -11,6 +11,7 @@ import { TextArea, TextInput } from "../../components/input";
 import { Button } from "@wordpress/components";
 import { CsekAddButton, CsekDeleteButton } from "../../components/button";
 import { CsekBlockHeading } from "../../components/heading";
+import CsekCard from "../../components/card";
 
 const NUMBER_OF_FIRES = 4;
 
@@ -43,7 +44,7 @@ const ChicagoFireEditor = ({
     };
 
     return (
-        <div className="flex flex-col gap-2 border border-solid border-slate-700 p-2 rounded my-2 relative">
+        <CsekCard className="flex flex-col gap-2 p-2">
             <Heading level="3">Column {index + 1}</Heading>
             <TextInput
                 label="Heading"
@@ -58,7 +59,7 @@ const ChicagoFireEditor = ({
                 onChange={onChangeMessage}
             />
             <CsekDeleteButton onDelete={handleDelete} className="absolute right-2 top-2" />
-        </div>
+        </CsekCard>
     );
 };
 
@@ -142,27 +143,29 @@ export const ChicagoFiresBlockEdit = ({
     return (
         <div {...blockProps}>
             <CsekBlockHeading>Csek Chicago Fires Block</CsekBlockHeading>
-            <p className="text-sm">
-                The flag of Chicago famously contains 4 stars, each representing one of the city&apos;s great fires.
-                This block evokes that image using 4 statements meant to represent significant influences on company
-                culture.
-            </p>
-            <div className="flex flex-col gap-2 py-2">
-                <TextInput
-                    label="Primary Heading"
-                    placeholder="Enter a heading."
-                    onChange={handleChangePrimaryHeading}
-                    initialValue={primaryHeading}
-                />
-                <TextInput
-                    label="Primary Message"
-                    placeholder="Enter a message."
-                    onChange={handleChangePrimaryMessage}
-                    initialValue={primaryMessage}
-                />
-                {fires}
-                <CsekAddButton label="Add column" onAdd={newFire} />
-            </div>
+            <CsekCard>
+                <p className="text-sm">
+                    The flag of Chicago famously contains 4 stars, each representing one of the city&apos;s great fires.
+                    This block evokes that image using 4 statements meant to represent significant influences on company
+                    culture.
+                </p>
+                <div className="flex flex-col gap-4 pt-2">
+                    <TextInput
+                        label="Primary Heading"
+                        placeholder="Enter a heading."
+                        onChange={handleChangePrimaryHeading}
+                        initialValue={primaryHeading}
+                    />
+                    <TextInput
+                        label="Primary Message"
+                        placeholder="Enter a message."
+                        onChange={handleChangePrimaryMessage}
+                        initialValue={primaryMessage}
+                    />
+                    {fires}
+                    <CsekAddButton label="Add column" onAdd={newFire} />
+                </div>
+            </CsekCard>
         </div>
     );
 };

@@ -6,6 +6,7 @@
 import React, { useState } from "react";
 import { ColorPicker } from "@wordpress/components";
 import { Heading } from "./heading";
+import CsekCard from "./card";
 
 interface ColorPickerProps {
     label?: string;
@@ -26,7 +27,7 @@ export const CsekColorPicker = ({ label, initialValue = "", className, onChange 
     };
 
     return (
-        <div className="csek-card">
+        <CsekCard>
             {label ? <Heading level="4">{label}</Heading> : null}
             <ColorPicker
                 color={color}
@@ -35,7 +36,7 @@ export const CsekColorPicker = ({ label, initialValue = "", className, onChange 
                 disableAlpha={true}
                 className="csek-color-picker"
             />
-        </div>
+        </CsekCard>
     );
 };
 

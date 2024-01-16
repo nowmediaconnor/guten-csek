@@ -141,9 +141,9 @@ function enqueue_editor_scripts()
             'You need to run `npm start` or `npm run build` to generate files for the Guten Csek plugin.'
         );
     }
-    $editor_script = 'build/editor.js';
 
     // Enqueue the block index.js file
+    $editor_script = 'build/editor.js';
     wp_enqueue_script(
         'guten-csek-editor-script', // unique handle
         guten_csek_asset($editor_script),
@@ -151,12 +151,14 @@ function enqueue_editor_scripts()
         guten_csek_file_version($editor_script)
     );
 
+
     // editor-only css
+    $editor_style = 'css/guten-csek-editor.css';
     wp_register_style(
         'guten-csek-editor-style',
-        plugins_url('css/guten-csek-editor.css', __FILE__),
+        guten_csek_asset($editor_style),
         ['wp-edit-blocks'],
-        filemtime(plugin_dir_path(__FILE__) . 'css/guten-csek-editor.css')
+        guten_csek_file_version($editor_style)
     );
 }
 add_action('enqueue_block_editor_assets', 'enqueue_editor_scripts');

@@ -10,6 +10,7 @@ import { CsekBlockHeading } from "../../components/heading";
 
 import { CsekMediaUpload } from "../../components/media-upload";
 import { TextInput } from "../../components/input";
+import CsekCard from "../../components/card";
 
 export interface FullscreenImageBlockAttributes {
     imageURL: string;
@@ -35,7 +36,7 @@ export const FullscreenImageBlockEdit = ({
     return (
         <section {...blockProps}>
             <CsekBlockHeading>Csek Fullscreen Image Block</CsekBlockHeading>
-            <div className="csek-card flex flex-col gap-4">
+            <CsekCard className="flex flex-col gap-4">
                 <TextInput
                     initialValue={imageAlt}
                     onChange={onChangeImageAlt}
@@ -43,7 +44,7 @@ export const FullscreenImageBlockEdit = ({
                     label="Image Alt Text"
                 />
                 <CsekMediaUpload onChange={onChangeImageURL} urlAttribute={imageURL} type="image" size="full" />
-            </div>
+            </CsekCard>
         </section>
     );
 };

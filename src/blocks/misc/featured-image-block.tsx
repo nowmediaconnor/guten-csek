@@ -11,6 +11,7 @@ import { CsekBlockHeading } from "../../components/heading";
 import { CsekMediaUpload } from "../../components/media-upload";
 import { TextInput } from "../../components/input";
 import Label from "../../components/label";
+import CsekCard from "../../components/card";
 
 export interface FeaturedImageBlockAttributes {
     imageURL: string;
@@ -34,9 +35,9 @@ export const FeaturedImageBlockEdit = ({
     };
 
     return (
-        <section {...blockProps}>
+        <section>
             <CsekBlockHeading>Csek Featured Image Block</CsekBlockHeading>
-            <div className="csek-card flex flex-col gap-4">
+            <CsekCard className="flex flex-col gap-4">
                 <Label>
                     Check the Inspector panel to edit padding <i className="fa fa-arrow-right"></i>
                 </Label>
@@ -53,7 +54,7 @@ export const FeaturedImageBlockEdit = ({
                     size="large"
                     altText={imageAlt}
                 />
-            </div>
+            </CsekCard>
         </section>
     );
 };
