@@ -443,18 +443,21 @@ export const registerAllBlocks = () => {
         ...commonProperties,
         title: "Csek Emphasized Text",
         icon: "text",
+        supports: {
+            ...commonProperties.supports,
+            color: {
+                background: true,
+                text: true,
+            },
+            typography: {
+                fontSize: true,
+                lineHeight: true,
+            },
+        },
         attributes: {
             text: {
                 type: "string",
                 default: "",
-            },
-            color: {
-                type: "string",
-                default: "#000000",
-            },
-            backgroundColor: {
-                type: "string",
-                default: "#FFFFFF",
             },
         },
         edit: EmphasizedTextBlockEdit,
