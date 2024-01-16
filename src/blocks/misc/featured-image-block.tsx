@@ -10,22 +10,12 @@ import { CsekBlockHeading } from "../../components/heading";
 
 import { CsekMediaUpload } from "../../components/media-upload";
 import { TextInput } from "../../components/input";
-import CsekPaddingSelector, { Padding, defaultPadding, styleFromPadding } from "../../components/padding-selector";
 import Label from "../../components/label";
 
 export interface FeaturedImageBlockAttributes {
     imageURL: string;
     imageAlt: string;
-    padding: Padding;
 }
-
-export const defaultFeaturedImagePadding: Padding = {
-    unit: "rem",
-    top: 3,
-    left: 0,
-    bottom: 3,
-    right: 0,
-};
 
 export const FeaturedImageBlockEdit = ({
     attributes,
@@ -33,7 +23,7 @@ export const FeaturedImageBlockEdit = ({
 }: GutenCsekBlockEditProps<FeaturedImageBlockAttributes>) => {
     const blockProps = useBlockProps();
 
-    const { imageURL, imageAlt, padding } = attributes;
+    const { imageURL, imageAlt } = attributes;
 
     const onChangeImageURL = (url: string) => {
         setAttributes({ imageURL: url });
@@ -43,15 +33,8 @@ export const FeaturedImageBlockEdit = ({
         setAttributes({ imageAlt: value });
     };
 
-    const handleChangePadding = (padding: Padding) => {
-        setAttributes({ padding });
-    };
-
     return (
         <section {...blockProps}>
-            <InspectorControls>
-                <CsekPaddingSelector onChange={handleChangePadding} padding={padding} />
-            </InspectorControls>
             <CsekBlockHeading>Csek Featured Image Block</CsekBlockHeading>
             <div className="csek-card flex flex-col gap-4">
                 <Label>
@@ -78,12 +61,10 @@ export const FeaturedImageBlockEdit = ({
 export const FeaturedImageBlockSave = ({ attributes }: GutenCsekBlockSaveProps<FeaturedImageBlockAttributes>) => {
     const blockProps = useBlockProps.save();
 
-    const { imageURL, imageAlt, padding } = attributes;
-
-    const p = styleFromPadding(padding ?? defaultPadding);
+    const { imageURL, imageAlt } = attributes;
 
     return (
-        <section {...blockProps} style={p}>
+        <section {...blockProps}>
             <img className="featured-image" src={imageURL} alt={imageAlt} />
         </section>
     );

@@ -47,7 +47,7 @@ async function getAllProjects(category?: number): Promise<CsekProject[]> {
                 id: project.id,
                 title: decodeHtmlEntities(project.title),
                 link: project.url,
-                featuredImageUrl: project.featuredImage.getSize("large"),
+                featuredImageUrl: project.featuredImage.large,
             };
             projectsData.push(projectData);
         }

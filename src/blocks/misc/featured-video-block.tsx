@@ -9,21 +9,11 @@ import { GutenCsekBlockEditProps, GutenCsekBlockSaveProps, GutenbergBlockProps }
 import { InspectorControls, useBlockProps } from "@wordpress/block-editor";
 import { CsekMediaUpload } from "../../components/media-upload";
 import { CsekBlockHeading } from "../../components/heading";
-import CsekPaddingSelector, { Padding, defaultPadding, styleFromPadding } from "../../components/padding-selector";
 import Label from "../../components/label";
 
 export interface FeaturedVideoBlockAttributes {
     videoURL: string;
-    padding: Padding;
 }
-
-export const defaultFeaturedVideoPadding: Padding = {
-    unit: "rem",
-    top: 3,
-    left: 0,
-    bottom: 3,
-    right: 0,
-};
 
 export const FeaturedVideoBlockEdit = ({
     attributes,
@@ -31,21 +21,14 @@ export const FeaturedVideoBlockEdit = ({
 }: GutenCsekBlockEditProps<FeaturedVideoBlockAttributes>) => {
     const blockProps = useBlockProps();
 
-    const { videoURL, padding } = attributes;
+    const { videoURL } = attributes;
 
     const handleChangeVideoURL = (url: string) => {
         setAttributes({ videoURL: url });
     };
 
-    const handleChangePadding = (padding: Padding) => {
-        setAttributes({ padding });
-    };
-
     return (
         <div {...blockProps}>
-            <InspectorControls>
-                <CsekPaddingSelector onChange={handleChangePadding} padding={padding} />
-            </InspectorControls>
             <CsekBlockHeading>Csek Featured Video Block</CsekBlockHeading>
             <Label>
                 Check the Inspector panel to edit padding <i className="fa fa-arrow-right"></i>
@@ -58,12 +41,10 @@ export const FeaturedVideoBlockEdit = ({
 export const FeaturedVideoBlockSave = ({ attributes }: GutenCsekBlockSaveProps<FeaturedVideoBlockAttributes>) => {
     const blockProps = useBlockProps.save();
 
-    const { videoURL, padding } = attributes;
-
-    const p = styleFromPadding(padding ?? defaultPadding);
+    const { videoURL } = attributes;
 
     return (
-        <section {...blockProps} style={p}>
+        <section {...blockProps}>
             <div className="block-container">
                 <div className="video-container">
                     <div className="video-shade"></div>
