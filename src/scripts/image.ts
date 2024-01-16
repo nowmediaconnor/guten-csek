@@ -6,7 +6,7 @@
 import { error, log } from "./global";
 import { getMediaById } from "./wp";
 
-type CsekImageSize = "thumbnail" | "medium" | "large" | "full";
+export type CsekImageSize = "thumbnail" | "medium" | "large" | "full";
 
 type WPMimeType = "image/jpeg" | "image/png" | "image/gif";
 

@@ -52,6 +52,7 @@ export const FeaturedImageBlockEdit = ({
                     urlAttribute={imageURL}
                     type="image"
                     size="large"
+                    fallbackSize="full"
                     altText={imageAlt}
                 />
             </CsekCard>
