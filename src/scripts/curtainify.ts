@@ -4,6 +4,7 @@
  */
 
 import { constrain, map } from "./math";
+import { log } from "./global";
 
 /**
  * curtainify.js
@@ -12,15 +13,7 @@ import { constrain, map } from "./math";
  * Each element to apply the effect to must have the classname "curtain" but can be placed anywhere inside the curtain-reel element.
  */
 
-console.log("Curtainify.js");
-
-const DEBUG = false;
-
-const log = (...msg: any[]) => {
-    if (DEBUG) {
-        console.log("[Curtainify.js]", ...msg);
-    }
-};
+log("Curtainify.js");
 
 const insertAfter = (newNode: Node, referenceNode: Node) => {
     if (!referenceNode.parentNode) return;
@@ -105,6 +98,7 @@ export const prepareCurtainElements = () => {
     // add scrollable mass of content to below content reel
     const contentReelScrollMass = document.createElement("div");
     contentReelScrollMass.setAttribute("id", "curtain-reel-scroll-mass");
+    contentReelScrollMass.classList.add("guten-csek-block");
     contentReelScrollMass.style.zIndex = "-1";
     contentReelScrollMass.style.height = `${contentReelHeight}px`;
     contentReelScrollMass.style.backgroundColor = "#131313";
@@ -142,22 +136,22 @@ export const prepareCurtainElements = () => {
 
         const scrollPercentage = Math.floor(constrain(scrollPositionFromTop / window.innerHeight, 0, 1) * 100) / 100;
 
-        log(
-            JSON.stringify(
-                {
-                    contentReelHeight,
-                    scrollPosition,
-                    scrollPositionFromTop,
-                    scrollPercentage,
-                    contentReelTop,
-                    contentReelBottom,
-                    vh: window.innerHeight,
-                    index,
-                },
-                null,
-                4
-            )
-        );
+        // log(
+        //     JSON.stringify(
+        //         {
+        //             contentReelHeight,
+        //             scrollPosition,
+        //             scrollPositionFromTop,
+        //             scrollPercentage,
+        //             contentReelTop,
+        //             contentReelBottom,
+        //             vh: window.innerHeight,
+        //             index,
+        //         },
+        //         null,
+        //         4
+        //     )
+        // );
 
         // effects for underlying card
         if (index < leftCurtains.length - 1) {
@@ -175,7 +169,7 @@ export const prepareCurtainElements = () => {
                 const scrollMass = document.getElementById("curtain-reel-scroll-mass");
                 if (scrollMass) {
                     scrollMass.style.backgroundColor = color;
-                    log({ color });
+                    // log({ color });
                 }
             }
         }
@@ -208,7 +202,7 @@ export const prepareCurtainElements = () => {
     const adjustBasedOnScroll = (scroll: number) => {
         const scrollDirection = Math.floor(constrain(window.scrollY - lastScroll, -1, 1));
         lastScroll = window.scrollY;
-        log("scroll position:", window.scrollY, "scroll direction:", scrollDirection);
+        // log("scroll position:", window.scrollY, "scroll direction:", scrollDirection);
 
         if (scroll === 1 && scrollDirection === 1) {
             currentIndex++;

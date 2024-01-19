@@ -9,15 +9,19 @@ import { Heading } from "./heading";
 import { capitalize } from "../scripts/strings";
 import { CsekAddButton } from "./button";
 import Label from "./label";
-import { CsekImage } from "../scripts/image";
+import { CsekImage, CsekImageSize } from "../scripts/image";
 import { twMerge } from "tailwind-merge";
+import { log } from "../scripts/global";
+import { getMediaById } from "../scripts/wp";
+import CsekCard from "./card";
 
 interface CsekMediaUploadProps {
     onChange: (v: string, altText?: string) => void;
     urlAttribute?: string;
     type?: "image" | "video" | "audio";
     label?: string;
-    size?: "thumbnail" | "medium" | "large" | "full";
+    size?: CsekImageSize;
+    fallbackSize?: CsekImageSize;
     altText?: string;
     className?: string;
 }
@@ -28,6 +32,7 @@ export const CsekMediaUpload = ({
     type = "image",
     label,
     size = "full",
+    fallbackSize = "full",
     altText = "",
     className = "",
 }: CsekMediaUploadProps) => {
@@ -37,32 +42,17 @@ export const CsekMediaUpload = ({
     const handleChangeURL = async (v: any) => {
         if (type === "audio") return;
         else if (type === "video") {
-            console.log("video url: ", v.url);
+            log("video url: ", v.url);
             onChange(v.url);
             setResourceURL(v.url);
             setResourceId(v.id);
             return;
         }
 
-        const resUrl = (resource: CsekImage) => {
-            switch (size) {
-                case "thumbnail":
-                    return resource.thumbnail;
-                case "medium":
-                    return resource.medium;
-                case "large":
-                    return resource.large;
-                case "full":
-                    return resource.full;
-                default:
-                    return resource.full;
-            }
-        };
-
         const resource = new CsekImage(v.id, "image", altText || undefined);
         await resource.doubleCheckSizes();
         // alert("Resource info: " + JSON.stringify({ ...resource }, null, 4));
-        onChange(resUrl(resource), resource.altText);
+        onChange(resource.getSize(size, fallbackSize), resource.altText);
         setResourceURL(v.url);
         setResourceId(v.id);
     };
@@ -89,7 +79,7 @@ export const CsekMediaUpload = ({
     };
 
     return (
-        <div className={twMerge("flex flex-col gap-4 py-4 csek-card w-fit", className)}>
+        <CsekCard className={twMerge("flex flex-col gap-4 py-4 flex-grow", className)}>
             {label ? <Heading level="3">{label}</Heading> : null}
             <MediaUploadCheck fallback={<Label>You are not permitted to upload media.</Label>}>
                 <MediaUpload
@@ -104,6 +94,6 @@ export const CsekMediaUpload = ({
             </MediaUploadCheck>
             <Heading level="4">{capitalize(type)} preview</Heading>
             {mediaPreview()}
-        </div>
+        </CsekCard>
     );
 };

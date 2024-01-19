@@ -8,6 +8,7 @@ import { Heading } from "./heading";
 import { RichText } from "@wordpress/block-editor";
 import { twMerge } from "tailwind-merge";
 import Label from "./label";
+import { csekCardTailwindStyles } from "./card";
 
 interface InputProps {
     label?: string;
@@ -79,7 +80,7 @@ export const RichTextInput = ({ label, initialValue = "", placeholder, className
             <em className="italic text-sm text-slate-500">Rich text</em>
             <RichText
                 tagName="div"
-                className={twMerge("csek-card flex-grow", className)}
+                className={twMerge("flex-grow", csekCardTailwindStyles, className)}
                 placeholder={placeholder || "Enter text here."}
                 label={label}
                 value={text}
@@ -211,9 +212,9 @@ export const CsekSelectDropdown = ({
     };
 
     return (
-        <div className={twMerge("w-full", className)}>
+        <div className={twMerge("w-full flex flex-col", className)}>
             {label ? <Heading level="4">{label}</Heading> : null}
-            {hint ? <em className="em-label">{hint}</em> : null}
+            {hint ? <Label>{hint}</Label> : null}
             <select
                 className={twMerge(
                     "w-full rounded border border-solid border-slate-700 px-2 py-1 text-lg",

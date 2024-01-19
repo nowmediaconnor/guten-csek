@@ -4,13 +4,15 @@
  */
 
 import React from "react";
-import { GutenCsekBlockEditProps, GutenCsekBlockSaveProps } from "../../scripts/dom";
+import DOMController, { GutenCsekBlockEditProps, GutenCsekBlockSaveProps } from "../../scripts/dom";
 import { useBlockProps } from "@wordpress/block-editor";
 import { urlExtractSecondLevelDomain } from "../../scripts/strings";
 import { CsekBlockHeading } from "../../components/heading";
 import { CheckboxInput, TextArea, TextInput } from "../../components/input";
 import CsekColorPicker from "../../components/color-picker";
 import { OutboundLink } from "../../components/links";
+import { log } from "../../scripts/global";
+import CsekCard from "../../components/card";
 
 export interface ProjectSummaryBlockAttributes {
     backgroundColor: string;
@@ -41,7 +43,7 @@ export const ProjectSummaryBlockEdit = ({
     } = attributes;
 
     const setBackgroundColor = (hexColor: string) => {
-        console.log(JSON.stringify(hexColor, null, 4));
+        log(JSON.stringify(hexColor, null, 4));
         setAttributes({ backgroundColor: hexColor });
     };
 
@@ -77,7 +79,7 @@ export const ProjectSummaryBlockEdit = ({
     return (
         <section {...blockProps}>
             <CsekBlockHeading>Project Summary Block</CsekBlockHeading>
-            <div className="csek-card py-4 flex flex-col gap-4">
+            <CsekCard className="py-4 flex flex-col gap-4">
                 <TextInput
                     label="Project tagline"
                     initialValue={projectTagline}
@@ -134,7 +136,7 @@ export const ProjectSummaryBlockEdit = ({
                         onChange={setBackgroundColor}
                     />
                 ) : null}
-            </div>
+            </CsekCard>
         </section>
     );
 };

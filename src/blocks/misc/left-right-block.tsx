@@ -11,6 +11,7 @@ import { MediaUpload, MediaUploadCheck, useBlockProps } from "@wordpress/block-e
 import { CsekBlockHeading } from "../../components/heading";
 import { CsekMediaUpload } from "../../components/media-upload";
 import { CsekSelectDropdown, TextArea, TextInput } from "../../components/input";
+import CsekCard from "../../components/card";
 
 export interface LeftRightBlockAttributes {
     text: string;
@@ -51,8 +52,8 @@ export const LeftRightBlockEdit = ({
         <section {...blockProps}>
             <CsekBlockHeading>Csek Left-Right Block</CsekBlockHeading>
 
-            <div className="flex flex-row justify-between gap-4 csek-card">
-                <div className="flex flex-col gap-2 csek-card">
+            <CsekCard className="flex flex-row justify-between gap-2">
+                <CsekCard className="flex flex-col gap-2">
                     <CsekSelectDropdown
                         onChange={handleChangeDirection}
                         label="Direction"
@@ -65,9 +66,9 @@ export const LeftRightBlockEdit = ({
                     />
                     <TextArea label="Body text" onChange={handleChangeText} initialValue={text} />
                     <TextInput label="Image alt text" onChange={handleChangeAltText} initialValue={altText} />
-                </div>
+                </CsekCard>
                 <CsekMediaUpload onChange={handleChangeImageURL} urlAttribute={imageURL} type="image" />
-            </div>
+            </CsekCard>
         </section>
     );
 };

@@ -3,6 +3,7 @@
  * Author: Connor Doman
  */
 
+import { log } from "../global";
 import { Brick, BrickCompatibility, Shape, compatibilityString } from "./brick";
 
 export interface CSSGridCoordinates {
@@ -393,7 +394,7 @@ export class MasonryGrid {
 
     private log(...args: any[]): void {
         if (this.debug) {
-            console.log(...args);
+            log("[MasonryGrid]", ...args);
         }
     }
 
@@ -417,5 +418,10 @@ export class MasonryGrid {
                 "\n";
         }
         return str;
+    }
+
+    public static calculateGridHeight(columnCount: number, brickCount: number): number {
+        log({ columnCount, brickCount }, `ceil(log2(${brickCount} / ${columnCount} * ${brickCount} * 2) + 1)`);
+        return Math.ceil(Math.log2((brickCount / columnCount) * brickCount * 2) + 1);
     }
 }

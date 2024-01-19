@@ -9,6 +9,7 @@ import React from "react";
 import { CsekMediaUpload } from "../../components/media-upload";
 import { CsekBlockHeading } from "../../components/heading";
 import { TextInput } from "../../components/input";
+import CsekCard from "../../components/card";
 
 export interface NextProjectBlockAttributes {
     projectTitle: string;
@@ -39,10 +40,10 @@ export const NextProjectBlockEdit = ({
         <div {...blockProps}>
             <CsekBlockHeading>Csek Next Project Block</CsekBlockHeading>
             <div className="flex flex-row gap-4">
-                <div className="flex flex-col gap-2 csek-card">
+                <CsekCard className="flex flex-col gap-2">
                     <TextInput label="Project name" onChange={updateProjectTitle} initialValue={projectTitle} />
                     <TextInput label="Project link" onChange={updateProjectLink} initialValue={projectLink} />
-                </div>
+                </CsekCard>
                 <CsekMediaUpload onChange={updateProjectImageURL} urlAttribute={projectImageURL} />
             </div>
         </div>

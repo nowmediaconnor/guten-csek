@@ -11,6 +11,7 @@ import { RichTextInput, TextInput, RichTextContent, CheckboxInput } from "../../
 import { CsekMediaUpload } from "../../components/media-upload";
 import { CsekBlockHeading, Heading } from "../../components/heading";
 import { OutboundLink } from "../../components/links";
+import CsekCard from "../../components/card";
 
 export type SocialMedia = "LinkedIn" | "Facebook" | "Twitter" | "Instagram" | "YouTube" | "TikTok" | "Snapchat";
 export type SocialMediaGroup = { [key in SocialMedia]?: string };
@@ -98,10 +99,10 @@ const SocialsSelect = ({ initialValue, onChange }: SocialsSelectProps) => {
     });
 
     return (
-        <div className="csek-card gap-2 flex flex-col">
+        <CsekCard className="gap-2 flex flex-col">
             <Heading level="3">Social Media</Heading>
             {checkboxes}
-        </div>
+        </CsekCard>
     );
 };
 
@@ -119,7 +120,7 @@ const StaffProfileComponentEdit = ({ profile, onChange }: StaffProfileComponentE
     };
 
     return (
-        <div className="csek-card flex flex-col gap-2">
+        <CsekCard className="flex flex-col gap-2">
             <TextInput
                 label="Name"
                 initialValue={staffProfile.name}
@@ -147,7 +148,7 @@ const StaffProfileComponentEdit = ({ profile, onChange }: StaffProfileComponentE
                     label="Profile Photo"
                 />
             </div>
-        </div>
+        </CsekCard>
     );
 };
 
@@ -207,7 +208,7 @@ export const StaffProfilesBlockEdit = ({
     return (
         <div {...blockProps} className="csek-block">
             <CsekBlockHeading>Csek Staff Showcase Block</CsekBlockHeading>
-            <div className="csek-card flex flex-col gap-2">
+            <CsekCard className="flex flex-col gap-2">
                 <TextInput label="Heading" initialValue={heading} onChange={handleChangeHeading} />
                 <TextInput label="Caption" initialValue={caption} onChange={handleChangeCaption} />
                 <CheckboxInput
@@ -215,7 +216,7 @@ export const StaffProfilesBlockEdit = ({
                     initialValue={alternateLayout}
                     onChange={handleUseAlternateLayout}
                 />
-            </div>
+            </CsekCard>
             <div className="flex flex-col gap-2">{staffProfiles}</div>
             <CsekAddButton onAdd={newStaffProfile} className="my-4" label="Add Staff Profile" />
         </div>

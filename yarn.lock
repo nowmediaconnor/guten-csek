@@ -11509,7 +11509,7 @@ typescript-cubic-spline@^1.0.1:
   resolved "https://registry.yarnpkg.com/typescript-cubic-spline/-/typescript-cubic-spline-1.0.1.tgz#340ef0f4f068fa28be0a0c3b4484e11f55b40610"
   integrity sha512-h1dvp2YK66CU/p1thrBjQ61/CBSmkZw4Uh28ay8v9UjAA0gQdCQ+Etkie9sdj74WjYuYHEom5qLHjrci1IVMPA==
 
-typescript@^5.2.2:
+typescript@>=3, typescript@^5.2.2:
   version "5.3.3"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.3.3.tgz#b3ce6ba258e72e6305ba66f5c9b452aaee3ffe37"
   integrity sha512-pXWcraxM0uxAS+tN0AG/BF2TyqmHO014Z070UsJ+pFvYuRSq8KH8DmWpnbXe0pEPDHXZV3FcAbJkijJ5oNEnWw==
@@ -12041,6 +12041,13 @@ wildcard@^2.0.0:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/wildcard/-/wildcard-2.0.1.tgz#5ab10d02487198954836b6349f74fff961e10f67"
   integrity sha512-CC1bOL87PIWSBhDcTrdeLo6eGT7mCFtrg0uIJtqJUFyK+eJnzl8A1niH56uu7KMa5XFrtiV+AQuHO3n7DsHnLQ==
+
+wp-types@^3.64.0:
+  version "3.64.0"
+  resolved "https://registry.yarnpkg.com/wp-types/-/wp-types-3.64.0.tgz#f8fc018299a9ee22ad2895d9789e20188ad5a0dd"
+  integrity sha512-8rwHUQFxI18jezvObymV0eKEhnU2xaSci5ra6YG+dV6EDZLfNR2z3NZA82mFkOzZRWpl/Dlj+a4u8aqk08UPGQ==
+  dependencies:
+    typescript ">=3"
 
 wrap-ansi@^5.1.0:
   version "5.1.0"

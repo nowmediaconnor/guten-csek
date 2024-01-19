@@ -10,54 +10,47 @@ import CsekCard from "../../components/card";
 import { RichTextContent, RichTextInput } from "../../components/input";
 import CsekColorPicker from "../../components/color-picker";
 import { useBlockProps } from "@wordpress/block-editor";
+import Label from "../../components/label";
+import { RightArrow } from "../../components/icons";
 
 export interface EmphasizedTextBlockAttributes {
     text: string;
-    color: string;
-    backgroundColor: string;
 }
 
 export const EmphasizedTextBlockEdit = ({
     attributes,
     setAttributes,
 }: GutenCsekBlockEditProps<EmphasizedTextBlockAttributes>) => {
-    const { text, color, backgroundColor } = attributes;
+    const { text } = attributes;
 
     const onChange = (value: string) => {
         setAttributes({ text: value });
     };
 
-    const onChangeColor = (value: string) => {
-        setAttributes({ color: value });
-    };
-
-    const onChangeBackgroundColor = (value: string) => {
-        setAttributes({ backgroundColor: value });
-    };
-
     return (
-        <div className="csek-block">
-            <CsekBlockHeading>Csek Emphasized Text</CsekBlockHeading>
-            <div className="flex flex-row gap-4">
+        <section className="csek-block bg-white text-black">
+            <CsekBlockHeading className="text-csek-dark">Csek Emphasized Text</CsekBlockHeading>
+            <Label>
+                You can change the text color, background color, font size, and spacing in the Inspector <RightArrow />
+            </Label>
+            <div className="flex flex-row gap-4 text-base w-full">
                 <CsekCard className="w-full">
                     <RichTextInput label="Content" className="" initialValue={text} onChange={onChange} />
                 </CsekCard>
-                <CsekColorPicker label="Text Color" initialValue={color} onChange={onChangeColor} />
-                <CsekColorPicker label="Background Color" initialValue={color} onChange={onChangeBackgroundColor} />
             </div>
-        </div>
+        </section>
     );
 };
 
 export const EmphasizedTextBlockSave = ({ attributes }: GutenCsekBlockSaveProps<EmphasizedTextBlockAttributes>) => {
     const blockProps = useBlockProps.save();
 
-    const { text, color, backgroundColor } = attributes;
+    const { text } = attributes;
 
     return (
-        <section {...blockProps} style={{ backgroundColor: backgroundColor, color: color }}>
+        <section {...blockProps}>
             <div className="block-content">
-                <RichTextContent value={text} />
+                <RichTextContent value={text} className="leading-[1.1]" />
             </div>
         </section>
     );

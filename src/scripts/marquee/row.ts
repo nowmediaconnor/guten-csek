@@ -4,6 +4,7 @@
  */
 
 import { shuffle } from "../array";
+import { log } from "../global";
 import { MarqueeCanvas } from "./marquee";
 
 export type Direction = 1 | -1;
@@ -212,29 +213,29 @@ export class Row {
         switch (this.direction) {
             case 1:
                 if (this.primaryRibbon.offset >= this.mq.width) {
-                    console.log("Moving primary ribbon behind");
+                    this.log("Moving primary ribbon behind");
                     this.moveRibbonBehind(this.primaryRibbon, this.secondaryRibbon);
                 }
 
                 if (this.secondaryRibbon.offset >= this.mq.width) {
-                    console.log("Moving secondary ribbon behind");
+                    this.log("Moving secondary ribbon behind");
                     this.moveRibbonBehind(this.secondaryRibbon, this.primaryRibbon);
                 }
                 break;
             case -1:
                 if (this.primaryRibbon.offset <= -this.primaryRibbon.width) {
-                    console.log("Moving primary ribbon ahead");
+                    this.log("Moving primary ribbon ahead");
                     this.moveRibbonAhead(this.primaryRibbon, this.secondaryRibbon);
                 }
 
                 if (this.secondaryRibbon.offset <= -this.secondaryRibbon.width) {
-                    console.log("Moving secondary ribbon ahead");
+                    this.log("Moving secondary ribbon ahead");
                     this.moveRibbonAhead(this.secondaryRibbon, this.primaryRibbon);
                 }
                 break;
         }
 
-        // console.log({ primary: this.primaryRibbon.offset, secondary: this.secondaryRibbon.offset });
+        // this.log({ primary: this.primaryRibbon.offset, secondary: this.secondaryRibbon.offset });
     }
 
     draw(x: number = 0, y: number = 0) {
@@ -258,5 +259,9 @@ export class Row {
         this.direction === 1
             ? this.moveRibbonBehind(this.secondaryRibbon, this.primaryRibbon)
             : this.moveRibbonAhead(this.secondaryRibbon, this.primaryRibbon);
+    }
+
+    log(...args: any[]) {
+        log("[MarqueeRow]", ...args);
     }
 }

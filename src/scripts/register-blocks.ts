@@ -3,7 +3,7 @@
  * Author: Connor Doman
  */
 
-import { registerBlockType } from "@wordpress/blocks";
+import { registerBlockType, BlockConfiguration } from "@wordpress/blocks";
 import {
     SelfDescriptionBlockAttributes,
     SelfDescriptionBlockEdit,
@@ -25,7 +25,6 @@ import {
     FeaturedImageBlockAttributes,
     FeaturedImageBlockEdit,
     FeaturedImageBlockSave,
-    defaultFeaturedImagePadding,
 } from "../blocks/misc/featured-image-block";
 import { LeftRightBlockAttributes, LeftRightBlockEdit, LeftRightBlockSave } from "../blocks/misc/left-right-block";
 import {
@@ -45,12 +44,7 @@ import {
 } from "../blocks/expanding-video-block";
 import { BlockquoteBlockEdit, BlockquoteBlockSave, BlockquoteBlockAttributes } from "../blocks/blockquote-block";
 import { TaglineHeaderAttributes, TaglineHeaderEdit, TaglineHeaderSave } from "../blocks/tagline-header-block";
-import {
-    ParagraphBlockAttributes,
-    ParagraphBlockEdit,
-    ParagraphBlockSave,
-    defaultParahraphBlockPadding,
-} from "../blocks/misc/paragraph-block";
+import { ParagraphBlockAttributes, ParagraphBlockEdit, ParagraphBlockSave } from "../blocks/misc/paragraph-block";
 import { MultiImageBlockAttributes, MultiImageBlockEdit, MultiImageBlockSave } from "../blocks/misc/multi-image-block";
 import {
     EmphasizedTextBlockAttributes,
@@ -78,7 +72,6 @@ import {
     FeaturedVideoBlockAttributes,
     FeaturedVideoBlockEdit,
     FeaturedVideoBlockSave,
-    defaultFeaturedVideoPadding,
 } from "../blocks/misc/featured-video-block";
 import { ImageCollageBlockEdit, ImageCollageBlockSave } from "../blocks/misc/image-collage-block";
 import { ScreenshotCollageBlockEdit, ScreenshotCollageBlockSave } from "../blocks/misc/screenshot-collage-block";
@@ -86,21 +79,31 @@ import { ScrollingProjectsBlockEdit, ScrollingProjectsBlockSave } from "../block
 import { TeamBlockEdit, TeamBlockSave } from "../blocks/team-block";
 import ProcessBlockController, { ProcessBlockAttributes } from "../blocks/process-block";
 import ProjectsMasonryBlock, { ProjectsMasonryBlockAttributes } from "../blocks/projects/masonry-block";
-import { defaultPadding } from "../components/padding-selector";
 import {
     PostCollageBlockAttributes,
     PostCollageBlockEdit,
     PostCollageBlockSave,
 } from "../blocks/blog/post-collage-block";
+import { log } from "./global";
+
+const commonProperties = {
+    category: "csek",
+    supports: {
+        spacing: {
+            margin: true,
+            padding: true,
+        },
+    },
+};
 
 export const registerAllBlocks = () => {
-    console.log("Registering blocks...");
+    log("Registering blocks...");
 
     // Self description block
     registerBlockType<SelfDescriptionBlockAttributes>("guten-csek/self-description-block", {
+        ...commonProperties,
         title: "Csek Self Description",
         icon: "text-page",
-        category: "csek",
         attributes: {
             heading: {
                 type: "string",
@@ -133,9 +136,9 @@ export const registerAllBlocks = () => {
 
     // Staff profiles block
     registerBlockType<StaffProfilesBlockAttributes>("guten-csek/staff-profiles-block", {
+        ...commonProperties,
         title: "Csek Staff Showcase",
         icon: "groups",
-        category: "csek",
         attributes: {
             heading: {
                 type: "string",
@@ -160,9 +163,9 @@ export const registerAllBlocks = () => {
 
     // Let's Talk / CTA block
     registerBlockType<LetsTalkBlockAttributes>("guten-csek/lets-talk-block", {
+        ...commonProperties,
         title: "Csek Let's Talk (CTA)",
         icon: "megaphone",
-        category: "csek",
         attributes: {
             heading: {
                 type: "string",
@@ -183,9 +186,9 @@ export const registerAllBlocks = () => {
 
     // Project summary block
     registerBlockType<ProjectSummaryBlockAttributes>("guten-csek/project-summary-block", {
+        ...commonProperties,
         title: "Csek Project Summary",
         icon: "text-page",
-        category: "csek",
         attributes: {
             backgroundColor: {
                 type: "string",
@@ -226,9 +229,9 @@ export const registerAllBlocks = () => {
 
     // Featured Image Block
     registerBlockType<FeaturedImageBlockAttributes>("guten-csek/featured-image-block", {
+        ...commonProperties,
         title: "Csek Featured Image",
         icon: "format-image",
-        category: "csek",
         attributes: {
             imageURL: {
                 type: "string",
@@ -238,10 +241,6 @@ export const registerAllBlocks = () => {
                 type: "string",
                 default: "",
             },
-            padding: {
-                type: "object",
-                default: defaultFeaturedImagePadding,
-            },
         },
         edit: FeaturedImageBlockEdit,
         save: FeaturedImageBlockSave,
@@ -249,9 +248,9 @@ export const registerAllBlocks = () => {
 
     // Fullscreen Image Block
     registerBlockType<FullscreenImageBlockAttributes>("guten-csek/fullscreen-image-block", {
+        ...commonProperties,
         title: "Csek Fullscreen Image",
         icon: "format-image",
-        category: "csek",
         attributes: {
             imageURL: {
                 type: "string",
@@ -268,9 +267,9 @@ export const registerAllBlocks = () => {
 
     // Left-Right Block
     registerBlockType<LeftRightBlockAttributes>("guten-csek/left-right-block", {
+        ...commonProperties,
         title: "Csek Left-Right",
         icon: "columns",
-        category: "csek",
         attributes: {
             text: {
                 type: "string",
@@ -295,9 +294,9 @@ export const registerAllBlocks = () => {
 
     // Next Project Block
     registerBlockType<NextProjectBlockAttributes>("guten-csek/next-project-block", {
+        ...commonProperties,
         title: "Csek Next Project",
         icon: "text",
-        category: "csek",
         attributes: {
             projectTitle: {
                 type: "string",
@@ -318,9 +317,9 @@ export const registerAllBlocks = () => {
 
     // Expanding Video Block
     registerBlockType<ExpandingVideoBlockAttributes>("guten-csek/expanding-video-block", {
+        ...commonProperties,
         title: "Csek Curtain Video",
         icon: "format-video",
-        category: "csek",
         attributes: {
             expandingMediaURL: {
                 type: "string",
@@ -349,9 +348,9 @@ export const registerAllBlocks = () => {
 
     // Block Quote Block
     registerBlockType<BlockquoteBlockAttributes>("guten-csek/block-quote-block", {
+        ...commonProperties,
         title: "Csek Blockquote",
         icon: "format-quote",
-        category: "csek",
         attributes: {
             heading: {
                 type: "string",
@@ -376,9 +375,9 @@ export const registerAllBlocks = () => {
 
     // Tagline Header Block
     registerBlockType<TaglineHeaderAttributes>("guten-csek/tagline-header-block", {
+        ...commonProperties,
         title: "Csek Tagline Header",
         icon: "text",
-        category: "csek",
         attributes: {
             preTagline: {
                 type: "string",
@@ -403,17 +402,13 @@ export const registerAllBlocks = () => {
 
     // Paragraph Block
     registerBlockType<ParagraphBlockAttributes>("guten-csek/paragraph-block", {
+        ...commonProperties,
         title: "Csek Paragraph",
         icon: "text",
-        category: "csek",
         attributes: {
             text: {
                 type: "string",
                 default: "",
-            },
-            padding: {
-                type: "object",
-                default: defaultParahraphBlockPadding,
             },
         },
         edit: ParagraphBlockEdit,
@@ -422,9 +417,9 @@ export const registerAllBlocks = () => {
 
     // Multi Image Block
     registerBlockType<MultiImageBlockAttributes>("guten-csek/multi-image-block", {
+        ...commonProperties,
         title: "Csek Multi Image",
         icon: "format-image",
-        category: "csek",
         attributes: {
             images: {
                 type: "array",
@@ -445,21 +440,24 @@ export const registerAllBlocks = () => {
 
     // Emhpasized Text Block
     registerBlockType<EmphasizedTextBlockAttributes>("guten-csek/emphasized-text-block", {
+        ...commonProperties,
         title: "Csek Emphasized Text",
         icon: "text",
-        category: "csek",
+        supports: {
+            ...commonProperties.supports,
+            color: {
+                background: true,
+                text: true,
+            },
+            typography: {
+                fontSize: true,
+                lineHeight: true,
+            },
+        },
         attributes: {
             text: {
                 type: "string",
                 default: "",
-            },
-            color: {
-                type: "string",
-                default: "#000000",
-            },
-            backgroundColor: {
-                type: "string",
-                default: "#FFFFFF",
             },
         },
         edit: EmphasizedTextBlockEdit,
@@ -468,9 +466,9 @@ export const registerAllBlocks = () => {
 
     // Page Header Block
     registerBlockType<PageHeaderBlockAttributes>("guten-csek/page-header-block", {
+        ...commonProperties,
         title: "Csek Page Header Block",
         icon: "text",
-        category: "csek",
         attributes: {
             heading: {
                 type: "string",
@@ -495,9 +493,9 @@ export const registerAllBlocks = () => {
 
     // Cycling Stack Block
     registerBlockType<CyclingStackBlockAttributes>("guten-csek/cycling-stack-block", {
+        ...commonProperties,
         title: "Csek Cycling Stack",
         icon: "text",
-        category: "csek",
         attributes: {
             cyclingWords: {
                 type: "array",
@@ -514,9 +512,9 @@ export const registerAllBlocks = () => {
 
     // Video Carousel Block
     registerBlockType<VideoCarouselAttributes>("guten-csek/video-carousel-block", {
+        ...commonProperties,
         title: "Csek Video Carousel Block",
         icon: "format-video",
-        category: "csek",
         attributes: {
             videos: {
                 type: "array",
@@ -529,9 +527,9 @@ export const registerAllBlocks = () => {
 
     // Scrolling Projects Block
     registerBlockType("guten-csek/scrolling-projects-block", {
+        ...commonProperties,
         title: "Csek Scrolling Projects Block",
         icon: "format-video",
-        category: "csek",
         attributes: {
             projects: {
                 type: "array",
@@ -544,9 +542,9 @@ export const registerAllBlocks = () => {
 
     // Team Block
     registerBlockType("guten-csek/team-block", {
+        ...commonProperties,
         title: "Csek Team Block",
         icon: "admin-users",
-        category: "csek",
         attributes: {
             images: {
                 type: "array",
@@ -579,9 +577,9 @@ export const registerAllBlocks = () => {
 
     // Horizontal Carousel Block
     registerBlockType("guten-csek/horizontal-carousel-block", {
+        ...commonProperties,
         title: "Csek Horizontal Carousel Block",
         icon: "columns",
-        category: "csek",
         attributes: {
             titles: {
                 type: "array",
@@ -623,9 +621,9 @@ export const registerAllBlocks = () => {
 
     // Image Collage Block
     registerBlockType("guten-csek/image-collage-block", {
+        ...commonProperties,
         title: "Csek Image Collage Block",
         icon: "format-image",
-        category: "csek",
         attributes: {
             images: {
                 type: "array",
@@ -646,9 +644,9 @@ export const registerAllBlocks = () => {
 
     // Screenshot Collage Block
     registerBlockType("guten-csek/screenshot-collage-block", {
+        ...commonProperties,
         title: "Csek Screenshot Collage Block",
         icon: "desktop",
-        category: "csek",
         attributes: {
             screenshots: {
                 type: "array",
@@ -673,17 +671,13 @@ export const registerAllBlocks = () => {
 
     // Featured Video Block
     registerBlockType<FeaturedVideoBlockAttributes>("guten-csek/featured-video-block", {
+        ...commonProperties,
         title: "Csek Featured Video Block",
         icon: "format-video",
-        category: "csek",
         attributes: {
             videoURL: {
                 type: "string",
                 default: "",
-            },
-            padding: {
-                type: "object",
-                default: defaultFeaturedVideoPadding,
             },
         },
         edit: FeaturedVideoBlockEdit,
@@ -692,9 +686,9 @@ export const registerAllBlocks = () => {
 
     // Chicago Fires Block
     registerBlockType<ChicagoFiresBlockAttributes>("guten-csek/chicago-fires-block", {
+        ...commonProperties,
         title: "Csek Chicago Fires Block",
         icon: "text",
-        category: "csek",
         attributes: {
             primaryHeading: {
                 type: "string",
@@ -719,9 +713,9 @@ export const registerAllBlocks = () => {
 
     // New Process Block
     registerBlockType<ProcessBlockAttributes>("guten-csek/process-block", {
+        ...commonProperties,
         title: "Csek Process Block",
         icon: "text",
-        category: "csek",
         attributes: {
             steps: {
                 type: "array",
@@ -734,13 +728,17 @@ export const registerAllBlocks = () => {
 
     // Projects Masonry Block
     registerBlockType<ProjectsMasonryBlockAttributes>("guten-csek/projects-masonry-block", {
-        title: "Csek Projects Masonry Block",
+        ...commonProperties,
+        title: "Csek Posts Masonry Block",
         icon: "text",
-        category: "csek",
         attributes: {
+            categoryId: {
+                type: "number",
+                default: -1,
+            },
             category: {
                 type: "string",
-                default: "",
+                default: "projects",
             },
             amount: {
                 type: "number",
@@ -752,7 +750,7 @@ export const registerAllBlocks = () => {
             },
             gridRows: {
                 type: "number",
-                default: 4,
+                default: -1,
             },
         },
         edit: ProjectsMasonryBlock.editComponent,
@@ -761,9 +759,15 @@ export const registerAllBlocks = () => {
 
     // Post Collage Block
     registerBlockType<PostCollageBlockAttributes>("guten-csek/post-collage-block", {
+        ...commonProperties,
         title: "Csek Post Collage Block",
         icon: "text",
-        category: "csek",
+        supports: {
+            spacing: {
+                margin: true,
+                padding: true,
+            },
+        },
         attributes: {
             chosenCategory: {
                 type: "number",

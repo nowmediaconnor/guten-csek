@@ -9,6 +9,7 @@ import { useBlockProps } from "@wordpress/block-editor";
 import { GutenCsekBlockEditProps, GutenCsekBlockSaveProps } from "../../scripts/dom";
 import { TextInput } from "../../components/input";
 import { CsekMediaUpload } from "../../components/media-upload";
+import CsekCard from "../../components/card";
 
 export interface LetsTalkBlockAttributes {
     heading: string;
@@ -36,14 +37,21 @@ export const LetsTalkBlockEdit = ({ attributes, setAttributes }: GutenCsekBlockE
     return (
         <div {...blockProps}>
             <CsekBlockHeading>Csek Let's Talk Block (CTA)</CsekBlockHeading>
-            <TextInput label="Heading" placeholder="Want to learn more?" initialValue={heading} onChange={setHeading} />
-            <TextInput
-                label="Button Text"
-                placeholder="Let's Talk"
-                initialValue={buttonText}
-                onChange={setButtonText}
-            />
-            <CsekMediaUpload urlAttribute={imageURL} onChange={setImageURL} />
+            <CsekCard className="flex flex-col gap-2">
+                <TextInput
+                    label="Heading"
+                    placeholder="Want to learn more?"
+                    initialValue={heading}
+                    onChange={setHeading}
+                />
+                <TextInput
+                    label="Button Text"
+                    placeholder="Let's Talk"
+                    initialValue={buttonText}
+                    onChange={setButtonText}
+                />
+                <CsekMediaUpload urlAttribute={imageURL} onChange={setImageURL} />
+            </CsekCard>
         </div>
     );
 };

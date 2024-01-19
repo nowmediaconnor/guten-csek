@@ -3,13 +3,15 @@
  * Author: Connor Doman
  */
 
+import { log } from "./global";
+
 const wrapNumbersInSpans = (inputString: string, className: string = "js-accumulator-number") => {
     const regex = /\d+/g;
     return inputString.replace(regex, (match) => `<span class="${className}">${match}</span>`);
 };
 
 export const runAccumulators = () => {
-    console.log("Accumulators...");
+    log("Accumulators...");
     const allAccumulators: NodeListOf<HTMLElement> = document.querySelectorAll(".js-accumulator");
 
     allAccumulators.forEach((accumulator) => {
@@ -24,7 +26,7 @@ export const runAccumulators = () => {
     const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
             if (entry.isIntersecting) {
-                console.log("Number is visible...");
+                log("Number is visible...");
                 setTimeout(() => {
                     const number: HTMLSpanElement = entry.target as HTMLSpanElement;
                     const numberValue: number = parseInt(number.innerText, 10);

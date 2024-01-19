@@ -4,6 +4,7 @@
  */
 
 import Player from "@vimeo/player";
+import { log } from "./global";
 
 export interface VimeoResponse {
     type: string;
@@ -50,6 +51,10 @@ export default class VimeoVideo {
         // });
     }
 
+    log(...args: any[]) {
+        log("[VimeoVideo]", ...args);
+    }
+
     createPlayer(parent: string | HTMLElement) {
         if (!this.apiResponseData) return null;
 
@@ -74,15 +79,15 @@ export default class VimeoVideo {
     }
 
     async updateVideoData(): Promise<VimeoResponse | null> {
-        // console.log("-VideoCarouselController- Updating video data");
+        this.log("Updating video data");
         if (this.apiResponseData) {
-            // console.log("-VideoCarouselController- Video data already fetched");
+            this.log("Video data already fetched");
             return this.apiResponseData;
         }
 
         this.apiResponseData = await VimeoVideo.fetchVideoData(this.vimeoURL, this.width, this.height);
 
-        // console.log("-VideoCarouselController- Video data fetched: ", this.apiResponseData);
+        this.log("Video data fetched: ", this.apiResponseData);
 
         return this.apiResponseData;
     }

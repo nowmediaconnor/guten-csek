@@ -15,7 +15,7 @@ hr {
 }
 
 section {
-    margin: 5rem 0;
+    margin: 1rem 0;
 }
 
 h4 {
@@ -86,16 +86,8 @@ h4 {
 }
 
 .preview-image {
-    max-width: 20rem;
-    height: auto;
-}
-
-.csek-card {
-    border: 1px solid #8c8f94;
-    border-radius: 0.25rem;
-    padding: 1rem;
-    width: 100%;
-    position: relative;
+    max-height: 20rem;
+    margin: 0 auto;
 }
 
 .csek-block {
@@ -105,7 +97,6 @@ h4 {
     justify-content: flex-start;
     align-items: flex-start;
     gap: 0.5rem;
-    padding: 1rem;
 }
 
 .wp-block-paragraph {
@@ -138,4 +129,8 @@ h5.wp-block-heading {
 
 h6.wp-block-heading {
     @apply text-base;
+}
+
+.edit-post-visual-editor {
+    @apply w-11/12 max-w-csek-max mx-auto;
 }

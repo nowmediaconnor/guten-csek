@@ -3,7 +3,7 @@
  * Author: Connor Doman
  */
 
-import { updateFeaturedImageColorDerivatives } from "./global";
+import { error, log, updateFeaturedImageColorDerivatives } from "./global";
 import { randomIntInRange, randomPartOfOne } from "./math";
 
 export interface GutenbergBlockProps {
@@ -72,7 +72,7 @@ export const prepareExpandingVideoBlocks = () => {
                 }
                 document.body.style.backgroundColor = "#131313";
                 DOM_FLAGS.taglineSroll = false;
-                console.log("threshold reached");
+                log("Expansion threshold reached");
             } else if (parseInt(thresholdTop.toString()) > 0 && !DOM_FLAGS.taglineSroll) {
                 video.classList.remove("expanded");
                 for (const element of elementsToFadeOnScroll) {
@@ -99,7 +99,7 @@ export const prepareExpandingVideoBlocks = () => {
                 imageElement.style.right = `${randomXDisplacement}rem`;
             }
 
-            console.log({ randomDelay, randomDuration, randomXDisplacement });
+            log({ randomDelay, randomDuration, randomXDisplacement });
         }
     }
 };
@@ -144,14 +144,14 @@ export abstract class BlockController implements ControllerProperties {
     }
 
     log(...msg: any[]): void {
-        if (this.debug) {
-            console.log(`[${this.name}]`, ...msg);
+        if (this.debug && DOMController.siteDebug) {
+            log(`[${this.name}]`, ...msg);
         }
     }
 
     err(...msg: any[]): void {
-        if (this.debug) {
-            console.error(`[${this.name}]`, ...msg);
+        if (this.debug && DOMController.siteDebug) {
+            error(`[${this.name}]`, ...msg);
         }
     }
 }
@@ -167,6 +167,8 @@ interface DOMControllerState extends ControllerProperties {
  * This class handles using the above legacy functions and also determines when the DOM is ready and the loading indicator can be removed.
  */
 export default class DOMController extends BlockController implements DOMControllerState {
+    static siteDebug: boolean = false;
+
     name: string;
     blockControllers: ControllerProperties[];
     loadingInterval: number;
@@ -225,8 +227,17 @@ export default class DOMController extends BlockController implements DOMControl
         }
 
         window.addEventListener("beforeunload", () => {
-            console.log("unload dom controller...");
+            this.log("unload dom controller...");
         });
+    }
+
+    checkIfLetsTalkRequested(): boolean {
+        const hash = window.location.hash;
+        if (hash === "#contact") {
+            this.openLetsTalk();
+            return true;
+        }
+        return false;
     }
 
     prepareLetsTalkScreen(): boolean {
@@ -251,6 +262,8 @@ export default class DOMController extends BlockController implements DOMControl
         this.letsTalkScreen = letsTalk;
         this.letsTalkOpenButtons = letsTalkButtons;
         this.letsTalkCloseButton = letsTalkCloseButton;
+
+        this.checkIfLetsTalkRequested();
 
         return true;
     }
@@ -357,6 +370,18 @@ export default class DOMController extends BlockController implements DOMControl
                 this.closeLetsTalk();
                 e.preventDefault();
             }
+
+            if (e.ctrlKey) {
+                console.info("[CsekCreative] (Press Ctrl + D to toggle debug mode)");
+            }
+
+            // debug mode
+            if (e.ctrlKey && e.key === "d") {
+                const newMode = !this.debug;
+                this.debugMode = newMode;
+                console.info("[CsekCreative] Debug mode:", this.debug ? "ON" : "OFF");
+                e.preventDefault();
+            }
         });
     }
 
@@ -398,11 +423,12 @@ export default class DOMController extends BlockController implements DOMControl
         }
     }
 
-    log(...msg: any[]) {
-        if (this.debug) console.log("[DOMController]", ...msg);
-    }
-
     onMouseMove(e: MouseEvent, blockIndex: number): void {}
+
+    set debugMode(state: boolean) {
+        DOMController.siteDebug = state;
+        this.debug = state;
+    }
 
     async setFeaturedImageColors() {
         await updateFeaturedImageColorDerivatives();

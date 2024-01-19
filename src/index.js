@@ -6,11 +6,13 @@
 import { createDOMController } from "./domcontroller";
 // import { registerAllBlocks } from "./scripts/register-blocks";
 import { runAccumulators } from "./scripts/accumulators";
+import { log } from "./scripts/global";
+import { getAllMedia } from "./scripts/wp";
 
 // registerAllBlocks();
 
 window.addEventListener("load", (e) => {
-    console.log("[Csek Creative] Window loaded.");
+    log("[Csek Creative] Window loaded.");
 
     /* Prepare Accumulator Elements */
     runAccumulators();
@@ -20,9 +22,7 @@ window.addEventListener("load", (e) => {
 
     window.requestAnimationFrame(() => {
         window.domController.setup();
-        window.domController.overrideAllDebug(false);
-        window.domController.debug = true;
-        window.domController.overrideDebug(true, "VideoCarouselBlock");
+        window.domController.debugMode = true;
     });
 
     setTimeout(() => {

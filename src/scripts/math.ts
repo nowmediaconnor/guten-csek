@@ -5,6 +5,7 @@
 
 import Spline from "typescript-cubic-spline";
 import { arrayMax, arrayMin } from "./array";
+import { log } from "./global";
 
 export const constrain = (n: number, low: number, high: number): number => {
     return Math.max(Math.min(n, high), low);
@@ -98,7 +99,7 @@ export class WaypointInterpolator {
     }
 
     setup() {
-        console.log("Setting up WaypointInterpolator...");
+        log("Setting up WaypointInterpolator...");
 
         // prepare interpolator
         const waypointX = this.points.map((p) => p.x);
@@ -112,12 +113,12 @@ export class WaypointInterpolator {
         const xList = waypointX.map((x) => map(x, 0, this.width, 0, 1));
         const yList = waypointY.map((y) => map(y, 0, this.height, 0, 1));
 
-        console.log("Generated x and y arrays:", { x: xList, y: xList });
+        log("Generated x and y arrays:", { x: xList, y: xList });
 
         this.spline = new Spline(xList, yList);
         // this.spline = new Spline(waypointX, waypointY);
 
-        console.log(this.toString());
+        log(this.toString());
     }
 
     /**

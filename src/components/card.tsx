@@ -11,8 +11,10 @@ interface CsekCardProps {
     children?: React.ReactNode;
 }
 
+export const csekCardTailwindStyles = "border border-solid border-zinc-500 rounded p-2 relative w-full";
+
 export const CsekCard = ({ children, className }: CsekCardProps) => {
-    return <div className={twMerge("csek-card", className)}>{children}</div>;
+    return <div className={twMerge(csekCardTailwindStyles, className)}>{children}</div>;
 };
 
 export default CsekCard;

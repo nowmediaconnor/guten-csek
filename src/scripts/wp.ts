@@ -3,8 +3,12 @@
  * Author: Connor Doman
  */
 
+import { log } from "./global";
 import { CsekImage } from "./image";
 import { decodeHtmlEntities, removeHTMLTags } from "./strings";
+import apiFetch from "@wordpress/api-fetch";
+import { addQueryArgs } from "@wordpress/url";
+import { WP_Query, WP_REST_API_Attachment, WP_REST_API_Attachments } from "wp-types";
 
 export interface WPPost {
     id: number;
@@ -34,10 +38,27 @@ export interface PostCategory {
     children?: PostCategory[];
 }
 
+export async function getAllMedia(): Promise<WP_REST_API_Attachments> {
+    const media: WP_REST_API_Attachments = await apiFetch({ path: "/wp/v2/media", method: "GET" });
+    return media;
+}
+
+export async function getMediaById(id: number): Promise<WP_REST_API_Attachment> {
+    const media: WP_REST_API_Attachment = await apiFetch({ path: `/wp/v2/media/${id}`, method: "GET" });
+    return media;
+}
+
 export async function getAllPosts(tags?: number[], categories?: number[]) {
     try {
-        const tagQuery = tags ? "&tags=" + tags.join(",") : "";
-        const categoryQuery = categories ? "&categories=" + categories.join(",") : "";
+        // check if parameters provided, filter out -1 values ("all")
+        const filteredTags = tags && tags.length > 0 ? tags.filter((t) => t > -1) : [];
+        const filteredCategories = categories && categories.length > 0 ? categories.filter((c) => c > -1) : [];
+
+        // build query string if tags or categories still remaining
+        const tagQuery = filteredTags.length > 0 ? "&tags=" + filteredTags.join(",") : "";
+        const categoryQuery = filteredCategories.length > 0 ? "&categories=" + filteredCategories.join(",") : "";
+
+        // fetch posts
         const res = await fetch(`/wp-json/wp/v2/posts?context=view${tagQuery}${categoryQuery}`);
         const postsData = await res.json();
 
@@ -180,6 +201,32 @@ export function getCategoryBySlug(slug: string): Promise<PostCategory | undefine
             reject(error);
         }
     });
+}
+
+export async function getCategoriesFromParent(parentId: number): Promise<PostCategory[] | undefined> {
+    try {
+        const parentCategory = parentId > -1 ? `&parent=${parentId}` : "";
+
+        const res = await fetch(`/wp-json/wp/v2/categories?context=view${parentCategory}`);
+        const categoryData = await res.json();
+
+        const categories: PostCategory[] = [];
+
+        categoryData.forEach((category: any) => {
+            categories.push({
+                id: category.id,
+                name: category.name,
+                slug: category.slug,
+                description: category.description,
+                url: category.link,
+            });
+        });
+
+        return categories;
+    } catch (err) {
+        console.error(err);
+    }
+    return undefined;
 }
 
 export function calculateReadTime(content: string): number {

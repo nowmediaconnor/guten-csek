@@ -20,11 +20,11 @@
         }
 
         & h1 {
-            @apply mt-12 pl-4 md:m-0 md:p-0 text-4xl md:text-6xl whitespace-normal;
+            @apply mt-12 md:mt-8 md:p-0 text-4xl md:text-5xl whitespace-normal max-w-max;
         }
 
         & h2 {
-            @apply pl-4 md:pl-0 md:left-[calc(var(--serif-width)+1rem)] text-2xl md:text-3xl;
+            @apply pl-4 md:pl-0 md:left-[calc(var(--serif-width)+1rem)] text-2xl md:text-3xl max-w-max;
         }
 
         & .csek-richtext {
@@ -32,7 +32,7 @@
         }
 
         & .subheader {
-            @apply px-4 md:pl-[calc(var(--serif-width)+1rem)];
+            @apply px-4 mx-auto max-w-max;
         }
     }
 }

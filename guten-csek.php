@@ -10,6 +10,28 @@ require 'api.php';
 require 'files.php';
 // require 'kmeans.php';
 
+function guten_csek_plugin_file_path(string $relative_path)
+{
+    // Remove leading slash if present
+    $relative_path = ltrim($relative_path, '/');
+
+    return plugin_dir_path(__FILE__) . $relative_path;
+}
+
+function guten_csek_file_version(string $filepath)
+{
+    return filemtime(guten_csek_plugin_file_path($filepath));
+}
+
+function guten_csek_asset($path)
+{
+    if (wp_get_environment_type() === 'production') {
+        return plugin_dir_url(__FILE__) . '/' . $path;
+    }
+
+    return add_query_arg('time', time(),  plugin_dir_url(__FILE__) . '/' . $path);
+}
+
 function enqueue_blocks_iteratively()
 {
     $block_names = [
@@ -42,6 +64,7 @@ function enqueue_blocks_iteratively()
             'editor_script' => $block_name,
             'editor_style' => 'guten-csek-editor-style',
             'style' => 'guten-csek-frontend-style',
+
         ]);
     }
 }
@@ -77,15 +100,17 @@ function enqueue_custom_block_assets()
     // bundled script
     wp_enqueue_script(
         'guten-csek-blocks',
-        plugins_url('build/index.js', __FILE__),
-        ['wp-element', 'wp-i18n'],
-        filemtime(plugin_dir_path(__FILE__) . 'build/index.js')
+        guten_csek_asset('build/index.js'),
+        [
+            'wp-element', 'wp-i18n', 'wp-api-fetch'
+        ],
+        guten_csek_file_version('build/index.js')
     );
-    $apiSettings = [
-        'root' => esc_url_raw(rest_url()),
-        'nonce' => wp_create_nonce('wp_rest')
-    ];
-    wp_add_inline_script("guten-csek-blocks", "const CSEK_API_SETTINGS = " . json_encode($apiSettings), "before");
+    // $apiSettings = [
+    //     'root' => esc_url_raw(rest_url()),
+    //     'nonce' => wp_create_nonce('wp_rest')
+    // ];
+    // wp_add_inline_script("guten-csek-blocks", "const CSEK_API_SETTINGS = " . json_encode($apiSettings), "before");
 
     // fonts
     // wp_enqueue_style('guten-csek-fonts', plugin_dir_url(__FILE__) . 'src/fonts/fonts.css');
@@ -116,22 +141,24 @@ function enqueue_editor_scripts()
             'You need to run `npm start` or `npm run build` to generate files for the Guten Csek plugin.'
         );
     }
-    $editor_script = 'build/editor.js';
 
     // Enqueue the block index.js file
+    $editor_script = 'build/editor.js';
     wp_enqueue_script(
         'guten-csek-editor-script', // unique handle
-        plugins_url($editor_script, __FILE__),
+        guten_csek_asset($editor_script),
         ['wp-blocks', 'wp-element', 'wp-i18n', 'wp-editor'], // required dependencies for blocks
-        filemtime(plugin_dir_path(__FILE__) . $editor_script)
+        guten_csek_file_version($editor_script)
     );
 
+
     // editor-only css
+    $editor_style = 'css/guten-csek-editor.css';
     wp_register_style(
         'guten-csek-editor-style',
-        plugins_url('css/guten-csek-editor.css', __FILE__),
+        guten_csek_asset($editor_style),
         ['wp-edit-blocks'],
-        filemtime(plugin_dir_path(__FILE__) . 'css/guten-csek-editor.css')
+        guten_csek_file_version($editor_style)
     );
 }
 add_action('enqueue_block_editor_assets', 'enqueue_editor_scripts');
@@ -174,3 +201,28 @@ if (version_compare(get_bloginfo('version'), '5.8', '>=')) {
 } else {
     add_filter('block_categories', 'register_layout_category');
 }
+
+/* Add Guten-Csek classname */
+
+function add_custom_class_to_blocks($content)
+{
+    // Define your custom class name to be added
+    $additionalClass = 'guten-csek-block';
+
+    // Regular expression to match any HTML tag with the existing class name
+    // This pattern now captures all parts of the tag, including other attributes
+    $pattern = '/<([a-zA-Z][a-zA-Z0-9]*)\s+(.*?)\bclass="([^"]*?wp-block-guten-csek-[^"]*?)"(.*?)>/';
+
+    $content = preg_replace_callback($pattern, function ($matches) use ($additionalClass) {
+        $tag = $matches[1]; // Tag name
+        $preAttrs = $matches[2]; // Attributes before the class attribute
+        $classes = $matches[3]; // Existing classes
+        $postAttrs = $matches[4]; // Attributes after the class attribute
+        $updatedClasses = $classes . ' ' . $additionalClass; // Add the new class
+        return "<$tag $preAttrs class=\"$updatedClasses\"$postAttrs>";
+    }, $content);
+
+    return $content;
+}
+
+add_filter('render_block', 'add_custom_class_to_blocks');

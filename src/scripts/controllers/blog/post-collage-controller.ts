@@ -4,12 +4,15 @@
  */
 
 import { BlockController } from "../../dom";
+import { log } from "../../global";
 import { decodeHtmlEntities } from "../../strings";
 import {
+    PostCategory,
     PostTag,
     WPPost,
     generateRelatedPostDOM,
     getAllPosts,
+    getCategoriesFromParent,
     getCategoryBySlug,
     getTagsByCategory,
     makeTagList,
@@ -17,6 +20,7 @@ import {
 
 interface RelatedPostDOM {
     tags: number[];
+    categories: number[];
     dom: HTMLElement;
     post: WPPost;
 }
@@ -24,27 +28,29 @@ interface RelatedPostDOM {
 class PostCollageBlock {
     block: HTMLElement;
     category: number;
-    currentTag: number;
+    // due to a misunderstanding and refactor, currentTag is actually now the current category
+    currentCategory: number;
     postCount: number;
     posts: WPPost[];
     tags: PostTag[];
 
-    tagLinks: NodeListOf<HTMLAnchorElement>;
+    categories: PostCategory[];
+
+    catLinkList: HTMLUListElement;
+
+    catLinks: NodeListOf<HTMLAnchorElement>;
     relatedPostsArea: HTMLElement;
     featuredPostArea: HTMLElement;
 
     relatedPosts: RelatedPostDOM[];
 
-    log: (...args: any[]) => void;
-
-    constructor(block: HTMLElement, log = console.log) {
+    constructor(block: HTMLElement) {
         this.block = block;
         this.category = -1;
-        this.currentTag = -1;
+        this.currentCategory = -1;
         this.posts = [];
         this.tags = [];
         this.relatedPosts = [];
-        this.log = log;
     }
 
     async setup() {
@@ -53,12 +59,17 @@ class PostCollageBlock {
         this.postCount = parseInt(this.block.dataset.postCount ?? "6");
 
         this.posts = await getAllPosts(undefined, [this.category]);
+        this.categories = await this.fetchCategories();
+
+        this.catLinkList = this.block.querySelector(".tag-nav ul") as HTMLUListElement;
+        await this.buildCategoryLinks();
 
         for (const p of this.posts) {
             const dom = await generateRelatedPostDOM(p);
 
             const related = {
                 tags: p.tags,
+                categories: p.categories,
                 dom,
                 post: p,
             };
@@ -66,7 +77,7 @@ class PostCollageBlock {
             this.relatedPosts.push(related);
         }
 
-        this.tagLinks = this.block.querySelectorAll(".tag-nav ul li a");
+        this.catLinks = this.block.querySelectorAll(".tag-nav ul li a");
         this.relatedPostsArea = this.block.querySelector(".collage-related-posts") as HTMLElement;
 
         // const gridElements = await this.buildPostsGrid(this.relatedPosts);
@@ -86,7 +97,7 @@ class PostCollageBlock {
             this.relatedPostsArea.innerHTML = "";
 
             for (const post of this.relatedPosts) {
-                if (this.currentTag === -1 || post.tags.includes(this.currentTag)) {
+                if (this.currentCategory === -1 || post.categories.includes(this.currentCategory)) {
                     post.dom.style.display = "block";
                 } else {
                     post.dom.style.display = "none";
@@ -101,7 +112,7 @@ class PostCollageBlock {
             });
         });
 
-        this.tagLinks.forEach((link, index) => {
+        this.catLinks.forEach((link, index) => {
             if (index === 0) {
                 link.classList.add("chosen");
             }
@@ -111,7 +122,7 @@ class PostCollageBlock {
 
                 const id = parseInt(link.dataset.tagId ?? "-1");
 
-                this.currentTag = id;
+                this.currentCategory = id;
                 await this.update();
             });
         });
@@ -120,17 +131,28 @@ class PostCollageBlock {
     }
 
     async update() {
-        console.log("updating...");
+        this.log("updating...");
         this.relatedPostsArea.style.opacity = "0";
 
-        this.tagLinks.forEach((link) => {
+        this.catLinks.forEach((link) => {
             const id = parseInt(link.dataset.tagId ?? "-1");
-            if (id === this.currentTag) {
+            if (id === this.currentCategory) {
                 link.classList.add("chosen");
             } else {
                 link.classList.remove("chosen");
             }
         });
+    }
+
+    async fetchCategories(): Promise<PostCategory[]> {
+        const cats = await getCategoriesFromParent(this.category);
+
+        if (cats) {
+            log("Post categories", cats);
+            return cats;
+        }
+
+        return [];
     }
 
     async createRelatedPostGrid(posts: WPPost[] | RelatedPostDOM[]): Promise<HTMLElement> {
@@ -192,7 +214,7 @@ class PostCollageBlock {
     }
 
     async buildPostsGrid(posts: RelatedPostDOM[]): Promise<HTMLElement[]> {
-        console.log("building posts grid...");
+        this.log("building posts grid...");
 
         const elements: HTMLElement[] = [];
         if (posts.length > this.postCount) {
@@ -209,6 +231,28 @@ class PostCollageBlock {
             elements.push(onlyGrid);
         }
         return elements;
+    }
+
+    async buildCategoryLinks() {
+        this.log("building category links...");
+
+        const links: HTMLLIElement[] = [];
+
+        for (const cat of this.categories) {
+            const link = document.createElement("li");
+            const a = document.createElement("a");
+            a.href = "#" + cat.slug;
+            a.innerText = decodeHtmlEntities(cat.name);
+            a.dataset.tagId = cat.id.toString();
+            link.appendChild(a);
+            links.push(link);
+        }
+
+        this.catLinkList.append(...links);
+    }
+
+    log(...args: any[]) {
+        log("[PostCollageBlock]", ...args);
     }
 }
 
@@ -234,7 +278,7 @@ export default class PostCollageController extends BlockController {
         }
 
         this.blocks.forEach((block) => {
-            const collageBlock = new PostCollageBlock(block, (...args: any[]) => this.log(...args));
+            const collageBlock = new PostCollageBlock(block);
             this.collageBlocks.push(collageBlock);
         });
 
