@@ -3,7 +3,8 @@ const { merge } = require("webpack-merge");
 
 const myConfig = {
     entry: {
-        editor: "./src/editor.ts",
+        ...defaultConfig.entry,
+        // editor: "./src/editor.ts",
         index: "./src/index.js",
     },
     // Additional custom configuration

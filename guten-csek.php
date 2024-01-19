@@ -69,6 +69,18 @@ function enqueue_blocks_iteratively()
     }
 }
 
+function guten_csek_register_dynamic_blocks()
+{
+    $blocks = [
+        "core/expanding-media"
+    ];
+
+    for ($i = 0; $i < count($blocks); $i++) {
+        $block = $blocks[$i];
+        register_block_type(__DIR__ . '/build/blocks/' . $block);
+    }
+}
+
 function convert_path_to_url($path)
 {
     $path = str_replace('\\', '/', $path);
@@ -100,11 +112,11 @@ function enqueue_custom_block_assets()
     // bundled script
     wp_enqueue_script(
         'guten-csek-blocks',
-        guten_csek_asset('build/index.js'),
+        guten_csek_asset('js/index.js'),
         [
             'wp-element', 'wp-i18n', 'wp-api-fetch'
         ],
-        guten_csek_file_version('build/index.js')
+        guten_csek_file_version('js/index.js')
     );
     // $apiSettings = [
     //     'root' => esc_url_raw(rest_url()),
@@ -127,7 +139,8 @@ function enqueue_custom_block_assets()
     // enqueue_css_folder();
 
     // enqueue block registration
-    enqueue_blocks_iteratively();
+    // enqueue_blocks_iteratively();
+    guten_csek_register_dynamic_blocks();
 }
 // Only enqueue these scripts if we're not in the admin panel
 add_action('init', 'enqueue_custom_block_assets');
@@ -161,7 +174,7 @@ function enqueue_editor_scripts()
         guten_csek_file_version($editor_style)
     );
 }
-add_action('enqueue_block_editor_assets', 'enqueue_editor_scripts');
+// add_action('enqueue_block_editor_assets', 'enqueue_editor_scripts');
 
 
 // API endpoints

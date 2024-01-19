@@ -1,0 +1,37 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "title": "Csek Expanding Media Block",
+    "description": "A block for displaying expanding media with a curtain-draw effect.",
+    "category": "csek",
+    "name": "guten-csek/expanding-media",
+    "icon": "expand",
+    "keywords": ["csek", "expanding", "media", "curtain", "draw"],
+    "textdomain": "guten-csek",
+    "attributes": {
+        "mediaURL": {
+            "type": "string",
+            "default": ""
+        },
+        "floatingImages": {
+            "type": "array",
+            "default": []
+        },
+        "messageHeading": {
+            "type": "string",
+            "default": ""
+        },
+        "message": {
+            "type": "string",
+            "default": ""
+        },
+        "expandingMediaType": {
+            "type": "string",
+            "default": "image"
+        }
+    },
+    "editorScript": "file:./index.js",
+    "editorStyle": "file:./editor.css",
+    "style": "file:./style.css",
+    "viewScript": "file:./controller.js"
+}
