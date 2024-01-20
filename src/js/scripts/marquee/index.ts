@@ -3,7 +3,7 @@
  * Author: Connor Doman
  */
 
-import { log } from "../global";
+import { log } from "../../guten-csek";
 import { Row } from "./row";
 
 export class MarqueeCanvas {
@@ -17,7 +17,7 @@ export class MarqueeCanvas {
     height: number = 100;
     rowCount: number = 1;
     frameCount: number = 0;
-    spacing: number[];
+    spacing: number[] = [];
 
     fontSize: number = 50;
     fontFamily: string = "Syne";

@@ -3,9 +3,9 @@
  * Author: Connor Doman
  */
 
+import { log } from "../../guten-csek";
 import { shuffle } from "../array";
-import { log } from "../global";
-import { MarqueeCanvas } from "./marquee";
+import { MarqueeCanvas } from ".";
 
 export type Direction = 1 | -1;
 

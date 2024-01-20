@@ -3,9 +3,9 @@
  * Author: Connor Doman
  */
 
-import { BlockController } from "../dom";
-import { MarqueeCanvas } from "../marquee";
-import { Strip } from "../marquee/row";
+import { BlockController } from "../../../js/block-controller";
+import { MarqueeCanvas } from "../../../js/scripts/marquee";
+import { Strip } from "../../../js/scripts/marquee/row";
 
 export default class ProjectsMarqueeController extends BlockController {
     debug: boolean = true;
