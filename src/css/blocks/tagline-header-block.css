@@ -7,27 +7,24 @@
 
 .wp-block-guten-csek-tagline-header-block {
     @apply w-full mx-auto mb-8;
-}
+    & .block-content {
+        @apply flex flex-col justify-center items-center text-center text-csek-dark relative transition-all duration-200;
+    }
 
-.wp-block-guten-csek-tagline-header-block .block-content {
-    @apply flex flex-col justify-center items-center text-center text-csek-dark relative transition-all duration-200;
-}
+    & .heading-text {
+        @apply z-[25] font-bold font-syne uppercase max-w-csek-max;
+        & h3 {
+            @apply text-lg md:text-xl;
+        }
 
-.wp-block-guten-csek-tagline-header-block .heading-text {
-    @apply z-[25] font-bold font-syne uppercase max-w-csek-max;
-}
-
-.wp-block-guten-csek-tagline-header-block .heading-text h3 {
-    @apply text-lg md:text-xl;
-}
-
-.wp-block-guten-csek-tagline-header-block .heading-text h1 {
-    @apply text-5xl md:text-8xl leading-none;
-}
-.wp-block-guten-csek-tagline-header-block .heading-text h2 {
-    @apply text-lg md:text-2xl leading-none max-w-csek-1/2 mx-auto font-syne w-2/3 md:w-full;
-}
-
-.wp-block-guten-csek-tagline-header-block .serif {
-    @apply w-24 md:w-serif absolute -bottom-24 md:-bottom-16 z-20;
+        & h1 {
+            @apply text-5xl md:text-8xl leading-none;
+        }
+        & h2 {
+            @apply text-lg md:text-2xl leading-none max-w-csek-1/2 mx-auto font-syne w-2/3 md:w-full;
+        }
+    }
+    & .serif {
+        @apply w-24 md:w-serif absolute -bottom-24 md:-bottom-16 z-20;
+    }
 }

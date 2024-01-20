@@ -69,10 +69,17 @@ function enqueue_blocks_iteratively()
     }
 }
 
+/**
+ * For registering blocks that use block.json
+ */
 function guten_csek_register_dynamic_blocks()
 {
     $blocks = [
-        "core/expanding-media"
+        "core/expanding-media",
+        "core/blockquote",
+        'core/process',
+        "core/scrolling-projects",
+        "core/tagline-header"
     ];
 
     for ($i = 0; $i < count($blocks); $i++) {

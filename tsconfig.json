@@ -8,7 +8,8 @@
         "moduleResolution": "node",
         "esModuleInterop": true,
         "declaration": true,
-        "lib": ["dom", "es6"]
+        "lib": ["dom", "es6"],
+        "allowJs": true
     },
     "include": ["src/**/*"],
     "exclude": ["node_modules", "**/*.spec.ts", "src/blocks/*", "src/components/*"]

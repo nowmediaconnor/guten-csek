@@ -14,7 +14,7 @@ export const TaglineHeaderSave = ({ attributes }: GutenCsekBlockSaveProps<Taglin
     const { preTagline, tagline, subTagline, imageURL } = attributes;
 
     return (
-        <div {...blockProps} className="scroll-fade-away">
+        <div {...blockProps}>
             <div className="block-content">
                 <div className="heading-text">
                     <h3>{preTagline}</h3>

@@ -9,22 +9,18 @@ export interface ControllerProperties {
     name: string;
     debug: boolean;
     isInitialized: boolean;
-    blocks: NodeListOf<HTMLElement>;
+    blocks: NodeListOf<HTMLElement> | undefined;
     setup(): void;
     beforeReload?(): void;
     scroll?(scrollY?: number): void;
     onMouseMove?(e: MouseEvent, blockIndex: number): void;
 }
 
-export abstract class BlockController implements ControllerProperties {
+export default abstract class BlockController implements ControllerProperties {
     name: string;
     debug: boolean;
     isInitialized: boolean;
-    abstract blocks: NodeListOf<HTMLElement>;
-
-    static get isMobile(): boolean {
-        return window.innerWidth <= 768;
-    }
+    abstract blocks: NodeListOf<HTMLElement> | undefined;
 
     constructor() {
         this.name = "BlockController";

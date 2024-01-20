@@ -3,9 +3,9 @@
  * Author: Connor Doman
  */
 
-import { randomIntInRange, randomPartOfOne } from "../scripts/math";
-import { BlockController, ControllerProperties } from "./block-controller";
-import { log } from "./guten-csek";
+import { randomIntInRange, randomPartOfOne } from "./scripts/math";
+import BlockController, { ControllerProperties } from "./block-controller";
+import { GutenCsek, error, log } from "./guten-csek";
 
 interface DOMControllerState extends ControllerProperties {
     blockControllers: ControllerProperties[];
@@ -16,24 +16,26 @@ interface DOMControllerState extends ControllerProperties {
  *
  * This class handles using the above legacy functions and also determines when the DOM is ready and the loading indicator can be removed.
  */
-export default class DOMController extends BlockController implements DOMControllerState {
+export default class DOMController implements DOMControllerState {
     static siteDebug: boolean = false;
+
+    id: number;
 
     name: string;
     blockControllers: ControllerProperties[];
-    loadingInterval: number;
+    loadingInterval: number = -1;
     debug: boolean;
     isInitialized: boolean;
-    blocks: NodeListOf<HTMLElement>;
+    blocks: NodeListOf<HTMLElement> | undefined;
 
     isStarted: boolean;
 
-    loadingPanel: HTMLDivElement;
+    loadingPanel: HTMLDivElement | undefined;
 
     isLetsTalkOpen: boolean = false;
-    letsTalkScreen: HTMLDivElement;
-    letsTalkOpenButtons: NodeListOf<HTMLAnchorElement>;
-    letsTalkCloseButton: HTMLAnchorElement;
+    letsTalkScreen: HTMLDivElement | undefined;
+    letsTalkOpenButtons: NodeListOf<HTMLAnchorElement> | undefined;
+    letsTalkCloseButton: HTMLAnchorElement | undefined;
 
     url: URL;
     basePath: string;
@@ -44,13 +46,13 @@ export default class DOMController extends BlockController implements DOMControl
     private scrollActions: (() => void)[] = [];
 
     constructor(...blockControllers: ControllerProperties[]) {
-        super();
+        // super();
+        this.id = randomIntInRange(0, 1000000);
         this.name = "DOMController";
         this.blockControllers = blockControllers;
         this.debug = true;
         this.isInitialized = false;
         this.isStarted = false;
-        this.prepareLoadingPanel();
 
         this.url = new URL(window.location.href);
         this.basePath = this.url.pathname.split("/").slice(0, -1).join("/");
@@ -61,15 +63,30 @@ export default class DOMController extends BlockController implements DOMControl
         this.usingEditor = isAdmin && isEdit;
 
         this.scrollActions = [];
+
+        console.log(`Instantiated DOMController ${this.id}`);
     }
 
-    addController(controller: BlockController) {
+    addControllerAfterSetup(controller: BlockController) {
         this.blockControllers.push(controller);
 
         if (this.isInitialized) {
             controller.setup();
         }
         this.addEventListeners();
+    }
+
+    addControllerBeforeSetup(controller: BlockController, index?: number) {
+        if (index && index >= 0 && index < this.blockControllers.length) {
+            this.blockControllers.splice(index, 0, controller);
+        } else {
+            this.blockControllers.push(controller);
+        }
+    }
+
+    addControllerAndReset(controller: BlockController, index?: number) {
+        this.addControllerBeforeSetup(controller, index);
+        this.setup();
     }
 
     prepareLoadingPanel() {
@@ -125,12 +142,13 @@ export default class DOMController extends BlockController implements DOMControl
     }
 
     hideLoadingPanel() {
-        this.loadingPanel.classList.add("complete");
+        this.loadingPanel?.classList.add("complete");
     }
 
     setup() {
         if (this.isStarted === false) this.isStarted = true;
 
+        this.prepareLoadingPanel();
         this.prepareExpandingVideoBlocks();
 
         // this.setFeaturedImageColors();
@@ -189,7 +207,7 @@ export default class DOMController extends BlockController implements DOMControl
                 if (controller.blocks) {
                     // prepare mouse move listeners
                     controller.blocks.forEach((block, index) => {
-                        if (DOMController.isMobile) return;
+                        if (GutenCsek.isMobile) return;
                         if (controller.onMouseMove) {
                             block.addEventListener("mousemove", (e) => {
                                 if (controller.onMouseMove) controller.onMouseMove(e, index);
@@ -212,13 +230,13 @@ export default class DOMController extends BlockController implements DOMControl
 
         // header/footer listeners
         if (this.prepareLetsTalkScreen()) {
-            this.letsTalkOpenButtons.forEach((btn) => {
+            this.letsTalkOpenButtons?.forEach((btn) => {
                 btn.addEventListener("click", () => {
                     this.openLetsTalk();
                 });
             });
 
-            this.letsTalkCloseButton.addEventListener("click", () => {
+            this.letsTalkCloseButton?.addEventListener("click", () => {
                 this.closeLetsTalk();
             });
         }
@@ -270,7 +288,7 @@ export default class DOMController extends BlockController implements DOMControl
 
     beforeReload() {
         if (this.usingEditor) return;
-        this.loadingPanel.classList.remove("complete");
+        this.loadingPanel?.classList.remove("complete");
     }
 
     overrideAllDebug(state: boolean) {
@@ -346,5 +364,13 @@ export default class DOMController extends BlockController implements DOMControl
                 log({ randomDelay, randomDuration, randomXDisplacement });
             }
         }
+    }
+
+    log(...args: any[]) {
+        if (this.debug) log("[DOMController]", ...args);
+    }
+
+    err(...args: any[]) {
+        if (this.debug) error("[DOMController]", ...args);
     }
 }

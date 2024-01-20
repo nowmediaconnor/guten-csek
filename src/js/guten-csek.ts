@@ -3,7 +3,8 @@
  * Author: Connor Doman
  */
 
-import { getImageColor } from "./scripts/files";
+import BlockController from "./block-controller";
+import DOMController from "./dom-controller";
 
 /** Global Wordpress Interfaces */
 
@@ -24,18 +25,35 @@ export interface GutenCsekBlockSaveProps<T> extends GutenbergBlockProps {
 /** Global Settings Class */
 
 export class GutenCsek {
-    static siteDebug = false;
+    static siteDebug = true;
     static siteName = "Csek Creative";
+
+    static domController: DOMController = new DOMController();
+
+    static get isMobile(): boolean {
+        return window.innerWidth <= 768;
+    }
+
+    static enqueueController(blockController: BlockController): void {
+        this.log(`Enqueueing ${blockController.name}...`);
+        this.domController.addControllerBeforeSetup(blockController);
+    }
+
+    static setupDOMController(): void {
+        this.log("Setting up DOM Controller...");
+        this.domController.debug = this.siteDebug;
+        this.domController.setup();
+    }
 
     static log(...msg: any[]): void {
         if (this.siteDebug) {
-            log(`[${this.siteName}]`, ...msg);
+            console.log(`[${this.siteName}]`, ...msg);
         }
     }
 
     static err(...msg: any[]): void {
         if (this.siteDebug) {
-            error(`[${this.siteName}]`, ...msg);
+            console.error(`[${this.siteName}]`, ...msg);
         }
     }
 }

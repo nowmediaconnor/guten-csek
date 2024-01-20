@@ -3,9 +3,9 @@
  * Author: Connor Doman
  */
 
-import { BlockController } from "../dom";
+import BlockController from "../../block-controller";
 import { getImageColor } from "../files";
-import { log } from "../global";
+import { log } from "../../guten-csek";
 import ProjectsMarqueeController from "./projects-marquee-controller";
 
 interface SelectedProject {

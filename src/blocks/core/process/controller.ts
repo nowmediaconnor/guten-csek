@@ -4,7 +4,7 @@
  */
 
 import { ProcessBlock, ProcessStep } from ".";
-import { BlockController } from "../../../js/block-controller";
+import BlockController from "../../../js/block-controller";
 
 export default class ProcessBlockController extends BlockController {
     blocks: NodeListOf<HTMLElement>;

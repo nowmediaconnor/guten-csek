@@ -1,35 +1,30 @@
 /*
- * Created on Fri Jan 19 2024
+ * Created on Tue Aug 22 2023
  * Author: Connor Doman
  */
 
-.wp-block-guten-csek-block-quote-block {
-    @apply hidden md:block w-full font-syne md:px-16 py-8 md:py-16 relative;
+/* Tagline Header Block */
 
-    & blockquote {
-        @apply mx-auto text-left text-2xl md:text-4xl leading-[1.2] z-10;
+.wp-block-guten-csek-tagline-header {
+    @apply w-full mx-auto mb-8;
+    & .block-content {
+        @apply flex flex-col justify-center items-center text-center text-csek-dark relative transition-all duration-200;
     }
 
-    & .quote-area {
-        @apply relative mx-auto w-11/12 max-w-csek-max box-border py-8;
-    }
-    & .quote-area::before {
-        @apply text-csek-red text-8xl absolute left-4 md:left-12 top-16 md:top-20;
-        content: "\201C";
-    }
-    & .quote {
-        @apply ml-10 md:ml-24 mr-4 mt-10 md:mt-8 mb-4 flex flex-col;
+    & .heading-text {
+        @apply z-[25] font-bold font-syne uppercase max-w-csek-max;
+        & h3 {
+            @apply text-lg md:text-xl;
+        }
 
-        & .byline {
-            @apply mt-4 font-bold font-montserrat leading-[1.2] uppercase;
-
-            & .author {
-                @apply text-csek-red;
-            }
+        & h1 {
+            @apply text-5xl md:text-8xl leading-none;
+        }
+        & h2 {
+            @apply text-lg md:text-2xl leading-none max-w-csek-1/2 mx-auto font-syne w-2/3 md:w-full;
         }
     }
-
     & .serif {
-        @apply absolute top-0 md:top-8 right-0;
+        @apply w-24 md:w-serif absolute -bottom-24 md:-bottom-16 z-20;
     }
 }

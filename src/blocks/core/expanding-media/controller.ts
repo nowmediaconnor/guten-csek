@@ -3,9 +3,12 @@
  * Author: Connor Doman
  */
 
-import { BlockController } from "../../../js/block-controller";
+import BlockController from "../../../js/block-controller";
+import DOMController from "../../../js/dom-controller";
+import { GutenCsek, log } from "../../../js/guten-csek";
 import { getSiblings } from "../../../js/scripts/dom";
 import { randomIntInRange } from "../../../js/scripts/math";
+import domReady from "@wordpress/dom-ready";
 
 export default class ExpandingVideoController extends BlockController {
     name: string;
@@ -16,7 +19,7 @@ export default class ExpandingVideoController extends BlockController {
     floatingImages: NodeListOf<HTMLElement>;
     blocks: NodeListOf<HTMLElement>;
 
-    static scrollThreshold: number = 150;
+    scrollThreshold: number = 150;
 
     constructor(blockClassName: string) {
         super();
@@ -85,7 +88,7 @@ export default class ExpandingVideoController extends BlockController {
 
             const rect = parent.getBoundingClientRect();
             // this.log(JSON.stringify(rect, null, 4));
-            if (rect.top <= ExpandingVideoController.scrollThreshold) {
+            if (rect.top <= this.scrollThreshold) {
                 this.expandVideo(container);
             } else {
                 this.retractVideo(container);
@@ -102,3 +105,12 @@ export default class ExpandingVideoController extends BlockController {
 
     onMouseMove(e: MouseEvent, blockIndex: number): void {}
 }
+
+domReady(() => {
+    log("ExpandingVideoController domReady");
+    const domCtrl = window["domController"] as DOMController;
+    log({ domCtrl });
+    (window["domController"] as DOMController).addControllerBeforeSetup(
+        new ExpandingVideoController(".expanding-video-block")
+    );
+});
