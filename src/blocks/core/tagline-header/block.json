@@ -1,0 +1,33 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "title": "Csek Tagline Header Block",
+    "description": "A block for adding a heading with tagline and serif symbol.",
+    "category": "csek",
+    "name": "guten-csek/tagline-header",
+    "icon": "expand",
+    "keywords": ["csek", "expanding", "media", "heading", "tagline", "title"],
+    "textdomain": "guten-csek",
+    "attributes": {
+        "preTagline": {
+            "type": "string",
+            "default": "Welcome to"
+        },
+        "tagline": {
+            "type": "string",
+            "default": "The House of More."
+        },
+        "subTagline": {
+            "type": "string",
+            "default": "We are a full-service marketing agency that delivers results."
+        },
+        "imageURL": {
+            "type": "string",
+            "default": ""
+        }
+    },
+    "editorScript": "file:./index.js",
+    "editorStyle": "file:./editor.css",
+    "style": "file:./style.css",
+    "viewScript": "file:./controller.js"
+}
