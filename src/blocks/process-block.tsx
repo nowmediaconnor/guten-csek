@@ -285,7 +285,7 @@ export default class ProcessBlockController extends BlockController {
                         <CsekMediaUpload
                             label="Featured Image"
                             urlAttribute={imageUrl}
-                            onChange={(v, alt) => handleUpdateStepImage(v, alt, i)}
+                            onChange={(v, alt) => handleUpdateStepImage(v, alt ?? "", i)}
                             size="large"
                         />
                         <CsekCard className="flex flex-col gap-2 basis-full">
