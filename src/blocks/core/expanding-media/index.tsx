@@ -11,8 +11,6 @@ import metadata from "./block.json";
 import "./style.css";
 import { registerAllBlocks } from "../../../scripts/register-blocks";
 
-registerAllBlocks();
-
 export interface ExpandingMediaBlockAttributes {
     mediaURL: string;
     floatingImages: string[];

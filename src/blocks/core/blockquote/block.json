@@ -1,0 +1,33 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "title": "Csek Blockquote Block",
+    "description": "A block for displaying a blockquote or testimonial.",
+    "category": "csek",
+    "name": "guten-csek/blockquote",
+    "icon": "expand",
+    "keywords": ["csek", "expanding", "media", "blockquote", "quote"],
+    "textdomain": "guten-csek",
+    "attributes": {
+        "heading": {
+            "type": "string",
+            "default": "Quote"
+        },
+        "quote": {
+            "type": "string",
+            "default": "This is a quote."
+        },
+        "author": {
+            "type": "string",
+            "default": "Author"
+        },
+        "authorRole": {
+            "type": "string",
+            "default": "CEO"
+        }
+    },
+    "editorScript": "file:./index.js",
+    "editorStyle": "file:./editor.css",
+    "style": "file:./style.css",
+    "viewScript": "file:./controller.js"
+}

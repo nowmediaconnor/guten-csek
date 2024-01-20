@@ -7,13 +7,18 @@
     "license": "MIT",
     "private": true,
     "scripts": {
-        "start": "wp-scripts start",
-        "build": "wp-scripts build src/index.js --output-path=js && wp-scripts build",
+        "build": "cross-env NODE_ENV=production yarn css:build && yarn wp:build",
+        "ci": "yarn install --frozen-lockfile",
+        "css:app": "yarn tailwindcss -i ./src/css/app.css -o ./css/guten-csek.css --postcss",
+        "css:editor": "yarn tailwindcss -i ./src/css/app-editor.css -o ./css/guten-csek-editor.css --postcss",
+        "css:build": "yarn css:app && yarn css:editor",
         "count": "python count_lines.py src -i img,fonts",
-        "watch:css-app": "cross-env NODE_ENV=development yarn tailwindcss -i ./src/css/app.css -o ./css/guten-csek.css --postcss --watch",
-        "watch:css-editor": "cross-env NODE_ENV=development yarn tailwindcss -i ./src/css/app-editor.css -o ./css/guten-csek-editor.css --postcss --watch",
-        "watch": "cross-env NODE_ENV=development concurrently \"yarn watch:css-app\" \"yarn watch:css-editor\" \"yarn start\"",
-        "ci": "yarn install --frozen-lockfile"
+        "js:build": "npx esbuild src/js/index.ts --bundle --outdir=js --platform=browser --target=es2015",
+        "watch": "cross-env NODE_ENV=development concurrently \"yarn watch:css-app\" \"yarn watch:css-editor\" \"yarn wp:start\"",
+        "watch:css-app": "yarn css:app -- --watch",
+        "watch:css-editor": "yarn css:editor -- --watch",
+        "wp:start": "wp-scripts start",
+        "wp:build": "wp-scripts build"
     },
     "devDependencies": {
         "@jeffreyvr/tailwindcss-tailpress": "^2.0.0",

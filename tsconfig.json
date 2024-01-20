@@ -1,0 +1,15 @@
+{
+    "compilerOptions": {
+        "module": "ESNext",
+        "target": "es6",
+        "outDir": "dist",
+        "rootDir": "src",
+        "strict": true,
+        "moduleResolution": "node",
+        "esModuleInterop": true,
+        "declaration": true,
+        "lib": ["dom", "es6"]
+    },
+    "include": ["src/**/*"],
+    "exclude": ["node_modules", "**/*.spec.ts", "src/blocks/*", "src/components/*"]
+}

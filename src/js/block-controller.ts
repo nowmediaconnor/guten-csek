@@ -1,0 +1,58 @@
+/*
+ * Created on Fri Jan 19 2024
+ * Author: Connor Doman
+ */
+
+import { GutenCsek, error, log } from "./guten-csek";
+
+export interface ControllerProperties {
+    name: string;
+    debug: boolean;
+    isInitialized: boolean;
+    blocks: NodeListOf<HTMLElement>;
+    setup(): void;
+    beforeReload?(): void;
+    scroll?(scrollY?: number): void;
+    onMouseMove?(e: MouseEvent, blockIndex: number): void;
+}
+
+export abstract class BlockController implements ControllerProperties {
+    name: string;
+    abstract debug: boolean;
+    abstract isInitialized: boolean;
+    abstract blocks: NodeListOf<HTMLElement>;
+
+    static get isMobile(): boolean {
+        return window.innerWidth <= 768;
+    }
+
+    constructor() {
+        this.name = "BlockController";
+    }
+
+    abstract setup(): void;
+
+    abstract onMouseMove?(e: MouseEvent, blockIndex: number): void;
+
+    invalid(truthy: any): boolean {
+        if (truthy) {
+            this.log("Block is valid.");
+            return false;
+        }
+        this.log("Block is invalid.");
+        this.isInitialized = true;
+        return true;
+    }
+
+    log(...msg: any[]): void {
+        if (this.debug && GutenCsek.siteDebug) {
+            log(`[${this.name}]`, ...msg);
+        }
+    }
+
+    err(...msg: any[]): void {
+        if (this.debug && GutenCsek.siteDebug) {
+            error(`[${this.name}]`, ...msg);
+        }
+    }
+}

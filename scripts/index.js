@@ -5,8 +5,8 @@
 
 import { createDOMController } from "./domcontroller";
 // import { registerAllBlocks } from "./scripts/register-blocks";
-import { runAccumulators } from "./scripts/accumulators";
-import { log } from "./scripts/global";
+import { runAccumulators } from "./accumulators";
+import { log } from "./global";
 
 // registerAllBlocks();
 

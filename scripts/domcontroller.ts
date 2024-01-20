@@ -3,22 +3,22 @@
  * Author: Connor Doman
  */
 
-import DOMController from "./scripts/dom";
-import ScrollDownController from "./scripts/controllers/scroll-down-controller";
-import CarouselController from "./scripts/controllers/carousel-controller";
-import VideoCarouselController from "./scripts/controllers/video-carousel-controller";
-import ExpandingVideoController from "./scripts/controllers/expanding-video-controller";
-import ScrollingProjectsController from "./scripts/controllers/scrolling-projects-controller";
-import CurtainifyController from "./scripts/controllers/curtainify-controller";
-import TeamController from "./scripts/controllers/team-controller";
-import NextProjectController from "./scripts/controllers/next-project-controller";
-import FeaturedVideoController from "./scripts/controllers/featured-video-controller";
-import StaffProfilesController from "./scripts/controllers/staff-profiles-controller";
-import CyclingStackController from "./scripts/controllers/cycling-stack-controller";
-import ProjectsMarqueeController from "./scripts/controllers/projects-marquee-controller";
-import ProcessBlockController from "./blocks/process-block";
-import { ProjectsMasonryController } from "./blocks/projects/masonry-block";
-import PostCollageController from "./scripts/controllers/blog/post-collage-controller";
+import DOMController from "./dom";
+import ScrollDownController from "./controllers/scroll-down-controller";
+import CarouselController from "./controllers/carousel-controller";
+import VideoCarouselController from "./controllers/video-carousel-controller";
+import ExpandingVideoController from "./controllers/expanding-video-controller";
+import ScrollingProjectsController from "./controllers/scrolling-projects-controller";
+import CurtainifyController from "./controllers/curtainify-controller";
+import TeamController from "./controllers/team-controller";
+import NextProjectController from "./controllers/next-project-controller";
+import FeaturedVideoController from "./controllers/featured-video-controller";
+import StaffProfilesController from "./controllers/staff-profiles-controller";
+import CyclingStackController from "./controllers/cycling-stack-controller";
+import ProjectsMarqueeController from "./controllers/projects-marquee-controller";
+// import ProcessBlockController from "./blocks/process-block";
+// import { ProjectsMasonryController } from "./blocks/projects/masonry-block";
+import PostCollageController from "./controllers/blog/post-collage-controller";
 
 export const createDOMController = () => {
     /* Prepare DOM Controller */
@@ -55,11 +55,11 @@ export const createDOMController = () => {
     // Cycling Stack Component
     const cyclingStackController = new CyclingStackController();
 
-    // Process Block
-    const processBlockController = new ProcessBlockController();
+    // // Process Block
+    // const processBlockController = new ProcessBlockController();
 
-    // Projects Masonry Block
-    const projectsMasonryBlock = new ProjectsMasonryController();
+    // // Projects Masonry Block
+    // const projectsMasonryBlock = new ProjectsMasonryController();
 
     // Post Collage Block
     const postCollageController = new PostCollageController();
@@ -77,8 +77,8 @@ export const createDOMController = () => {
         staffProfilesController,
         cyclingStackController,
         teamController,
-        processBlockController,
-        projectsMasonryBlock,
+        // processBlockController,
+        // projectsMasonryBlock,
         postCollageController
     );
 };
