@@ -3,7 +3,8 @@
  * Author: Connor Doman
  */
 
-import { getSiblings, BlockController } from "../../../js/scripts/dom";
+import { BlockController } from "../../../js/block-controller";
+import { getSiblings } from "../../../js/scripts/dom";
 import { randomIntInRange } from "../../../js/scripts/math";
 
 export default class ExpandingVideoController extends BlockController {

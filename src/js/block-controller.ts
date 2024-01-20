@@ -18,8 +18,8 @@ export interface ControllerProperties {
 
 export abstract class BlockController implements ControllerProperties {
     name: string;
-    abstract debug: boolean;
-    abstract isInitialized: boolean;
+    debug: boolean;
+    isInitialized: boolean;
     abstract blocks: NodeListOf<HTMLElement>;
 
     static get isMobile(): boolean {
@@ -28,6 +28,8 @@ export abstract class BlockController implements ControllerProperties {
 
     constructor() {
         this.name = "BlockController";
+        this.debug = false;
+        this.isInitialized = false;
     }
 
     abstract setup(): void;

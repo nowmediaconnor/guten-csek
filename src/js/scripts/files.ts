@@ -3,7 +3,7 @@
  * Author: Connor Doman
  */
 
-import { error, log } from "./global";
+import { error, log } from "../guten-csek";
 
 // https://stackoverflow.com/questions/6150289/how-can-i-convert-an-image-into-base64-string-using-javascript
 export const imageToBase64 = async (url: string): Promise<string> => {

@@ -4,7 +4,7 @@
  */
 
 import { constrain, map } from "./math";
-import { log } from "./global";
+import { log } from "../guten-csek";
 
 /**
  * curtainify.js

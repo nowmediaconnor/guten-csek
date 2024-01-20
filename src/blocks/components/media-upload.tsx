@@ -6,14 +6,13 @@
 import { MediaUpload, MediaUploadCheck } from "@wordpress/block-editor";
 import React, { useState } from "@wordpress/element";
 import { Heading } from "./heading";
-import { capitalize } from "../scripts/strings";
+import { capitalize } from "../../js/scripts/strings";
 import { CsekAddButton } from "./button";
 import Label from "./label";
-import { CsekImage, CsekImageSize } from "../scripts/image";
+import { CsekImage, CsekImageSize } from "../../js/scripts/image";
 import { twMerge } from "tailwind-merge";
-import { log } from "../scripts/global";
-import { getMediaById } from "../scripts/wp";
 import CsekCard from "./card";
+import { log } from "../../js/guten-csek";
 
 interface CsekMediaUploadProps {
     onChange: (v: string, altText?: string) => void;

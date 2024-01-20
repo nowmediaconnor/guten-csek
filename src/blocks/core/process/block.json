@@ -1,0 +1,21 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "title": "Csek Process Block",
+    "description": "A block for displaying a series of informational cards.",
+    "category": "csek",
+    "name": "guten-csek/process",
+    "icon": "expand",
+    "keywords": ["csek", "expanding", "media", "process", "steps"],
+    "textdomain": "guten-csek",
+    "attributes": {
+        "steps": {
+            "type": "array",
+            "default": []
+        }
+    },
+    "editorScript": "file:./index.js",
+    "editorStyle": "file:./editor.css",
+    "style": "file:./style.css",
+    "viewScript": "file:./controller.js"
+}

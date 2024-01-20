@@ -3,7 +3,7 @@
  * Author: Connor Doman
  */
 
-import DOMController from "./dom";
+import DOMController from "../src/js/scripts/dom";
 import { getImageColor } from "./files";
 
 export async function updateFeaturedImageColorDerivatives(): Promise<boolean> {

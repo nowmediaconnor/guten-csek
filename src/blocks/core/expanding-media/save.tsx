@@ -5,9 +5,9 @@
 
 import { useBlockProps, useInnerBlocksProps } from "@wordpress/block-editor";
 import React from "react";
-import { GutenCsekBlockSaveProps } from "../../../scripts/dom";
+import { GutenCsekBlockSaveProps } from "../../../js/guten-csek";
 import { ExpandingMediaBlockAttributes } from ".";
-import { RichTextContent } from "../../../components/input";
+import { RichTextContent } from "../../components/input";
 
 export const ExpandingMediaBlockSave = ({ attributes }: GutenCsekBlockSaveProps<ExpandingMediaBlockAttributes>) => {
     const blockProps = useBlockProps.save();

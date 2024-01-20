@@ -5,15 +5,15 @@
 
 import { InspectorControls, useBlockProps, useInnerBlocksProps } from "@wordpress/block-editor";
 import React from "react";
-import { GutenCsekBlockEditProps } from "../../../scripts/dom";
+import { GutenCsekBlockEditProps } from "../../../js/guten-csek";
 import { ExpandingMediaBlockAttributes } from ".";
-import { CsekAddButton, CsekDeleteButton } from "../../../components/button";
-import { CsekMediaUpload } from "../../../components/media-upload";
+import { CsekAddButton, CsekDeleteButton } from "../../components/button";
+import { CsekMediaUpload } from "../../components/media-upload";
 import { Panel, PanelBody } from "@wordpress/components";
-import { CsekBlockHeading } from "../../../components/heading";
-import { CsekSelectDropdown, RichTextInput, TextInput } from "../../../components/input";
-import Label from "../../../components/label";
-import CsekCard from "../../../components/card";
+import { CsekBlockHeading } from "../../components/heading";
+import { CsekSelectDropdown, RichTextInput, TextInput } from "../../components/input";
+import Label from "../../components/label";
+import CsekCard from "../../components/card";
 
 export const ExpandingMediaBlockEdit = ({
     attributes,

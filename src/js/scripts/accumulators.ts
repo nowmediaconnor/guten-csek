@@ -3,7 +3,7 @@
  * Author: Connor Doman
  */
 
-import { log } from "./global";
+import { log } from "../guten-csek";
 
 const wrapNumbersInSpans = (inputString: string, className: string = "js-accumulator-number") => {
     const regex = /\d+/g;

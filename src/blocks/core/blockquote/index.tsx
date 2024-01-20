@@ -9,7 +9,7 @@ import { BlockquoteBlockEdit } from "./edit";
 import { BlockquoteBlockSave } from "./save";
 import metadata from "./block.json";
 import "./style.css";
-import { registerAllBlocks } from "../../../scripts/register-blocks";
+import { registerAllBlocks } from "../../../js/scripts/register-blocks";
 
 export interface BlockquoteBlockAttributes {
     heading: string;

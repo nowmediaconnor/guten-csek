@@ -4,7 +4,7 @@
  */
 
 import Player from "@vimeo/player";
-import { log } from "./global";
+import { log } from "../guten-csek";
 
 export interface VimeoResponse {
     type: string;

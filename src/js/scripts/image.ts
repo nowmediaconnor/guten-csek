@@ -3,7 +3,7 @@
  * Author: Connor Doman
  */
 
-import { error, log } from "./global";
+import { error, log } from "../guten-csek";
 import { getMediaById } from "./wp";
 
 export type CsekImageSize = "thumbnail" | "medium" | "large" | "full";
@@ -45,7 +45,12 @@ export class CsekImage {
 
         if (alt) {
             this.alt = alt;
+        } else {
+            this.alt = "No alt text provided";
         }
+
+        this.sizes = {};
+        this._url = "";
 
         this.preload();
     }

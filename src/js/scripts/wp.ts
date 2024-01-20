@@ -3,7 +3,6 @@
  * Author: Connor Doman
  */
 
-import { log } from "./global";
 import { CsekImage } from "./image";
 import { decodeHtmlEntities, removeHTMLTags } from "./strings";
 import apiFetch from "@wordpress/api-fetch";

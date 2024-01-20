@@ -5,9 +5,9 @@
 
 import { useBlockProps } from "@wordpress/block-editor";
 import React from "react";
-import { GutenCsekBlockEditProps } from "../../../js/scripts/dom";
-import { CsekBlockHeading } from "../../../components/heading";
-import { TextArea, TextInput } from "../../../components/input";
+import { GutenCsekBlockEditProps } from "../../../js/guten-csek";
+import { CsekBlockHeading } from "../../components/heading";
+import { TextArea, TextInput } from "../../components/input";
 import { BlockquoteBlockAttributes } from ".";
 
 export const BlockquoteBlockEdit = ({

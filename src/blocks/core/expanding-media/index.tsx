@@ -9,7 +9,7 @@ import { ExpandingMediaBlockEdit } from "./edit";
 import { ExpandingMediaBlockSave } from "./save";
 import metadata from "./block.json";
 import "./style.css";
-import { registerAllBlocks } from "../../../scripts/register-blocks";
+import { registerAllBlocks } from "../../../js/scripts/register-blocks";
 
 export interface ExpandingMediaBlockAttributes {
     mediaURL: string;

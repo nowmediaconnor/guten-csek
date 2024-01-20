@@ -5,7 +5,7 @@
 
 import { useBlockProps } from "@wordpress/block-editor";
 import React from "react";
-import { GutenCsekBlockSaveProps } from "../../../scripts/dom";
+import { GutenCsekBlockSaveProps } from "../../../js/scripts/dom";
 import { BlockquoteBlockAttributes } from ".";
 
 export const BlockquoteBlockSave = ({ attributes }: GutenCsekBlockSaveProps<BlockquoteBlockAttributes>) => {
