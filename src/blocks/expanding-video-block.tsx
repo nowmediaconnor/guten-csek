@@ -169,11 +169,12 @@ export const ExpandingVideoBlockSave = ({ attributes }: GutenCsekBlockSaveProps<
 
     const expandingElement =
         expandingElementType === "video" ? (
-            <video controls={false} autoPlay={true} loop={true} muted={true}>
+            <video className="inner" controls={false} autoPlay={true} loop={true} muted={true}>
                 <source src={expandingMediaURL} />
             </video>
         ) : (
-            <img src={expandingMediaURL} />
+            // <img className="inner" src={expandingMediaURL} />
+            <div className="inner" style={{ backgroundImage: `url(${expandingMediaURL})` }} />
         );
 
     const messageElement = message ? (
@@ -190,7 +191,9 @@ export const ExpandingVideoBlockSave = ({ attributes }: GutenCsekBlockSaveProps<
                     <div className="content-block curtain">
                         <div className="row">
                             <div className="image-container left">{leftImageColumns}</div>
-                            <div className="expanding-video-container">{expandingElement}</div>
+                            <div className="expanding-video-container">
+                                <div className="fade-to-black">{expandingElement}</div>
+                            </div>
                             <div className="image-container right">{rightImageColumns}</div>
                         </div>
                     </div>

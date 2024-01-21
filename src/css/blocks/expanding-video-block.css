@@ -5,85 +5,92 @@
 
 /* Expanding Video Block*/
 
-.wp-block-guten-csek-expanding-video-block .row {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: flex-start;
-    gap: 2rem;
-}
+.wp-block-guten-csek-expanding-video-block {
+    /* --local-ftb-shadow: transparent; */
+    --local-ftb-shadow-opacity: 0;
 
-.expanding-video-container {
-    @apply w-11/12 md:w-[40vw] h-[75vh] overflow-hidden rounded-xl relative z-20 transition-all duration-1200 drop-shadow-md md:drop-shadow-none top-[2rem];
-}
-
-.expanding-video-container.expanded {
-    @apply top-0;
-}
-
-.expanding-video-container video,
-.expanding-video-container img {
-    @apply object-cover max-w-none object-center relative left-1/2 top-1/4 transform -translate-x-1/2 -translate-y-1/4;
-}
-
-.expanding-video-container img {
-    @apply w-screen object-cover object-top h-full;
-}
-
-.expanded {
-    @apply w-screen h-screen rounded-none;
-}
-
-.expanded > video,
-.expanded > img {
-    @apply filter brightness-50 transition-all duration-1200;
-}
-
-.floating-image {
-    @apply relative w-80 rounded-md;
-    animation: hover 2s ease-in-out infinite alternate;
-}
-
-.image-container {
-    @apply relative min-w-[30vh] w-1/3 hidden md:flex flex-row justify-start items-center gap-8 mt-8 transition-all duration-750 ease-in-out;
-
-    &.left {
-        @apply flex-row-reverse;
+    & .row {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: flex-start;
+        gap: 2rem;
     }
 
-    &.right {
-        @apply flex-row;
-    }
+    & .expanding-video-container {
+        @apply w-11/12 md:w-[40vw] h-[75vh] overflow-hidden rounded-xl relative z-20 transition-all duration-1200 drop-shadow-md md:drop-shadow-none top-[2rem] bg-csek-dark;
 
-    & .image-column {
-        @apply flex flex-col gap-4 justify-center items-center;
+        &.expanded {
+            /* --local-ftb-shadow: var(--csek-dark); */
+            --local-ftb-shadow-opacity: 1;
+            @apply top-0;
+        }
+
+        & video,
+        & img {
+            @apply object-cover max-w-none object-center relative left-1/2 top-1/4 transform -translate-x-1/2 -translate-y-1/4;
+        }
 
         & img {
-            @apply max-w-[15rem];
+            @apply w-screen object-cover object-top h-full;
         }
     }
-}
 
-.disappear {
-    @apply opacity-0 w-0;
-}
+    & .expanded {
+        @apply w-screen h-screen rounded-none;
 
-.message {
-    @apply text-white h-screen bg-csek-dark w-screen text-center flex flex-col items-center justify-center gap-4 transition-all duration-3000 ease-out overflow-hidden font-montserrat mx-auto;
-
-    & > * {
-        @apply w-11/12 max-w-csek-2/3;
+        & > video,
+        & > img {
+            @apply filter brightness-50 transition-all duration-1200;
+        }
     }
-}
 
-.message h2 {
-    @apply text-3xl leading-none font-semibold;
-}
+    & .floating-image {
+        @apply relative w-80 rounded-md;
+        animation: hover 2s ease-in-out infinite alternate;
+    }
 
-.message p {
-    @apply whitespace-nowrap;
-}
+    & .image-container {
+        @apply relative min-w-[30vh] w-1/3 hidden md:flex flex-row justify-start items-center gap-8 mt-8 transition-all duration-750 ease-in-out;
 
-.expanded .message {
-    @apply top-0 opacity-100 delay-1200;
+        &.left {
+            @apply flex-row-reverse;
+        }
+
+        &.right {
+            @apply flex-row;
+        }
+
+        & .image-column {
+            @apply flex flex-col gap-4 justify-center items-center;
+
+            & img {
+                @apply max-w-[15rem];
+            }
+        }
+    }
+
+    & .disappear {
+        @apply opacity-0 w-0;
+    }
+
+    & .message {
+        @apply text-white h-screen bg-csek-dark w-screen text-center flex flex-col items-center justify-center gap-4 transition-all duration-3000 ease-out overflow-hidden font-montserrat mx-auto;
+
+        & > * {
+            @apply w-11/12 max-w-csek-2/3;
+        }
+
+        & h2 {
+            @apply text-3xl leading-none font-semibold;
+        }
+
+        & p {
+            @apply whitespace-nowrap;
+        }
+
+        &.expanded {
+            @apply top-0 opacity-100 delay-1200;
+        }
+    }
 }

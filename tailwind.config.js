@@ -8,6 +8,8 @@ const customWidths = {
     "csek-1/3": "25rem",
     "csek-2/3": "50rem",
     serif: "12rem",
+    "csek-best-fit": "max(75rem,100%)",
+    bleed: "calc(100% + 1rem)",
 };
 
 const customTimings = {

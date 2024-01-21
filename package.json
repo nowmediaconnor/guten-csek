@@ -15,8 +15,8 @@
         "count": "python count_lines.py src -i img,fonts",
         "js:build": "npx esbuild src/js/index.js --bundle --outdir=js --platform=browser --target=es2015",
         "watch": "cross-env NODE_ENV=development concurrently \"yarn:watch:css-app\" \"yarn:watch:css-editor\" \"yarn:wp:start\"",
-        "watch:css-app": "yarn css:app -- --watch",
-        "watch:css-editor": "yarn css:editor -- --watch",
+        "watch:css-app": "yarn css:app --watch",
+        "watch:css-editor": "yarn css:editor --watch",
         "wp:start": "wp-scripts start",
         "wp:build": "wp-scripts build"
     },
