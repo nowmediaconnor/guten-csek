@@ -51,7 +51,7 @@ export const TextInput = ({
             <input
                 type="text"
                 className={twMerge(
-                    "w-full rounded border border-solid border-slate-700 px-2 py-1 text-lg",
+                    "w-full rounded border border-solid border-slate-700 px-2 py-1 text-lg bg-slate-50",
                     "csek-input",
                     label ? "mt-2" : ""
                 )}
@@ -80,7 +80,7 @@ export const RichTextInput = ({ label, initialValue = "", placeholder, className
             <em className="italic text-sm text-slate-500">Rich text</em>
             <RichText
                 tagName="div"
-                className={twMerge("flex-grow", csekCardTailwindStyles, className)}
+                className={twMerge("flex-grow", csekCardTailwindStyles, "bg-slate-50", className)}
                 placeholder={placeholder || "Enter text here."}
                 label={label}
                 value={text}
@@ -163,7 +163,7 @@ export const TextArea = ({ label, initialValue = "", placeholder, className, dis
             ) : null}
             <textarea
                 className={twMerge(
-                    "w-full min-h-fit h-64 rounded border border-solid border-slate-700 px-2 py-1 text-lg",
+                    "w-full min-h-fit h-64 rounded border border-solid border-slate-700 px-2 py-1 text-lg bg-slate-50",
                     "csek-input"
                 )}
                 placeholder={placeholder}
