@@ -25,8 +25,9 @@
                 @apply my-4 text-2xl;
             }
 
-            & p {
-                @apply text-3xl font-bold leading-[1.1] mb-20;
+            & p,
+            & .csek-richtext {
+                @apply text-white text-3xl font-bold leading-[1.1] mb-20;
             }
         }
 
@@ -40,8 +41,9 @@
                     @apply w-2/3 md:w-full mx-auto text-center text-base text-pretty;
                 }
 
-                & p {
-                    @apply text-left font-montserrat leading-[1.1] text-base text-pretty;
+                & p,
+                & .csek-richtext {
+                    @apply text-white text-left font-montserrat leading-[1.1] text-base text-pretty;
                 }
             }
         }

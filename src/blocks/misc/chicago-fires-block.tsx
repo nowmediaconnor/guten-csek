@@ -7,7 +7,7 @@ import React from "@wordpress/element";
 import { GutenCsekBlockEditProps, GutenCsekBlockSaveProps, GutenbergBlockProps } from "../../scripts/dom";
 import { useBlockProps } from "@wordpress/block-editor";
 import { Heading } from "../../components/heading";
-import { TextArea, TextInput } from "../../components/input";
+import { RichTextContent, RichTextInput, TextArea, TextInput } from "../../components/input";
 import { Button } from "@wordpress/components";
 import { CsekAddButton, CsekDeleteButton } from "../../components/button";
 import { CsekBlockHeading } from "../../components/heading";
@@ -52,9 +52,9 @@ const ChicagoFireEditor = ({
                 initialValue={heading}
                 onChange={onChangeHeading}
             />
-            <TextArea
+            <RichTextInput
                 label="Message"
-                placeholder="Enter a message."
+                placeholder="What do you want to say?"
                 initialValue={message}
                 onChange={onChangeMessage}
             />
@@ -156,7 +156,7 @@ export const ChicagoFiresBlockEdit = ({
                         onChange={handleChangePrimaryHeading}
                         initialValue={primaryHeading}
                     />
-                    <TextInput
+                    <RichTextInput
                         label="Primary Message"
                         placeholder="Enter a message."
                         onChange={handleChangePrimaryMessage}
@@ -178,7 +178,7 @@ export const ChicagoFiresBlockSave = ({ attributes }: GutenCsekBlockSaveProps<Ch
         return (
             <div className="secondary-text">
                 <h3>{secondaryHeadings[i]}</h3>
-                <p>{secondaryMessages[i]}</p>
+                <RichTextContent value={secondaryMessages[i]} />
             </div>
         );
     });
@@ -188,7 +188,7 @@ export const ChicagoFiresBlockSave = ({ attributes }: GutenCsekBlockSaveProps<Ch
             <div className="block-container">
                 <div className="primary-text">
                     <h2>{primaryHeading}</h2>
-                    {primaryMessage ? <p>{primaryMessage}</p> : null}
+                    {primaryMessage ? <RichTextContent value={primaryMessage} /> : null}
                 </div>
                 <div className="fires">{fires}</div>
             </div>
