@@ -1,0 +1,42 @@
+/*
+ * Created on Thu Jan 25 2024
+ * Author: Connor Doman
+ */
+
+.wp-block-guten-csek-newsletter-cta-block {
+    & .block-content {
+        @apply flex flex-row justify-center items-center gap-8 md:px-32 py-32 min-h-max;
+
+        & div {
+            @apply flex flex-col justify-center basis-1/2;
+
+            &.text-content {
+                @apply w-min;
+
+                & h2 {
+                    @apply text-8xl font-bold font-syne uppercase whitespace-nowrap;
+                }
+
+                & span {
+                    @apply text-xl font-bold font-syne uppercase text-csek-red;
+                }
+
+                & .csek-richtext {
+                    @apply my-4 pr-8;
+                }
+            }
+
+            &.visual-content {
+                @apply relative object-cover;
+
+                & img {
+                    @apply relative max-w-none -ml-48 -mt-12;
+                }
+
+                & a {
+                    @apply absolute;
+                }
+            }
+        }
+    }
+}

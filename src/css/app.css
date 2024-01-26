@@ -9,10 +9,6 @@
 
 @import "style.css";
 
-@import "blocks/block-quote-block.css";
-@import "blocks/curtainify.css";
-@import "blocks/expanding-video-block.css";
-@import "blocks/horizontal-carousel-block.css";
 @import "blocks/misc/chicago-fires-block.css";
 @import "blocks/misc/emphasized-text-block.css";
 @import "blocks/misc/featured-image-block.css";
@@ -29,6 +25,11 @@
 @import "blocks/misc/screenshot-collage-block.css";
 @import "blocks/misc/self-description-block.css";
 @import "blocks/misc/staff-profiles-block.css";
+
+@import "blocks/block-quote-block.css";
+@import "blocks/curtainify.css";
+@import "blocks/expanding-video-block.css";
+@import "blocks/horizontal-carousel-block.css";
 @import "blocks/scrolling-projects-block.css";
 @import "blocks/tagline-header-block.css";
 @import "blocks/team-block.css";
@@ -38,3 +39,5 @@
 @import "blocks/projects/masonry-block.css";
 
 @import "blocks/blog/post-collage-block.css";
+
+@import "blocks/cta/newsletter-block.css";

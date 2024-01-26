@@ -85,6 +85,7 @@ import {
     PostCollageBlockSave,
 } from "../blocks/blog/post-collage-block";
 import { log } from "./global";
+import { NewsletterBlockAttributes, NewsletterBlockEdit, NewsletterBlockSave } from "../blocks/cta/newsletter-block";
 
 const commonProperties = {
     category: "csek",
@@ -784,5 +785,36 @@ export const registerAllBlocks = () => {
         },
         edit: PostCollageBlockEdit,
         save: PostCollageBlockSave,
+    });
+
+    // Newsletter CTA block
+    registerBlockType<NewsletterBlockAttributes>("guten-csek/newsletter-cta-block", {
+        ...commonProperties,
+        title: "Csek Newsletter CTA Block",
+        icon: "text",
+        attributes: {
+            heading: {
+                type: "string",
+                default: "Say Yes",
+            },
+            subheading: {
+                type: "string",
+                default: "To Marketing Tips",
+            },
+            message: {
+                type: "string",
+                default: "And more info on the latest industry trends & data, plus exclusive event invites.",
+            },
+            buttonText: {
+                type: "string",
+                default: "Subscribe Now",
+            },
+            buttonLink: {
+                type: "string",
+                default: "#newsletter-link",
+            },
+        },
+        edit: NewsletterBlockEdit,
+        save: NewsletterBlockSave,
     });
 };
