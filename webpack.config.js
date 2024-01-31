@@ -1,12 +1,35 @@
-const defaultConfig = require("@wordpress/scripts/config/webpack.config");
-const { merge } = require("webpack-merge");
+const path = require("path");
+const defaults = require("@wordpress/scripts/config/webpack.config.js");
 
-const myConfig = {
+module.exports = {
+    ...defaults,
     entry: {
-        editor: "./src/editor.ts",
-        index: "./src/index.js",
+        index: path.resolve(process.cwd(), "src"),
+        editor: path.resolve(process.cwd(), "src", "editor"),
     },
-    // Additional custom configuration
+    output: {
+        filename: "[name].js",
+        path: path.resolve(process.cwd(), "build"),
+    },
+    module: {
+        ...defaults.module,
+        rules: [
+            ...defaults.module.rules,
+            {
+                test: /\.tsx?$/,
+                use: [
+                    {
+                        loader: "ts-loader",
+                        options: {
+                            configFile: "tsconfig.json",
+                            transpileOnly: true,
+                        },
+                    },
+                ],
+            },
+        ],
+    },
+    resolve: {
+        extensions: [".ts", ".tsx", ...(defaults.resolve ? defaults.resolve.extensions || [".js", ".jsx"] : [])],
+    },
 };
-
-module.exports = merge(defaultConfig, myConfig);
