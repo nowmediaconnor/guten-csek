@@ -5,37 +5,98 @@
 
 .wp-block-guten-csek-newsletter-cta-block {
     & .block-content {
-        @apply flex flex-row justify-center items-center gap-8 md:px-32 py-32 min-h-max;
+        @apply md:px-32 py-32 min-h-max;
 
-        & div {
-            @apply flex flex-col justify-center basis-1/2;
+        & .cta {
+            @apply flex flex-row justify-center items-center gap-8;
 
-            &.text-content {
-                @apply w-min;
+            & div {
+                &.text-content {
+                    @apply w-min flex flex-col justify-center basis-1/2;
 
-                & h2 {
-                    @apply text-8xl font-bold font-syne uppercase whitespace-nowrap;
+                    & h2 {
+                        @apply text-8xl font-bold font-syne uppercase whitespace-nowrap;
+                    }
+
+                    & span {
+                        @apply text-xl font-bold font-syne uppercase text-csek-red;
+                    }
+
+                    & .csek-richtext {
+                        @apply my-4 pr-8;
+                    }
                 }
 
-                & span {
-                    @apply text-xl font-bold font-syne uppercase text-csek-red;
+                &.visual-content {
+                    @apply relative object-cover flex flex-col justify-center basis-1/2;
+
+                    & img {
+                        @apply relative max-w-none -ml-48 -mt-12;
+                    }
+
+                    & a {
+                        @apply absolute;
+                    }
+                }
+            }
+        }
+
+        & .newsletter-form {
+            @apply overflow-hidden;
+            --select-dropdown: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M0.292893 0.292893C0.683417 -0.097631 1.31658 -0.097631 1.70711 0.292893L5 3.58579L8.29289 0.292893C8.68342 -0.0976311 9.31658 -0.0976311 9.70711 0.292893C10.0976 0.683417 10.0976 1.31658 9.70711 1.70711L5.70711 5.70711C5.31658 6.09763 4.68342 6.09763 4.29289 5.70711L0.292893 1.70711C-0.0976311 1.31658 -0.0976311 0.683418 0.292893 0.292893Z' fill='rgba(255, 255, 255, 1)'/%3E%3C/svg%3E");
+
+            & .gform_wrapper {
+                @apply w-11/12 max-w-csek-max;
+            }
+
+            & .gform_heading {
+                @apply hidden;
+            }
+
+            & .gfield_required_asterisk {
+                @apply text-csek-red text-lg;
+            }
+
+            & .gform_wrapper {
+                @apply flex flex-col gap-4 w-full;
+
+                &.open {
+                    @apply h-auto;
                 }
 
-                & .csek-richtext {
-                    @apply my-4 pr-8;
+                & .gfield_label:not(&.gform-field-label) {
+                    @apply text-csek-dark font-montserrat font-bold text-xl;
+                }
+
+                & label.gform-field-label {
+                    @apply text-csek-dark font-montserrat text-sm;
+                }
+
+                & input[type="text"],
+                & input[type="tel"],
+                & input[type="email"],
+                & textarea,
+                & .gfield_select {
+                    @apply bg-transparent border border-solid border-csek-dark rounded-lg text-csek-dark font-montserrat;
+                }
+
+                & .gfield_select {
+                    @apply relative appearance-none;
+                    background-image: var(--select-dropdown);
+
+                    &:before {
+                        content: ">";
+                        @apply absolute top-0 right-0 w-8 h-full text-csek-red rounded-r-lg pointer-events-none;
+                    }
+                }
+
+                & .gfield_description {
+                    @apply text-csek-light font-montserrat text-sm;
                 }
             }
 
-            &.visual-content {
-                @apply relative object-cover;
-
-                & img {
-                    @apply relative max-w-none -ml-48 -mt-12;
-                }
-
-                & a {
-                    @apply absolute;
-                }
+            & input[type="submit"].gform_button {
+                @apply bg-csek-red text-white font-syne font-bold text-lg py-2 px-8 rounded-full mx-auto !important;
             }
         }
     }

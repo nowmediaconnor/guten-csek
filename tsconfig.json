@@ -4,8 +4,9 @@
         "jsx": "react-jsx",
         "module": "ESNext",
         "target": "ES2015", // Set to ES5 for older browser support.
-        "strict": true,
+        "strict": false,
         "allowSyntheticDefaultImports": true,
-        "moduleResolution": "node"
+        "moduleResolution": "node",
+        "lib": ["dom", "dom.iterable", "esnext"]
     }
 }
