@@ -8,7 +8,7 @@ import { BlockController } from "../../dom";
 export default class NewsletterController extends BlockController {
     blocks: NodeListOf<HTMLElement>;
 
-    globalNewsletterForm: HTMLElement | undefined;
+    newsletterForms: (HTMLElement | null)[] = [];
 
     constructor() {
         super();
@@ -20,36 +20,46 @@ export default class NewsletterController extends BlockController {
         this.blocks = document.querySelectorAll(".wp-block-guten-csek-newsletter-cta-block");
 
         if (this.invalid(this.blocks.length > 0)) {
-            this.log("No newsletter blocks found");
             return;
-        }
-
-        // get actual form
-        this.globalNewsletterForm = document.getElementById("newsletter-form");
-
-        if (this.globalNewsletterForm) {
-            this.err(
-                'No global newsletter form found. Your theme must contain a global newsletter form with the ID "#newsletter-form". Exiting block setup.'
-            );
-            this.isInitialized = true;
-            return;
-        } else {
-            this.log("Found global newsletter form");
         }
 
         // add listeners to each block's links
         this.blocks.forEach((block: HTMLElement, index: number) => {
-            const link = block.querySelector("a[href='#newsletter-form']");
+            // get form for action listener, styling
+            const form = block.querySelector(".newsletter-form .gform_wrapper") as HTMLElement;
+            if (!form) {
+                this.newsletterForms[index] = null;
+                return;
+            }
 
-            if (!link) return;
+            // compute form height for transition
+            const formHeight = form.offsetHeight;
+            form.classList.add("closed");
+            form.style.setProperty("--expanded-height", `${formHeight}px`);
 
-            link.addEventListener("click", (e: Event) => {
-                e.preventDefault();
-                this.globalNewsletterForm?.classList.add("open");
-            });
+            this.newsletterForms[index] = form;
+
+            // add listener to "Subscribe" link
+            this.addEventListenerToLink(block, index);
         });
 
         this.isInitialized = true;
+    }
+
+    addEventListenerToLink(block: HTMLElement, index?: number) {
+        const link = block.querySelector("a.subscribe-button");
+
+        if (!link) return;
+
+        link.addEventListener("click", (e: Event) => {
+            e.preventDefault();
+            this.openForm(index);
+        });
+    }
+
+    openForm(index: number) {
+        this.log(`Opening form ${index}`);
+        this.newsletterForms[index].classList.toggle("open");
     }
 
     onMouseMove?(e: MouseEvent, blockIndex: number): void {}

@@ -99,7 +99,7 @@ export const NewsletterBlockSave = ({ attributes }: GutenCsekBlockSaveProps<News
                             src="/wp-content/plugins/guten-csek/src/img/envelope.svg"
                             alt="A stock photo of a closed envelope hovering at a -30 angle over a transparent background."
                         />
-                        <RedButton text={buttonText} link={buttonLink} />
+                        <RedButton text={buttonText} link={buttonLink} ping={false} className="subscribe-button" />
                     </div>
                 </div>
                 {gravityFormId > -1 ? (
