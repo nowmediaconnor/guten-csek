@@ -19,6 +19,7 @@ import ProjectsMarqueeController from "./scripts/controllers/projects-marquee-co
 import ProcessBlockController from "./blocks/process-block";
 import { ProjectsMasonryController } from "./blocks/projects/masonry-block";
 import PostCollageController from "./scripts/controllers/blog/post-collage-controller";
+import NewsletterController from "./scripts/controllers/cta/newsletter-controller";
 
 export const createDOMController = () => {
     /* Prepare DOM Controller */
@@ -64,6 +65,9 @@ export const createDOMController = () => {
     // Post Collage Block
     const postCollageController = new PostCollageController();
 
+    // Newsletter CTA Block
+    const newsletterController = new NewsletterController();
+
     // DOM controller
     return new DOMController(
         curtainifyController,
@@ -79,6 +83,7 @@ export const createDOMController = () => {
         teamController,
         processBlockController,
         projectsMasonryBlock,
-        postCollageController
+        postCollageController,
+        newsletterController
     );
 };

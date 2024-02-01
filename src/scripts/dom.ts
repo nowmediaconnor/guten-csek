@@ -361,6 +361,7 @@ export default class DOMController extends BlockController implements DOMControl
                 this.closeLetsTalk();
             });
         }
+
         // keyboard listeners
         window.addEventListener("keydown", (e) => {
             this.log("Key pressed:", e.key);

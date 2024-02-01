@@ -1,0 +1,12 @@
+{
+    "compilerOptions": {
+        "outDir": ".build/",
+        "jsx": "react-jsx",
+        "module": "ESNext",
+        "target": "ES2015", // Set to ES5 for older browser support.
+        "strict": false,
+        "allowSyntheticDefaultImports": true,
+        "moduleResolution": "node",
+        "lib": ["dom", "dom.iterable", "esnext"]
+    }
+}

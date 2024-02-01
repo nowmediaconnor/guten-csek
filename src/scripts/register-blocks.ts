@@ -813,6 +813,10 @@ export const registerAllBlocks = () => {
                 type: "string",
                 default: "#newsletter-link",
             },
+            gravityFormId: {
+                type: "number",
+                default: -1,
+            },
         },
         edit: NewsletterBlockEdit,
         save: NewsletterBlockSave,

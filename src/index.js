@@ -21,8 +21,8 @@ window.addEventListener("load", (e) => {
     window.domController = createDOMController();
 
     window.requestAnimationFrame(() => {
-        window.domController.setup();
         window.domController.debugMode = true;
+        window.domController.setup();
     });
 
     setTimeout(() => {
