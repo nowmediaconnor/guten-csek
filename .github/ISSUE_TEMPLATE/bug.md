@@ -1,6 +1,6 @@
 ---
 name: Bug
-description: Create a report to catch any found bugs.
+about: Create a report to catch any found bugs.
 title: "[Bug] "
 labels: bug
 assignees: nowmediaconnor
