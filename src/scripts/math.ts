@@ -33,11 +33,11 @@ export const randomInRange = (min: number, max: number): number => {
 /**
  * Generate a random integer between min and max
  * @param min the lower bound of the range
- * @param max the upper bound of the range (inclusive)
+ * @param max the upper bound of the range (exclusive)
  * @returns a random integer between min and max
  */
 export const randomIntInRange = (min: number, max: number): number => {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
+    return Math.floor(Math.random() * (max - min)) + min;
 };
 
 export const randomPartOfOne = (): number => {

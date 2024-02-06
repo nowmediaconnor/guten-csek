@@ -28,7 +28,6 @@ export class Strip {
 
     constructor(mq: MarqueeCanvas, words: string[]) {
         this.mq = mq;
-        this.words = shuffle(words);
 
         if (this.mq.separator) {
             this.words = [];
@@ -36,6 +35,8 @@ export class Strip {
                 this.words.push(word);
                 this.words.push(this.mq.separator);
             }
+        } else {
+            this.words = shuffle(words);
         }
 
         const dimensions = this.calculateDimensions();
@@ -213,23 +214,23 @@ export class Row {
         switch (this.direction) {
             case 1:
                 if (this.primaryRibbon.offset >= this.mq.width) {
-                    this.log("Moving primary ribbon behind");
+                    // this.log("Moving primary ribbon behind");
                     this.moveRibbonBehind(this.primaryRibbon, this.secondaryRibbon);
                 }
 
                 if (this.secondaryRibbon.offset >= this.mq.width) {
-                    this.log("Moving secondary ribbon behind");
+                    // this.log("Moving secondary ribbon behind");
                     this.moveRibbonBehind(this.secondaryRibbon, this.primaryRibbon);
                 }
                 break;
             case -1:
                 if (this.primaryRibbon.offset <= -this.primaryRibbon.width) {
-                    this.log("Moving primary ribbon ahead");
+                    // this.log("Moving primary ribbon ahead");
                     this.moveRibbonAhead(this.primaryRibbon, this.secondaryRibbon);
                 }
 
                 if (this.secondaryRibbon.offset <= -this.secondaryRibbon.width) {
-                    this.log("Moving secondary ribbon ahead");
+                    // this.log("Moving secondary ribbon ahead");
                     this.moveRibbonAhead(this.secondaryRibbon, this.primaryRibbon);
                 }
                 break;
