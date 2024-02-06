@@ -105,6 +105,7 @@ export default class ProjectsMarqueeController extends BlockController {
 
         for (let i = 0; i < projects.length; i++) {
             const innerText = projects[i].innerText;
+            // this.log(`project ${i}: ${innerText}`);
             if (!innerText) continue;
 
             if (!projectNames.includes(innerText)) projectNames.push(innerText);

@@ -9,7 +9,7 @@ export const shuffle = (array: any[]) => {
     let currentIndex = array.length;
     let randomIndex = 0;
 
-    const newArray = [...array];
+    const newArray = array.map((el) => el);
 
     while (currentIndex !== 0) {
         randomIndex = randomIntInRange(0, currentIndex);
