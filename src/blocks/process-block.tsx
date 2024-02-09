@@ -340,7 +340,7 @@ export default class ProcessBlockController extends BlockController {
 
             return (
                 <section className="step">
-                    <h2>{title}</h2>
+                    <h3>{title}</h3>
                     <p>{description}</p>
                 </section>
             );
@@ -348,10 +348,10 @@ export default class ProcessBlockController extends BlockController {
 
         return (
             <section {...blockProps}>
-                <h1 className="process-title">
+                <h2 className="process-title">
                     <span className="left-digit">0</span>
                     <div className="right-digits">{stepNumbers}</div>
-                </h1>
+                </h2>
                 <div className="block-content">
                     <div className="process-image">{stepImages}</div>
                     <div className="process-steps">{stepElements}</div>
