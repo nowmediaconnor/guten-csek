@@ -29,7 +29,7 @@
         & a {
             @apply flex flex-row items-center justify-start no-underline text-csek-dark cursor-pointer;
 
-            & h1 {
+            & h2 {
                 @apply text-2xl md:text-5xl font-semibold m-0 p-0 border-b border-solid border-transparent transition-all duration-200 ease-in-out leading-[0.75];
             }
 
@@ -38,7 +38,7 @@
             }
 
             &:hover {
-                & h1 {
+                & h2 {
                     @apply border-csek-dark;
                 }
 
@@ -48,7 +48,7 @@
             }
         }
 
-        & h2 {
+        & h3 {
             @apply text-csek-red font-bold uppercase;
         }
     }

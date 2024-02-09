@@ -64,10 +64,10 @@ export const NextProjectBlockSave = ({ attributes }: GutenCsekBlockSaveProps<Nex
                 </div>
                 <div className="next-project-info">
                     <a href={projectLink}>
-                        <h1>Next project</h1>
+                        <h2>Next project</h2>
                         <i className="fa fa-arrow-right"></i>
                     </a>
-                    <h2>{projectTitle}</h2>
+                    <h3>{projectTitle}</h3>
                 </div>
             </div>
         </section>

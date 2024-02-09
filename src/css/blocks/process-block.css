@@ -60,7 +60,7 @@
             & .step {
                 @apply relative flex flex-col items-start justify-end h-screen px-0 md:px-16 py-[6.125vh] md:py-[12.5vh];
 
-                & h2 {
+                & h3 {
                     @apply text-5xl font-bold text-csek-red mb-4;
                 }
 

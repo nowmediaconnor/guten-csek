@@ -242,7 +242,7 @@ const StaffProfileComponent = ({ name, position, description, socialMedia, image
                 <div className="bio">
                     <header>
                         <div className="name">
-                            <h1>{name}</h1>
+                            <h2>{name}</h2>
                             <CloseButton />
                         </div>
                         <h2>{position}</h2>
@@ -278,9 +278,9 @@ const StaffProfileSummary = ({ name, position, imageURL, fullProfile }: StaffPro
                 <img src={imageURL} alt={name + "'s profile photo"} />
             </div>
             <div className="info">
-                <h1>{name}</h1>
+                <h2>{name}</h2>
                 <span className="separator">•</span>
-                <h2>{position}</h2>
+                <h3>{position}</h3>
             </div>
             {fullProfile}
         </div>
@@ -300,7 +300,7 @@ export const StaffProfilesBlockSave = ({ attributes }: GutenCsekBlockSaveProps<S
         <section {...blockProps} className="" style={{ marginBottom: alternateLayout ? "0" : "-10rem" }}>
             <div className="block-content">
                 <div className="block-header">
-                    <h2>{heading}</h2>
+                    <h3>{heading}</h3>
                     {caption ? <p>{caption}</p> : null}
                 </div>
                 <div className={`profiles-area ${alternateLayout ? "alternate" : ""}`}>{profileElements}</div>
