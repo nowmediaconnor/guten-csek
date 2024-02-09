@@ -26,11 +26,11 @@
             & header {
                 @apply z-30 font-syne font-bold uppercase pb-4 shadow-lg shadow-white;
 
-                & h1 {
+                & h2 {
                     @apply text-3xl md:text-6xl leading-none;
                 }
 
-                & h2 {
+                & h3 {
                     @apply text-base text-csek-red my-1;
                 }
 
@@ -76,7 +76,7 @@
 .wp-block-guten-csek-staff-profiles-block .block-header {
     @apply flex flex-col md:flex-row justify-start items-start font-montserrat gap-8 md:gap-24 mb-8 pt-12 md:pt-16 w-11/12 max-w-csek-max mx-auto;
 
-    & h2 {
+    & h3 {
         @apply font-syne text-4xl leading-[1.1] w-min font-bold;
     }
 
@@ -182,11 +182,11 @@
     & .info {
         @apply flex flex-row justify-between w-full items-start font-syne font-bold text-csek-red text-sm leading-none my-1;
 
-        & h1 {
-            @apply text-base md:text-sm leading-none uppercase m-0 text-csek-dark whitespace-nowrap;
+        & h2 {
+            @apply text-base md:text-sm md:leading-none leading-none uppercase m-0 text-csek-dark whitespace-nowrap;
         }
 
-        & h2 {
+        & h3 {
             @apply text-right;
         }
 
