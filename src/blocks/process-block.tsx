@@ -85,7 +85,7 @@ export default class ProcessBlockController extends BlockController {
 
             const stepElements = block.querySelectorAll(".step");
             stepElements.forEach((step: Element) => {
-                const stepTitle = step.querySelector("h2") as HTMLElement;
+                const stepTitle = step.querySelector("h3") as HTMLElement;
                 const stepDescription = step.querySelector("p") as HTMLElement;
                 const stepImage = step.querySelector("img") as HTMLImageElement;
 
