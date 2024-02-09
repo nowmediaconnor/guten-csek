@@ -104,9 +104,9 @@ export const HorizontalCarouselBlockSave = ({
     for (let i = 0; i < numItems; i++) {
         items.push(
             <li key={i} className="carousel-item">
-                <h1>{i + 1}</h1>
+                <h2>{i + 1}</h2>
                 <div className="carousel-item-body">
-                    <h2>{titles[i]}</h2>
+                    <h3>{titles[i]}</h3>
                     <p>{statements[i]}</p>
                 </div>
             </li>
