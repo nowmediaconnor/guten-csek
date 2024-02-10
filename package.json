@@ -11,7 +11,7 @@
         "ci": "yarn install --frozen-lockfile",
         "css:app": "yarn tailwindcss -i ./src/css/app.css -o ./css/guten-csek.css --postcss",
         "css:editor": "yarn tailwindcss -i ./src/css/app-editor.css -o ./css/guten-csek-editor.css --postcss",
-        "css:build": "yarn css:app && yarn css:editor",
+        "css:build": "yarn css:app --minify && yarn css:editor --minify",
         "count": "python count_lines.py src -i img,fonts",
         "js:build": "npx esbuild src/js/index.js --bundle --outdir=js --platform=browser --target=es2015",
         "watch": "cross-env NODE_ENV=development concurrently \"yarn:watch:css-app\" \"yarn:watch:css-editor\" \"yarn:wp:start\"",
