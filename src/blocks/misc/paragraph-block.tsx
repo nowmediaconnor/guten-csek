@@ -6,7 +6,7 @@
 import React from "react";
 import { GutenCsekBlockEditProps, GutenCsekBlockSaveProps } from "../../scripts/dom";
 import { CsekBlockHeading } from "../../components/heading";
-import { InspectorControls, useBlockProps } from "@wordpress/block-editor";
+import { useBlockProps } from "@wordpress/block-editor";
 import { RichTextContent, RichTextInput } from "../../components/input";
 import Label from "../../components/label";
 

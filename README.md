@@ -6,6 +6,24 @@ Lead Developer: [Connor Doman](https://github.com/connordoman)
 
 A series of Gutenberg blocks for use in the new Csek Creative rebrand. Our hope is to modernize the way we build websites and make it easier for our clients to manage their content and developers to build new features.
 
+## How To Run
+
+This plugin uses `yarn` instead of `npm`. You can convert to `npm` by deleting `yarn.lock` and `node_nodules/` and then running `npm install`.
+
+Open a terminal into this plugin's root folder.
+
+Run this script:
+
+```bash
+yarn install
+
+# watch file changes and rebuild for development
+yarn watch
+
+# build and minify files for production
+yarn build
+```
+
 ## Preface
 
 My hope with this documentation is to make it easier for any future developers to go in, make changes, and add new blocks. I have tried to make the code as readable as possible, but learning new technologies always makes for a bit of a mess. Especially in the earlier code.
@@ -18,13 +36,19 @@ This is a Wordpress Plugin, so Wordpress + PHP is a given.
 
 Since this was an opportunity to make a Wordpress site for the modern web, I decided to make use of Wordpress' more recently added custom Gutenberg Blocks API. Gutenberg blocks are what the newest WP page editor uses, and using only free libraries provided by Wordpress itself it is possible to create fully customizable blocks. This is effectively a first-party replacement for ACF Pro.
 
-That being said, ACF Pro still earns its premium label by making the process smoother. Personally, the greatest challenge was initial set up. Installation documentation is still strangely sparse and inconsistent. If I'm not mistaken, the technique ultimately used here are "static" blocks, meaning the blocks are compiled to HTML when the page is published and then simply echoed into the document flow.
+That being said, ACF Pro still earns its premium label by making the process smoother. Personally, the greatest challenge was initial set up. Installation documentation is still strangely sparse and inconsistent.
+
+The technique ultimately used here are "static" blocks, meaning the blocks are compiled to HTML as text when the page is published and then simply echoed into the document flow.
+
+There is another block creation technique that makes "dynamic" blocks that are functionally very similar to ACF blocks. They use a render template written in PHP that will compile on every page load. This was _not_ used for this project, and this was an oversight. Adding dynamic data to blocks is instead done with front-end "controller" scripts. This increases complexity since multiple blocks must be considered at any given time and you must write support code to access elements and their content.
+
+In the future, the `block.json` style of blocks should be supported.
 
 ### React
 
 React is a JavaScript framework for creating front-end interfaces. As of 2023, React is still the most popular among all frameworks and is still widely used all over the web. The appeal of React is its flexibility and modularity. A great oversimplification is that React acts like your browser window and manages elements and their relationships. In dynamic contexts, this allows for behavior and state management at the component level, which is very useful.
 
-Additionally, React lets you combine multiple HTML elements into macro-elements called components. These components can then be added to other components and so on. This makes writing pages with React much cleaner and easier to read and allows the developer to abstract away low-level HTML/DOM behavior.
+Additionally, React lets you combine multiple HTML elements into groups of elements called components. These components can then be added to other components and so on. This makes pages written with React much easier to write & read, and abstracts away low-level HTML/DOM behavior.
 
 Here is an example of a component:
 
@@ -32,8 +56,8 @@ Here is an example of a component:
 const MacroElement = () => {
     return (
         <div>
-            <h2>Macro Element Title</h2>
-            <p>Macro element body</p>
+            <h2>Custom Title</h2>
+            <p>Custom Body</p>
         </div>
     );
 };
@@ -60,6 +84,25 @@ const CompositionOfElements = () => {
             </li>
         </ul>
     );
+};
+```
+
+#### Props:
+
+React components have _props_ (properties) that work similary to HTML _attributes_. They can be any kind object like strings, numbers, arrays, and custom TypeScript types.
+
+```jsx
+const PropComponent = ({ title, body }) => {
+    return (
+        <div>
+            <h2>{title}</h2>
+            <p>{body}</p>
+        </div>
+    );
+};
+
+const App = () => {
+    return <PropComponent title="My Component" body="This is its content.">;
 };
 ```
 
@@ -101,7 +144,7 @@ Now, we can use `MacroElement` like this:
 <MacroElement title="Hello World" message="Something to say" />
 ```
 
-And once the React renders, it will show simply as the HTML:
+And once the React renders, it will render as this HTML:
 
 ```html
 <div>
@@ -128,3 +171,55 @@ Gutenberg blocks also receive special props. Every block has `attributes`, a Wor
 In a minute, state variables are how React components can change their appearance over time. If a user types into an `<input>`, the input's value is stored in some state variable. Then, when React rerenders the page to reflect the changes, it knows about that state variable and so the `<input>` component doesn't just get reset.
 
 For Gutenberg blocks, every `edit` component needs to accept `attributes` and `setAttributes` as its props. For `save`, only `attributes` is necessary.
+
+## Example Block
+
+This is an example of how blocks work in this project. This is not necessarily the ideal way to do it, but acts as a reference to how is project's files work.
+
+```tsx
+// my-custom-block.tsx
+
+import { GutenCsekBlockEditProps, GutenCsekBlockSaveProps } from "@/scripts/dom"; // this may need to be a relative import
+import { useBlockProps } from "@wordpress/block-editor";
+
+export interface MyCustomBlockAttributes {
+    title: string;
+    body: string;
+}
+
+/* This component support React hooks and live interactivity. */
+export const MyCustomBlockEdit = ({ attributes, setAttributes }: GutenCsekBlockEditProps<MyCustomBlockAttributes>) => {
+    const blockProps = useBlockProps();
+
+    const { title, body } = attributes;
+
+    const handleTitleChange = (newTitle: string) => {
+        setAttributes({ title: newTitle });
+    };
+
+    const handleBodyChange = (newBody: string) => {
+        setAttributes({ body: newBody });
+    };
+
+    return (
+        <div {...blockProps}>
+            <input placeholder="Custom title" value={title} onChange={handleTitleChange} />
+            <input placeholder="Custom body" value={body} onChange={handleBodydChange} />
+        </div>
+    );
+};
+
+/* This component is computed once and then saved as-is. */
+export const MyCustomBlockSave = () => {
+    const blockProps = useBlockProps().save;
+
+    const { title, body } = attributes;
+
+    return (
+        <div {...blockProps}>
+            <h1>{title}</h1>
+            <p>{body}</p>
+        </div>
+    );
+};
+```
