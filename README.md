@@ -203,6 +203,7 @@ export const MyCustomBlockEdit = ({ attributes, setAttributes }: GutenCsekBlockE
 
     return (
         <div {...blockProps}>
+            <h2 className="text-3xl font-bold leading-none">My Custom Block</h2>
             <input placeholder="Custom title" value={title} onChange={handleTitleChange} />
             <input placeholder="Custom body" value={body} onChange={handleBodydChange} />
         </div>
@@ -222,4 +223,61 @@ export const MyCustomBlockSave = () => {
         </div>
     );
 };
+```
+
+Then, in the `@/scripts/register-blocks.ts` script, add an entry like this:
+
+```tsx
+// register-blocks.ts
+
+import { MyCustomBlockAttributes, MyCustomBlockEdit, MyCustomBlockSave } from "@/blocks/my-custom-block.tsx";
+
+// Block Quote Block
+registerBlockType<MyCustomBlockAttributes>("guten-csek/block-quote-block", {
+    ...commonProperties, // includes metadata used by all blocks
+    title: "My Custom Block",
+    icon: "format-text",
+    attributes: {
+        title: {
+            type: "string",
+            default: "Default Title",
+        },
+        body: {
+            type: "string",
+            default: "",
+        },
+    },
+    edit: MyCustomBlockEdit,
+    save: MyCustomBlockSave,
+});
+```
+
+Now, your block will be accessible and editable from the block editor.
+
+To modify CSS, add a new file for your block. This isn't necessary, but it's good for organization.
+
+All blocks follow the same class name format based on the `id` of the block (`guten-csek/my-custom-block`).
+
+```css
+.wp-blocks-guten-csek-my-custom-block {
+    /* You can use Tailwind CSS styles alongside regular CSS. Watch out because an incorrect Tailwind property name will prevent the stylesheet from compiling, even for other new styles.  */
+    @apply w-min p-12 m-8 border rounded-lg border-zinc-500;
+
+    background-image: url("../../img/custom-background.png");
+
+    /* You can also nest related styles. Ampersand + space is for child elements. No space for class names and pseudoelements. These are compiled to regular CSS that the browser can interpret. */
+
+    & div {
+        /* All divs inside the block. */
+        /* = .wp-blocks-guten-csek-my-custom-block div { } */
+
+        &.shadow {
+            /* Divs in the block that have this class name */
+        }
+
+        &:focus {
+            /* Pseudoelements */
+        }
+    }
+}
 ```
