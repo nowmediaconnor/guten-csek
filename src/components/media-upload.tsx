@@ -38,6 +38,7 @@ export const CsekMediaUpload = ({
 }: CsekMediaUploadProps) => {
     const [resourceURL, setResourceURL] = useState(urlAttribute);
     const [resourceId, setResourceId] = useState(0);
+    const [altTextState, setAltTextState] = useState(altText);
 
     const handleChangeURL = async (v: any) => {
         if (type === "audio") return;
@@ -52,6 +53,7 @@ export const CsekMediaUpload = ({
         const resource = new CsekImage(v.id, "image", altText || undefined);
         await resource.doubleCheckSizes();
         // alert("Resource info: " + JSON.stringify({ ...resource }, null, 4));
+        setAltTextState(resource.altText);
         onChange(resource.getSize(size, fallbackSize), resource.altText);
         setResourceURL(v.url);
         setResourceId(v.id);
@@ -60,7 +62,7 @@ export const CsekMediaUpload = ({
     const mediaPreview = (): JSX.Element => {
         switch (type) {
             case "image":
-                return <img className="preview-image" src={resourceURL} />;
+                return <img className="preview-image" src={resourceURL} alt={altTextState} />;
             case "video":
                 return (
                     <video className="preview-image" controls={true} autoPlay={false} loop={false} muted={false}>
