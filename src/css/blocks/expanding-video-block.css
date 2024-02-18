@@ -15,10 +15,11 @@
         justify-content: center;
         align-items: flex-start;
         gap: 2rem;
+        @apply w-full;
     }
 
     & .expanding-video-container {
-        @apply w-11/12 md:w-[40vw] h-[75vh] overflow-hidden rounded-xl relative z-20 transition-all duration-1200 drop-shadow-md md:drop-shadow-none top-[2rem] bg-csek-dark;
+        @apply w-11/12 min-w-csek-1/2 md:w-[40vw] h-[75vh] overflow-hidden rounded-xl relative z-20 transition-all duration-1200 drop-shadow-md md:drop-shadow-none top-[2rem] bg-csek-dark;
 
         &.expanded {
             /* --local-ftb-shadow: var(--csek-dark); */
