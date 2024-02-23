@@ -8,14 +8,14 @@
         @apply md:px-32 min-h-max;
 
         & .cta {
-            @apply flex flex-row justify-between items-center gap-8 w-full;
+            @apply flex flex-col md:flex-row justify-between items-center gap-8 w-11/12 md:w-full mx-auto;
 
             & div {
                 &.text-content {
-                    @apply w-min flex flex-col justify-center basis-1/2;
+                    @apply w-min flex flex-col justify-center items-center md:items-start basis-1/2 text-center md:text-left;
 
                     & h2 {
-                        @apply text-8xl font-bold font-syne uppercase whitespace-nowrap;
+                        @apply text-6xl md:text-8xl font-bold font-syne uppercase whitespace-nowrap;
                     }
 
                     & span {
@@ -23,19 +23,19 @@
                     }
 
                     & .csek-richtext {
-                        @apply my-4 pr-8;
+                        @apply my-4 md:pr-8;
                     }
                 }
 
                 &.visual-content {
-                    @apply relative object-cover flex flex-col justify-center basis-1/3;
+                    @apply relative object-cover flex flex-col justify-center items-center md:items-start w-11/12 md:w-auto md:basis-1/3 mx-auto max-h-[16rem] md:max-h-none;
 
                     & img {
-                        @apply relative max-w-none -ml-48 -mt-12;
+                        @apply relative max-w-csek-1/3 md:max-w-none md:-ml-48 md:-mt-12;
                     }
 
                     & a {
-                        @apply absolute;
+                        @apply absolute mr-20 md:mr-0;
                     }
                 }
             }
