@@ -86,6 +86,7 @@ import {
 } from "../blocks/blog/post-collage-block";
 import { log } from "./global";
 import { NewsletterBlockAttributes, NewsletterBlockEdit, NewsletterBlockSave } from "../blocks/cta/newsletter-block";
+import { type HeadingBlockAttributes, HeadingBlockEdit, HeadingBlockSave } from "../blocks/misc/heading-block";
 
 const commonProperties = {
     category: "csek",
@@ -412,8 +413,28 @@ export const registerAllBlocks = () => {
                 default: "",
             },
         },
+
         edit: ParagraphBlockEdit,
         save: ParagraphBlockSave,
+    });
+
+    // Heading Block
+    registerBlockType<HeadingBlockAttributes>("guten-csek/heading-block", {
+        ...commonProperties,
+        title: "Csek Heading",
+        icon: "text",
+        attributes: {
+            level: {
+                type: "number",
+                default: "",
+            },
+            content: {
+                type: "string",
+                default: "",
+            },
+        },
+        edit: HeadingBlockEdit,
+        save: HeadingBlockSave,
     });
 
     // Multi Image Block

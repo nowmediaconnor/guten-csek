@@ -175,7 +175,7 @@ export const TextArea = ({ label, initialValue = "", placeholder, className, dis
     );
 };
 
-interface SelectOption {
+export interface SelectOption {
     value: string;
     label: string;
 }

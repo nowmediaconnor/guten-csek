@@ -25,6 +25,7 @@
 @import "blocks/misc/screenshot-collage-block.css";
 @import "blocks/misc/self-description-block.css";
 @import "blocks/misc/staff-profiles-block.css";
+@import "blocks/misc/heading-block.css";
 
 @import "blocks/block-quote-block.css";
 @import "blocks/curtainify.css";

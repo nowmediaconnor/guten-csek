@@ -164,3 +164,7 @@ html {
         }
     }
 }
+
+.wp-core-ui select {
+    @apply text-lg py-1 rounded;
+}

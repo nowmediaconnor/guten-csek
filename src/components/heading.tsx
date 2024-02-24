@@ -6,8 +6,10 @@
 import React from "react";
 import { twMerge } from "tailwind-merge";
 
+export type HeadingLevel = "1" | "2" | "3" | "4" | "5" | "6";
+
 interface HeadingProps {
-    level: "1" | "2" | "3" | "4" | "5" | "6";
+    level: HeadingLevel;
     text?: string;
     className?: string;
     children?: React.ReactNode;

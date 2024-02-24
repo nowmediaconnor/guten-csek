@@ -24,4 +24,12 @@ export const Danger = ({ className, children }: LabelProps) => {
     return <Label className={twMerge("text-red-500", className)}>{children}</Label>;
 };
 
+export const PaddingLabel = () => {
+    return (
+        <Label>
+            You can edit this component&apos;s padding or margin in the inspector <i className="fa fa-arrow-right"></i>
+        </Label>
+    );
+};
+
 export default Label;
