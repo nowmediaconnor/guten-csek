@@ -31,11 +31,11 @@
                     @apply relative object-cover flex flex-col justify-center items-center md:items-start w-11/12 md:w-auto md:basis-1/3 mx-auto max-h-[16rem] md:max-h-none;
 
                     & img {
-                        @apply relative max-w-csek-1/3 md:max-w-none md:-ml-48 md:-mt-12;
+                        @apply relative max-w-csek-1/3 md:max-w-none -ml-8 md:-ml-48 md:-mt-12;
                     }
 
                     & a {
-                        @apply absolute mr-20 md:mr-0;
+                        @apply absolute mr-40 md:mr-0;
                     }
                 }
             }
