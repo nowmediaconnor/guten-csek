@@ -1,0 +1,18 @@
+/*
+ * Created on Wed Feb 28 2024
+ * Author: Connor Doman
+ */
+
+.wp-block-guten-csek-social-share-block {
+    & .social-share {
+        @apply w-11/12 max-w-csek-max mx-auto flex flex-col gap-6;
+
+        & .share-heading {
+            @apply font-medium font-montserrat uppercase text-sm;
+        }
+
+        & .social-list {
+            @apply flex flex-row gap-2;
+        }
+    }
+}

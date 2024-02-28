@@ -3,6 +3,8 @@
  * Author: Connor Doman
  */
 
+import { addHttpToUrl } from "../../scripts/strings";
+
 export type SocialMedia = "facebook" | "x-twitter" | "linkedin" | "reddit" | "email";
 
 function generateSocialLink(media: SocialMedia, link: string, title?: string): URL {
@@ -65,7 +67,7 @@ export const SocialIcon = ({ media }: SocialIconProps) => {
             className = "fab fa-reddit-alien";
             break;
         case "email":
-            className = "fas fa-envelope-square";
+            className = "fas fa-envelope";
             break;
     }
     return <i className={className}></i>;
@@ -80,7 +82,7 @@ interface SocialLinkProps {
 export const SocialLink = ({ media, link, title }: SocialLinkProps) => {
     return (
         <a
-            href={generateSocialLink(media, link, title).toString()}
+            href={generateSocialLink(media, addHttpToUrl(link).toString(), title).toString()}
             className="inline-flex text-xl w-10 h-10 items-center justify-center rounded-full bg-csek-dark text-white"
             target="_blank"
             rel="noopener noreferrer">

@@ -50,3 +50,10 @@ export const decodeHtmlEntities = (str: string): string => {
     const doc = new DOMParser().parseFromString(str, "text/html");
     return doc.documentElement.textContent || "";
 };
+
+export function addHttpToUrl(url: string): URL {
+    if (!/^https?:\/\//i.test(url)) {
+        url = "https://" + url;
+    }
+    return new URL(url);
+}

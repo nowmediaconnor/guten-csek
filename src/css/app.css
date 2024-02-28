@@ -40,5 +40,6 @@
 @import "blocks/projects/masonry-block.css";
 
 @import "blocks/blog/post-collage-block.css";
+@import "blocks/blog/social-share-block.css";
 
 @import "blocks/cta/newsletter-block.css";
