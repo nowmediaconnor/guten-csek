@@ -20,11 +20,11 @@
         }
 
         & h1 {
-            @apply mt-12 md:mt-8 md:p-0 text-4xl md:text-5xl whitespace-normal max-w-max;
+            @apply px-4 mt-12 md:mt-8 md:p-0 text-4xl md:text-5xl whitespace-normal max-w-full md:max-w-without-serif;
         }
 
         & h2 {
-            @apply pl-4 md:pl-0 md:left-[calc(var(--serif-width)+1rem)] text-2xl md:text-3xl max-w-max;
+            @apply pl-4 md:pl-0 md:left-[calc(var(--serif-width)+0.5rem)] text-2xl md:text-3xl max-w-max h-max;
         }
 
         & .csek-richtext {
@@ -32,7 +32,16 @@
         }
 
         & .subheader {
-            @apply px-4 mx-auto max-w-max;
+            @apply px-4 my-2 mx-auto md:w-serif-centered;
+
+            & > .csek-richtext,
+            & > p {
+                @apply mt-4 md:mt-0;
+            }
+
+            & > *:not(.csek-richtext):not(p) {
+                @apply w-max mx-auto;
+            }
         }
     }
 }
