@@ -50,7 +50,7 @@ export const SocialShareBlockEdit = ({
 
     return (
         <div>
-            <CsekBlockHeading>Social Media Block</CsekBlockHeading>
+            <CsekBlockHeading>Csek Social Share Block</CsekBlockHeading>
             <CsekCard className="flex flex-row gap-4">
                 <div className="flex flex-col gap-4 justify-center">
                     {Object.keys(selected).map((media: SocialMedia, i) => {
