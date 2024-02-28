@@ -87,6 +87,7 @@ import {
 import { log } from "./global";
 import { NewsletterBlockAttributes, NewsletterBlockEdit, NewsletterBlockSave } from "../blocks/cta/newsletter-block";
 import { type HeadingBlockAttributes, HeadingBlockEdit, HeadingBlockSave } from "../blocks/misc/heading-block";
+import { SocialShareBlockAttributes, SocialShareBlockEdit } from "../blocks/blog/social-share-block";
 
 const commonProperties = {
     category: "csek",
@@ -424,13 +425,13 @@ export const registerAllBlocks = () => {
         title: "Csek Heading",
         icon: "text",
         attributes: {
-            level: {
-                type: "number",
-                default: "",
-            },
             content: {
                 type: "string",
                 default: "",
+            },
+            level: {
+                type: "number",
+                default: 0,
             },
         },
         edit: HeadingBlockEdit,
@@ -841,5 +842,27 @@ export const registerAllBlocks = () => {
         },
         edit: NewsletterBlockEdit,
         save: NewsletterBlockSave,
+    });
+
+    // Social Share Block
+    registerBlockType<SocialShareBlockAttributes>("guten-csek/social-share-block", {
+        ...commonProperties,
+        title: "Csek Social Share Block",
+        icon: "share",
+        keywords: ["social", "share", "media", "csek"],
+        attributes: {
+            selected: {
+                type: "object",
+                default: {
+                    facebook: true,
+                    "x-twitter": true,
+                    linkedin: true,
+                    reddit: true,
+                    email: true,
+                },
+            },
+        },
+        edit: SocialShareBlockEdit,
+        save: () => null,
     });
 };
