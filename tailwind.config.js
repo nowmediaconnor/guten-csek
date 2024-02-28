@@ -10,6 +10,9 @@ const customWidths = {
     serif: "12rem",
     "csek-best-fit": "max(75rem,100%)",
     bleed: "calc(100% + 1rem)",
+    "without-serif": "calc(100% - var(--serif-width))",
+    "serif-offset": "var(--serif-width)",
+    "serif-centered": "min(100%, calc(100% - var(--serif-width) * 2))",
 };
 
 const customTimings = {

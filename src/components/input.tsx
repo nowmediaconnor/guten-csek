@@ -125,9 +125,9 @@ export const CheckboxInput = ({ label, initialValue = false, onChange }: Checkbo
     };
 
     return (
-        <label className="flex flex-row justify-start items-center">
-            <input type="checkbox" checked={checked} onChange={handleChange} />
-            <Heading level="4" className="whitespace-nowrap">
+        <label className="flex flex-row justify-start items-center relative">
+            <input type="checkbox" checked={checked} onChange={handleChange} className="relative top-px" />
+            <Heading level="4" className="whitespace-nowrap leading-none">
                 {label}
             </Heading>
         </label>
