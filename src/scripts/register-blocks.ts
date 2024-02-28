@@ -87,7 +87,11 @@ import {
 import { log } from "./global";
 import { NewsletterBlockAttributes, NewsletterBlockEdit, NewsletterBlockSave } from "../blocks/cta/newsletter-block";
 import { type HeadingBlockAttributes, HeadingBlockEdit, HeadingBlockSave } from "../blocks/misc/heading-block";
-import { SocialShareBlockAttributes, SocialShareBlockEdit } from "../blocks/blog/social-share-block";
+import {
+    SocialShareBlockAttributes,
+    SocialShareBlockEdit,
+    SocialShareBlockSave,
+} from "../blocks/blog/social-share-block";
 
 const commonProperties = {
     category: "csek",
@@ -871,6 +875,6 @@ export const registerAllBlocks = () => {
             },
         },
         edit: SocialShareBlockEdit,
-        save: () => null,
+        save: SocialShareBlockSave,
     });
 };

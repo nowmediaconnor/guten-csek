@@ -3,12 +3,13 @@
  * Author: Connor Doman
  */
 
+import { useBlockProps } from "@wordpress/block-editor";
 import { VerticalBar } from "../../components/bar";
 import CsekCard from "../../components/card";
 import { CsekBlockHeading } from "../../components/heading";
 import { CheckboxInput, TextInput } from "../../components/input";
-import { SocialIcon, SocialMedia } from "../../components/social/link";
-import { GutenCsekBlockEditProps } from "../../scripts/dom";
+import { SocialIcon, SocialLink, SocialMedia } from "../../components/social/link";
+import { GutenCsekBlockEditProps, GutenCsekBlockSaveProps } from "../../scripts/dom";
 
 type SocialMediaSelections = {
     [K in SocialMedia]: boolean;
@@ -89,5 +90,32 @@ export const SocialShareBlockEdit = ({
                 </div>
             </CsekCard>
         </div>
+    );
+};
+
+export const SocialShareBlockSave = ({ attributes }: GutenCsekBlockSaveProps<SocialShareBlockAttributes>) => {
+    const blockProps = useBlockProps.save();
+
+    const { selected, permalink, title } = attributes;
+
+    const links = Object.keys(selected).map((media: SocialMedia) => {
+        if (selected[media]) {
+            return (
+                <li key={media}>
+                    <SocialLink media={media} link={permalink} title={title} />
+                </li>
+            );
+        }
+    });
+
+    return (
+        <section {...blockProps}>
+            <div className="block-content">
+                <div className="social-share">
+                    <strong className="share-heading">Share</strong>
+                    <ul className="social-list">{links}</ul>
+                </div>
+            </div>
+        </section>
     );
 };

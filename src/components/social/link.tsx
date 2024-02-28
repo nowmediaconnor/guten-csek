@@ -34,8 +34,10 @@ function generateSocialLink(media: SocialMedia, link: string, title?: string): U
             break;
         case "email":
             url = new URL(`mailto:`);
-            params.append("subject", title);
             params.append("body", link);
+            if (title) {
+                params.append("subject", title);
+            }
             break;
     }
 
@@ -69,21 +71,11 @@ export const SocialIcon = ({ media }: SocialIconProps) => {
     return <i className={className}></i>;
 };
 
-type SocialLinkPropsBase = {
+interface SocialLinkProps {
+    media: SocialMedia;
     link: string;
-};
-
-type SocialLinkPropsWithTitle = SocialLinkPropsBase & {
-    media: "x-twitter" | "reddit" | "email";
-    title: string;
-};
-
-type SocialLinkPropsWithoutTitle = SocialLinkPropsBase & {
-    media: "facebook" | "linkedin";
-    title?: never;
-};
-
-type SocialLinkProps = SocialLinkPropsWithTitle | SocialLinkPropsWithoutTitle;
+    title?: string;
+}
 
 export const SocialLink = ({ media, link, title }: SocialLinkProps) => {
     return (
