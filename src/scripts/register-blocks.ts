@@ -861,6 +861,14 @@ export const registerAllBlocks = () => {
                     email: true,
                 },
             },
+            permalink: {
+                type: "string",
+                default: "",
+            },
+            title: {
+                type: "string",
+                default: "",
+            },
         },
         edit: SocialShareBlockEdit,
         save: () => null,

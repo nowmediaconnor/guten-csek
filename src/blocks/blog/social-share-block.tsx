@@ -3,8 +3,11 @@
  * Author: Connor Doman
  */
 
+import { VerticalBar } from "../../components/bar";
+import CsekCard from "../../components/card";
 import { CsekBlockHeading } from "../../components/heading";
-import { SocialMedia } from "../../components/social/link";
+import { CheckboxInput, TextInput } from "../../components/input";
+import { SocialIcon, SocialMedia } from "../../components/social/link";
 import { GutenCsekBlockEditProps } from "../../scripts/dom";
 
 type SocialMediaSelections = {
@@ -13,13 +16,15 @@ type SocialMediaSelections = {
 
 export interface SocialShareBlockAttributes {
     selected: SocialMediaSelections;
+    permalink: string;
+    title: string;
 }
 
 export const SocialShareBlockEdit = ({
     attributes,
     setAttributes,
 }: GutenCsekBlockEditProps<SocialShareBlockAttributes>) => {
-    const { selected } = attributes;
+    const { selected, permalink, title } = attributes;
 
     const handleSelection = (media: SocialMedia) => {
         setAttributes({
@@ -30,23 +35,59 @@ export const SocialShareBlockEdit = ({
         });
     };
 
+    const handleChangePermalink = (newPermalink: string) => {
+        setAttributes({
+            permalink: newPermalink,
+        });
+    };
+
+    const handleChangeTitle = (newTitle: string) => {
+        setAttributes({
+            title: newTitle,
+        });
+    };
+
     return (
         <div>
             <CsekBlockHeading>Social Media Block</CsekBlockHeading>
-            <div>
-                {Object.keys(selected).map((media) => {
-                    return (
-                        <label key={media}>
-                            <input
-                                type="checkbox"
-                                checked={selected[media as SocialMedia]}
-                                onChange={() => handleSelection(media as SocialMedia)}
-                            />
-                            {media}
-                        </label>
-                    );
-                })}
-            </div>
+            <CsekCard className="flex flex-row gap-4">
+                <div className="flex flex-col gap-4 justify-center">
+                    {Object.keys(selected).map((media: SocialMedia, i) => {
+                        return (
+                            <span key={`${i}_${media}_social`} className="flex flex-row gap-2 items-center">
+                                <span className="w-4 flex items-center justify-center">
+                                    <SocialIcon media={media} />
+                                </span>
+                                <CheckboxInput
+                                    label={media
+                                        .split("-")
+                                        .map((s) =>
+                                            s === "linkedin" ? "LinkedIn" : s.charAt(0).toUpperCase() + s.slice(1)
+                                        )
+                                        .join("-")}
+                                    initialValue={selected[media]}
+                                    onChange={() => handleSelection(media)}
+                                />
+                            </span>
+                        );
+                    })}
+                </div>
+                <VerticalBar />
+                <div className="flex flex-col flex-grow gap-2">
+                    <TextInput
+                        label="Share title"
+                        hint="Some platforms allow a title or post body to be added. You can set that here."
+                        initialValue={title}
+                        onChange={handleChangeTitle}
+                    />
+                    <TextInput
+                        label="Permalink"
+                        hint={`Grab the "URL" or "Permalink" from the Inspector Panel and put it here.`}
+                        initialValue={permalink}
+                        onChange={handleChangePermalink}
+                    />
+                </div>
+            </CsekCard>
         </div>
     );
 };

@@ -51,19 +51,19 @@ export const SocialIcon = ({ media }: SocialIconProps) => {
     let className = "";
     switch (media) {
         case "facebook":
-            className = "fa-brands fa-facebook-f";
+            className = "fab fa-facebook-f";
             break;
         case "x-twitter":
-            className = "fa-brands fa-x-twitter";
+            className = "fab fa-x-twitter";
             break;
         case "linkedin":
-            className = "fa-brands fa-linkedin";
+            className = "fab fa-linkedin";
             break;
         case "reddit":
-            className = "fa-brands fa-reddit-alien";
+            className = "fab fa-reddit-alien";
             break;
         case "email":
-            className = "fa-solid fa-envelope-square";
+            className = "fas fa-envelope-square";
             break;
     }
     return <i className={className}></i>;
