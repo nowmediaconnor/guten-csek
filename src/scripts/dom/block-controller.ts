@@ -55,9 +55,9 @@ export abstract class BlockController {
 
     abstract setup(): boolean;
 
-    abstract onMouseMove(): void;
-    abstract onMouseEnter(): void;
-    abstract onMouseLeave(): void;
+    abstract onMouseMove(e: MouseEvent): void;
+    abstract onMouseEnter(e: MouseEvent): void;
+    abstract onMouseLeave(e: MouseEvent): void;
     abstract onClick(x: number, y: number): void;
 
     abstract onPageScroll(scrollY: number): void;
@@ -66,6 +66,13 @@ export abstract class BlockController {
 
     abstract onEnterViewport(): void;
     abstract onExitViewport(): void;
+
+    _addStaticEventListeners() {
+        this.block.addEventListener("mousemove", (e) => this.onMouseMove(e));
+        this.block.addEventListener("mouseenter", (e) => this.onMouseEnter(e));
+        this.block.addEventListener("mouseleave", (e) => this.onMouseLeave(e));
+        this.block.addEventListener("click", (e) => this.onClick(e.clientX, e.clientY));
+    }
 
     init() {
         const successfulSetup = this.setup();
@@ -107,4 +114,19 @@ export abstract class BlockController {
     warn(...msg: any[]) {
         if (this.debug) console.warn(`[${this.controllerName}]`, ...msg);
     }
+}
+
+class TestBlockController extends BlockController {
+    setup(): boolean {
+        return true;
+    }
+    onMouseMove(e: MouseEvent): void {}
+    onMouseEnter(e: MouseEvent): void {}
+    onMouseLeave(e: MouseEvent): void {}
+    onClick(x: number, y: number): void {}
+    onPageScroll(scrollY: number): void {}
+    onPageResize(width: number, height: number): void {}
+    onPageLoad(): void {}
+    onEnterViewport(): void {}
+    onExitViewport(): void {}
 }

@@ -3,7 +3,7 @@
  * Author: Connor Doman
  */
 
-import { BlockController, BlockControllerConfig } from "./controller";
+import { BlockController, BlockControllerConfig } from "./block-controller";
 
 interface BlockRegistry {
     [blockClassName: string]: HTMLElement[];
@@ -21,6 +21,9 @@ class DOMEngine {
     blocks: BlockRegistry = {};
     controllers: BlockController[] = [];
 
+    scrollHandlers: Function[] = [];
+    resizeHandlers: Function[] = [];
+
     constructor(...blockConfigs: BlockControllerConfig[]) {
         this.blockControllerConfigs = blockConfigs;
     }
@@ -30,8 +33,12 @@ class DOMEngine {
     }
 
     init() {
+        // find all blocks listed in config
         this.collectBlocks();
-        this.collectControllers();
+        // create a controller for each block found
+        this.createControllers();
+        // add event listeners for each controller
+        this.addEventListeners();
     }
 
     collectBlocks() {
@@ -42,7 +49,7 @@ class DOMEngine {
         }
     }
 
-    collectControllers() {
+    createControllers() {
         // the only controllers that are created are the ones that have had their blocks collected
         for (const config of this.blockControllerConfigs) {
             const blocksList = this.blocks[config.blockClassName];
@@ -55,5 +62,37 @@ class DOMEngine {
                 });
             }
         }
+    }
+
+    addEventListeners() {
+        // add event listeners to blocks, gather global listeners
+        this.controllers.forEach((controller) => {
+            controller._addStaticEventListeners();
+
+            if (controller.onPageScroll) {
+                this.scrollHandlers.push(controller.onPageScroll.bind(controller));
+            }
+
+            if (controller.onPageResize) {
+                this.resizeHandlers.push(controller.onPageResize.bind(controller));
+            }
+        });
+
+        // add global event listeners
+        window.addEventListener("scroll", (_) => {
+            this.onPageScroll(window.scrollY);
+        });
+
+        window.addEventListener("resize", (_) => {
+            this.onPageResize(window.innerWidth, window.innerHeight);
+        });
+    }
+
+    onPageScroll(scrollY: number) {
+        this.scrollHandlers.forEach((handler) => handler(scrollY));
+    }
+
+    onPageResize(width: number, height: number) {
+        this.resizeHandlers.forEach((handler) => handler(width, height));
     }
 }
