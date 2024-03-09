@@ -8,6 +8,10 @@ import { error, log } from "../global";
 
 export class PageController {
     private _initialized: boolean;
+    private _usingEditor: boolean = false;
+    private _url: URL;
+    private _finishInterval: number;
+    private _finishCondition: () => boolean;
 
     loadingPanel: HTMLElement;
 
@@ -17,25 +21,39 @@ export class PageController {
     constructor() {
         this.initialized = false;
         this.contactFormOpened = false;
+
+        this._url = new URL(window.location.href);
     }
 
-    set initialized(value: boolean) {
-        this._initialized = value;
-    }
-
-    get initialized(): boolean {
-        return this._initialized;
+    static get isMobile(): boolean {
+        return window.innerWidth <= 768;
     }
 
     init() {
         log("PageController initializing...");
+        this.checkIfEditor();
         this.prepareLoadingPanel();
         this.prepareContactForm();
         this.prepareFeaturedColors();
         this.initialized = true;
     }
 
-    prepareLoadingPanel(): boolean {
+    finish() {
+        if (this.usingEditor) {
+            this.log("Using editor, skipping loading screen.");
+            this.hideLoadingPanel();
+        } else if (!this.usingEditor) {
+            this._finishInterval = window.setInterval(() => {
+                if (this.isFinished) {
+                    this.hideLoadingPanel();
+                    window.clearInterval(this._finishInterval);
+                    this.log("Finished loading.");
+                }
+            }, 1000);
+        }
+    }
+
+    private prepareLoadingPanel(): boolean {
         const existingPanel = document.getElementById("loading");
         if (existingPanel) {
             this.loadingPanel = existingPanel as HTMLElement;
@@ -48,7 +66,7 @@ export class PageController {
         }
     }
 
-    prepareContactForm(id: string = "lets-talk"): boolean {
+    private prepareContactForm(id: string = "lets-talk"): boolean {
         const contactForm = document.getElementById("lets-talk");
         if (!contactForm) {
             error("Contact form not found");
@@ -76,7 +94,7 @@ export class PageController {
         this.checkIfContactFormRequested(id);
     }
 
-    async prepareFeaturedColors() {
+    private async prepareFeaturedColors() {
         const featuredImageColorElements: NodeListOf<HTMLElement> = document.querySelectorAll(".featured-image-color");
         if (!featuredImageColorElements || featuredImageColorElements.length === 0) {
             return false;
@@ -101,7 +119,16 @@ export class PageController {
         return true;
     }
 
-    checkIfContactFormRequested(tag: string = "lets-talk"): boolean {
+    private checkIfEditor() {
+        const isAdmin = this.pathname.startsWith("/wp-admin");
+
+        const searchParams = new URLSearchParams(this.url.search);
+        const isEditing = searchParams.get("action") === "edit";
+
+        this.usingEditor = isAdmin && isEditing;
+    }
+
+    private checkIfContactFormRequested(tag: string = "lets-talk"): boolean {
         const locationHash = window.location.hash.replaceAll("#", "");
 
         if (locationHash === tag) {
@@ -109,6 +136,14 @@ export class PageController {
             return true;
         }
         return false;
+    }
+
+    private log(...args: any[]) {
+        log("[PageController]", ...args);
+    }
+
+    private error(...args: any[]) {
+        error("[PageController]", ...args);
     }
 
     showLoadingPanel() {
@@ -127,5 +162,37 @@ export class PageController {
         if (!this.contactFormScreen) return;
         this.contactFormScreen.classList.remove("open");
         this.contactFormOpened = false;
+    }
+
+    set initialized(value: boolean) {
+        this._initialized = value;
+    }
+
+    get initialized(): boolean {
+        return this._initialized;
+    }
+
+    get usingEditor(): boolean {
+        return this._usingEditor;
+    }
+
+    set usingEditor(value: boolean) {
+        this._usingEditor = value;
+    }
+
+    get url(): URL {
+        return this._url;
+    }
+
+    get pathname(): string {
+        return this._url.pathname;
+    }
+
+    set finishedCondition(condition: () => boolean) {
+        this._finishCondition = condition;
+    }
+
+    get isFinished(): boolean {
+        return this._finishCondition();
     }
 }

@@ -45,9 +45,11 @@ export class DOMEngine {
         this.addEventListeners();
         // initialize the page controller
         this.pageController.init();
+        // finish loading
+        this.finish();
     }
 
-    collectBlocks() {
+    private collectBlocks() {
         // search for which blocks of the config are present in the current DOM
         for (const config of this.blockControllerConfigs) {
             const thoseBlocks: NodeListOf<HTMLElement> = document.querySelectorAll(`.${config.blockClassName}`);
@@ -55,7 +57,7 @@ export class DOMEngine {
         }
     }
 
-    createControllers() {
+    private createControllers() {
         // the only controllers that are created are the ones that have had their blocks collected
         for (const config of this.blockControllerConfigs) {
             const blocksList = this.blocks[config.blockClassName];
@@ -70,7 +72,7 @@ export class DOMEngine {
         }
     }
 
-    addEventListeners() {
+    private addEventListeners() {
         // add event listeners to blocks, gather global listeners
         this.controllers.forEach((controller) => {
             controller._addStaticEventListeners();
@@ -78,7 +80,6 @@ export class DOMEngine {
             if (controller.onPageScroll) {
                 this.scrollHandlers.push(controller.onPageScroll.bind(controller));
             }
-
             if (controller.onPageResize) {
                 this.resizeHandlers.push(controller.onPageResize.bind(controller));
             }
@@ -88,17 +89,37 @@ export class DOMEngine {
         window.addEventListener("scroll", (_) => {
             this.onPageScroll(window.scrollY);
         });
-
         window.addEventListener("resize", (_) => {
             this.onPageResize(window.innerWidth, window.innerHeight);
         });
     }
 
-    onPageScroll(scrollY: number) {
+    private finish() {
+        this.pageController.finishedCondition = this.isFinished.bind(this);
+        this.pageController.finish();
+    }
+
+    private onPageScroll(scrollY: number) {
         this.scrollHandlers.forEach((handler) => handler(scrollY));
     }
 
-    onPageResize(width: number, height: number) {
+    private onPageResize(width: number, height: number) {
         this.resizeHandlers.forEach((handler) => handler(width, height));
+    }
+
+    private log(...args: any[]) {
+        if (DOMEngine.siteDebug) {
+            console.log(`[${this.constructor.name}]`, ...args);
+        }
+    }
+
+    private error(...args: any[]) {
+        if (DOMEngine.siteDebug) {
+            console.error(`[${this.constructor.name}]`, ...args);
+        }
+    }
+
+    isFinished(): boolean {
+        return this.controllers.every((controller) => controller.initialized);
     }
 }
