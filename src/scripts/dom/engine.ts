@@ -4,28 +4,32 @@
  */
 
 import { BlockController, BlockControllerConfig } from "./block-controller";
+import { PageController } from "./page-controller";
 
-interface BlockRegistry {
+export interface BlockRegistry {
     [blockClassName: string]: HTMLElement[];
 }
 
-interface ControllerRegistry {
+export interface ControllerRegistry {
     [blockClassName: string]: new () => BlockController;
 }
 
-class DOMEngine {
+export class DOMEngine {
     static siteDebug: boolean = true;
+
+    private pageController: PageController;
 
     private blockControllerConfigs: BlockControllerConfig[] = [];
 
-    blocks: BlockRegistry = {};
-    controllers: BlockController[] = [];
+    private blocks: BlockRegistry = {};
+    private controllers: BlockController[] = [];
 
-    scrollHandlers: Function[] = [];
-    resizeHandlers: Function[] = [];
+    private scrollHandlers: Function[] = [];
+    private resizeHandlers: Function[] = [];
 
     constructor(...blockConfigs: BlockControllerConfig[]) {
         this.blockControllerConfigs = blockConfigs;
+        this.pageController = new PageController();
     }
 
     addControllerConfig(config: BlockControllerConfig) {
@@ -39,6 +43,8 @@ class DOMEngine {
         this.createControllers();
         // add event listeners for each controller
         this.addEventListeners();
+        // initialize the page controller
+        this.pageController.init();
     }
 
     collectBlocks() {
