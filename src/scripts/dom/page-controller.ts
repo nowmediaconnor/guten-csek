@@ -3,6 +3,7 @@
  * Author: Connor Doman
  */
 
+import { prepareCurtainElements } from "../curtainify";
 import { getImageColor } from "../files";
 import { error, log } from "../global";
 
@@ -34,6 +35,7 @@ export class PageController {
         this.checkIfEditor();
         this.prepareLoadingPanel();
         this.prepareContactForm();
+        this.prepareCurtainElements();
         this.prepareFeaturedColors();
         this.initialized = true;
     }
@@ -92,6 +94,11 @@ export class PageController {
         });
 
         this.checkIfContactFormRequested(id);
+    }
+
+    private prepareCurtainElements() {
+        if (this.usingEditor) return;
+        prepareCurtainElements();
     }
 
     private async prepareFeaturedColors() {

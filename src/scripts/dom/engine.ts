@@ -37,6 +37,8 @@ export class DOMEngine {
     }
 
     init() {
+        // initialize the page controller
+        this.pageController.init();
         // find all blocks listed in config
         this.collectBlocks();
         // create a controller for each block found
@@ -45,8 +47,6 @@ export class DOMEngine {
         this.controllerSetup();
         // add event listeners for each controller
         this.addEventListeners();
-        // initialize the page controller
-        this.pageController.init();
         // finish loading
         this.finish();
     }

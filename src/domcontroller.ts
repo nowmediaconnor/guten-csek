@@ -70,7 +70,7 @@ export const createDOMController = () => {
 
     // DOM controller
     return new DOMController(
-        curtainifyController,
+        // curtainifyController,
         scrollController,
         videoCarouselController,
         scrollingProjectsController,
