@@ -6,10 +6,11 @@
 import { createDOMController } from "./domcontroller";
 // import { registerAllBlocks } from "./scripts/register-blocks";
 import { runAccumulators } from "./scripts/accumulators";
+import ExpandingMediaController from "./scripts/block-controllers/expanding-video-controller";
 import DOMController from "./scripts/dom";
+import { ControllerConfig } from "./scripts/dom/block-controller";
 import { DOMEngine } from "./scripts/dom/engine";
 import { log } from "./scripts/global";
-import { getAllMedia } from "./scripts/wp";
 
 declare global {
     interface Window {
@@ -29,9 +30,19 @@ window.addEventListener("load", (e) => {
     /* Prepare DOM Controller */
     window.domController = createDOMController();
 
+    /* Prepare DOM Engine */
+    const blockConfigs: ControllerConfig = [
+        {
+            blockClassName: ".wp-block-guten-csek-expanding-video-block",
+            controller: ExpandingMediaController,
+        },
+    ];
+    window.domEngine = new DOMEngine(...blockConfigs);
+
     window.requestAnimationFrame(() => {
-        window.domController.debugMode = true;
+        window.domController.debugMode = false;
         window.domController.setup();
+        window.domEngine.init();
     });
 
     setTimeout(() => {

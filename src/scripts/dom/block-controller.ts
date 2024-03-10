@@ -8,6 +8,8 @@ export interface BlockControllerConfig {
     blockClassName: string;
 }
 
+export type ControllerConfig = Array<BlockControllerConfig>;
+
 export abstract class BlockController {
     block: HTMLElement;
     debug: boolean = true;
@@ -49,7 +51,7 @@ export abstract class BlockController {
         return this._inViewport;
     }
 
-    get controllerName(): string {
+    get name(): string {
         return this.constructor.name;
     }
 
@@ -76,8 +78,8 @@ export abstract class BlockController {
 
     init() {
         const successfulSetup = this.setup();
-        if (successfulSetup) {
-            throw new Error(`Failed to set up ${this.controllerName}!`);
+        if (!successfulSetup) {
+            throw new Error(`Failed to set up ${this.name}!`);
         }
         this.viewportObserver.observe(this.block);
         this.initialized = true;
@@ -85,12 +87,12 @@ export abstract class BlockController {
 
     validate(
         truthy: any,
-        success: string = `${this.controllerName} is valid`,
-        failure: string = `${this.controllerName} is invalid`,
+        success: string = `${this.name} is valid`,
+        failure: string = `${this.name} is invalid`,
         error: boolean = this.debug
     ): boolean {
         if (truthy) {
-            this.log(success);
+            this.info(success);
             return true;
         } else {
             this.error(failure);
@@ -100,19 +102,23 @@ export abstract class BlockController {
     }
 
     log(...msg: any[]) {
-        console.log(`[${this.controllerName}]`, ...msg);
+        console.log(`[${this.name}]`, ...msg);
     }
 
     info(...msg: any[]) {
-        if (this.debug) console.info(`[${this.controllerName}]`, ...msg);
+        if (this.debug) console.info(`[${this.name}]`, ...msg);
     }
 
     error(...msg: any[]) {
-        if (this.debug) console.error(`[${this.controllerName}]`, ...msg);
+        if (this.debug) console.error(`[${this.name}]`, ...msg);
     }
 
     warn(...msg: any[]) {
-        if (this.debug) console.warn(`[${this.controllerName}]`, ...msg);
+        if (this.debug) console.warn(`[${this.name}]`, ...msg);
+    }
+
+    toString(): string {
+        return `BlockController: [${this.name}]`;
     }
 }
 

@@ -14,8 +14,14 @@ export default class ExpandingMediaController extends BlockController {
     private floatingImages: NodeListOf<HTMLElement>;
 
     setup(): boolean {
-        this.expandingMedia = this.block.querySelectorAll(".expanding-media");
-        this.validate(this.expandingMedia.length > 0, null, "No expanding media found.", true);
+        this.debug = false;
+
+        this.expandingMedia = this.block.querySelectorAll(".expanding-video-container");
+        this.validate(
+            this.expandingMedia.length > 0,
+            `${this.expandingMedia.length} expanding media items found.`,
+            "No expanding media found."
+        );
 
         this.floatingImages = this.block?.querySelectorAll(".floating-image");
         this.floatingImages.forEach((image: HTMLElement) => {
@@ -26,12 +32,13 @@ export default class ExpandingMediaController extends BlockController {
     }
 
     private expandVideo(container: HTMLElement) {
-        this.log("Expanding video...");
-        container.classList.add("expanded");
-        const otherElements = getSiblings(container);
+        this.info("Expanding video...");
 
+        container.classList.add("expanded");
+
+        const otherElements = getSiblings(container);
         if (otherElements.length === 0) {
-            this.log("No siblings found");
+            this.warn("No siblings found");
             return;
         }
         otherElements.forEach((elmt: Node) => {
@@ -40,18 +47,25 @@ export default class ExpandingMediaController extends BlockController {
     }
 
     private retractVideo(container: HTMLElement) {
-        container.classList.remove("expanded");
-        const otherElements = getSiblings(container);
+        this.info("Retracting video...");
 
+        container.classList.remove("expanded");
+
+        const otherElements = getSiblings(container);
         if (otherElements.length === 0) {
-            this.log("No siblings found");
+            this.warn("No siblings found");
             return;
         }
         otherElements.forEach((elmt: Node) => (elmt as HTMLElement).classList.remove("disappear"));
     }
 
     onPageScroll(scrollY: number): void {
-        if (!this.inViewport || this.expandingMedia.length === 0) return;
+        if (this.expandingMedia.length === 0) return;
+
+        if (!this.inViewport) {
+            this.info("Not in viewport, skipping...");
+            return;
+        }
 
         this.expandingMedia.forEach((container: HTMLElement) => {
             const parent = container.parentElement;

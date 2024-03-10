@@ -41,6 +41,8 @@ export class DOMEngine {
         this.collectBlocks();
         // create a controller for each block found
         this.createControllers();
+        // set up controllers
+        this.controllerSetup();
         // add event listeners for each controller
         this.addEventListeners();
         // initialize the page controller
@@ -52,9 +54,12 @@ export class DOMEngine {
     private collectBlocks() {
         // search for which blocks of the config are present in the current DOM
         for (const config of this.blockControllerConfigs) {
-            const thoseBlocks: NodeListOf<HTMLElement> = document.querySelectorAll(`.${config.blockClassName}`);
+            const thoseBlocks: NodeListOf<HTMLElement> = document.querySelectorAll(
+                `.${config.blockClassName.replaceAll(".", "")}`
+            );
             this.blocks[config.blockClassName] = Array.from(thoseBlocks);
         }
+        this.log("Blocks collected:", this.blocks);
     }
 
     private createControllers() {
@@ -70,6 +75,15 @@ export class DOMEngine {
                 });
             }
         }
+
+        this.log("Controllers created:", this.controllers);
+    }
+
+    private controllerSetup() {
+        // call setup on each controller
+        this.controllers.forEach((controller) => {
+            controller.init();
+        });
     }
 
     private addEventListeners() {
@@ -78,6 +92,7 @@ export class DOMEngine {
             controller._addStaticEventListeners();
 
             if (controller.onPageScroll) {
+                this.log("Adding scroll handler for", controller.name);
                 this.scrollHandlers.push(controller.onPageScroll.bind(controller));
             }
             if (controller.onPageResize) {
