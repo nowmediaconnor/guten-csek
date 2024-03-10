@@ -3,7 +3,7 @@
  * Author: Connor Doman
  */
 
-import BlockController, { BlockControllerConfig } from "../block-controllers/block-controller";
+import BlockController, { BlockControllerConfig } from "./block-controllers/block-controller";
 import { PageController } from "./page-controller";
 
 export interface BlockRegistry {
@@ -15,6 +15,8 @@ export interface ControllerRegistry {
 }
 
 export class DOMEngine {
+    static readonly RESIZE_WAIT_MS: number = 100;
+
     static siteDebug: boolean = true;
 
     private pageController: PageController;
@@ -26,6 +28,8 @@ export class DOMEngine {
 
     private scrollHandlers: Function[] = [];
     private resizeHandlers: Function[] = [];
+
+    private resizeTimeout: number;
 
     constructor(...blockConfigs: BlockControllerConfig[]) {
         this.blockControllerConfigs = blockConfigs;
@@ -119,7 +123,12 @@ export class DOMEngine {
     }
 
     private onPageResize(width: number, height: number) {
-        this.resizeHandlers.forEach((handler) => handler(width, height));
+        // debounce resize events by waiting 250ms
+        window.clearTimeout(this.resizeTimeout);
+        this.resizeTimeout = window.setTimeout(() => {
+            // actual resize event handling
+            this.resizeHandlers.forEach((handler) => handler(width, height));
+        }, DOMEngine.RESIZE_WAIT_MS);
     }
 
     private log(...args: any[]) {

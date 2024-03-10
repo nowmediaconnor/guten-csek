@@ -4,7 +4,7 @@
  */
 
 import BlockController from "../block-controller";
-import { getImageColor } from "../../files";
+import { getImageColor } from "../../../files";
 
 export default class NextProjectController extends BlockController {
     private nextProjectImage: HTMLImageElement;

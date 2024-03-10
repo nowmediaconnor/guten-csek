@@ -8,8 +8,9 @@ import {
     ExpandingMediaController,
     FeaturedVideoController,
     NextProjectController,
-} from "./block-controllers";
-import { ControllerConfig } from "./block-controllers/block-controller";
+    ScrollingProjectsController,
+} from "./dom/block-controllers";
+import { ControllerConfig } from "./dom/block-controllers/block-controller";
 import { DOMEngine } from "./dom/engine";
 
 export const BLOCK_CONFIGS: ControllerConfig = [
@@ -28,6 +29,10 @@ export const BLOCK_CONFIGS: ControllerConfig = [
     {
         blockClassName: ".wp-block-guten-csek-next-project-block",
         controller: NextProjectController,
+    },
+    {
+        blockClassName: ".wp-block-guten-csek-scrolling-projects-block",
+        controller: ScrollingProjectsController,
     },
 ];
 

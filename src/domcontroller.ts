@@ -73,7 +73,7 @@ export const createDOMController = () => {
         // curtainifyController,
         scrollController,
         videoCarouselController,
-        scrollingProjectsController,
+        // scrollingProjectsController,
         // expandingVideoController,
         carouselController,
         // nextProjectController,

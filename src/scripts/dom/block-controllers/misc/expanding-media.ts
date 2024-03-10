@@ -4,8 +4,8 @@
  */
 
 import BlockController from "../block-controller";
-import { getSiblings } from "../../dom";
-import { randomIntInRange } from "../../math";
+import { getSiblings } from "../../../dom";
+import { randomIntInRange } from "../../../math";
 
 export default class ExpandingMediaController extends BlockController {
     static scrollThreshold: number = 150;
