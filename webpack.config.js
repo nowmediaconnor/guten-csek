@@ -5,7 +5,7 @@ module.exports = {
     ...defaults,
     entry: {
         index: path.resolve(process.cwd(), "src", "index.ts"),
-        // editor: path.resolve(process.cwd(), "src", "editor"),
+        editor: path.resolve(process.cwd(), "src", "editor"),
     },
     output: {
         filename: "[name].js",

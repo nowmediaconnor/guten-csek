@@ -77,7 +77,7 @@ export const createDOMController = () => {
         // expandingVideoController,
         carouselController,
         nextProjectController,
-        featuredVideoController,
+        // featuredVideoController,
         staffProfilesController,
         // cyclingStackController,
         teamController,
