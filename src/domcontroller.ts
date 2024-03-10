@@ -79,7 +79,7 @@ export const createDOMController = () => {
         nextProjectController,
         featuredVideoController,
         staffProfilesController,
-        cyclingStackController,
+        // cyclingStackController,
         teamController,
         processBlockController,
         projectsMasonryBlock,

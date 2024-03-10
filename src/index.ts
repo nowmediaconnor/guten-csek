@@ -6,7 +6,8 @@
 import { createDOMController } from "./domcontroller";
 // import { registerAllBlocks } from "./scripts/register-blocks";
 import { runAccumulators } from "./scripts/accumulators";
-import ExpandingMediaController from "./scripts/block-controllers/expanding-video-controller";
+import ExpandingMediaController from "./scripts/block-controllers/expanding-media-controller";
+import CyclingStackController from "./scripts/block-controllers/misc/cycling-stack-controller";
 import DOMController from "./scripts/dom";
 import { ControllerConfig } from "./scripts/dom/block-controller";
 import { DOMEngine } from "./scripts/dom/engine";
@@ -35,6 +36,10 @@ window.addEventListener("load", (e) => {
         {
             blockClassName: ".wp-block-guten-csek-expanding-video-block",
             controller: ExpandingMediaController,
+        },
+        {
+            blockClassName: ".cycling-stack",
+            controller: CyclingStackController,
         },
     ];
     window.domEngine = new DOMEngine(...blockConfigs);
