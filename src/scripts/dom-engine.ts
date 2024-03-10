@@ -9,7 +9,7 @@ import {
     FeaturedVideoController,
     NextProjectController,
 } from "./block-controllers";
-import { ControllerConfig } from "./dom/block-controller";
+import { ControllerConfig } from "./block-controllers/block-controller";
 import { DOMEngine } from "./dom/engine";
 
 export const BLOCK_CONFIGS: ControllerConfig = [

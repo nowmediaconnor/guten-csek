@@ -3,7 +3,7 @@
  * Author: Connor Doman
  */
 
-import { BlockController } from "../dom/block-controller";
+import BlockController from "../block-controller";
 
 export default class FeaturedVideoController extends BlockController {
     private videoContainer: HTMLElement;

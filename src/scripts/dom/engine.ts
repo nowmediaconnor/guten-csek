@@ -3,7 +3,7 @@
  * Author: Connor Doman
  */
 
-import { BlockController, BlockControllerConfig } from "./block-controller";
+import BlockController, { BlockControllerConfig } from "../block-controllers/block-controller";
 import { PageController } from "./page-controller";
 
 export interface BlockRegistry {

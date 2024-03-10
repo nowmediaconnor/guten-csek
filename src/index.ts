@@ -6,12 +6,12 @@
 import { createDOMController } from "./domcontroller";
 // import { registerAllBlocks } from "./scripts/register-blocks";
 import { runAccumulators } from "./scripts/accumulators";
-import ExpandingMediaController from "./scripts/block-controllers/expanding-media";
-import FeaturedVideoController from "./scripts/block-controllers/featured-video";
+import ExpandingMediaController from "./scripts/block-controllers/misc/expanding-media";
+import FeaturedVideoController from "./scripts/block-controllers/misc/featured-video";
 import CyclingStackController from "./scripts/block-controllers/misc/cycling-stack";
 import DOMController from "./scripts/dom";
 import domEngine from "./scripts/dom-engine";
-import { ControllerConfig } from "./scripts/dom/block-controller";
+import { ControllerConfig } from "./scripts/block-controllers/block-controller";
 import { DOMEngine } from "./scripts/dom/engine";
 import { log } from "./scripts/global";
 

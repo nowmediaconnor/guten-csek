@@ -10,7 +10,7 @@ export interface BlockControllerConfig {
 
 export type ControllerConfig = Array<BlockControllerConfig>;
 
-export abstract class BlockController {
+export default abstract class BlockController {
     block: HTMLElement;
     debug: boolean = true;
 
