@@ -87,8 +87,8 @@ export abstract class BlockController {
 
     validate(
         truthy: any,
-        success: string = `${this.name} is valid`,
         failure: string = `${this.name} is invalid`,
+        success: string = `${this.name} is valid`,
         error: boolean = this.debug
     ): boolean {
         if (truthy) {

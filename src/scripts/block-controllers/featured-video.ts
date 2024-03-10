@@ -19,10 +19,10 @@ export default class FeaturedVideoController extends BlockController {
         this.videoPlayer = this.block.querySelector(".video-container video") as HTMLVideoElement;
         this.playButton = this.block.querySelector(".video-container .playbutton") as HTMLElement;
 
-        this.validate(this.videoContainer !== undefined, "Video container found.", "Video container not found.");
-        this.validate(this.videoShade !== undefined, "Video shade found.", "Video shade not found.");
-        this.validate(this.videoPlayer !== undefined, "Video player found.", "Video player not found.");
-        this.validate(this.playButton !== undefined, "Play button found.", "Play button not found.");
+        this.validate(this.videoContainer !== undefined, "Video container not found.", "Video container found.");
+        this.validate(this.videoShade !== undefined, "Video shade not found.", "Video shade found.");
+        this.validate(this.videoPlayer !== undefined, "Video player not found.", "Video player found.");
+        this.validate(this.playButton !== undefined, "Play button not found.", "Play button found.");
 
         const videoPlayerRect = this.videoPlayer.getBoundingClientRect();
         this.videoContainer.style.paddingBottom = `${(videoPlayerRect.height / videoPlayerRect.width) * 100}%`;

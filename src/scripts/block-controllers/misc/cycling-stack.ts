@@ -17,14 +17,14 @@ export default class CyclingStackController extends BlockController {
         this.debug = false;
 
         this.wordsList = this.block.querySelector(".words-list");
-        this.validate(this.wordsList !== undefined, "Words list found.", "Words list not found.");
+        this.validate(this.wordsList !== undefined, "Words list not found.", "Words list found.");
 
         if (!this.wordsList.hasAttribute("data-current-index")) {
             this.wordsList.setAttribute("data-current-index", "0");
         }
 
         this.words = this.wordsList.querySelectorAll(".cycling-word");
-        this.validate(this.words.length > 0, "Words found.", "No words found.");
+        this.validate(this.words.length > 0, "No words found.", "Words found.");
 
         // this.currentIndex = Number(this.wordsList.getAttribute("data-current-index"));
         this.currentIndex = 0;

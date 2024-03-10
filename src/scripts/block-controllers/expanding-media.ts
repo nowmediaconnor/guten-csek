@@ -19,8 +19,8 @@ export default class ExpandingMediaController extends BlockController {
         this.expandingMedia = this.block.querySelectorAll(".expanding-video-container");
         this.validate(
             this.expandingMedia.length > 0,
-            `${this.expandingMedia.length} expanding media items found.`,
-            "No expanding media found."
+            "No expanding media found.",
+            `${this.expandingMedia.length} expanding media items found.`
         );
 
         this.floatingImages = this.block?.querySelectorAll(".floating-image");
