@@ -6,8 +6,17 @@
 import { createDOMController } from "./domcontroller";
 // import { registerAllBlocks } from "./scripts/register-blocks";
 import { runAccumulators } from "./scripts/accumulators";
+import DOMController from "./scripts/dom";
+import { DOMEngine } from "./scripts/dom/engine";
 import { log } from "./scripts/global";
 import { getAllMedia } from "./scripts/wp";
+
+declare global {
+    interface Window {
+        domController: DOMController;
+        domEngine: DOMEngine;
+    }
+}
 
 // registerAllBlocks();
 

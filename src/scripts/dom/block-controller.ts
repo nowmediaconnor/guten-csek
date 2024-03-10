@@ -9,8 +9,8 @@ export interface BlockControllerConfig {
 }
 
 export abstract class BlockController {
-    private block: HTMLElement;
-    private debug: boolean = true;
+    block: HTMLElement;
+    debug: boolean = true;
 
     private _initialized: boolean = false;
     private _inViewport: boolean = false;

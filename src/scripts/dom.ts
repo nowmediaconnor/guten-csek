@@ -275,7 +275,7 @@ export default class DOMController extends BlockController implements DOMControl
     setup() {
         if (this.isStarted === false) this.isStarted = true;
 
-        prepareExpandingVideoBlocks();
+        // prepareExpandingVideoBlocks();
 
         this.setFeaturedImageColors();
 
