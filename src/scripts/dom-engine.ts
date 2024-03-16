@@ -11,6 +11,7 @@ import {
     ScrollingProjectsController,
 } from "./dom/block-controllers";
 import { ControllerConfig } from "./dom/block-controllers/block-controller";
+import PostCollageController from "./dom/block-controllers/blog/post-collage";
 import NewsletterController from "./dom/block-controllers/cta/newsletter";
 import { DOMEngine } from "./dom/engine";
 
@@ -38,6 +39,10 @@ export const BLOCK_CONFIGS: ControllerConfig = [
     {
         blockClassName: ".wp-block-guten-csek-newsletter-cta-block",
         controller: NewsletterController,
+    },
+    {
+        blockClassName: ".wp-block-guten-csek-post-collage-block",
+        controller: PostCollageController,
     },
 ];
 
