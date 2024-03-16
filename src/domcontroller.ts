@@ -83,7 +83,7 @@ export const createDOMController = () => {
         teamController,
         processBlockController,
         projectsMasonryBlock,
-        postCollageController,
-        newsletterController
+        postCollageController
+        // newsletterController
     );
 };
