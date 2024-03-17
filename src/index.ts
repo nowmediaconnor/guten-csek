@@ -31,21 +31,21 @@ window.addEventListener("load", (e) => {
     runAccumulators();
 
     /* Prepare DOM Controller */
-    window.domController = createDOMController();
+    // window.domController = createDOMController();
 
     /* Prepare DOM Engine */
     window.domEngine = domEngine;
 
     window.requestAnimationFrame(() => {
-        window.domController.debugMode = false;
-        window.domController.setup();
+        // window.domController.debugMode = false;
+        // window.domController.setup();
         window.domEngine.init();
     });
 
     setTimeout(() => {
         // hide loading panel if DOM controller is not in use...
-        if (!window.domController.isStarted || !window.domController) {
-            window.domController.hideLoadingPanel();
-        }
+        // if (!window.domController.isStarted || !window.domController) {
+        //     window.domController.hideLoadingPanel();
+        // }
     }, 1000);
 });

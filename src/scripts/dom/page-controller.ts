@@ -19,10 +19,10 @@ export class PageController {
 
     debug: boolean;
 
-    loadingPanel: HTMLElement;
+    private loadingPanel: HTMLElement;
 
-    contactFormScreen: HTMLElement;
-    contactFormOpened: boolean;
+    private contactFormScreen: HTMLElement;
+    private contactFormOpened: boolean;
 
     constructor() {
         this.debug = true;
@@ -85,31 +85,33 @@ export class PageController {
     }
 
     private prepareContactForm(id: string = "lets-talk"): boolean {
-        const contactForm = document.getElementById("lets-talk");
-        if (!contactForm) {
+        this.contactFormScreen = document.getElementById(id);
+        if (!this.contactFormScreen) {
             this.error("Contact form not found");
             return false;
         }
 
-        const openContactButtons: NodeListOf<HTMLAnchorElement> = document.querySelectorAll(`a[href="#${id}"]`);
+        const openContactButtons: NodeListOf<HTMLAnchorElement> = document.querySelectorAll(`.${id}-open`);
         openContactButtons.forEach((button) => {
             button.addEventListener("click", (e) => {
                 e.preventDefault();
+                this.info("Contact form requested");
                 this.openContactForm();
             });
         });
 
-        const closeContactButton: HTMLAnchorElement | undefined = contactForm.querySelector(`#${id}-close`);
+        const closeContactButton: HTMLAnchorElement | undefined = this.contactFormScreen.querySelector(`#${id}-close`);
         if (!closeContactButton) {
             this.error("Close button not found");
             return false;
         }
+
         closeContactButton.addEventListener("click", (e) => {
             e.preventDefault();
             this.closeContactForm();
         });
 
-        this.checkIfContactFormRequested(id);
+        this.checkIfContactFormRequested();
     }
 
     private prepareCurtainElements() {
@@ -151,13 +153,15 @@ export class PageController {
         this.usingEditor = isAdmin && isEditing;
     }
 
-    private checkIfContactFormRequested(tag: string = "lets-talk"): boolean {
+    private checkIfContactFormRequested(tag: string = "contact"): boolean {
         const locationHash = window.location.hash.replaceAll("#", "");
 
         if (locationHash === tag) {
+            this.info("Contact form requested");
             this.openContactForm();
             return true;
         }
+        this.info("Contact form not requested");
         return false;
     }
 
@@ -185,12 +189,18 @@ export class PageController {
     }
 
     openContactForm() {
-        if (!this.contactFormScreen) return;
+        if (!this.contactFormScreen) {
+            this.warn("Contact form not found");
+            return;
+        }
         this.contactFormScreen.classList.add("open");
         this.contactFormOpened = true;
     }
     closeContactForm() {
-        if (!this.contactFormScreen) return;
+        if (!this.contactFormScreen) {
+            this.warn("Contact form not found");
+            return;
+        }
         this.contactFormScreen.classList.remove("open");
         this.contactFormOpened = false;
     }
