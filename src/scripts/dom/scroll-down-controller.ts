@@ -46,9 +46,9 @@ export default class ScrollDownCircleController {
             (entries) => {
                 entries.forEach((entry) => {
                     if (entry.isIntersecting) {
-                        this.scrollDownElement.style.opacity = "0";
+                        this.showScrollDownCircle();
                     } else {
-                        this.scrollDownElement.style.opacity = "1";
+                        this.hideScrollDownCircle();
                     }
                 });
             },
@@ -59,6 +59,14 @@ export default class ScrollDownCircleController {
             }
         );
         this.parentObserver.observe(this.parentScrollTarget);
+    }
+
+    hideScrollDownCircle() {
+        this.scrollDownElement.style.opacity = "0";
+    }
+
+    showScrollDownCircle() {
+        this.scrollDownElement.style.opacity = "1";
     }
 
     log(...msg: any[]) {

@@ -63,9 +63,8 @@ export default class MasonryController extends BlockController {
             this.gridArea = document.createElement("div");
             this.gridArea.classList.add("projects-grid");
         } else {
-            this.info("Grid area found in block, using it:", grid);
+            this.info("Grid area found in block, using it.");
             this.gridArea = grid as HTMLElement;
-            this.info(this.gridArea);
         }
 
         this.projectsData = [];
