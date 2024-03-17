@@ -13,6 +13,7 @@ import PostCollageController from "./blog/post-collage";
 import NewsletterController from "./cta/newsletter";
 import ProcessController from "./misc/process";
 import MasonryController from "./projects/masonry";
+import StaffProfilesController from "./misc/staff-profiles";
 
 export {
     BlockController,
@@ -25,4 +26,5 @@ export {
     NewsletterController,
     ProcessController,
     MasonryController,
+    StaffProfilesController,
 };

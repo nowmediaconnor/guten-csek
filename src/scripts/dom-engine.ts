@@ -13,6 +13,7 @@ import {
     PostCollageController,
     ProcessController,
     ScrollingProjectsController,
+    StaffProfilesController,
 } from "./dom/block-controllers";
 import { ControllerConfig } from "./dom/block-controllers/block-controller";
 import { DOMEngine } from "./dom/engine";
@@ -53,6 +54,10 @@ export const BLOCK_CONFIGS: ControllerConfig = [
     {
         blockClassName: ".wp-block-guten-csek-projects-masonry-block",
         controller: MasonryController,
+    },
+    {
+        blockClassName: ".wp-block-guten-csek-staff-profiles-block",
+        controller: StaffProfilesController,
     },
 ];
 
