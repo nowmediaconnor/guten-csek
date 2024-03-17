@@ -5,14 +5,19 @@
 
 import { prepareCurtainElements } from "../curtainify";
 import { getImageColor } from "../files";
-import { error, log } from "../global";
 
 export class PageController {
+    private static readonly INIT_CHECK_INTERVAL = 1000;
+    private static readonly INIT_CHECK_TIMEOUT = 5000;
+
     private _initialized: boolean;
     private _usingEditor: boolean = false;
     private _url: URL;
     private _finishInterval: number;
+    private _fallbackTimeout: number;
     private _finishCondition: () => boolean;
+
+    debug: boolean;
 
     loadingPanel: HTMLElement;
 
@@ -20,6 +25,7 @@ export class PageController {
     contactFormOpened: boolean;
 
     constructor() {
+        this.debug = true;
         this.initialized = false;
         this.contactFormOpened = false;
 
@@ -31,7 +37,7 @@ export class PageController {
     }
 
     init() {
-        log("PageController initializing...");
+        this.info("PageController initializing...");
         this.checkIfEditor();
         this.prepareLoadingPanel();
         this.prepareContactForm();
@@ -42,25 +48,35 @@ export class PageController {
 
     finish() {
         if (this.usingEditor) {
-            this.log("Using editor, skipping loading screen.");
+            this.info("Using editor, skipping loading screen.");
             this.hideLoadingPanel();
         } else if (!this.usingEditor) {
             this._finishInterval = window.setInterval(() => {
                 if (this.isFinished) {
                     this.hideLoadingPanel();
                     window.clearInterval(this._finishInterval);
-                    this.log("Finished loading.");
+                    window.clearTimeout(this._fallbackTimeout);
+                    this.info("Finished loading.");
                 }
-            }, 1000);
+            }, PageController.INIT_CHECK_INTERVAL);
+
+            // if the above fails for some reason, just hide the loading panel after 5 seconds
+            this._fallbackTimeout = window.setTimeout(() => {
+                this.error("Failed to finish loading properly, hiding panel...");
+                this.hideLoadingPanel();
+                window.clearInterval(this._finishInterval);
+            }, PageController.INIT_CHECK_TIMEOUT);
         }
     }
 
     private prepareLoadingPanel(): boolean {
         const existingPanel = document.getElementById("loading");
         if (existingPanel) {
+            this.warn("Loading panel found");
             this.loadingPanel = existingPanel as HTMLElement;
             return true;
         } else {
+            this.warn("Loading panel not found, creating...");
             this.loadingPanel = document.createElement("div");
             this.loadingPanel.id = "loading";
             document.body.prepend(this.loadingPanel);
@@ -71,7 +87,7 @@ export class PageController {
     private prepareContactForm(id: string = "lets-talk"): boolean {
         const contactForm = document.getElementById("lets-talk");
         if (!contactForm) {
-            error("Contact form not found");
+            this.error("Contact form not found");
             return false;
         }
 
@@ -83,9 +99,9 @@ export class PageController {
             });
         });
 
-        const closeContactButton: HTMLAnchorElement | undefined = contactForm.querySelector(`.${id}-close`);
+        const closeContactButton: HTMLAnchorElement | undefined = contactForm.querySelector(`#${id}-close`);
         if (!closeContactButton) {
-            error("Close button not found");
+            this.error("Close button not found");
             return false;
         }
         closeContactButton.addEventListener("click", (e) => {
@@ -145,12 +161,20 @@ export class PageController {
         return false;
     }
 
-    private log(...args: any[]) {
-        log("[PageController]", ...args);
+    log(...msg: any[]) {
+        console.log(`[${this.name}]`, ...msg);
     }
 
-    private error(...args: any[]) {
-        error("[PageController]", ...args);
+    info(...msg: any[]) {
+        if (this.debug) console.info(`[${this.name}]`, ...msg);
+    }
+
+    error(...msg: any[]) {
+        if (this.debug) console.error(`[${this.name}]`, ...msg);
+    }
+
+    warn(...msg: any[]) {
+        if (this.debug) console.warn(`[${this.name}]`, ...msg);
     }
 
     showLoadingPanel() {
@@ -201,5 +225,9 @@ export class PageController {
 
     get isFinished(): boolean {
         return this._finishCondition();
+    }
+
+    get name(): string {
+        return this.constructor.name;
     }
 }
