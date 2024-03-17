@@ -16,9 +16,9 @@ import {
     StaffProfilesController,
     TeamController,
     VideoCarouselController,
-} from "./dom/block-controllers";
-import { ControllerConfig } from "./dom/block-controllers/block-controller";
-import { DOMEngine } from "./dom/engine";
+} from "./block-controllers";
+import { ControllerConfig } from "./block-controllers/block-controller";
+import { DOMEngine } from "./engine";
 
 export const BLOCK_CONFIGS: ControllerConfig = [
     {

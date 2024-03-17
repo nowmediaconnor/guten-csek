@@ -3,6 +3,7 @@
  * Author: Connor Doman
  */
 
+import { runAccumulators } from "../accumulators";
 import { prepareCurtainElements } from "../curtainify";
 import { getImageColor } from "../files";
 
@@ -22,12 +23,10 @@ export class PageController {
     private loadingPanel: HTMLElement;
 
     private contactFormScreen: HTMLElement;
-    private contactFormOpened: boolean;
 
     constructor() {
         this.debug = true;
         this.initialized = false;
-        this.contactFormOpened = false;
 
         this._url = new URL(window.location.href);
     }
@@ -43,6 +42,7 @@ export class PageController {
         this.prepareContactForm();
         this.prepareCurtainElements();
         this.prepareFeaturedColors();
+        runAccumulators();
         this.initialized = true;
     }
 
@@ -194,7 +194,6 @@ export class PageController {
             return;
         }
         this.contactFormScreen.classList.add("open");
-        this.contactFormOpened = true;
     }
     closeContactForm() {
         if (!this.contactFormScreen) {
@@ -202,7 +201,6 @@ export class PageController {
             return;
         }
         this.contactFormScreen.classList.remove("open");
-        this.contactFormOpened = false;
     }
 
     set initialized(value: boolean) {
