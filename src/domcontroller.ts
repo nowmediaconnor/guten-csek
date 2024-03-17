@@ -72,7 +72,7 @@ export const createDOMController = () => {
     return new DOMController(
         // curtainifyController,
         // scrollController,
-        videoCarouselController,
+        videoCarouselController
         // scrollingProjectsController,
         // expandingVideoController,
         // carouselController,
@@ -80,7 +80,7 @@ export const createDOMController = () => {
         // featuredVideoController,
         // staffProfilesController,
         // cyclingStackController,
-        teamController
+        // teamController
         // processBlockController,
         // projectsMasonryBlock
         // postCollageController

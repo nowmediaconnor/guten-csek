@@ -14,6 +14,7 @@ import NewsletterController from "./cta/newsletter";
 import ProcessController from "./misc/process";
 import MasonryController from "./projects/masonry";
 import StaffProfilesController from "./misc/staff-profiles";
+import TeamController from "./misc/team-controller";
 
 export {
     BlockController,
@@ -27,4 +28,5 @@ export {
     ProcessController,
     MasonryController,
     StaffProfilesController,
+    TeamController,
 };
