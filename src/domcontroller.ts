@@ -80,9 +80,9 @@ export const createDOMController = () => {
         // featuredVideoController,
         staffProfilesController,
         // cyclingStackController,
-        teamController,
+        teamController
         // processBlockController,
-        projectsMasonryBlock
+        // projectsMasonryBlock
         // postCollageController
         // newsletterController
     );

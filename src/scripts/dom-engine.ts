@@ -14,6 +14,7 @@ import { ControllerConfig } from "./dom/block-controllers/block-controller";
 import PostCollageController from "./dom/block-controllers/blog/post-collage";
 import NewsletterController from "./dom/block-controllers/cta/newsletter";
 import ProcessController from "./dom/block-controllers/misc/process";
+import MasonryController from "./dom/block-controllers/projects/masonry";
 import { DOMEngine } from "./dom/engine";
 
 export const BLOCK_CONFIGS: ControllerConfig = [
@@ -48,6 +49,10 @@ export const BLOCK_CONFIGS: ControllerConfig = [
     {
         blockClassName: ".wp-block-guten-csek-process-block",
         controller: ProcessController,
+    },
+    {
+        blockClassName: ".wp-block-guten-csek-projects-masonry-block",
+        controller: MasonryController,
     },
 ];
 
