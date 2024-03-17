@@ -7,14 +7,14 @@ import {
     CyclingStackController,
     ExpandingMediaController,
     FeaturedVideoController,
+    MasonryController,
+    NewsletterController,
     NextProjectController,
+    PostCollageController,
+    ProcessController,
     ScrollingProjectsController,
 } from "./dom/block-controllers";
 import { ControllerConfig } from "./dom/block-controllers/block-controller";
-import PostCollageController from "./dom/block-controllers/blog/post-collage";
-import NewsletterController from "./dom/block-controllers/cta/newsletter";
-import ProcessController from "./dom/block-controllers/misc/process";
-import MasonryController from "./dom/block-controllers/projects/masonry";
 import { DOMEngine } from "./dom/engine";
 
 export const BLOCK_CONFIGS: ControllerConfig = [
@@ -56,6 +56,4 @@ export const BLOCK_CONFIGS: ControllerConfig = [
     },
 ];
 
-export const domEngineSingleton = new DOMEngine(...BLOCK_CONFIGS);
-
-export default domEngineSingleton;
+export default new DOMEngine(...BLOCK_CONFIGS);
