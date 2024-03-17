@@ -1,29 +1,29 @@
 Arguments: 
-  /usr/local/bin/node /opt/homebrew/Cellar/yarn/1.22.19/libexec/bin/yarn.js add wp-api
+  /Users/connordoman/.nvm/versions/node/v20.11.0/bin/node /opt/homebrew/Cellar/yarn/1.22.19/libexec/bin/yarn.js add -D @types/circletype
 
 PATH: 
-  /Users/connordoman/.pyenv/shims:/Users/connordoman/.composer/vendor/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/Users/connordoman/miniconda3/condabin:/Users/connordoman/.composer/vendor/bin:/opt/homebrew/bin:/opt/homebrew/sbin
+  /Users/connordoman/.pyenv/versions/3.10.4/bin:/Users/connordoman/miniconda3/condabin:/Users/connordoman/.pyenv/shims:/Users/connordoman/.nvm/versions/node/v20.11.0/bin:/Users/connordoman/.composer/vendor/bin:/Users/connordoman/.pyenv/versions/3.10.4/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/Users/connordoman/.pyenv/versions/3.10.4/bin
 
 Yarn version: 
   1.22.19
 
 Node version: 
-  18.16.1
+  20.11.0
 
 Platform: 
   darwin arm64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/wp-api: Not found
+  Error: https://registry.yarnpkg.com/@types%2fcircletype: Not found
       at params.callback [as _callback] (/opt/homebrew/Cellar/yarn/1.22.19/libexec/lib/cli.js:66145:18)
       at self.callback (/opt/homebrew/Cellar/yarn/1.22.19/libexec/lib/cli.js:140890:22)
-      at Request.emit (node:events:513:28)
+      at Request.emit (node:events:518:28)
       at Request.<anonymous> (/opt/homebrew/Cellar/yarn/1.22.19/libexec/lib/cli.js:141862:10)
-      at Request.emit (node:events:513:28)
+      at Request.emit (node:events:518:28)
       at IncomingMessage.<anonymous> (/opt/homebrew/Cellar/yarn/1.22.19/libexec/lib/cli.js:141784:12)
-      at Object.onceWrapper (node:events:627:28)
-      at IncomingMessage.emit (node:events:525:35)
-      at endReadableNT (node:internal/streams/readable:1359:12)
+      at Object.onceWrapper (node:events:632:28)
+      at IncomingMessage.emit (node:events:530:35)
+      at endReadableNT (node:internal/streams/readable:1696:12)
       at process.processTicksAndRejections (node:internal/process/task_queues:82:21)
 
 npm manifest: 
@@ -36,13 +36,18 @@ npm manifest:
       "license": "MIT",
       "private": true,
       "scripts": {
-          "start": "wp-scripts start",
-          "build": "wp-scripts build",
+          "build": "cross-env NODE_ENV=production yarn css:build && yarn wp:build",
+          "ci": "yarn install --frozen-lockfile",
+          "css:app": "yarn tailwindcss -i ./src/css/app.css -o ./css/guten-csek.css --postcss",
+          "css:editor": "yarn tailwindcss -i ./src/css/app-editor.css -o ./css/guten-csek-editor.css --postcss",
+          "css:build": "yarn css:app --minify && yarn css:editor --minify",
           "count": "python count_lines.py src -i img,fonts",
-          "watch:css-app": "cross-env NODE_ENV=development yarn tailwindcss -i ./src/css/app.css -o ./css/guten-csek.css --postcss --watch",
-          "watch:css-editor": "cross-env NODE_ENV=development yarn tailwindcss -i ./src/css/app-editor.css -o ./css/guten-csek-editor.css --postcss --watch",
-          "watch": "cross-env NODE_ENV=development concurrently \"yarn watch:css-app\" \"yarn watch:css-editor\" \"yarn start\"",
-          "ci": "yarn install --frozen-lockfile"
+          "js:build": "npx esbuild src/js/index.js --bundle --outdir=js --platform=browser --target=es2015",
+          "watch": "cross-env NODE_ENV=development concurrently \"yarn:watch:css-app\" \"yarn:watch:css-editor\" \"yarn:wp:start\"",
+          "watch:css-app": "yarn css:app --watch",
+          "watch:css-editor": "yarn css:editor --watch",
+          "wp:start": "wp-scripts start",
+          "wp:build": "wp-scripts build"
       },
       "devDependencies": {
           "@jeffreyvr/tailwindcss-tailpress": "^2.0.0",
@@ -54,7 +59,7 @@ npm manifest:
           "@wordpress/components": "^25.5.0",
           "@wordpress/scripts": "^26.16.0",
           "autoprefixer": "^10.4.16",
-          "concurrently": "^8.2.1",
+          "concurrently": "^8.2.2",
           "cross-env": "^7.0.3",
           "esbuild": "^0.19.4",
           "eslint": "^8.53.0",
@@ -65,12 +70,14 @@ npm manifest:
           "react": "^18.2.0",
           "react-dom": "^18.2.0",
           "tailwindcss": "^3.4.0",
+          "ts-loader": "^9.5.1",
           "typescript": "^5.2.2",
           "webpack-merge": "^5.10.0",
           "wp-types": "^3.64.0"
       },
       "dependencies": {
           "@vimeo/player": "^2.20.1",
+          "@wordpress/api-fetch": "^6.45.0",
           "circletype": "^2.3.0",
           "tailwind-merge": "^1.14.0",
           "typescript-cubic-spline": "^1.0.1"
@@ -1134,10 +1141,17 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/@babel/regjsgen/-/regjsgen-0.8.0.tgz#f0ba69b075e1f05fb2825b7fad991e7adbb18310"
     integrity sha512-x/rqGMdzj+fWZvCOYForTghzbtqPDZ5gPwaoNGHdgDfF2QA/XZbCBp4Moo5scrkAMPhB7z26XM/AaHuIJdgauA==
   
-  "@babel/runtime@^7.12.5", "@babel/runtime@^7.13.10", "@babel/runtime@^7.14.8", "@babel/runtime@^7.16.0", "@babel/runtime@^7.18.3", "@babel/runtime@^7.21.0", "@babel/runtime@^7.23.2", "@babel/runtime@^7.8.4", "@babel/runtime@^7.9.2":
+  "@babel/runtime@^7.12.5", "@babel/runtime@^7.13.10", "@babel/runtime@^7.14.8", "@babel/runtime@^7.16.0", "@babel/runtime@^7.18.3", "@babel/runtime@^7.23.2", "@babel/runtime@^7.8.4", "@babel/runtime@^7.9.2":
     version "7.23.6"
     resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.23.6.tgz#c05e610dc228855dc92ef1b53d07389ed8ab521d"
     integrity sha512-zHd0eUrf5GZoOWVCXp6koAKQTfZV07eit6bGPmJgnZdnSAvvZee6zniW2XMF7Cmc4ISOOnPy3QaSiIJGJkVEDQ==
+    dependencies:
+      regenerator-runtime "^0.14.0"
+  
+  "@babel/runtime@^7.21.0":
+    version "7.23.8"
+    resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.23.8.tgz#8ee6fe1ac47add7122902f257b8ddf55c898f650"
+    integrity sha512-Y7KbAP984rn1VGMbGqKmBLio9V7y5Je9GvU4rQPCPinCyNfUcToxIXl06d59URp/F3LwinvODxab5N/G6qggkw==
     dependencies:
       regenerator-runtime "^0.14.0"
   
@@ -4978,7 +4992,7 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/concat-map/-/concat-map-0.0.1.tgz#d8a96bd77fd68df7793a73036a3ba0d5405d477b"
     integrity sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==
   
-  concurrently@^8.2.1:
+  concurrently@^8.2.2:
     version "8.2.2"
     resolved "https://registry.yarnpkg.com/concurrently/-/concurrently-8.2.2.tgz#353141985c198cfa5e4a3ef90082c336b5851784"
     integrity sha512-1dP4gpXFhei8IOtlXRE/T/4H88ElHgTiUzh71YUmtjTEHMSRS2Z/fgOxHSxxusGHogsRfxNq1vyAwxSC+EVyDg==
@@ -5729,7 +5743,7 @@ Lockfile:
     dependencies:
       once "^1.4.0"
   
-  enhanced-resolve@^5.15.0:
+  enhanced-resolve@^5.0.0, enhanced-resolve@^5.15.0:
     version "5.15.0"
     resolved "https://registry.yarnpkg.com/enhanced-resolve/-/enhanced-resolve-5.15.0.tgz#1af946c7d93603eb88e9896cee4904dc012e9c35"
     integrity sha512-LXYT42KJ7lpIKECr2mAXIaMldcNCh/7E0KBKOu4KSfkHmP+mZmSs+8V5gBAqisWBy0OO4W5Oyys0GO1Y8KtdKg==
@@ -6497,9 +6511,9 @@ Lockfile:
     integrity sha512-36yxDn5H7OFZQla0/jFJmbIKTdZAQHngCedGxiMmpNfEZM0sdEeT+WczLQrjK6D7o2aiyLYDnkw0R3JK0Qv1RQ==
   
   follow-redirects@^1.0.0, follow-redirects@^1.15.0:
-    version "1.15.3"
-    resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.15.3.tgz#fe2f3ef2690afce7e82ed0b44db08165b207123a"
-    integrity sha512-1VzOtuEM8pC9SFU1E+8KfTjZyMztRsgEfwQl44z8A25uy13jSzTj6dyK2Df52iV0vgHCfBwLhDWevLn95w5v6Q==
+    version "1.15.5"
+    resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.15.5.tgz#54d4d6d062c0fa7d9d17feb008461550e3ba8020"
+    integrity sha512-vSFWUON1B+yAw1VN4xMfxgn5fTUiaOzAJCKBwIIgT/+7CuGy9+r+5gITvP62j3RmaD5Ph65UaERdOSRGUzZtgw==
   
   for-each@^0.3.3:
     version "0.3.3"
@@ -8672,7 +8686,7 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/methods/-/methods-1.1.2.tgz#5529a4d67654134edcc5266656835b0f851afcee"
     integrity sha512-iclAHeNqNm68zFtnZ0e+1L2yUIdvzNoauKU4WBA3VvH/vPFieF7qfRlwUZU+DA9P9bPXIS90ulxoUoCH23sV2w==
   
-  micromatch@^4.0.2, micromatch@^4.0.4, micromatch@^4.0.5:
+  micromatch@^4.0.0, micromatch@^4.0.2, micromatch@^4.0.4, micromatch@^4.0.5:
     version "4.0.5"
     resolved "https://registry.yarnpkg.com/micromatch/-/micromatch-4.0.5.tgz#bc8999a7cbbf77cdc89f132f6e467051b49090c6"
     integrity sha512-DMy+ERcEW2q8Z2Po+WNXuw3c5YaUSFjAO5GsJqfEl7UjvtIuFKO6ZrKvcItdy98dwFI2N1tg3zNIdKaQT+aNdA==
@@ -10789,7 +10803,7 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.6.1.tgz#74722af32e9614e9c287a8d0bbde48b5e2f1a263"
     integrity sha512-UjgapumWlbMhkBgzT7Ykc5YXUT46F0iKu8SGXq0bcwP5dz/h0Plj6enJqjz1Zbq2l5WaqYnrVbwWOWMyF3F47g==
   
-  source-map@^0.7.3:
+  source-map@^0.7.3, source-map@^0.7.4:
     version "0.7.4"
     resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.7.4.tgz#a9bbe705c9d8846f4e08ff6765acf0f1b0898656"
     integrity sha512-l3BikUxvPOcn5E74dZiq5BGsTb5yEwhaTSzccU6t4sDOH8NWJCstKO5QT2CvtFoK6F0saL7p9xHAqHOlCPJygA==
@@ -11461,6 +11475,17 @@ Lockfile:
     version "0.1.13"
     resolved "https://registry.yarnpkg.com/ts-interface-checker/-/ts-interface-checker-0.1.13.tgz#784fd3d679722bc103b1b4b8030bcddb5db2a699"
     integrity sha512-Y/arvbn+rrz3JCKl9C4kVNfTfSm2/mEp5FSz5EsZSANGPSlQrpRI5M4PKF+mJnE52jOO90PnPSc3Ur3bTQw0gA==
+  
+  ts-loader@^9.5.1:
+    version "9.5.1"
+    resolved "https://registry.yarnpkg.com/ts-loader/-/ts-loader-9.5.1.tgz#63d5912a86312f1fbe32cef0859fb8b2193d9b89"
+    integrity sha512-rNH3sK9kGZcH9dYzC7CewQm4NtxJTjSEVRJ2DyBZR7f8/wcta+iV44UPCXc5+nzDzivKtlzV6c9P4e+oFhDLYg==
+    dependencies:
+      chalk "^4.1.0"
+      enhanced-resolve "^5.0.0"
+      micromatch "^4.0.0"
+      semver "^7.3.4"
+      source-map "^0.7.4"
   
   tsconfig-paths@^3.15.0:
     version "3.15.0"

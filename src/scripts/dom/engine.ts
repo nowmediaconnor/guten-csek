@@ -5,6 +5,7 @@
 
 import BlockController, { BlockControllerConfig } from "./block-controllers/block-controller";
 import { PageController } from "./page-controller";
+import ScrollDownCircleController from "./scroll-down-controller";
 
 export interface BlockRegistry {
     [blockClassName: string]: HTMLElement[];
@@ -20,6 +21,7 @@ export class DOMEngine {
     static siteDebug: boolean = true;
 
     private pageController: PageController;
+    private scrollDownCircleController: ScrollDownCircleController;
 
     private blockControllerConfigs: BlockControllerConfig[] = [];
 
@@ -34,6 +36,7 @@ export class DOMEngine {
     constructor(...blockConfigs: BlockControllerConfig[]) {
         this.blockControllerConfigs = blockConfigs;
         this.pageController = new PageController();
+        this.scrollDownCircleController = new ScrollDownCircleController("scroll-down", ".header-scroll-down-target");
     }
 
     addControllerConfig(config: BlockControllerConfig) {
@@ -43,6 +46,8 @@ export class DOMEngine {
     init() {
         // initialize the page controller
         this.pageController.init();
+        // initialize the scroll down circle controller
+        this.scrollDownCircleController.init();
         // find all blocks listed in config
         this.collectBlocks();
         // create a controller for each block found
@@ -144,6 +149,9 @@ export class DOMEngine {
     }
 
     isFinished(): boolean {
-        return this.controllers.every((controller) => controller.initialized);
+        return (
+            this.controllers.every((controller) => controller.initialized) &&
+            this.scrollDownCircleController.isInitialized
+        );
     }
 }
