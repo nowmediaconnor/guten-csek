@@ -27,15 +27,15 @@
                 @apply z-30 font-syne font-bold uppercase pb-4 shadow-lg shadow-white;
 
                 & h2 {
-                    @apply text-3xl md:text-6xl leading-none;
-                }
-
-                & h3 {
                     @apply text-base text-csek-red my-1;
                 }
 
                 & .name {
                     @apply flex flex-row justify-between items-start;
+
+                    & h2 {
+                        @apply text-3xl md:text-6xl leading-none text-csek-dark;
+                    }
 
                     & .close-button {
                         @apply fixed top-4 right-4 md:relative md:-top-8;
