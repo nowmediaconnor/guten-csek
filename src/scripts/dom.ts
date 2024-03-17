@@ -196,7 +196,7 @@ export default class DOMController extends BlockController implements DOMControl
         this.debug = true;
         this.isInitialized = false;
         this.isStarted = false;
-        this.prepareLoadingPanel();
+        // this.prepareLoadingPanel();
 
         this.url = new URL(window.location.href);
         this.basePath = this.url.pathname.split("/").slice(0, -1).join("/");
@@ -275,7 +275,7 @@ export default class DOMController extends BlockController implements DOMControl
     setup() {
         if (this.isStarted === false) this.isStarted = true;
 
-        prepareExpandingVideoBlocks();
+        // prepareExpandingVideoBlocks();
 
         this.setFeaturedImageColors();
 
@@ -291,19 +291,19 @@ export default class DOMController extends BlockController implements DOMControl
 
         this.addEventListeners();
 
-        if (this.usingEditor) {
-            this.log("Using editor, not showing loading panel.");
-            this.hideLoadingPanel();
-        } else if (!this.usingEditor) {
-            // check if all controllers are loaded and show page
-            this.loadingInterval = window.setInterval(() => {
-                if (this.finished()) {
-                    window.clearInterval(this.loadingInterval);
-                    this.hideLoadingPanel();
-                    this.log("Finished loading");
-                }
-            }, 1000);
-        }
+        // if (this.usingEditor) {
+        //     this.log("Using editor, not showing loading panel.");
+        //     this.hideLoadingPanel();
+        // } else if (!this.usingEditor) {
+        //     // check if all controllers are loaded and show page
+        //     this.loadingInterval = window.setInterval(() => {
+        //         if (this.finished()) {
+        //             window.clearInterval(this.loadingInterval);
+        //             this.hideLoadingPanel();
+        //             this.log("Finished loading");
+        //         }
+        //     }, 1000);
+        // }
 
         this.isInitialized = true;
     }
@@ -312,14 +312,14 @@ export default class DOMController extends BlockController implements DOMControl
         // block controller listeners
         for (const controller of this.blockControllers) {
             try {
-                // prepare reload listeners
-                window.addEventListener("beforeunload", (e) => {
-                    this.beforeReload();
+                // // prepare reload listeners
+                // window.addEventListener("beforeunload", (e) => {
+                //     this.beforeReload();
 
-                    if (controller.beforeReload) {
-                        controller.beforeReload();
-                    }
-                });
+                //     if (controller.beforeReload) {
+                //         controller.beforeReload();
+                //     }
+                // });
                 // prepare scroll listeners
                 window.addEventListener("scroll", (e) => {
                     // this.scroll();
@@ -350,17 +350,17 @@ export default class DOMController extends BlockController implements DOMControl
         }
 
         // header/footer listeners
-        if (this.prepareLetsTalkScreen()) {
-            this.letsTalkOpenButtons.forEach((btn) => {
-                btn.addEventListener("click", () => {
-                    this.openLetsTalk();
-                });
-            });
+        // if (this.prepareLetsTalkScreen()) {
+        //     this.letsTalkOpenButtons.forEach((btn) => {
+        //         btn.addEventListener("click", () => {
+        //             this.openLetsTalk();
+        //         });
+        //     });
 
-            this.letsTalkCloseButton.addEventListener("click", () => {
-                this.closeLetsTalk();
-            });
-        }
+        //     this.letsTalkCloseButton.addEventListener("click", () => {
+        //         this.closeLetsTalk();
+        //     });
+        // }
 
         // keyboard listeners
         window.addEventListener("keydown", (e) => {

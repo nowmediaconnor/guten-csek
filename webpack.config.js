@@ -4,7 +4,7 @@ const defaults = require("@wordpress/scripts/config/webpack.config.js");
 module.exports = {
     ...defaults,
     entry: {
-        index: path.resolve(process.cwd(), "src"),
+        index: path.resolve(process.cwd(), "src", "index.ts"),
         editor: path.resolve(process.cwd(), "src", "editor"),
     },
     output: {

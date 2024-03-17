@@ -199,6 +199,10 @@ export class MarqueeCanvas {
         }
     }
 
+    destroy() {
+        this.canvas.remove();
+    }
+
     static PIXEL_RATIO = (() => {
         let ctx = document.createElement("canvas").getContext("2d") as any,
             dpr = window.devicePixelRatio || 1,

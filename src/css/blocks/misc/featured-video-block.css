@@ -10,7 +10,7 @@
         @apply relative mx-auto w-11/12 max-w-csek-max;
 
         & .video-container {
-            @apply relative pb-[56.25%] h-0 overflow-hidden rounded-lg;
+            @apply relative h-0 overflow-hidden rounded-lg;
 
             & > * {
                 @apply transition-all ease-in-out duration-200;

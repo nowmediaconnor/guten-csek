@@ -13,8 +13,6 @@ import {
     generateRelatedPostDOM,
     getAllPosts,
     getCategoriesFromParent,
-    getCategoryBySlug,
-    getTagsByCategory,
     makeTagList,
 } from "../../wp";
 
