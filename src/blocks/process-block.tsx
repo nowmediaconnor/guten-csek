@@ -3,7 +3,6 @@
  * Author: Connor Doman
  */
 
-import React from "react";
 import { BlockController, GutenCsekBlockEditProps, GutenCsekBlockSaveProps } from "../scripts/dom";
 import { CsekBlockHeading, Heading } from "../components/heading";
 import { useBlockProps } from "@wordpress/block-editor";

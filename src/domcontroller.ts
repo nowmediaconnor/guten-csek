@@ -81,7 +81,7 @@ export const createDOMController = () => {
         staffProfilesController,
         // cyclingStackController,
         teamController,
-        processBlockController,
+        // processBlockController,
         projectsMasonryBlock
         // postCollageController
         // newsletterController
