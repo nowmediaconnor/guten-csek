@@ -69,21 +69,20 @@ export const createDOMController = () => {
     const newsletterController = new NewsletterController();
 
     // DOM controller
-    return new DOMController(
-        // curtainifyController,
-        // scrollController,
-        videoCarouselController
-        // scrollingProjectsController,
-        // expandingVideoController,
-        // carouselController,
-        // nextProjectController,
-        // featuredVideoController,
-        // staffProfilesController,
-        // cyclingStackController,
-        // teamController
-        // processBlockController,
-        // projectsMasonryBlock
-        // postCollageController
-        // newsletterController
-    );
+    return new DOMController();
+    // curtainifyController,
+    // scrollController,
+    // videoCarouselController
+    // scrollingProjectsController,
+    // expandingVideoController,
+    // carouselController,
+    // nextProjectController,
+    // featuredVideoController,
+    // staffProfilesController,
+    // cyclingStackController,
+    // teamController
+    // processBlockController,
+    // projectsMasonryBlock
+    // postCollageController
+    // newsletterController
 };

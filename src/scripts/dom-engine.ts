@@ -15,6 +15,7 @@ import {
     ScrollingProjectsController,
     StaffProfilesController,
     TeamController,
+    VideoCarouselController,
 } from "./dom/block-controllers";
 import { ControllerConfig } from "./dom/block-controllers/block-controller";
 import { DOMEngine } from "./dom/engine";
@@ -63,6 +64,10 @@ export const BLOCK_CONFIGS: ControllerConfig = [
     {
         blockClassName: ".wp-block-guten-csek-team-block",
         controller: TeamController,
+    },
+    {
+        blockClassName: ".wp-block-guten-csek-video-carousel-block",
+        controller: VideoCarouselController,
     },
 ];
 
