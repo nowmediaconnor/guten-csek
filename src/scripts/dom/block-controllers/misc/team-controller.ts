@@ -12,8 +12,6 @@ export default class TeamController extends BlockController {
 
     private headshots: NodeListOf<HTMLDivElement>;
 
-    debug = true;
-
     setup(): boolean {
         this.headshots = this.block.querySelectorAll(".headshot");
         if (!this.validate(this.headshots.length, "No headshots found")) return false;

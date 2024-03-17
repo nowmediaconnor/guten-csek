@@ -12,8 +12,6 @@ export default class FeaturedVideoController extends BlockController {
     private playButton: HTMLElement;
 
     setup(): boolean {
-        this.debug = false;
-
         this.videoContainer = this.block.querySelector(".video-container") as HTMLElement;
         this.videoShade = this.block.querySelector(".video-container .video-shade") as HTMLElement;
         this.videoPlayer = this.block.querySelector(".video-container video") as HTMLVideoElement;

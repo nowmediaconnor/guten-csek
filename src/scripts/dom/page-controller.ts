@@ -25,7 +25,7 @@ export class PageController {
     private contactFormScreen: HTMLElement;
 
     constructor() {
-        this.debug = true;
+        this.debug = false;
         this.initialized = false;
 
         this._url = new URL(window.location.href);

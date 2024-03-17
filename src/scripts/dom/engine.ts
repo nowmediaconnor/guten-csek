@@ -148,6 +148,29 @@ export class DOMEngine {
         }
     }
 
+    toggleDebug(debug?: boolean) {
+        if (debug !== undefined) {
+            DOMEngine.siteDebug = debug;
+            return;
+        }
+        DOMEngine.siteDebug = !DOMEngine.siteDebug;
+    }
+
+    setControllerDebug(controllerName: string, debug: boolean) {
+        const controller = this.controllers.find((controller) => controller.name === controllerName);
+        if (controller) {
+            controller.debug = debug;
+        } else {
+            this.error(`Controller ${controllerName} not found`);
+        }
+    }
+
+    overrideAllControllersDebug(debug: boolean) {
+        this.controllers.forEach((controller) => {
+            controller.debug = debug;
+        });
+    }
+
     isFinished(): boolean {
         return (
             this.controllers.every((controller) => controller.initialized) &&

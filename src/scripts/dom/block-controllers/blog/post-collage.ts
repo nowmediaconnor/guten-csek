@@ -23,8 +23,6 @@ interface RelatedPostDOM {
 }
 
 export default class PostCollageController extends BlockController {
-    debug = true;
-
     category: number;
     currentCategory: number;
     postCount: number;

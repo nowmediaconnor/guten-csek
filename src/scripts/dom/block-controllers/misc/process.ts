@@ -33,8 +33,6 @@ export default class ProcessController extends BlockController {
     private processTitle: HTMLElement;
     private lastIntersectingStep: Element;
 
-    debug = true;
-
     setup(): boolean {
         this.steps = [];
         this.stepObservers = [];

@@ -6,8 +6,6 @@
 import BlockController from "../block-controller";
 
 export default class NewsletterController extends BlockController {
-    debug = true;
-
     form: HTMLElement | null = null;
 
     setup(): boolean {

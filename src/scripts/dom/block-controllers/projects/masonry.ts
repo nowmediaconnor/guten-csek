@@ -41,14 +41,9 @@ async function getAllProjects(category?: number): Promise<CsekProject[]> {
 }
 
 export default class MasonryController extends BlockController {
-    debug = true;
-
     private gridArea: HTMLElement;
 
     private projectsData: CsekProject[];
-
-    private brickWidth: number;
-    private brickHeight: number;
 
     private masonryGrid: MasonryGrid;
     private gridCols: number;

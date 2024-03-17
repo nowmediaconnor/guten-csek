@@ -20,8 +20,6 @@ export default class ScrollingProjectsController extends BlockController {
     static readonly RETRY_COLOR_DELAY_MS: number = 250;
     static readonly DEFAULT_COLOR: string = "#E9EBEA";
 
-    debug: boolean = true;
-
     private projectNameHeading: HTMLHeadingElement;
     private projectBlurb: HTMLElement;
     private projectImage: HTMLImageElement;

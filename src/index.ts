@@ -3,8 +3,6 @@
  * Author: Connor Doman
  */
 
-import { runAccumulators } from "./scripts/accumulators";
-import DOMController from "./scripts/dom";
 import domEngine from "./scripts/dom/dom-engine";
 import { DOMEngine } from "./scripts/dom/engine";
 import { log } from "./scripts/global";
@@ -21,8 +19,10 @@ window.addEventListener("load", (e) => {
 
     /* Prepare DOM Engine */
     window.domEngine = domEngine;
+    window.domEngine.toggleDebug(false);
 
     window.requestAnimationFrame(() => {
         window.domEngine.init();
+        window.domEngine.overrideAllControllersDebug(DOMEngine.siteDebug);
     });
 });

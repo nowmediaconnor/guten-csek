@@ -27,29 +27,29 @@ export default class VideoCarouselController extends BlockController {
     private vimeoVideos: VimeoVideo[];
     private currentVimeoPlayer: Player;
 
-    debug = true;
     setup(): boolean {
         this.activeIndex = 0;
         this.vimeoVideos = [];
 
         this.videoBlocks = this.block.querySelectorAll(".video-block");
-        if (!this.validate(this.videoBlocks.length, "No video blocks found")) return false;
+        if (!this.validate(this.videoBlocks.length, "No video blocks found.", "Video blocks found.")) return false;
 
         this.videoDialog = document.getElementById("video-player") as HTMLDialogElement;
-        if (!this.validate(this.videoDialog, "No video dialog found")) return false;
+        if (!this.validate(this.videoDialog, "No video dialog found.", "Video dialog found.")) return false;
 
         this.videoCloseButton = this.videoDialog.querySelector(".close-dialog");
-        if (!this.validate(this.videoCloseButton, "No close button found")) return false;
+        if (!this.validate(this.videoCloseButton, "No close button found.", "Video close button found.")) return false;
 
         this.videoStrip = this.block.querySelector(".video-strip");
-        if (!this.validate(this.videoStrip, "No video strip found")) return false;
+        if (!this.validate(this.videoStrip, "No video strip found.", "Video strip found.")) return false;
 
         this.progressNumerator = this.block.querySelector(".video-carousel-slider-progress .start");
         this.progressDenominator = this.block.querySelector(".video-carousel-slider-progress .stop");
         this.barProgress = this.block.querySelector(".video-carousel-slider-progress .bar .progress");
-        if (!this.validate(this.progressNumerator, "No progress numerator found")) return false;
-        if (!this.validate(this.progressDenominator, "No progress denominator found")) return false;
-        if (!this.validate(this.barProgress, "No bar progress found")) return false;
+        if (!this.validate(this.progressNumerator, "No progress numerator found", "Numerator found")) return false;
+        if (!this.validate(this.progressDenominator, "No progress denominator found", "Denominator found"))
+            return false;
+        if (!this.validate(this.barProgress, "No bar progress found", "Progress bar found.")) return false;
 
         this.numVideos = this.videoBlocks.length;
         this.updateDenominator(pad(this.numVideos, 2));
@@ -80,13 +80,13 @@ export default class VideoCarouselController extends BlockController {
                 const video = new VimeoVideo(url, 1920, 1080, false);
                 this.vimeoVideos[idx] = video;
                 await video.updateVideoData();
-                this.log("video data updated:", { ...video.apiResponseData });
+                this.info("video data updated:", { ...video.apiResponseData });
                 if (vimeoThumbnail.getAttribute("src") === "") {
                     const thumbnail = video.apiResponseData?.thumbnail_url ?? "";
                     vimeoThumbnail.setAttribute("src", thumbnail);
                 }
             } else {
-                this.log("vimeo data not found");
+                this.info("vimeo data not found");
             }
             idx++;
         }
@@ -95,8 +95,8 @@ export default class VideoCarouselController extends BlockController {
     addEventListeners() {
         const prevButton = this.block.querySelector(".video-carousel-slider-progress .prev");
         const nextButton = this.block.querySelector(".video-carousel-slider-progress .next");
-        if (!this.validate(prevButton, "No previous button found")) return;
-        if (!this.validate(nextButton, "No next button found")) return;
+        if (!this.validate(prevButton, "No previous button found", "Previous button found.")) return;
+        if (!this.validate(nextButton, "No next button found", "Next button found.")) return;
 
         this.videoPlayButton = this.block.querySelector(
             `.video-block:nth-child(${this.activeIndex + 1}) .video-playbutton`
@@ -141,7 +141,7 @@ export default class VideoCarouselController extends BlockController {
     updatePlayButton() {
         const buttonSelector = `.video-block:nth-child(${this.activeIndex + 1}) .video-playbutton`;
         this.videoPlayButton = this.block.querySelector(buttonSelector);
-        if (!this.validate(this.videoPlayButton, "No video play button found")) return;
+        if (!this.validate(this.videoPlayButton, "No video play button found", "Play button found.")) return;
 
         this.videoPlayButton.addEventListener("click", (e) => {
             e.preventDefault();
@@ -174,7 +174,7 @@ export default class VideoCarouselController extends BlockController {
             if (internalVideo && currentSource) {
                 internalVideo.appendChild(currentSource);
                 player.appendChild(internalVideo);
-                this.log("video updated");
+                this.info("video updated");
             }
         }
 
@@ -191,12 +191,12 @@ export default class VideoCarouselController extends BlockController {
 
         if (internalVideo) {
             internalVideo.play();
-            this.log("video playing");
+            this.info("video playing");
         } else if (this.currentVimeoPlayer) {
             this.currentVimeoPlayer.play();
-            this.log("vimeo video playing");
+            this.info("vimeo video playing");
         } else {
-            this.log("no video found");
+            this.info("no video found");
         }
     }
 

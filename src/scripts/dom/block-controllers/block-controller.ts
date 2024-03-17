@@ -3,6 +3,8 @@
  * Author: Connor Doman
  */
 
+import { DOMEngine } from "../engine";
+
 export interface BlockControllerConfig {
     controller: new (block: HTMLElement) => BlockController;
     blockClassName: string;
@@ -106,15 +108,15 @@ export default abstract class BlockController {
     }
 
     info(...msg: any[]) {
-        if (this.debug) console.info(`[${this.name}]`, ...msg);
+        if (DOMEngine.siteDebug && this.debug) console.info(`[${this.name}]`, ...msg);
     }
 
     error(...msg: any[]) {
-        if (this.debug) console.error(`[${this.name}]`, ...msg);
+        if (DOMEngine.siteDebug && this.debug) console.error(`[${this.name}]`, ...msg);
     }
 
     warn(...msg: any[]) {
-        if (this.debug) console.warn(`[${this.name}]`, ...msg);
+        if (DOMEngine.siteDebug && this.debug) console.warn(`[${this.name}]`, ...msg);
     }
 
     toString(): string {

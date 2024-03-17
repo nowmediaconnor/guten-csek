@@ -14,8 +14,6 @@ export default class CyclingStackController extends BlockController {
     private cycleInterval: number;
 
     setup(): boolean {
-        this.debug = false;
-
         this.wordsList = this.block.querySelector(".words-list");
         this.validate(this.wordsList !== undefined, "Words list not found.", "Words list found.");
 

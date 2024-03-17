@@ -11,8 +11,6 @@ export default class NextProjectController extends BlockController {
     private nextProjectImageBacking: HTMLElement;
 
     setup(): boolean {
-        this.debug = false;
-
         this.nextProjectImage = this.block.querySelector(".next-project-image > img") as HTMLImageElement;
         this.nextProjectImageBacking = this.block.querySelector(".image-backing") as HTMLElement;
 
