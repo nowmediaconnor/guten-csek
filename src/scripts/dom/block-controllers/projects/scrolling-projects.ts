@@ -64,8 +64,19 @@ export default class ScrollingProjectsController extends BlockController {
         this.shuffleProjectOrder();
         this.update();
         this.prepMarqueeData();
+        this.addDocumentVisibilityListener();
 
         return true;
+    }
+
+    private addDocumentVisibilityListener() {
+        // if the document is hidden and an image fades out, it will never fade back in. this overrides that
+        document.addEventListener("visibilitychange", () => {
+            if (this.fadedOut && document.visibilityState === "visible") {
+                this.updateProjectShowcase();
+                this.fadeIn();
+            }
+        });
     }
 
     private gatherProjectData() {
@@ -154,12 +165,10 @@ export default class ScrollingProjectsController extends BlockController {
 
     private nextProject() {
         this.currentProjectIndex = (this.currentProjectIndex + 1) % this.projectData.length;
-        this.updateCurrentProject();
     }
 
     private previousProject() {
         this.currentProjectIndex = (this.currentProjectIndex - 1) % this.projectData.length;
-        this.updateCurrentProject();
     }
 
     private fadeOutProjectImage() {
@@ -243,7 +252,7 @@ export default class ScrollingProjectsController extends BlockController {
     private startMarquee() {
         this.marqueeInterval = window.setInterval(() => {
             try {
-                this.marquee.activeWord = this.block.getAttribute("data-project") || "";
+                this.marquee.activeWord = this.marqueeCanvasContainer.getAttribute("data-project") || "";
 
                 this.marquee.update();
                 this.marquee.draw();
